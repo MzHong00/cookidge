@@ -1,0 +1,18 @@
+.sidebar {
+    width: 12rem;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+}
+
+.navBar>a {
+    justify-content: start;
+}
+.navBar>a:hover {
+    background-color: whitesmoke;
+}
+
+.navBar>a>svg {
+    font-size: 1.5rem;
+}

@@ -1,0 +1,19 @@
+.container {
+    padding: 1rem;
+    border: 1px solid var(--base-rgb-grey-light);
+    border-radius: 5px;
+    background-color: white;
+}
+
+.subTitle{
+    color: rgb(var(--base-rgb-grey-medium));
+}
+
+.header {
+    width: 100%;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}

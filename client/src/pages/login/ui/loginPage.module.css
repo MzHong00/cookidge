@@ -1,0 +1,15 @@
+.page {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10%;
+    background: linear-gradient(to bottom, rgb(var(--main-rgb)), white);
+}
+
+.logo {
+    width: fit-content;
+    color: white;
+    font-size: 2rem !important;
+}

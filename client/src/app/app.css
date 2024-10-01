@@ -1,0 +1,43 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --main-rgb: 167, 202, 255;
+  --base-rgb-grey-light: 227, 227, 227;
+  --base-rgb-grey-medium: 121, 121, 121;
+}
+
+a {
+  color: inherit;
+  text-decoration: initial;
+}
+
+button, input[type="button"], input[type="submit"] {
+  background-color: transparent;
+  background-image: none;
+  font-weight: inherit;
+  line-height: inherit;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+dialog {
+  margin: auto;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+hr {
+  width: 100%;
+  border-width: 1px;
+  border-top: 1px;
+}
+
+ul, ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}

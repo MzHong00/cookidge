@@ -1,0 +1,29 @@
+.fileInput {
+    width: 100%;
+    height: 16rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.fileInput:hover > svg {
+    transform: translateY(-5px);
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+}
+
+.imageBox {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: black;
+    overflow: hidden;
+}
+
+.imageBox > img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}

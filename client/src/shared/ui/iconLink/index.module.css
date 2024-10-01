@@ -1,0 +1,9 @@
+.iconLink {
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    border: none;
+    border-radius: 5px;
+}
