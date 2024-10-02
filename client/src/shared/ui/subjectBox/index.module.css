@@ -1,8 +1,12 @@
 .container {
     padding: 1rem;
-    border: 1px solid var(--base-rgb-grey-light);
+    border: 1px solid rgb(var(--base-rgb-grey-light));
     border-radius: 5px;
     background-color: white;
+}
+
+.title {
+    white-space: nowrap;
 }
 
 .subTitle{

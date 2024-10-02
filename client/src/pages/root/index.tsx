@@ -5,10 +5,12 @@ import { Sidebar } from "widgets/sidebar";
 
 export default function Root() {
   return (
-    <div style={{display: "flex"}}>
+    <div style={{ display: "flex" }}>
       <Sidebar />
-      <Header />
-      <Outlet />
+      <main style={{width: "100%"}}>
+        <Header />
+        <Outlet />
+      </main>
     </div>
   );
 }

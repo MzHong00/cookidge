@@ -9,13 +9,13 @@ import styles from "./sidebar.module.css";
 
 export const Sidebar = () => {
   return (
-    <div className={styles.sidebar}>
+    <aside className={styles.sidebar}>
       <Logo />
       <nav className={styles.navBar}>
         <IconLink to={"/"} Icon={RiHome5Line} title="홈" />
-        <IconLink to={"/"} Icon={RiLayout2Line} title="대시보드" />
-        <IconLink to={"/"} Icon={RiSearchLine} title="검색" />
+        <IconLink to={"/dashboard"} Icon={RiLayout2Line} title="대시보드" />
+        <IconLink to={"/search"} Icon={RiSearchLine} title="검색" />
       </nav>
-    </div>
+    </aside>
   );
 };

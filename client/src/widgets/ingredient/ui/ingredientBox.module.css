@@ -1,0 +1,20 @@
+.ingredientBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ingredientControls {
+    display: flex;
+}
+
+.addButton{
+    background-color: rgb(var(--main-rgb));
+    color: white;
+}
+
+.ingredientActions {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}

@@ -1,8 +1,10 @@
 .iconButton {
-    padding: 1rem;
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-shrink: 0;
     position: relative;
     gap: 0.5rem;
     border: none;

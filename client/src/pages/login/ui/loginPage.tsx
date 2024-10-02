@@ -1,5 +1,5 @@
 import { Logo } from "widgets/logo"
-import { LoginBox } from "widgets/loginBox"
+import { LoginBox } from "widgets/login"
 
 import styles from './loginPage.module.css'
 

@@ -26,7 +26,7 @@ export const SubjectBox = ({
         <div>
           <div className={`${styles.header} ${headerClassName}`}>
             {Icon && <Icon />}
-            {title && <h2>{title}</h2>}
+            {title && <h2 className={styles.title}>{title}</h2>}
           </div>
           {indicator && <div className={styles.indicator}>{indicator}</div>}
         </div>

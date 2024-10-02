@@ -1,0 +1,18 @@
+.container {
+    padding-inline: 0.5rem;
+    min-height: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid rgb(var(--base-rgb-grey-light));
+    border-radius: 5px;
+}
+.container > button {
+    padding: 0px;
+}
+.container > input {
+    height: 100%;
+    padding-inline: 0.5rem;
+    border: none;
+    outline: none;
+}

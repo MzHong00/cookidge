@@ -4,7 +4,7 @@ import styles from "./index.module.css";
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   Icon: IconType;
-  IconUrl: string;
+  src: string;
   title: string;
   isCounterVisible: boolean;
   counterTheme: "grey" | "red";
@@ -13,7 +13,7 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 
 export const IconButton = ({
   Icon,
-  IconUrl,
+  src,
   title,
   isCounterVisible = false,
   counterTheme,
@@ -24,10 +24,15 @@ export const IconButton = ({
 }: Partial<Props>) => {
   return (
     <button className={`${styles.iconButton} ${className}`} {...props}>
-      {IconUrl && (
-        <img src={IconUrl} alt={title} className={styles.IconImage} referrerPolicy="no-referrer"/>
+      {src && (
+        <img
+          src={src}
+          alt={title}
+          className={styles.IconImage}
+          referrerPolicy="no-referrer"
+        />
       )}
-      {Icon && <Icon />}
+      {Icon && <Icon style={{ fontSize: "1.5rem" }} />}
       {title && <p>{title}</p>}
       {isCounterVisible && (
         <div

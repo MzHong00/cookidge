@@ -1,0 +1,22 @@
+.container {
+    width: fit-content;
+    padding: 0.5rem;
+    display: flex;
+    gap: 1rem;
+    border-radius: 5px;
+    background-color: whitesmoke;
+}
+
+.item {
+    color: rgb(var(--base-rgb-grey-medium));
+    background-color: whitesmoke;
+}
+.item:hover {
+    filter: none;
+}
+
+.activeItem {
+    color: black;
+    background-color: white;
+    box-shadow: 0px 1px 2px 1px silver
+}

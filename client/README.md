@@ -10,3 +10,8 @@
 
 10.01
 - (widgets) 헤더, 사이드바 UI 구현
+- (widgets) 레시피 카드, 댓글 창 UI 구현 중
+
+10.02
+- (page) 대시보드 UI 구현 중
+- (widgets) ingredient, 구현 중

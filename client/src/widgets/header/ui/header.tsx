@@ -10,7 +10,7 @@ export const Header = () => {
     <div className={styles.header}>
       <IconLink to={"/login"} title="로그인" className={styles.loginButton} />
       <IconButton
-        IconUrl="https://lh3.googleusercontent.com/a/AEdFTp4pPqM6NpOpPqG-cAg1vMo6k6PwFlei8v1deyEJ=s96-c"
+        src="https://lh3.googleusercontent.com/a/AEdFTp4pPqM6NpOpPqG-cAg1vMo6k6PwFlei8v1deyEJ=s96-c"
         className={styles.iconButton}
       />
       <IconButton
