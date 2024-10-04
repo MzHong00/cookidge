@@ -1,7 +1,7 @@
 import { RiSeedlingLine } from "@react-icons/all-files/ri/RiSeedlingLine";
 import { RiTimer2Line } from "@react-icons/all-files/ri/RiTimer2Line";
 
-import { IngredientBox } from "widgets/ingredient";
+import { IngredientListContainer } from "features/ingredient/view";
 import { ItemSelectionBox } from "shared/ui/itemSelectionBox";
 import { SubjectBox } from "shared/ui/subjectBox";
 
@@ -33,7 +33,7 @@ export const Dashboard = () => {
           <p>3일 이내 유통기한 만료 재료 수</p>
         </SubjectBox>
       </div>
-      <IngredientBox />
+      <IngredientListContainer />
     </div>
   );
 };

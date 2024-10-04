@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 1rem;
 }
 
 .ingredientControls {
@@ -17,4 +18,8 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+}
+
+.ingredientList {
+    width: 100%;
 }

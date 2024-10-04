@@ -16,6 +16,7 @@ export const ItemSelectionBox = ({
     <div className={`${styles.container} ${className}`} {...props}>
       {itemList.map((item) => (
         <IconButton
+          key={item}
           title={item}
           className={`${styles.item} ${
             item === activeItem && styles.activeItem

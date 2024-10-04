@@ -15,3 +15,9 @@
 10.02
 - (page) 대시보드 UI 구현 중
 - (widgets) ingredient, 구현 중
+- 데이터 모델링 댓글 컬렉션 참조 방식으로 결정
+    => comment.author_id 와 user를 $lookup을 사용하는 방법이 최선
+
+10.03
+- (현재는 feature) ingredientBox를 table태그를 사용해서 구성
+    => will. 해당 컴포넌트를 shared로 해야할지 정해야 함

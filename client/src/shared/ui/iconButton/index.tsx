@@ -32,7 +32,7 @@ export const IconButton = ({
           referrerPolicy="no-referrer"
         />
       )}
-      {Icon && <Icon style={{ fontSize: "1.5rem" }} />}
+      {Icon && <Icon className={styles.icon}/>}
       {title && <p>{title}</p>}
       {isCounterVisible && (
         <div
