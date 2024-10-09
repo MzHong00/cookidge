@@ -9,14 +9,14 @@
     gap: 0.5rem;
     border: none;
     border-radius: 5px;
-    background-color: white;
+    background-color: inherit;
 }
 .iconButton:hover {
     filter: brightness(0.95);
 }
 
 .icon {
-    font-size: 1.5rem;
+    font-size: var(--icon-size-medium);
 }
 
 .IconImage {

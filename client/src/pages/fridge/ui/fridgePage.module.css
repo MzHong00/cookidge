@@ -1,0 +1,25 @@
+/* 냉장고 탭*/
+.dashboardPage button:hover {
+    filter: none;
+}
+
+.fridgeSelection {
+    height: 3rem;
+    padding-inline: 0.5rem;
+    border: 1px solid rgb(var(--base-rgb-grey-light));
+}
+
+.statusBoard {
+    display: flex;
+}
+
+.statusBoard>section {
+    flex-grow: 1;
+    flex-basis: 0;
+    min-width: 10rem;
+}
+
+.headerReverse {
+    font-size: clamp(0.5rem, 3vw, 1rem);
+    flex-direction: row-reverse;
+}

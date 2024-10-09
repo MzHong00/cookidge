@@ -1,0 +1,47 @@
+.container > section {
+    border: none;
+}
+
+.ingredientAddBox {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.selectionBox {
+    width: 100%;
+}
+
+.ingredientTable {
+    width: 100%;
+    padding-block: 0.25rem;
+    padding-inline: 0.5rem;
+    border: 1px solid rgb(var(--base-rgb-grey-light));
+    border-radius: 5px;
+}
+
+.addedIngredientTableBody {
+    height: clamp(5rem, 20vh, 20rem);
+}
+
+
+.addButton {
+    color:white;
+    background-color: rgb(var(--main-rgb));
+}
+
+.actionBar {
+    padding: 1rem;
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+}
+
+.closeButton {
+    border: 1px solid rgb(var(--base-rgb-grey-light));
+}
+
+.decideButton {
+    color: white;
+    background-color: rgb(var(--main-rgb));
+}

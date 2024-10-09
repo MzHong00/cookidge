@@ -18,7 +18,7 @@ export const IconLink = ({
 }: Props) => {
   return (
     <Link to={to} className={`${styles.iconLink} ${className}`} {...props}>
-      {Icon && <Icon style={{ fontSize: "1.5rem" }} />}
+      {Icon && <Icon className={styles.icon} />}
       {title && <p>{title}</p>}
       {children}
     </Link>

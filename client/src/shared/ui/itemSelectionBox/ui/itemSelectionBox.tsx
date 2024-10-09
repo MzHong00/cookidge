@@ -1,28 +1,37 @@
 import { IconButton } from "shared/ui/iconButton";
+
 import styles from "./itemSelectionBox.module.css";
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  itemList: string[];
-  activeItem: string;
+interface Props {
+  itemList?: string[];
+  activeItem?: string;
+  activeIndex?: number;
+  onclick?: React.MouseEventHandler<HTMLButtonElement>;
+  children?: React.ReactNode;
+  className?: string;
 }
 
 export const ItemSelectionBox = ({
   itemList,
   activeItem,
+  activeIndex,
+  onclick,
+  children,
   className,
-  ...props
 }: Props) => {
   return (
-    <div className={`${styles.container} ${className}`} {...props}>
-      {itemList.map((item) => (
+    <div className={`${styles.container} ${className}`}>
+      {itemList?.map((item, index) => (
         <IconButton
           key={item}
           title={item}
+          onClick={onclick}
           className={`${styles.item} ${
-            item === activeItem && styles.activeItem
+            (item === activeItem || index === activeIndex) && styles.activeItem
           }`}
         />
       ))}
+      {children}
     </div>
   );
 };

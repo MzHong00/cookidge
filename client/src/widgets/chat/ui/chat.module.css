@@ -1,0 +1,16 @@
+.container {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.container >button {
+    height: 3rem;
+    padding: 0.5rem;
+}
+
+.header { 
+    display: flex;
+    gap: 1rem;
+}

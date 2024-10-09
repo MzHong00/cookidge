@@ -1,23 +1,28 @@
 .container {
+    width: 100%;
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
     border: 1px solid rgb(var(--base-rgb-grey-light));
     border-radius: 5px;
     background-color: white;
 }
 
 .title {
-    white-space: nowrap;
-}
-
-.subTitle{
-    color: rgb(var(--base-rgb-grey-medium));
-}
-
-.header {
     width: 100%;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-weight: bold;
+    white-space: nowrap;
+}
+
+.subTitle{
+    margin-bottom: 1rem;
+    color: rgb(var(--base-rgb-grey-medium));
+}
+
+.icon {
+    font-size: var(--icon-size-medium);
 }

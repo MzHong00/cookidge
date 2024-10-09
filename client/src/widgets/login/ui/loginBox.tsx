@@ -3,9 +3,9 @@ import { FcGoogle } from "@react-icons/all-files/fc/FcGoogle";
 
 import { IconButton } from "shared/ui/iconButton";
 import { SubjectBox } from "shared/ui/subjectBox";
+import { InputBox } from "shared/ui/inputBox";
 
 import styles from "./loginBox.module.css";
-import { InputIconBox } from "shared/ui/inputBox";
 
 export const LoginBox = () => {
   return (
@@ -15,7 +15,7 @@ export const LoginBox = () => {
       className={styles.loginContainer}
     >
       <form className={styles.loginForm}>
-        <InputIconBox
+        <InputBox
           label="이메일"
           name="email"
           placeholder="foodMate@example.com"

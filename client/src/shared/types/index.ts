@@ -1,6 +1,6 @@
 export interface User {
   _id: string;
-  tag_name: string;
+  name: string;
   email: string;
   picture: string;
   created_at: Date;
@@ -13,18 +13,19 @@ export interface Recipe {
   _id: string;
   name: string;
   picture: string[];
-  author_tag_name: User['tag_name'][];
+  author_id: User['_id'][];
   ingredients: Ingredient[];
-  instructions: string;
+  introduction: string;
   servings: number;
   cooking_time: number;
+  cooking_steps: CookingStep[];
   like_members: User["_id"][];
   comments: Comment[];
   created_at: Date;
 }
 
 export interface Comment {
-  user_tag_name: User['tag_name'];
+  user_id: User['_id'];
   comment: string;
   created_at: Date;
 }
@@ -35,6 +36,11 @@ export interface Ingredient {
   category: string;
   quantity?: string;
   expired_at?: Date;
+}
+
+export interface CookingStep {
+  picture?: string;
+  instruction: string;
 }
 
 export interface Refrigerator {

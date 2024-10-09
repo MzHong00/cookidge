@@ -1,0 +1,43 @@
+
+/* 레시피 탭*/
+.recipeOverviewSection{
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+}
+
+@media screen and (max-width: 767px) {
+    .recipeOverviewSection {
+        flex-direction: column;
+    }
+}
+
+.createRecipeButton{
+    width: fit-content;
+    padding-inline: 1rem;
+    color: white;
+    background-color: rgb(var(--main-rgb));
+}
+
+.attachChildHeader {
+    justify-content: start !important;
+    gap: 1rem;
+}
+
+.recipeRecommendSection {
+    display: flex;
+    gap: 1rem;
+}
+
+.recipeRecommendSection svg {
+    font-size: 1rem;
+}
+
+.recommendReloadButton {
+    border: 1px solid rgb(var(--base-rgb-grey-light));
+}
+
+.recommendToAiButton {
+    color: white;
+    background-color: rgb(var(--main-rgb));
+}

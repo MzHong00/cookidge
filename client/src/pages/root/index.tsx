@@ -1,14 +1,14 @@
 import { Outlet } from "react-router-dom";
 
 import { Header } from "widgets/header";
-import { Sidebar } from "widgets/sidebar";
+
+import styles from "./index.module.css";
 
 export default function Root() {
   return (
-    <div style={{ display: "flex" }}>
-      <Sidebar />
-      <main style={{width: "100%"}}>
-        <Header />
+    <div className={styles.root}>
+      <Header />
+      <main className={styles.mainContainer}>
         <Outlet />
       </main>
     </div>

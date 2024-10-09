@@ -7,7 +7,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
 }
 
-export const InputIconBox = ({
+export const InputBox = ({
   Icon,
   label,
   name,

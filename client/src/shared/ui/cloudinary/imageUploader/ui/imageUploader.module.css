@@ -27,3 +27,11 @@
     max-height: 100%;
     object-fit: contain;
 }
+
+.uploadIconBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgb(var(--base-rgb-grey-medium));
+}

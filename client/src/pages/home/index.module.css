@@ -1,0 +1,26 @@
+.cardListContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.homeRecipeCard {
+    max-height: 80%;
+}
+
+.homeRecipeCard>section {
+    width: 40vw;
+}
+
+.homeRecipeCard>section>div:first-child {
+    max-height: 50%
+}
+
+@media screen and (max-width: 767px) {
+    .cardListContainer {
+        justify-content: start;
+    }
+}

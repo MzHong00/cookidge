@@ -1,0 +1,16 @@
+.detailPage {
+    padding: 10%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.recipeDetailCard {
+    width: 100% !important;
+}
+
+.recipeDetailCard>section {
+    flex-direction: row;
+}

@@ -8,6 +8,8 @@
   --main-rgb: 167, 202, 255;
   --base-rgb-grey-light: 227, 227, 227;
   --base-rgb-grey-medium: 121, 121, 121;
+  --icon-size-medium: 1.5rem;
+  --base-box-shadow: 0px 1px 2px 1px silver;
 }
 
 a {

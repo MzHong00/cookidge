@@ -26,11 +26,10 @@ export const CloudinaryImg = ({
       plugins={plugins}
       {...props}
       style={{
-        maxWidth: "inherit",
+        width: "100%",
         height: "100%",
-        maxHeight: "inherit",
-        objectFit: "contain",
-        objectPosition: "top",
+        objectFit: "cover",
+        objectPosition: "center",
       }}
     />
   ) : null;

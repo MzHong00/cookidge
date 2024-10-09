@@ -6,12 +6,14 @@
     border-radius: 5px;
     background-color: whitesmoke;
 }
-
-.item {
+.container > * {
+    flex: 1;
     color: rgb(var(--base-rgb-grey-medium));
     background-color: whitesmoke;
+    white-space: nowrap;
 }
-.item:hover {
+
+.container > *:hover {
     filter: none;
 }
 

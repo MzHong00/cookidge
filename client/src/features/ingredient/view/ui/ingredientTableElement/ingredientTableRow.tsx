@@ -2,8 +2,9 @@ import { RiEditBoxLine } from "@react-icons/all-files/ri/RiEditBoxLine";
 import { CgRemoveR } from "@react-icons/all-files/cg/CgRemoveR";
 
 import { Ingredient } from "shared/types";
-import styles from "./ingredientItemBox.module.css";
 import { IconButton } from "shared/ui/iconButton";
+
+import styles from "./ingredientTableRow.module.css";
 
 interface Props extends React.HTMLAttributes<HTMLTableRowElement>, Ingredient {
   onClickEdit?: () => void;
@@ -11,7 +12,7 @@ interface Props extends React.HTMLAttributes<HTMLTableRowElement>, Ingredient {
   disabled?: boolean;
 }
 
-export const IngredientItemBox = ({
+export const IngredientTableRow = ({
   name,
   category,
   quantity,
@@ -28,9 +29,11 @@ export const IngredientItemBox = ({
       {...props}
     >
       <td>
-        <select disabled={disabled} >
+        <select disabled={disabled}>
           {["고기", "채소"].map((item) => (
-            <option key={item} defaultValue={category}>{item}</option>
+            <option key={item} defaultValue={category}>
+              {item}
+            </option>
           ))}
         </select>
       </td>
@@ -39,26 +42,25 @@ export const IngredientItemBox = ({
           defaultValue={name}
           placeholder="재료 이름"
           disabled={disabled}
+          title={name}
         />
       </td>
       <td>
         <input type="date" disabled={disabled} />
       </td>
       <td>
-        <input
-          defaultValue={quantity}
-          placeholder="수량"
-          disabled={disabled}
-        />
+        <input defaultValue={quantity} placeholder="수량" disabled={disabled} />
       </td>
-      <td className={styles.ingredientActionBar}>
-        {onClickEdit && (
-          <IconButton Icon={RiEditBoxLine} onClick={onClickEdit} />
-        )}
-        {onClickRemove && (
-          <IconButton Icon={CgRemoveR} onClick={onClickRemove} />
-        )}
-      </td>
+      {(onClickEdit || onClickRemove) && (
+        <td className={styles.ingredientActionBar}>
+          {onClickEdit && (
+            <IconButton Icon={RiEditBoxLine} onClick={onClickEdit} />
+          )}
+          {onClickRemove && (
+            <IconButton Icon={CgRemoveR} onClick={onClickRemove} />
+          )}
+        </td>
+      )}
     </tr>
   );
 };

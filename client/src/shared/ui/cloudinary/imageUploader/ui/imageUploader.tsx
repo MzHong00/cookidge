@@ -5,9 +5,17 @@ import { useCloudinaryImage } from "../model/imageUploader";
 
 import styles from "./imageUploader.module.css";
 
-interface Props extends React.InputHTMLAttributes<HTMLInputElement> {}
+interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+  introduction?: string;
+}
 
-export const CloduinaryImageUploader = ({ id, name, className, ...props }: Props) => {
+export const CloduinaryImageUploader = ({
+  introduction,
+  id,
+  name,
+  className,
+  ...props
+}: Props) => {
   const { image, imageLoadHandler } = useCloudinaryImage();
 
   return (
@@ -19,7 +27,10 @@ export const CloduinaryImageUploader = ({ id, name, className, ...props }: Props
             <input type="hidden" name={name} value={(image as any).publicID} />
           </div>
         ) : (
-          <GrDocumentUpload size={24} />
+          <div className={styles.uploadIconBox}>
+            <GrDocumentUpload size={24} />
+            <p>{introduction}</p>
+          </div>
         )}
       </label>
       <input

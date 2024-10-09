@@ -1,0 +1,41 @@
+.navBar {
+    width: fit-content;
+    height: 3rem;
+    max-height: 100%;
+    display: flex;
+    background-color: white;
+    white-space: nowrap;
+}
+
+@media screen and (max-width: 767px) {
+    .navBar {
+        width: 100%;
+        height: fit-content;
+        flex-direction: row;
+        position: fixed;
+        left: 0;
+        bottom: 0px;
+        z-index: 10;
+    }
+
+    .navBar>a {
+        flex: 1;
+        justify-content: center !important;
+    }
+
+    .navBar>a>p {
+        display: none;
+    }
+}
+
+.navBar>a {
+    justify-content: start;
+}
+
+.navBar>a:hover {
+    background-color: whitesmoke;
+}
+
+.navBar>a>svg {
+    font-size: 1.5rem;
+}
