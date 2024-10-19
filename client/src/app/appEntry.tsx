@@ -10,7 +10,7 @@ const AppEntry = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <CookiesProvider>
-        <RouterProvider router={appRouter} />
+          <RouterProvider router={appRouter} />
       </CookiesProvider>
       {/* <ReactQueryDevtools initialIsOpen /> */}
     </QueryClientProvider>

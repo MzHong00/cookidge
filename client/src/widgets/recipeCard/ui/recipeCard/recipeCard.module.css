@@ -1,0 +1,91 @@
+.cardContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    box-shadow: var(--base-box-shadow);
+    overflow: hidden;
+}
+
+.recipeSection {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.pictureBox {
+    flex: 1;
+}
+
+.infoBox {
+    height: 100%;
+    padding: 1rem;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    gap: 2rem;
+}
+
+.recipeInfoBar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.infoHeader > * {
+    display: inline;
+}
+.infoHeader>:first-child {
+    font-size: 1.5em;
+    margin-right: 0.5rem;
+}
+
+.subInfo {
+    display: flex;
+    gap: 1rem;
+    color: rgb(var(--base-rgb-grey-medium));
+}
+
+.subInfo>*{
+    padding: 0rem;
+
+}
+.subInfo svg {
+    font-size: 1em;
+}
+
+.recipeActionBar {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.recipeActionBar>button {
+    padding-inline: 0.25rem;
+}
+
+.chatSection {
+    height: 100%;
+    transition: transform 0.5s ease;
+}
+
+@media screen and (max-width:767px) {
+    .cardContainer {
+        border-radius: 0px;
+    }
+
+    .chatSection {
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: 0px !important;
+        border: none !important;
+    }
+}
+
+.recipeDetailButton {
+    width: 100%;
+    flex-direction: row-reverse;
+}

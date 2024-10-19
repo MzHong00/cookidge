@@ -1,6 +1,12 @@
+.container {
+    border: 1px solid black;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
 .fileInput {
     width: 100%;
-    height: 16rem;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,9 +35,18 @@
 }
 
 .uploadIconBox {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
     color: rgb(var(--base-rgb-grey-medium));
+}
+
+.introduction {
+    text-align: center;
+    text-overflow: ellipsis;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
 }

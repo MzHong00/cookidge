@@ -1,0 +1,105 @@
+.userPage {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.userInfoContainer {
+    max-width: 800px;
+    width: 100%;
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.userInfoBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profilesPicture {
+    min-width: 8rem;
+    max-width: 12rem;
+    width: 25%;
+    margin: auto;
+    cursor: auto;
+}
+
+.nameBox {
+    margin-bottom: 0.5rem;
+    display: inline-block;
+    font-size: 1.25em;
+}
+
+.communityBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.userActionBar {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.userActionButton {
+    padding-block: 0.25rem;
+    padding-inline: 0.5rem;
+    border-radius: 30px;
+    border: 1px solid silver;
+}
+
+.userActionButton>svg {
+    font-size: 1em;
+}
+
+.profileEditButton {
+    color: white;
+    background-color: rgb(var(--main-rgb));
+    border: none
+}
+
+.followBox {
+    padding: 1rem;
+    display: inline-block;
+    font-size: 1.25em;
+}
+
+.userRecipeContainer {
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.userRecipeList {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem;
+}
+
+.userRecipeCard>:last-child {
+    padding: 0.5rem;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.userRecipeCard b {
+    font-size: 1rem !important;
+}
+
+@media screen and (max-width: 767px) {
+    .userRecipeCard {
+        font-size: 2vw;
+    }
+
+    .userActionBar {
+        flex-direction: column;
+    }
+}

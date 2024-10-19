@@ -7,20 +7,23 @@ import styles from "./imageUploader.module.css";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   introduction?: string;
+  defaultImgSrc?: string;
 }
 
 export const CloduinaryImageUploader = ({
   introduction,
+  defaultImgSrc,
   id,
-  name,
+  name = "imageFile",
+  children,
   className,
   ...props
 }: Props) => {
   const { image, imageLoadHandler } = useCloudinaryImage();
 
   return (
-    <fieldset>
-      <label htmlFor={id} className={`${styles.fileInput} ${className}`}>
+    <div className={`${styles.container} ${className}`}>
+      <label htmlFor={name} className={styles.fileInput}>
         {image ? (
           <div className={styles.imageBox}>
             <AdvancedImage cldImg={image} />
@@ -28,20 +31,29 @@ export const CloduinaryImageUploader = ({
           </div>
         ) : (
           <div className={styles.uploadIconBox}>
-            <GrDocumentUpload size={24} />
-            <p>{introduction}</p>
+            {defaultImgSrc ? (
+              <img src={defaultImgSrc} alt="" style={{ width: "100%" }} />
+            ) : (
+              <GrDocumentUpload size={24} />
+            )}
+            {introduction && (
+              <p className={styles.introduction} title={introduction}>
+                {introduction}
+              </p>
+            )}
           </div>
         )}
       </label>
+      {children}
       <input
         type="file"
-        id={id}
-        name="imageFile"
+        id={name}
+        name={name}
         accept="image/*"
         onChange={imageLoadHandler}
         style={{ display: "none" }}
         {...props}
       />
-    </fieldset>
+    </div>
   );
 };

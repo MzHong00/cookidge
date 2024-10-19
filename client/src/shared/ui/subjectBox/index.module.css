@@ -18,11 +18,18 @@
     white-space: nowrap;
 }
 
+.title > :last-child {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
 .subTitle{
     margin-bottom: 1rem;
     color: rgb(var(--base-rgb-grey-medium));
 }
 
 .icon {
+    min-width: var(--icon-size-medium);
     font-size: var(--icon-size-medium);
 }

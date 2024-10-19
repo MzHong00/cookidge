@@ -5,22 +5,26 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 3rem;
 }
 
 .homeRecipeCard {
     max-height: 80%;
 }
 
-.homeRecipeCard>section {
-    width: 40vw;
+.homeRecipeCard > img {
+    max-height: 20rem;
 }
 
-.homeRecipeCard>section>div:first-child {
-    max-height: 50%
+.chatBox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition-duration: 1s;
 }
 
 @media screen and (max-width: 767px) {
     .cardListContainer {
-        justify-content: start;
+        padding-inline: 0.5rem;
     }
 }

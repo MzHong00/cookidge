@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
 export const useModal = () => {
-  const ref = useRef<any>(null);
+  const modalRef = useRef<any>(null);
   const [isOpen, setIsOpen] = useState(false);
   
   const openModal = useCallback((e: React.MouseEvent) => {
@@ -20,7 +20,7 @@ export const useModal = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (ref.current && !ref.current.contains(event.target)) {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
         closeModal();
       }
     };
@@ -33,7 +33,7 @@ export const useModal = () => {
   }, [closeModal]);
 
   return {
-    ref,
+    modalRef,
     isOpen,
     openModal,
     closeModal,

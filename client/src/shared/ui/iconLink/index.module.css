@@ -1,4 +1,5 @@
 .iconLink {
+    width: fit-content;
     padding-inline: 1rem;
     padding-block: 0.5rem;
     display: flex;

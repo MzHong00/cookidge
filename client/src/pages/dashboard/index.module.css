@@ -2,23 +2,22 @@
     min-width: fit-content;
     min-height: calc(100vh - 4rem);
     width: 100%;
-    height: 100%;
-    padding: 1rem;
-    padding-bottom: 3rem;
+    height: fit-content;
     display: flex;
     flex-direction: column;
     gap: 1rem;
     background-color: whitesmoke;
 }
 
-@media screen and (min-width: 767px) {
-    .dashboardPage {
-        padding-inline: 10%;
-    }
-}
-
 .activeTab {
     color: black;
     background-color: white;
     box-shadow: var(--base-box-shadow);
+}
+
+@media screen and (max-width:767px) {
+    .dashboardPage {
+        width: 100%;
+        padding: 0.5rem;
+    }
 }

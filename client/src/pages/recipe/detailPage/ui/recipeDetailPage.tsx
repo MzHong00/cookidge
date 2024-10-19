@@ -1,9 +1,10 @@
 import { useParams } from "react-router-dom";
 
-import { Recipe } from "shared/types";
-import { SubjectBox } from "shared/ui/subjectBox";
-import { CloudinaryImg } from "shared/ui/cloudinary";
-import { RecipeCard } from "widgets/recipeCard";
+import { type Recipe } from "shared/types";
+import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
+import { ChatBox } from "widgets/chat";
+import { DetailCard } from "widgets/recipeCard";
+import { RecipeStep } from "widgets/recipeStep";
 
 import styles from "./recipeDetailPage.module.css";
 
@@ -11,21 +12,38 @@ export const RecipeDetailPage = () => {
   const { id } = useParams();
 
   return (
-    <div className={styles.detailPage}>
-      <RecipeCard {...recipeExample1} className={styles.recipeDetailCard} />
-      <SubjectBox title="레시피">
-        <div className={styles.recipeStepContainer}>
-          {recipeExample1.cooking_steps.map((step) => (
-            <div key={step.picture} className={styles.recipeStepBox}>
-              <CloudinaryImg publicId={step?.picture} />
-              <div>{step.instruction}</div>
-            </div>
-          ))}
-        </div>
-      </SubjectBox>
-      <SubjectBox title="추천 요리" />
-      <SubjectBox title="댓글" />
-    </div>
+    <FramerFadeLayout className={styles.detailPage}>
+      <DetailCard
+        {...recipeExample1}
+        className={styles.recipeDetailCard}
+        onClickStar={() => {}}
+      />
+      <RecipeStep
+        recipeSteps={[
+          {
+            picture:
+              "https://res.cloudinary.com/db0ls9b6a/image/upload/f_auto/q_50/c_auto,g_auto,h_300/food-1651279_1280_arlr1i?_a=DAJAUVWIZAA0",
+            instruction: "이건 1번째",
+          },
+          {
+            picture:
+              "https://res.cloudinary.com/db0ls9b6a/image/upload/f_auto/q_50/c_auto,g_auto,h_300/food-1651279_1280_arlr1i?_a=DAJAUVWIZAA0",
+            instruction: "이건 2번째",
+          },
+          {
+            picture:
+              "https://res.cloudinary.com/db0ls9b6a/image/upload/f_auto/q_50/c_auto,g_auto,h_300/food-1651279_1280_arlr1i?_a=DAJAUVWIZAA0",
+            instruction: "이건 3번째",
+          },
+          {
+            picture:
+              "https://res.cloudinary.com/db0ls9b6a/image/upload/f_auto/q_50/c_auto,g_auto,h_300/food-1651279_1280_arlr1i?_a=DAJAUVWIZAA0",
+            instruction: "이건 4번째",
+          },
+        ]}
+      />
+      <ChatBox recipe_id={""} className={styles.chatBox} />
+    </FramerFadeLayout>
   );
 };
 
@@ -45,7 +63,7 @@ const recipeExample1: Recipe = {
     { _id: "ingredient3", name: "양파", category: "채소", quantity: "1개" },
   ],
   introduction:
-    "파스타를 끓이고, 소스를 만들어 섞는다.ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ",
+    "이것은 손쉽게 만들 수 있는 토마토 파스타입니다. 간단하게 아이들 먹기에 좋습니다.",
   servings: 2,
   cooking_time: 30,
   cooking_steps: [
@@ -55,6 +73,6 @@ const recipeExample1: Recipe = {
     },
   ],
   like_members: ["user1", "user2"],
-  comments: [],
+  ratting: 4.3,
   created_at: new Date("2024-10-01"),
 };

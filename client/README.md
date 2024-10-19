@@ -37,3 +37,39 @@
 - (widgets) 반응형 레시피 재료 태그 추가 및 카드 UI 구현 완료
 - (shared) recipe 타입 레시피 제조 과정인 step 속성 추가
 - (features) 레시피 생성 폼 구현 중
+
+10.12
+- (pages) user 페이지 구현 중
+- (widgets) recipe 카드 채팅부분 제거 (채팅은 독립적으로 위젯 생성 예정)
+
+10.13
+- (pages) user 페이지 구현 완료
+- (pages) user/settings 페이지 구현 중
+
+10.14
+- (pages) user/settings 페이지 구현 완료
+- 컴포넌트 리팩토링 (재료 테이블)
+- (shared) 컴포넌트들 반응형으로 약간의 업데이트
+
+10.15
+- (widgets) 재료 생성 박스 수정 및 완료
+- (features) 기존 ingredientTableRow, List 등 모호한 의미 교체
+    => ingredientTable로 변환 feature폴더의 update와 delete를 edit으로 통합
+- user 메뉴바 구현
+- Recipe 모델에서 comment속성 제외 결정
+- 레시피 카드에서 chat 아이콘을 별점 아이콘으로 변경 후, 레시피 모델 별점 속성 추가
+
+10.16
+- (widgets) 레시피 과정 슬라이더 반응형 UI 구현 완료
+- (widgets) detail 페이지의 레시피 카드를 따로 detail 카드 위젯 UI 구현 완료
+
+10.17
+- 레시피 카드들 이미지 max-width 설정
+
+10.18
+- Framer-motion 학습 및 도입
+
+10.19
+- Framer-motion을 사용하여 페이지 이동시, Fade효과
+- 프론트엔드 UI 껍데기 배포
+- 백엔드 개발 준비

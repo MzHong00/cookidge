@@ -1,5 +1,4 @@
 .detailPage {
-    padding: 10%;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -7,10 +6,27 @@
     gap: 1rem;
 }
 
+@media screen and (max-width: 767px) {
+    .detailPage {
+        padding-inline: 0.5rem !important;
+    }
+
+    .recipeDetailCard{
+        max-height: fit-content !important;
+        flex-direction: column !important;
+    }
+}
+
 .recipeDetailCard {
-    width: 100% !important;
+    width: 100%;
+    box-shadow: none;
+    align-items: center;
 }
 
 .recipeDetailCard>section {
     flex-direction: row;
+}
+
+.chatBox {
+    border: none;
 }

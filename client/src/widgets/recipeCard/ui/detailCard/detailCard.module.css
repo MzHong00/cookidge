@@ -1,0 +1,104 @@
+.cardContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.recipeSection {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.pictureBox {
+    max-height: 20rem;
+    flex: 1;
+    aspect-ratio: 0;
+    background-color: white;
+}
+
+.infoBox {
+    width: 100%;
+    height: 100%;
+    padding-block: 1rem;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+.recipeInfoBar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.infoHeader>* {
+    display: inline;
+}
+
+.infoHeader>:first-child {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+.subInfo {
+    display: flex;
+    gap: 1rem;
+    color: rgb(var(--base-rgb-grey-medium));
+}
+
+.subInfo>* {
+    padding: 0rem;
+}
+
+.subInfo svg {
+    font-size: 1rem;
+}
+
+.recipeActionBar {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.recipeActionBar>button {
+    padding-inline: 0.25rem;
+}
+
+.chatSection {
+    height: 100%;
+    transition: transform 0.5s ease;
+}
+
+.ingredientBox {
+    border: none !important;
+}
+
+.ingredientBox>ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.ingredientBox li {
+    padding: 0.5rem;
+    border: 1px solid silver;
+    border-radius: 10px;
+}
+
+@media screen and (max-width:767px) {
+    .cardContainer {
+        border-radius: 0px;
+    }
+
+    .chatSection {
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: 0px !important;
+        border: none !important;
+    }
+}

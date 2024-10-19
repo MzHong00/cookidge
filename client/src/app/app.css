@@ -8,7 +8,7 @@
   --main-rgb: 167, 202, 255;
   --base-rgb-grey-light: 227, 227, 227;
   --base-rgb-grey-medium: 121, 121, 121;
-  --icon-size-medium: 1.5rem;
+  --icon-size-medium: 1.25em;
   --base-box-shadow: 0px 1px 2px 1px silver;
 }
 
@@ -17,7 +17,10 @@ a {
   text-decoration: initial;
 }
 
-button, input[type="button"], input[type="submit"] {
+button,
+input[type="button"],
+input[type="submit"],
+input[type="date"] {
   background-color: transparent;
   background-image: none;
   font-weight: inherit;
@@ -28,7 +31,9 @@ button, input[type="button"], input[type="submit"] {
 
 dialog {
   margin: auto;
+  border: none;
   border-radius: 10px;
+  box-shadow: 0px 0px 10px silver;
   overflow: hidden;
 }
 
@@ -38,8 +43,13 @@ hr {
   border-top: 1px;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+select {
+  cursor: pointer;
 }

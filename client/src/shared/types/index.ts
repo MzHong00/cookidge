@@ -20,11 +20,12 @@ export interface Recipe {
   cooking_time: number;
   cooking_steps: CookingStep[];
   like_members: User["_id"][];
-  comments: Comment[];
+  ratting: number;
   created_at: Date;
 }
 
 export interface Comment {
+  recipe_id: Recipe['_id'];
   user_id: User['_id'];
   comment: string;
   created_at: Date;

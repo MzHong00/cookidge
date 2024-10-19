@@ -1,0 +1,50 @@
+.container > section {
+    border: none;
+}
+
+.ingredientAddBox {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-block: 1rem;
+    border:none;
+}
+
+.ingredientAddBox > * {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.ingredientAddBox select {
+    width: 100%;
+    height: 3rem;
+    padding-inline: 0.5rem;
+    font-size: 1rem;
+}
+
+.ingredientAddBox label {
+   min-width: 4rem;
+   white-space: nowrap;
+}
+
+.selectionBox {
+    width: 100%;
+}
+
+.addButton {
+    color:white;
+    background-color: rgb(var(--main-rgb));
+}
+
+.actionBar {
+    padding: 1rem;
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+}
+
+.decideButton {
+    color: white;
+    background-color: rgb(var(--main-rgb));
+}

@@ -3,7 +3,7 @@ import { IconButton } from "shared/ui/iconButton";
 import styles from "./itemSelectionBox.module.css";
 
 interface Props {
-  itemList?: string[];
+  itemList?: readonly string[];
   activeItem?: string;
   activeIndex?: number;
   onclick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -24,12 +24,11 @@ export const ItemSelectionBox = ({
       {itemList?.map((item, index) => (
         <IconButton
           key={item}
-          title={item}
           onClick={onclick}
-          className={`${styles.item} ${
+          className={`${
             (item === activeItem || index === activeIndex) && styles.activeItem
           }`}
-        />
+        >{item}</IconButton>
       ))}
       {children}
     </div>

@@ -2,10 +2,9 @@ import { IconType } from "@react-icons/all-files";
 
 import styles from "./index.module.css";
 
-interface Props extends React.HTMLAttributes<HTMLButtonElement> {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   Icon: IconType;
   src: string;
-  title: string;
   isCounterVisible: boolean;
   counterTheme: "grey" | "red";
   counterValue: number;
@@ -14,7 +13,6 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 export const IconButton = ({
   Icon,
   src,
-  title,
   isCounterVisible = false,
   counterTheme,
   counterValue,
@@ -27,13 +25,12 @@ export const IconButton = ({
       {src && (
         <img
           src={src}
-          alt={title}
-          className={styles.IconImage}
+          alt=""
           referrerPolicy="no-referrer"
         />
       )}
-      {Icon && <Icon className={styles.icon}/>}
-      {title && <p>{title}</p>}
+      {Icon && <Icon />}
+      {children}
       {isCounterVisible && (
         <div
           className={styles.counter}
@@ -42,7 +39,6 @@ export const IconButton = ({
           {counterValue}
         </div>
       )}
-      {children}
     </button>
   );
 };

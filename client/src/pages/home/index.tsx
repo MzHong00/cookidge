@@ -1,17 +1,28 @@
-import { Recipe } from "shared/types";
+import { type Recipe } from "shared/types";
+import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 import { RecipeCard } from "widgets/recipeCard";
 
 import styles from "./index.module.css";
 
 export const Home = () => {
   return (
-    <div className={styles.cardListContainer}>
+    <FramerFadeLayout className={styles.cardListContainer}>
       <RecipeCard
         {...recipeExample1}
-        onClickChat={() => {}}
+        ingredients={undefined}
+        onClickStar={() => {}}
         className={styles.homeRecipeCard}
+        isActiveDetailLink
       />
-    </div>
+
+      <RecipeCard
+        {...recipeExample1}
+        ingredients={undefined}
+        onClickStar={() => {}}
+        className={styles.homeRecipeCard}
+        isActiveDetailLink
+      />
+    </FramerFadeLayout>
   );
 };
 
@@ -40,6 +51,6 @@ const recipeExample1: Recipe = {
     },
   ],
   like_members: ["user1", "user2"],
-  comments: [],
+  ratting: 4.3,
   created_at: new Date("2024-10-01"),
 };

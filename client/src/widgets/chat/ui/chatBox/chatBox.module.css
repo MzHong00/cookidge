@@ -1,0 +1,14 @@
+.container {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-radius: 0px;
+}
+
+.chatList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}

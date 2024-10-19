@@ -5,13 +5,11 @@ import styles from "./index.module.css";
 
 interface Props extends LinkProps {
   Icon?: IconType;
-  title?: string;
 }
 
 export const IconLink = ({
   to,
   Icon,
-  title,
   children,
   className,
   ...props
@@ -19,7 +17,6 @@ export const IconLink = ({
   return (
     <Link to={to} className={`${styles.iconLink} ${className}`} {...props}>
       {Icon && <Icon className={styles.icon} />}
-      {title && <p>{title}</p>}
       {children}
     </Link>
   );

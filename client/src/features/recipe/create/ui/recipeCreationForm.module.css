@@ -1,0 +1,72 @@
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.formContent {
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+
+.uploadImageList {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.uploaderBox {
+    max-height: min(16rem, 30vh);
+    aspect-ratio: 1;
+}
+
+.numberInputBox {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.numberInputBox>* {
+    width: 100%;
+}
+
+.addItemBox {
+    display: flex;
+    gap: 1rem;
+}
+
+.addItemBox>button {
+    padding-inline: 0;
+    align-items: start;
+    color: red;
+}
+
+.ingredientsInputBox>div {
+    width: 100%;
+}
+
+.stepInputBox {
+    width: 100%;
+    max-height: 10rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.stepInputBox > *{
+    width: 100%;
+}
+
+.stepTextArea {
+    padding: 1rem;
+}
+
+.addItemButton {
+    width: fit-content;
+    color: white;
+    background-color: rgba(var(--main-rgb),0.8);
+}
+
+.createRecipeButton {
+    width: 100%;
+    color: white;
+    background-color: rgb(var(--main-rgb));
+}

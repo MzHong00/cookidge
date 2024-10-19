@@ -1,1 +1,0 @@
-export const INGREDIENT_TABLE_FIELD = ["분류", "이름", "유통기한", "수량"]

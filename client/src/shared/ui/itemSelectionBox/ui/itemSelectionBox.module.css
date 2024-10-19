@@ -6,14 +6,15 @@
     border-radius: 5px;
     background-color: whitesmoke;
 }
-.container > * {
+
+.container>* {
     flex: 1;
     color: rgb(var(--base-rgb-grey-medium));
     background-color: whitesmoke;
     white-space: nowrap;
 }
 
-.container > *:hover {
+.container>*:hover {
     filter: none;
 }
 
@@ -21,4 +22,14 @@
     color: black;
     background-color: white;
     box-shadow: 0px 1px 2px 1px silver
+}
+
+@media screen and (max-width: 767px) {
+    .container {
+        gap: 0.25rem;
+    }
+
+    .container>button {
+        padding-inline: 0.25rem;
+    }
 }

@@ -1,0 +1,26 @@
+.container {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.profileButton {
+    width: 3rem;
+    padding: 0.5rem;
+}
+
+.nameBar > :first-child {
+    display: inline;
+}
+
+.nameBar > :nth-child(2) {
+    margin-inline: 0.5rem;
+    display: inline;
+    font-size: small;
+}
+
+.comment {
+    font-size: small;
+}

@@ -12,6 +12,7 @@
 }
 
 .userBar {
+    position: relative;
     display: flex;
     align-items: center;
 }
@@ -23,6 +24,7 @@
     border-radius: 100%;
     font-size: 1.5rem;
 }
+
 .iconButton:hover {
     background-color: whitesmoke;
 }
@@ -34,6 +36,33 @@
     border: 1px solid rgb(var(--base-rgb-grey-medium));
     border-radius: 20px;
 }
+
 .loginButton:hover {
     background-color: whitesmoke;
+}
+
+.userMenu {
+    min-width: 18rem;
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    box-shadow: 0px 0px 2px 2px whitesmoke;
+    background-color: white;
+}
+
+.userMenu>* {
+    padding: 0.5rem;
+    padding-inline: 1rem;
+    font-size: small;
+}
+
+.userProfileImage {
+    width: 3rem;
+    border-radius: 100%;
+}
+
+.userProfile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }

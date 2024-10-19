@@ -1,1 +1,2 @@
-export { RecipeCard } from "./ui/recipeCard";
+export { DetailCard } from "./ui/detailCard/detailCard";
+export { RecipeCard } from "./ui/recipeCard/recipeCard";

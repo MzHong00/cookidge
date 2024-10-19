@@ -21,10 +21,12 @@ export const SubjectBox = ({
   return (
     <section className={`${styles.container} ${className}`} {...props}>
       <header>
-        <div className={`${headerClassName} ${styles.title}`}>
-          {Icon && <Icon className={styles.icon} />}
-          {title && <h2>{title}</h2>}
-        </div>
+        {(Icon || title) && (
+          <div className={`${headerClassName} ${styles.title}`}>
+            {Icon && <Icon className={styles.icon} />}
+            {title && <h2>{title}</h2>}
+          </div>
+        )}
         {subtitle && <p className={styles.subTitle}>{subtitle}</p>}
       </header>
       {children}

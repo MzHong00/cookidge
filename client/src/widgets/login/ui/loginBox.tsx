@@ -7,12 +7,15 @@ import { InputBox } from "shared/ui/inputBox";
 
 import styles from "./loginBox.module.css";
 
-export const LoginBox = () => {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {}
+
+export const LoginBox = ({ className, ...props }: Props) => {
   return (
     <SubjectBox
       title="시작하기"
       subtitle="계정에 로그인하여 다양한 서비스를 경험하세요."
-      className={styles.loginContainer}
+      className={`${styles.loginContainer} ${className}`}
+      {...props}
     >
       <form className={styles.loginForm}>
         <InputBox
@@ -20,7 +23,7 @@ export const LoginBox = () => {
           name="email"
           placeholder="foodMate@example.com"
         />
-        <IconButton title="이메일 인증" className={styles.loginButton} />
+        <IconButton className={styles.loginButton} >이메일 인증</IconButton>
       </form>
 
       <footer>

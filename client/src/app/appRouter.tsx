@@ -2,17 +2,38 @@ import { lazy, Suspense } from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { QueryClient } from "@tanstack/react-query";
 
+import { RecipeCreationForm } from "features/recipe";
 import Root from "pages/root";
 import { Home } from "pages/home";
+import LoginPage from "pages/login";
 import { Dashboard } from "pages/dashboard";
-import { FridgePage } from "pages/fridge";
-import { RecipeMyPage } from "pages/recipe/myPage";
-import { RecipeDetailPage } from "pages/recipe/detailPage";
-import { RecipeCreationForm } from "features/recipe/create";
+import { RecipeDetailPage} from "pages/recipe";
 
 export const queryClient = new QueryClient();
 
-const LoginPage = lazy(() => import("pages/login"));
+const UserPage = lazy(() =>
+  import("pages/user").then((module) => ({
+    default: module.UserPage,
+  }))
+);
+
+const UserEditForm = lazy(() =>
+  import("features/user").then((module) => ({
+    default: module.UserEditForm,
+  }))
+);
+
+const FridgePage = lazy(() =>
+  import("pages/fridge/index").then((module) => ({
+    default: module.FridgePage,
+  }))
+);
+
+const RecipeMyPage = lazy(() =>
+  import("pages/recipe/index").then((module) => ({
+    default: module.RecipeMyPage,
+  }))
+);
 
 const appRouter = createBrowserRouter([
   {
@@ -29,28 +50,52 @@ const appRouter = createBrowserRouter([
         element: <RecipeDetailPage />,
       },
       {
+        path: "/user",
+        element: (
+          <Suspense fallback={"...사용자 페이지 로딩 중"}>
+            <UserPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/user/setting",
+        element: (
+          <Suspense fallback={"...사용자 편집 폼 로딩 중"}>
+            <UserEditForm />
+          </Suspense>
+        ),
+      },
+      {
         path: "dashboard",
         element: <Dashboard />,
         children: [
           {
             path: "",
-            element: <Navigate to={"fridge"} />,
+            element: <Navigate to={"fridge/1"} />,
           },
           {
-            path: "fridge",
-            element: <FridgePage />,
+            path: "fridge/:id",
+            element: (
+              <Suspense fallback={'...fridge 페이지 로딩중'}>
+                <FridgePage />
+              </Suspense>
+            ),
           },
           {
             path: "recipe",
-            element: <RecipeMyPage />,
+            element: (
+              <Suspense  fallback={'...myRecipe 페이지 로딩중'}>
+                <RecipeMyPage />
+              </Suspense>
+            ),
           },
           {
             path: "recipe/create",
-            element: <RecipeCreationForm />
+            element: <RecipeCreationForm />,
           },
           {
             path: "*",
-            element: <Navigate to={"fridge"} />,
+            element: <Navigate to={"fridge/1"} />,
           },
         ],
       },
@@ -58,11 +103,7 @@ const appRouter = createBrowserRouter([
   },
   {
     path: "/login",
-    element: (
-      <Suspense fallback={"...로그인 페이지 로딩 중"}>
-        <LoginPage />
-      </Suspense>
-    ),
+    element: <LoginPage />,
   },
 ]);
 
