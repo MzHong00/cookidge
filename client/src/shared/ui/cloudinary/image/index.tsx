@@ -10,17 +10,22 @@ interface Props extends React.ImgHTMLAttributes<HTMLImageElement> {
   publicId: string;
   cldImg: CloudinaryImage;
   plugins: Plugins;
+  height: number;
 }
 
-export const CloudinaryImageBox = ({
+export const CloudinaryImg = ({
   publicId,
   cldImg,
   plugins,
+  height,
   children,
   className,
   ...props
 }: Partial<Props>) => {
-  const downloadImage = cloudinaryDownload(publicId);
+  const downloadImage = cloudinaryDownload({
+    publicID: publicId,
+    height: height,
+  });
 
   const image = cldImg || downloadImage;
 
@@ -28,6 +33,8 @@ export const CloudinaryImageBox = ({
 
   return (
     <AdvancedImage
+      loading="lazy"
+      height={height}
       cldImg={image}
       plugins={plugins}
       className={`${styles.image} ${className}`}

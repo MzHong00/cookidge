@@ -4,7 +4,7 @@ import { type CookingStep } from "shared/types";
 import { IconButton } from "shared/ui/iconButton";
 import { SubjectBox } from "shared/ui/subjectBox";
 
-import styles from "./recipeStep.module.css";
+import styles from "./recipeStep.module.scss";
 
 interface Props {
   recipeSteps: CookingStep[];
@@ -77,7 +77,7 @@ export const RecipeStep = ({ recipeSteps }: Props) => {
           onClick={changeStepByButtonHandler}
         >이전</IconButton>
         <IconButton
-          className={styles.stepNextButton}
+          className="main-button"
           onClick={changeStepByButtonHandler}
         >다음</IconButton>
       </div>

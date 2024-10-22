@@ -1,14 +1,4 @@
-.cardContainer {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-}
-
-.recipeSection {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
+@use 'app/app.scss';
 
 .pictureBox {
     max-height: 20rem;
@@ -21,18 +11,12 @@
     width: 100%;
     height: 100%;
     padding-block: 1rem;
-    display: flex;
+    @include app.flex-layout(column, center, space-between);
     flex: 1;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2rem;
 }
 
 .recipeInfoBar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    @include app.flex-layout(column, center);
     gap: 0.5rem;
 }
 
@@ -46,8 +30,7 @@
 }
 
 .subInfo {
-    display: flex;
-    gap: 1rem;
+    @include app.flex-layout(row);
     color: rgb(var(--base-rgb-grey-medium));
 }
 
@@ -57,11 +40,6 @@
 
 .subInfo svg {
     font-size: 1rem;
-}
-
-.recipeActionBar {
-    display: flex;
-    gap: 0.5rem;
 }
 
 .recipeActionBar>button {
@@ -78,9 +56,8 @@
 }
 
 .ingredientBox>ol {
-    display: flex;
+    @include app.flex-layout(row);
     flex-wrap: wrap;
-    gap: 1rem;
 }
 
 .ingredientBox li {

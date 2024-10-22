@@ -1,3 +1,5 @@
+import { IconType } from "@react-icons/all-files";
+
 export interface User {
   _id: string;
   name: string;
@@ -50,4 +52,9 @@ export interface Refrigerator {
   owner_id: User["_id"];
   stored_ingredients: Ingredient[];
   last_updated: Date;
+}
+
+export interface IconCategoriesByClodinary {
+  iconId: string;
+  text: string; 
 }

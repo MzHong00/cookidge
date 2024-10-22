@@ -1,3 +1,5 @@
+@import 'app/app.scss';
+
 .container {
     border: 1px solid black;
     border-radius: 5px;
@@ -5,11 +7,8 @@
 }
 
 .fileInput {
-    width: 100%;
     height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include flex-layout(row, center, center);
     cursor: pointer;
 }
 
@@ -22,31 +21,22 @@
 .imageBox {
     width: 100%;
     height: 100%;
-    display: flex;
-    justify-content: center;
+    @include flex-layout(row, center, center);
     background-color: black;
     overflow: hidden;
 }
 
 .imageBox > img {
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
 }
 
 .uploadIconBox {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
+    @include flex-layout(column, center);
     color: rgb(var(--base-rgb-grey-medium));
 }
 
 .introduction {
-    text-align: center;
-    text-overflow: ellipsis;
-    width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
+    @include text-ellipsis;
 }

@@ -14,6 +14,8 @@ export const Logo = ({ style, className }: Props) => {
       Icon={ImSpoonKnife}
       style={{ fontWeight: "bold", fontSize: "1.5rem", ...style }}
       className={className}
-    >FoodMate</IconLink>
+    >
+      Cookidge
+    </IconLink>
   );
 };

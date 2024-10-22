@@ -18,12 +18,12 @@ export const FridgePage = () => {
   const { ref, openDialog, closeDialog } = useDialog();
 
   return (
-    <FramerFadeLayout className={styles.pageContainer}>
+    <FramerFadeLayout className="flex-column">
       <select className={styles.fridgeSelection}>
         <option value="거실냉장고">거실냉장고</option>
         <option value="김치냉장고">김치냉장고</option>
       </select>
-      <div className={styles.fridgeOverviewSection}>
+      <div className="flex-row">
         <SubjectBox
           title="재료"
           Icon={RiSeedlingLine}
@@ -42,11 +42,14 @@ export const FridgePage = () => {
         </SubjectBox>
       </div>
 
-      <SubjectBox title="재료 현황" className={styles.ingredientContainer}>
+      <SubjectBox
+        title="재료 현황"
+        className={`${styles.ingredientContainer} flex-column-center`}
+      >
         <div className={styles.ingredientControls}>
           <IconButton
             Icon={CgAddR}
-            className={styles.addButton}
+            className="main-button"
             onClick={() => openDialog()}
           >
             재료 추가

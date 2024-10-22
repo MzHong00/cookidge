@@ -1,11 +1,3 @@
-.detailPage {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-}
-
 @media screen and (max-width: 767px) {
     .detailPage {
         padding-inline: 0.5rem !important;

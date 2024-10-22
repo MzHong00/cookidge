@@ -3,9 +3,11 @@ import { CgRemoveR } from "@react-icons/all-files/cg/CgRemoveR";
 
 import { type Ingredient } from "shared/types";
 import { IconButton } from "shared/ui/iconButton";
-import { INGREDIENTS_CATEGORIES } from "shared/consts";
+import { IconCategoriesBox } from "shared/ui/iconCategoriesBox";
+import { INGREDIENTS_CATEGORIES } from "../";
 
 import styles from "./ingredientTable.module.css";
+import { useModal } from "shared/hooks/useModal";
 
 interface Props extends React.TableHTMLAttributes<HTMLTableElement> {
   ingredients: Ingredient[];
@@ -20,11 +22,14 @@ export const IngredientTable = ({
   ingredients,
   onClickEditItem,
   onClickRemoveItem,
+  className,
   disabled,
   ...props
 }: Props) => {
+  const { isOpen, toggleModal } = useModal();
+
   return (
-    <table {...props}>
+    <table className={`w-full ${className}`} {...props}>
       <thead>
         <tr className={styles.ingredientTableHeader}>
           {INGREDIENT_TABLE_FIELD.map((filed) => (
@@ -35,21 +40,29 @@ export const IngredientTable = ({
       <tbody>
         {ingredients?.map((ingredient) => (
           <tr key={ingredient._id} className={styles.ingredientTableItem}>
-            <td>
-              <select disabled={disabled}>
-                {INGREDIENTS_CATEGORIES.map((item) => (
-                  <option key={item} defaultValue={ingredient.category}>
-                    {item}
-                  </option>
-                ))}
-              </select>
+            <td style={{ position: "relative" }}>
+              <input
+                type="button"
+                defaultValue={"고기"}
+                style={{ width: "fit-content" }}
+                onClick={(e) => {
+                  toggleModal(e);
+                }}
+              />
+              {isOpen && (
+                <IconCategoriesBox
+                  title="재료 카테고리"
+                  itemList={INGREDIENTS_CATEGORIES}
+                  className={styles.categoriesBox}
+                />
+              )}
             </td>
             <td>
               <input
                 defaultValue={ingredient.name}
                 placeholder="재료 이름"
-                disabled={disabled}
                 title={ingredient.name}
+                disabled={disabled}
               />
             </td>
             <td>

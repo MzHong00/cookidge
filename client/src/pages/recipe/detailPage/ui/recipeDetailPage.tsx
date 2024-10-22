@@ -12,7 +12,7 @@ export const RecipeDetailPage = () => {
   const { id } = useParams();
 
   return (
-    <FramerFadeLayout className={styles.detailPage}>
+    <FramerFadeLayout className="flex-column">
       <DetailCard
         {...recipeExample1}
         className={styles.recipeDetailCard}
@@ -22,22 +22,22 @@ export const RecipeDetailPage = () => {
         recipeSteps={[
           {
             picture:
-              "https://res.cloudinary.com/db0ls9b6a/image/upload/f_auto/q_50/c_auto,g_auto,h_300/food-1651279_1280_arlr1i?_a=DAJAUVWIZAA0",
+              "https://res.cloudinary.com/db0ls9b6a/image/upload/f_auto/q_auto/c_auto,g_center,h_200/shish-kebab-417994_640_db1899?_a=DAJAUVWIZAA0",
             instruction: "이건 1번째",
           },
           {
             picture:
-              "https://res.cloudinary.com/db0ls9b6a/image/upload/f_auto/q_50/c_auto,g_auto,h_300/food-1651279_1280_arlr1i?_a=DAJAUVWIZAA0",
+              "https://res.cloudinary.com/db0ls9b6a/image/upload/f_auto/q_auto/c_auto,g_center,h_200/shish-kebab-417994_640_db1899?_a=DAJAUVWIZAA0",
             instruction: "이건 2번째",
           },
           {
             picture:
-              "https://res.cloudinary.com/db0ls9b6a/image/upload/f_auto/q_50/c_auto,g_auto,h_300/food-1651279_1280_arlr1i?_a=DAJAUVWIZAA0",
+              "https://res.cloudinary.com/db0ls9b6a/image/upload/f_auto/q_auto/c_auto,g_center,h_200/shish-kebab-417994_640_db1899?_a=DAJAUVWIZAA0",
             instruction: "이건 3번째",
           },
           {
             picture:
-              "https://res.cloudinary.com/db0ls9b6a/image/upload/f_auto/q_50/c_auto,g_auto,h_300/food-1651279_1280_arlr1i?_a=DAJAUVWIZAA0",
+              "https://res.cloudinary.com/db0ls9b6a/image/upload/f_auto/q_auto/c_auto,g_center,h_200/shish-kebab-417994_640_db1899?_a=DAJAUVWIZAA0",
             instruction: "이건 4번째",
           },
         ]}

@@ -71,5 +71,19 @@
 
 10.19
 - Framer-motion을 사용하여 페이지 이동시, Fade효과
-- 프론트엔드 UI 껍데기 배포
-- 백엔드 개발 준비
+- (widgets) footer 제작 및 저작권 표시 Icons8
+- 여러 반응형 UI 수정
+- recipe 카테고리 추가 필요성 반영
+- 음식, 재료 아이콘 Icons8에서 수집
+
+10.20
+- scss 도입
+- app.scss 전역 css 및 scss mixin 정의
+- scss가 필요한 컴포넌트들 scss로 변경
+- 페이지 이동시 스크롤 맨 위 이동 구현
+
+10.22
+- icons8의 재료, 음식 카테고리 아이콘 이미지 수집
+- 카테고리 아이콘 UI 구현
+- sass legacy code 제거
+- 프론트엔드 UI 껍데기 첫 번쨰 배포

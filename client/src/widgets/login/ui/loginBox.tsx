@@ -5,7 +5,7 @@ import { IconButton } from "shared/ui/iconButton";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { InputBox } from "shared/ui/inputBox";
 
-import styles from "./loginBox.module.css";
+import styles from "./loginBox.module.scss";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -17,7 +17,7 @@ export const LoginBox = ({ className, ...props }: Props) => {
       className={`${styles.loginContainer} ${className}`}
       {...props}
     >
-      <form className={styles.loginForm}>
+      <form className="flex-column">
         <InputBox
           label="이메일"
           name="email"

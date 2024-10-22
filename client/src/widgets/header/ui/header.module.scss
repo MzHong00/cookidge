@@ -1,10 +1,11 @@
+@use 'app/app.scss';
+
 .header {
     width: 100%;
     height: 4rem;
     padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    @include app.flex-layout(row, center, space-between);
+    gap: 0;
     position: sticky;
     top: 0;
     background-color: white;
@@ -13,8 +14,7 @@
 
 .userBar {
     position: relative;
-    display: flex;
-    align-items: center;
+    @include app.flex-layout(row, center);
 }
 
 .iconButton {
@@ -22,7 +22,6 @@
     height: 2.5rem;
     padding: 0.25rem;
     border-radius: 100%;
-    font-size: 1.5rem;
 }
 
 .iconButton:hover {
@@ -62,7 +61,5 @@
 }
 
 .userProfile {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+    @include app.flex-layout(row, center);
 }

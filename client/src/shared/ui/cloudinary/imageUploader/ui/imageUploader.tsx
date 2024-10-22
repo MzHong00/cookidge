@@ -3,7 +3,7 @@ import { GrDocumentUpload } from "@react-icons/all-files/gr/GrDocumentUpload";
 
 import { useCloudinaryImage } from "../model/imageUploader";
 
-import styles from "./imageUploader.module.css";
+import styles from "./imageUploader.module.scss";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   introduction?: string;

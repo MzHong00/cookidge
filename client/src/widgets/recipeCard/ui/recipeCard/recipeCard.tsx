@@ -5,11 +5,11 @@ import { RiArrowRightSLine } from "@react-icons/all-files/ri/RiArrowRightSLine";
 import { type Recipe } from "shared/types";
 import { IconLink } from "shared/ui/iconLink";
 import { IconBox } from "shared/ui/iconBox";
-import { CloudinaryImageBox } from "shared/ui/cloudinary";
+import { CloudinaryImg } from "shared/ui/cloudinary";
 import { dateGap } from "shared/helper/dateGap";
 import { LikeButton, RattingButton } from "features/recipe";
 
-import styles from "./recipeCard.module.css";
+import styles from "./recipeCard.module.scss";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement>, Recipe {
   onClickLike: React.MouseEventHandler;
@@ -39,13 +39,13 @@ export const RecipeCard = ({
 }: Partial<Props>) => {
   return (
     <article className={`${styles.cardContainer} ${className}`} {...props}>
-      <CloudinaryImageBox
-        publicId="food-1651279_1280_arlr1i"
+      <CloudinaryImg
+        publicId="shish-kebab-417994_640_db1899"
         className={styles.pictureBox}
       />
 
       <div className={styles.infoBox}>
-        <div className={styles.recipeInfoBar}>
+        <div className="flex-column">
           <div className={styles.infoHeader}>
             {name && <b>{name}</b>}
             {created_at && <p>{`${dateGap(created_at)}전`}</p>}
@@ -59,7 +59,9 @@ export const RecipeCard = ({
             </div>
           )}
 
-          {introduction && <p>{introduction}</p>}
+          {introduction && (
+              <p className={styles.introduction}>{introduction}</p>
+          )}
         </div>
         {ingredients && (
           <div className={styles.ingredientBox}>

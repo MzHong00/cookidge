@@ -49,3 +49,12 @@
 .ingredientActionButton> :first-child {
   font-size: 1rem !important;
 }
+
+.categoriesBox {
+  width: 16rem;
+  position: absolute;
+  justify-content: center;
+  background: white;
+  left: 0;
+  z-index: 10;
+}

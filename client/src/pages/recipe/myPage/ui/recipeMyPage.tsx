@@ -13,16 +13,16 @@ import styles from "./recipeMyPage.module.css";
 
 export const RecipeMyPage = () => {
   return (
-    <FramerFadeLayout className={styles.pageContainer}>
+    <FramerFadeLayout className="flex-column">
       <IconLink
         to={"create"}
         Icon={RiAddLine}
-        className={styles.createRecipeButton}
+        className="main-button"
       >
         레시피 만들기
       </IconLink>
 
-      <div className={styles.recipeOverviewSection}>
+      <div className="flex-row">
         <SubjectBox
           Icon={RiBook2Line}
           title="내가 만든 레시피"
@@ -39,11 +39,11 @@ export const RecipeMyPage = () => {
         title="레시피 추천"
         subtitle="현재 냉장고 재료를 기반으로 한 추천 레시피"
       >
-        <section className={styles.recipeRecommendSection}>
+        <section className="flex-row">
           <IconButton Icon={IoReload} className={styles.recommendReloadButton}>
             레시피 추천
           </IconButton>
-          <IconButton Icon={FaMagic} className={styles.recommendToAiButton}>
+          <IconButton Icon={FaMagic} className="main-button">
             AI 추천
           </IconButton>
         </section>

@@ -8,12 +8,20 @@
     gap: 3rem;
 }
 
-.homeRecipeCard {
-    max-height: 80%;
+.categoriesBox {
+    position: sticky;
+    top: 4rem;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    border-radius: 0;
+    background-color: white;
+    overflow-x: hidden;
 }
 
-.homeRecipeCard > img {
-    max-height: 20rem;
+.cardListContainer > * {
+    width: 40%;
+    min-width: 20rem;
+    max-width: 30rem;
 }
 
 .chatBox {

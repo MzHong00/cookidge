@@ -4,13 +4,6 @@
     margin: auto;
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 1rem;
-}
-
 .profilesPicture {
     min-width: 10rem;
     max-width: 14rem;
@@ -43,15 +36,8 @@
     outline: none;
 }
 
-.submitButton {
-    width: 100%;
-    color: white;
-    background-color: rgb(var(--main-rgb));
-    font-weight: bold;
-}
-
 @media screen and (max-width:767px) {
-    .container {
+    .form {
         width: 100% !important;
         padding-inline: 1rem;
     }

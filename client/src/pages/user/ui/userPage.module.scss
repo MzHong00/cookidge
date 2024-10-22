@@ -1,29 +1,17 @@
-.userPage {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+@use 'app/app.scss';
 
 .userInfoContainer {
-    max-width: 800px;
     width: 100%;
+    max-width: 800px;
     margin-bottom: 3rem;
-    display: flex;
-    flex-direction: column;
+    @include app.flex-layout(column);
     gap: 2rem;
 }
 
-.userInfoBox {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .profilesPicture {
+    width: 25%;
     min-width: 8rem;
     max-width: 12rem;
-    width: 25%;
     margin: auto;
     cursor: auto;
 }
@@ -34,27 +22,11 @@
     font-size: 1.25em;
 }
 
-.communityBox {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.userActionBar {
-    display: flex;
-    gap: 0.5rem;
-}
-
 .userActionButton {
     padding-block: 0.25rem;
     padding-inline: 0.5rem;
     border-radius: 30px;
     border: 1px solid silver;
-}
-
-.userActionButton>svg {
-    font-size: 1em;
 }
 
 .profileEditButton {
@@ -71,10 +43,6 @@
 
 .userRecipeContainer {
     max-width: 800px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
 }
 
 .userRecipeList {
@@ -85,21 +53,24 @@
 
 .userRecipeCard>:last-child {
     padding: 0.5rem;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    @include app.flex-layout(row, center, space-between);
 }
 
 .userRecipeCard b {
-    font-size: 1rem !important;
+    font-size: 1em !important;
+    white-space: nowrap;
 }
 
 @media screen and (max-width: 767px) {
-    .userRecipeCard {
-        font-size: 2vw;
-    }
-
     .userActionBar {
         flex-direction: column;
+    }
+
+    .userRecipeList {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .userRecipeCard>:last-child {
+        gap: 0;
     }
 }

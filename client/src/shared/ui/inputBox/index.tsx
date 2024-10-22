@@ -7,25 +7,14 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
 }
 
-export const InputBox = ({
-  Icon,
-  label,
-  name,
-  className,
-  ...props
-}: Props) => {
+export const InputBox = ({ Icon, label, name, className, ...props }: Props) => {
   return (
-    <div>
+    <div className={`${className} w-full`}>
       <label htmlFor={name} className={styles.label}>
         {Icon && <Icon />}
         {label}
       </label>
-      <input
-        id={name}
-        name={name}
-        className={`${styles.input} ${className}`}
-        {...props}
-      />
+      <input id={name} name={name} className={`${styles.input}`} {...props} />
     </div>
   );
 };

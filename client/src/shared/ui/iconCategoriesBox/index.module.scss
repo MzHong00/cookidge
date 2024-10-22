@@ -1,0 +1,22 @@
+@use 'app/app.scss';
+
+.itemList {
+    padding: 0.75rem;
+    @include app.flex-layout(row, center);
+    flex-wrap: wrap;
+    border: 1px solid rgb(var(--base-rgb-grey-light));
+    border-radius: 5px;
+}
+
+.item {
+    width: fit-content;
+    @include app.flex-layout(column, center, center, 0);
+    border: none;
+    aspect-ratio: 1;
+    font-weight: bold;
+    font-size: 0.75rem;
+}
+
+.item:hover {
+    transform: scale(1.05);
+}

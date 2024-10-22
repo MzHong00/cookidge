@@ -9,17 +9,17 @@ import { IconBox } from "shared/ui/iconBox";
 import { RecipeCard } from "widgets/recipeCard";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 
-import styles from "./userPage.module.css";
+import styles from "./userPage.module.scss";
 
 export const UserPage = () => {
   return (
-    <FramerFadeLayout className={styles.userPage}>
+    <FramerFadeLayout className="w-full flex-column-center">
       <div className={styles.userInfoContainer}>
         <IconButton
           src="https://lh3.googleusercontent.com/a/AEdFTp4pPqM6NpOpPqG-cAg1vMo6k6PwFlei8v1deyEJ=s96-c"
           className={styles.profilesPicture}
         />
-        <div className={styles.userInfoBox}>
+        <div className="flex-column-center">
           <div className={styles.nameBox}>
             <b>홍길동</b>
             <span> #홍길동123</span>
@@ -30,7 +30,7 @@ export const UserPage = () => {
           </p>
         </div>
 
-        <div className={styles.communityBox}>
+        <div className="flex-column-center">
           <div>
             <IconBox className={styles.followBox}>
               <b>팔로우</b>
@@ -41,7 +41,7 @@ export const UserPage = () => {
               <span>1.1k</span>
             </IconBox>
           </div>
-          <div className={styles.userActionBar}>
+          <div className="flex-row">
             <IconLink
               to={"setting"}
               Icon={RiUserSettingsLine}
@@ -65,12 +65,19 @@ export const UserPage = () => {
         </div>
       </div>
 
-      <div className={styles.userRecipeContainer}>
+      <div className={`flex-column-center ${styles.userRecipeContainer}`}>
         <header>
           <h2>레시피</h2>
         </header>
         <hr />
         <div className={styles.userRecipeList}>
+          <Link to={"/recipe/1"}>
+            <RecipeCard
+              name="김치볶음밥"
+              className={styles.userRecipeCard}
+              like_members={["", ""]}
+            />
+          </Link>
           <Link to={"/recipe/1"}>
             <RecipeCard
               name="김치볶음밥"

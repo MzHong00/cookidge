@@ -1,7 +1,7 @@
 import { Outlet, useLocation } from "react-router-dom";
 
 import { IconLink } from "shared/ui/iconLink";
-import { ItemSelectionBox } from "shared/ui/itemSelectionBox";
+import { ItemSelectionBox } from "shared/ui/itemSelection";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 
 import styles from "./index.module.css";

@@ -1,8 +1,7 @@
 import axios from "axios";
 import { auto } from "@cloudinary/url-gen/actions/resize";
-import { Cloudinary, CloudinaryImage } from "@cloudinary/url-gen";
-import { autoGravity } from "@cloudinary/url-gen/qualifiers/gravity";
-import { useQuery } from "@tanstack/react-query";
+import { Cloudinary } from "@cloudinary/url-gen";
+import { center } from "@cloudinary/url-gen/qualifiers/textAlignment";
 
 export const cloudinaryUpload = async (file: File) => {
   if (!file) return;
@@ -24,17 +23,26 @@ export const cloudinaryUpload = async (file: File) => {
   }
 };
 
-export const cloudinaryDownload = (publicID?: string) => {
+
+interface ClodinaryProps {
+  publicID: string;
+  height: number;
+}
+
+export const cloudinaryDownload = ({
+  publicID,
+  height = 200,
+}: Partial<ClodinaryProps>) => {
   if (!publicID) return;
 
   try {
     const cld = new Cloudinary({ cloud: { cloudName: "db0ls9b6a" } });
-    
+
     const img = cld
       .image(publicID)
       .format("auto")
-      .quality("50")
-      .resize(auto().gravity(autoGravity()).height(300));
+      .quality("auto")
+      .resize(auto().gravity(center()).height(height));
 
     return img;
   } catch (error) {
@@ -42,11 +50,11 @@ export const cloudinaryDownload = (publicID?: string) => {
   }
 };
 
-export const useCloudinaryDownload = (publicID?: string) => {
-  return useQuery<CloudinaryImage | undefined>({
-    queryKey: ["cloudinaryImage", publicID],
-    queryFn: () => cloudinaryDownload(publicID),
-    staleTime: 10800,
-    enabled: !!publicID,
-  });
-};
+// export const useCloudinaryDownload = (publicID?: string) => {
+//   return useQuery<CloudinaryImage | undefined>({
+//     queryKey: ["cloudinaryImage", publicID],
+//     queryFn: () => cloudinaryDownload(publicID),
+//     staleTime: 10800,
+//     enabled: !!publicID,
+//   });
+// };

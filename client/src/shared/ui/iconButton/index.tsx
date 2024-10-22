@@ -1,6 +1,6 @@
 import { IconType } from "@react-icons/all-files";
 
-import styles from "./index.module.css";
+import styles from "./index.module.scss";
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   Icon: IconType;

@@ -1,22 +1,10 @@
 .navBar {
     width: fit-content;
-    height: 3rem;
+    height: fit-content;
     max-height: 100%;
     display: flex;
     background-color: white;
     white-space: nowrap;
-}
-
-.navBar>a {
-    justify-content: start;
-}
-
-.navBar>a:hover {
-    background-color: whitesmoke;
-}
-
-.navBar>a>svg {
-    font-size: 1.5rem;
 }
 
 @media screen and (max-width: 767px) {
@@ -29,13 +17,15 @@
         z-index: 10;
     }
 
-    .navBar>a {
-        flex: 1;
-        justify-content: center !important;
+    .navItem {
+        flex: 1 1;
+        flex-direction: column;
+        gap: 0;
         border-radius: 0;
+        font-size: 1.25em;
     }
 
-    .navBar>a>p {
-        display: none;
+    .navItem > :last-child {
+        font-size: 0.65em;
     }
 }

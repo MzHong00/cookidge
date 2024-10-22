@@ -36,6 +36,7 @@ export const Navbar = () => {
           key={item.to}
           to={`${item.to}`}
           Icon={item.Icon}
+          className={styles.navItem}
           style={{
             backgroundColor:
               `/${location.pathname.split("/")[1]}` === item.to
@@ -43,7 +44,7 @@ export const Navbar = () => {
                 : "transparent",
           }}
         >
-          {item.title}
+          <p>{item.title}</p>
         </IconLink>
       ))}
     </nav>

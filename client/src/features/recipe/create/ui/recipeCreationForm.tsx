@@ -8,7 +8,7 @@ import { CgRemoveR } from "@react-icons/all-files/cg/CgRemoveR";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { InputBox } from "shared/ui/inputBox";
 import { IconButton } from "shared/ui/iconButton";
-import { ItemSelectionBox } from "shared/ui/itemSelectionBox";
+import { ItemSelectionBox } from "shared/ui/itemSelection";
 import { CloduinaryImageUploader } from "shared/ui/cloudinary";
 
 import styles from "./recipeCreationForm.module.css";
@@ -28,7 +28,7 @@ export const RecipeCreationForm = () => {
   };
 
   return (
-    <form className={styles.formContainer}>
+    <form className="flex-column">
       <FramerFadeLayout>
         <SubjectBox title="레시피 생성" className={styles.formContent}>
           <div className={styles.uploadImageList}>
@@ -48,18 +48,20 @@ export const RecipeCreationForm = () => {
             label="요리 소개"
             placeholder="요리의 간단한 소개를 작성해주세요."
           />
-          <div className={styles.numberInputBox}>
+          <div className="flex-row-between">
             <InputBox
               Icon={RiTimer2Line}
               id="cooking_time"
               label="조리 시간(분)"
               type="number"
+              className="w-full"
             />
             <InputBox
               Icon={RiGroupLine}
               id="servings"
               label="인분"
               type="number"
+              className="w-full"
             />
           </div>
 
@@ -69,10 +71,7 @@ export const RecipeCreationForm = () => {
             onclick={changeSectionHandler}
           />
           {activeSection === "재료" ? (
-            <FramerFadeLayout
-              key="재료"
-              className={`${styles.addItemBox} ${styles.ingredientsInputBox}`}
-            >
+            <FramerFadeLayout key="재료" className="flex-row">
               <InputBox
                 id="ingredient-1"
                 placeholder="재료 이름을 입력하세요."
@@ -81,7 +80,7 @@ export const RecipeCreationForm = () => {
               <IconButton Icon={CgRemoveR} />
             </FramerFadeLayout>
           ) : (
-            <FramerFadeLayout key="과정" className={`${styles.addItemBox}`}>
+            <FramerFadeLayout key="과정" className="flex-row">
               <h2>1</h2>
               <div className={styles.stepInputBox}>
                 <CloduinaryImageUploader
@@ -95,15 +94,15 @@ export const RecipeCreationForm = () => {
                   className={styles.stepTextArea}
                 />
               </div>
-              <IconButton Icon={CgRemoveR} />
+              <IconButton Icon={CgRemoveR}/>
             </FramerFadeLayout>
           )}
-          <IconButton Icon={CgAddR} className={styles.addItemButton}>
+          <IconButton Icon={CgAddR} className="w-fit main-button">
             추가
           </IconButton>
         </SubjectBox>
         <SubjectBox>
-          <IconButton className={styles.createRecipeButton}>
+          <IconButton className="w-full main-button">
             레시피 생성하기
           </IconButton>
         </SubjectBox>

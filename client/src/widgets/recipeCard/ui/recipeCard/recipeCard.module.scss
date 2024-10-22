@@ -1,16 +1,10 @@
+@use 'app/app.scss';
+
 .cardContainer {
-    position: relative;
-    display: flex;
-    flex-direction: column;
+    @include app.flex-layout(column);
+    gap: 0;
     border-radius: 5px;
     box-shadow: var(--base-box-shadow);
-    overflow: hidden;
-}
-
-.recipeSection {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
 }
 
 .pictureBox {
@@ -20,46 +14,45 @@
 .infoBox {
     height: 100%;
     padding: 1rem;
-    display: flex;
+    @include app.flex-layout(column, start, space-between);
     flex: 1;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: start;
-    gap: 2rem;
 }
 
-.recipeInfoBar {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+.infoHeader {
+    @include app.text-ellipsis;
 }
 
-.infoHeader > * {
+.infoHeader>* {
     display: inline;
 }
+
 .infoHeader>:first-child {
     font-size: 1.5em;
     margin-right: 0.5rem;
 }
 
 .subInfo {
-    display: flex;
-    gap: 1rem;
+    @include app.flex-layout(row);
+    flex-wrap: wrap;
     color: rgb(var(--base-rgb-grey-medium));
 }
 
-.subInfo>*{
+.subInfo>* {
     padding: 0rem;
 
 }
+
 .subInfo svg {
     font-size: 1em;
 }
 
+.introduction {
+    height: 5rem;
+    overflow-y: auto;
+}
+
 .recipeActionBar {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
+    @include app.flex-layout(row, stretch, center);
 }
 
 .recipeActionBar>button {

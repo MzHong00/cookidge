@@ -5,10 +5,10 @@ import { RiCalendarLine } from "@react-icons/all-files/ri/RiCalendarLine";
 import { type Recipe } from "shared/types";
 import { IconBox } from "shared/ui/iconBox";
 import { SubjectBox } from "shared/ui/subjectBox";
-import { CloudinaryImageBox } from "shared/ui/cloudinary";
+import { CloudinaryImg } from "shared/ui/cloudinary";
 import { LikeButton, RattingButton } from "features/recipe";
 
-import styles from "./detailCard.module.css";
+import styles from "./detailCard.module.scss";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement>, Recipe {
   onClickLike: React.MouseEventHandler;
@@ -35,16 +35,16 @@ export const DetailCard = ({
   ...props
 }: Partial<Props>) => {
   return (
-    <article className={`${styles.cardContainer} ${className}`} {...props}>
-      <CloudinaryImageBox
-        publicId="food-1651279_1280_arlr1i"
+    <article className={`flex-column ${className}`} {...props}>
+      <CloudinaryImg
+        publicId="shish-kebab-417994_640_db1899"
         className={styles.pictureBox}
       />
       <div className={styles.infoBox}>
         <div className={styles.recipeInfoBar}>
           <div className={styles.infoHeader}>{name && <b>{name}</b>}</div>
           {(like_members || onClickStar) && (
-            <div className={styles.recipeActionBar}>
+            <div className="flex-row">
               {like_members && (
                 <LikeButton
                   likeCount={like_members.length}

@@ -1,2 +1,2 @@
-export { CloudinaryImageBox } from "./image";
+export { CloudinaryImg } from "./image";
 export { CloduinaryImageUploader } from "./imageUploader/ui/imageUploader";

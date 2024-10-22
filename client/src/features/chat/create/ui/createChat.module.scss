@@ -1,7 +1,9 @@
+@use 'app/app.scss';
+
 .container {
     height: 2rem;
-    display: flex;
-    gap: 0.5rem;
+    margin-block: 1rem;
+    @include app.flex-layout(row);
 }
 
 .textArea {
@@ -11,10 +13,4 @@
     border: none;
     border-bottom: 1px solid black;
     outline: none;
-}
-
-.submitButton {
-    padding-inline: 0.5rem;
-    color: white;
-    background-color: rgb(var(--main-rgb));
 }

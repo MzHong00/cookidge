@@ -1,0 +1,6 @@
+.footer {
+    width: 100%;
+    min-height: 10rem;
+    background-color: rgba(var(--main-rgb), 0.1);
+    font-size: 0.75rem;
+}

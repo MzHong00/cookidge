@@ -7,7 +7,7 @@ import { Logo } from "shared/ui/logo";
 import { Navbar } from "shared/ui/navbar";
 import { useModal } from "shared/hooks/useModal";
 
-import styles from "./header.module.css";
+import styles from "./header.module.scss";
 
 export const Header = () => {
   const { modalRef, isOpen, toggleModal } = useModal();

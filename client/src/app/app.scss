@@ -1,0 +1,144 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --main-rgb: 167, 202, 255;
+  --base-rgb-grey-light: 227, 227, 227;
+  --base-rgb-grey-medium: 121, 121, 121;
+  --icon-size-medium: 1.25em;
+  --base-box-shadow: 0px 1px 2px 1px silver;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.w-fit {
+  width: fit-content;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.h-fit {
+  height: fit-content;
+}
+
+@mixin flex-layout($direction, $align: stretch, $justify: flex-start, $gap: 1rem) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: $align;
+  justify-content: $justify;
+  gap: $gap;
+}
+
+.flex-column {
+  @include flex-layout(column);
+}
+
+.flex-column-center {
+  @include flex-layout(column, center, center);
+}
+
+.flex-column-between {
+  @include flex-layout(column, center, space-between);
+}
+
+.flex-row {
+  @include flex-layout(row);
+}
+
+.flex-row-center {
+  @include flex-layout(row, center, center);
+}
+
+.flex-row-between {
+  @include flex-layout(row, center, space-between);
+}
+
+@mixin text-ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.text-ellipsis {
+  @include text-ellipsis()
+}
+
+@mixin main-button {
+  color: white;
+  background-color: rgb(var(--main-rgb));
+}
+
+.main-button {
+  @include main-button();
+}
+
+a {
+  color: inherit;
+  text-decoration: initial;
+}
+
+button,
+input[type="button"],
+input[type="submit"],
+input[type="date"] {
+  background-color: transparent;
+  background-image: none;
+  font-weight: inherit;
+  line-height: inherit;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+dialog {
+  margin: auto;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px silver;
+  overflow: hidden;
+}
+
+hr {
+  width: 100%;
+  border-width: 1px;
+  border-top: 1px;
+}
+
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+select {
+  cursor: pointer;
+}
+
+/* width */
+*::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+/* Track */
+*::-webkit-scrollbar-track {
+  border-radius: 5px;
+}
+
+/* Handle */
+*::-webkit-scrollbar-thumb {
+  background: silver;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+*::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--base-rgb-grey-medium));
+}
