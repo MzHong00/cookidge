@@ -1,5 +1,3 @@
-import { IconType } from "@react-icons/all-files";
-
 export interface User {
   _id: string;
   name: string;
@@ -9,6 +7,7 @@ export interface User {
   like_recipes: Recipe["_id"][];
   follower: User["_id"][];
   following: User["_id"][];
+  plan: "normal" | "premium";
 }
 
 export interface Recipe {
