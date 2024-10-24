@@ -1,18 +1,18 @@
-import express from 'express';
-import config from 'config'
+import express from "express";
+import config from "./config";
 
-import loaders from 'loaders';
+import loaders from "./loaders";
 
 async function server() {
-    const app = express();
+  const app = express();
 
-    await loaders({
-        expressApp: app
-    });
-
-    app.listen(config.port, () => {
-        console.log(`http://localhost:${config.port}`);
-    });
+  await loaders({
+    expressApp: app,
+  });
+  
+  app.listen(config.port, () => {
+    console.log(`http://localhost:${config.port}`);
+  });
 }
 
 server();
