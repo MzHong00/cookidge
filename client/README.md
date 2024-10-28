@@ -87,3 +87,25 @@
 - 카테고리 아이콘 UI 구현
 - sass legacy code 제거
 - 프론트엔드 UI 껍데기 첫 번쨰 배포
+
+10.26
+- 로고 변경
+- 로그인 폼 UI 변경
+
+10.27
+- google Oauth 회원가입 연동 완료
+- (pages) google oauth redirect 페이지 제작
+- jwt 토큰 흐름 결정 
+    => 로그인 시, refresh token발급, access token은 페이지 새로고침시 1번, 그 외 서버 요청에서 재발급
+- react router loader 를 사용한 root 로더 제작 및 다른 로더들 구현 결정
+    => Root 페이지에서 유저와 엑세스 토큰을 prefetch
+- (pages) 유저 페이지 /:id를 사용해 다른 사용자 검색 가능하도록 설계
+- zustand slice를 사용하여 유저 정보 전역으로 관리 구현
+
+10.28 
+- 로그인 성공했을 때, 홈으로 리다이렉트 되면서 즉시, 유저 데이터가 반영 안되는 현상 (새로고침 해야 유저 정보를 가져오는 상황)
+    => 원인 1. redirect에서 home으로 새로고침 시 헤더에 넣어논 access token이 없어짐 
+            => window.href를 Navigate로 변경
+            2. redirect페이지에서 home으로 온 뒤, root loader를 발생시킬 때, 헤더에 access token이 undefiend인 상황
+            => redirect 로직을 redirect page component 내부에서 실행하는 것 대신, 로직을 로더 함수로 바꾼 후, 라우터에 적용
+- 사용자 fetch를 me와 find로 나눔, find는 다른 사용자의 데이터를 가져올 때 사용

@@ -1,0 +1,47 @@
+@use 'app/app.scss';
+
+.container {
+    width: 500px;
+    height: 500px;
+    @include app.flex-layout(column, center, center, 2rem);
+}
+
+.logo {
+    @include app.flex-layout(column, center, center);
+    font-size: 2rem !important;
+}
+
+.introduce {
+    margin-block: 1rem;
+    @include app.flex-layout(column, center, center, 0.5rem);
+}
+
+.oauthButton {
+    width: 100%;
+    padding-inline: 1rem; 
+    padding-block: 0.5rem;
+    @include app.flex-layout(row, center, stretch);
+    border-radius: 10px;
+}
+
+.oauthIcon {
+    padding: 0.25rem;
+    font-size: 1.25rem;
+    border-radius: 100%;
+}
+
+.kakaoOAuth {
+    background-color: yellow;
+}
+
+.kakaoOAuth > b{
+    margin: auto;
+}
+
+.googleOAuth {
+    border: 1px solid whitesmoke;
+}
+
+.googleOAuth > b{
+    margin: auto;
+}

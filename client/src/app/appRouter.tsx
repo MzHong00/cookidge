@@ -3,11 +3,13 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import { QueryClient } from "@tanstack/react-query";
 
 import { RecipeCreationForm } from "features/recipe";
-import Root from "pages/root";
+import { Root, initUserLoader } from "pages/root";
 import { Home } from "pages/home";
-import LoginPage from "pages/login";
+import { LoginPage } from "pages/login";
 import { Dashboard } from "pages/dashboard";
-import { RecipeDetailPage} from "pages/recipe";
+import { RecipeDetailPage } from "pages/recipe";
+import { searchUserLoader } from "pages/user/loader/searchUserLoader";
+import { googleOAuthRedirect } from "features/user";
 
 export const queryClient = new QueryClient();
 
@@ -39,6 +41,7 @@ const appRouter = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
+    loader: initUserLoader(queryClient),
     errorElement: <Navigate to={"/"} />,
     children: [
       {
@@ -50,7 +53,8 @@ const appRouter = createBrowserRouter([
         element: <RecipeDetailPage />,
       },
       {
-        path: "/user",
+        path: "user/:name",
+        loader: searchUserLoader(queryClient),
         element: (
           <Suspense fallback={"...사용자 페이지 로딩 중"}>
             <UserPage />
@@ -58,7 +62,7 @@ const appRouter = createBrowserRouter([
         ),
       },
       {
-        path: "/user/setting",
+        path: "setting",
         element: (
           <Suspense fallback={"...사용자 편집 폼 로딩 중"}>
             <UserEditForm />
@@ -76,7 +80,7 @@ const appRouter = createBrowserRouter([
           {
             path: "fridge/:id",
             element: (
-              <Suspense fallback={'...fridge 페이지 로딩중'}>
+              <Suspense fallback={"...fridge 페이지 로딩중"}>
                 <FridgePage />
               </Suspense>
             ),
@@ -84,7 +88,7 @@ const appRouter = createBrowserRouter([
           {
             path: "recipe",
             element: (
-              <Suspense  fallback={'...myRecipe 페이지 로딩중'}>
+              <Suspense fallback={"...myRecipe 페이지 로딩중"}>
                 <RecipeMyPage />
               </Suspense>
             ),
@@ -104,6 +108,11 @@ const appRouter = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
+  },
+  {
+    path: "/oauth-redirect",
+    loader: async () => await googleOAuthRedirect(),
+    element: <Navigate to={"/"} />,
   },
 ]);
 

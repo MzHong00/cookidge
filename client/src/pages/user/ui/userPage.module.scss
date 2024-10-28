@@ -12,14 +12,16 @@
     width: 25%;
     min-width: 8rem;
     max-width: 12rem;
+    border-radius: 100%;
     margin: auto;
-    cursor: auto;
 }
 
-.nameBox {
-    margin-bottom: 0.5rem;
-    display: inline-block;
-    font-size: 1.25em;
+.userInfo {
+    @include app.flex-layout(column, center, center, 0.5rem)
+}
+
+.introduceText {
+    color: rgb(var(--base-rgb-grey-medium));
 }
 
 .userActionButton {

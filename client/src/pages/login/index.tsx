@@ -1,3 +1,1 @@
-import LoginPage from "./ui/loginPage";
-
-export default LoginPage
+export { LoginPage } from "./ui/loginPage";

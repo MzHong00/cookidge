@@ -3,6 +3,7 @@ export interface User {
   name: string;
   email: string;
   picture: string;
+  introduce: string;
   created_at: Date;
   like_recipes: Recipe["_id"][];
   follower: User["_id"][];

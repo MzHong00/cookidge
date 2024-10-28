@@ -7,7 +7,7 @@ import { RecipeCard } from "widgets/recipeCard";
 import styles from "./index.module.css";
 
 export const Home = () => {
-  return (
+    return (
     <FramerFadeLayout className={styles.cardListContainer}>
       <IconCategoriesBox
         itemList={FOOD_TYPE_CATEGORIES}

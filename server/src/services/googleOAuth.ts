@@ -6,7 +6,7 @@ import keys from "../config/googleOAuth2.keys";
 const oAuth2Client = new OAuth2Client(
   keys.web.client_id,
   keys.web.client_secret,
-  keys.web.redirect_uris
+  keys.web.redirect_uris[0]
 );
 
 export const googleOauthForm = () => {
@@ -33,9 +33,9 @@ export const googleOauth = async (googleCode: string): Promise<any> => {
         Authorization: `Bearer ${oAuth2Client.credentials.access_token}`,
       },
     });
-    
+
     return fetchGoogle.data;
   } catch (error) {
-    throw new Error(`google redirect 에러 ${error}`)
+    throw new Error(`google redirect 에러 ${error}`);
   }
 };

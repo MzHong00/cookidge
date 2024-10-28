@@ -10,3 +10,16 @@
 10.24
 - 몽고디비 atlas 연결 후 입출력 성공
 - googleOAuth 구현 중
+
+10.26
+- 미들웨어 express Req 타입 declare 생성 (express.d.ts) 
+
+10.27
+- isAuth 미들웨어 구현
+- 서버에서 응답 토큰으로 전달하기 (오류 해결: 프론트엔드에서도 withCredential:true 해줘야 함)
+- express 미들웨어 res 공유 해결 (오류 해결: 구글링에 나오는 것 뿐만 아니라, tsconfig의 "types": ["express.d.ts"]까지 해줬음)
+- 몽고디비 pre 미들웨어 학습
+
+10.28
+- user fetch /me, /find로 구분
+- isAuth 로직 오류 수정

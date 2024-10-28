@@ -2,16 +2,7 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    background: linear-gradient(to bottom, rgb(var(--main-rgb)), white);
-}
-
-.logo {
-    width: fit-content;
-    color: white;
-    font-size: 2rem !important;
-}
-
-.loginBox {
-    margin: auto;
+    background: linear-gradient(to right top, rgb(var(--main-rgb)), white);
 }

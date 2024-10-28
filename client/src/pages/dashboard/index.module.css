@@ -1,6 +1,5 @@
 .dashboardPage {
     min-width: fit-content;
-    min-height: calc(100vh - 4rem);
     width: 100%;
     height: fit-content;
     display: flex;

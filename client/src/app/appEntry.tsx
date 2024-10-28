@@ -1,6 +1,7 @@
 import { RouterProvider } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
 import { QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import appRouter, { queryClient } from "./appRouter";
 
@@ -12,7 +13,7 @@ const AppEntry = () => {
       <CookiesProvider>
           <RouterProvider router={appRouter} />
       </CookiesProvider>
-      {/* <ReactQueryDevtools initialIsOpen /> */}
+      <ReactQueryDevtools initialIsOpen />
     </QueryClientProvider>
   );
 };

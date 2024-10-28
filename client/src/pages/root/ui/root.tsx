@@ -1,12 +1,12 @@
 import { Outlet } from "react-router-dom";
 
+import ScrollToTop from "shared/lib/react-router/scrollToTop";
 import { Header } from "widgets/header";
 import { Footer } from "widgets/footer";
 
-import styles from "./index.module.css";
-import ScrollToTop from "shared/lib/react-router/scrollToTop";
+import styles from "./root.module.css";
 
-export default function Root() {
+export const Root = () => {
   return (
     <div className={styles.root}>
       <ScrollToTop />
@@ -17,4 +17,4 @@ export default function Root() {
       <Footer />
     </div>
   );
-}
+};

@@ -1,24 +1,15 @@
 import axios, { AxiosStatic } from "axios";
-import { Cookies } from "react-cookie";
 
-import { reissueAccessToken } from "./jwtToken";
-
-const cookies = new Cookies();
+import { issueAccessToken } from "./jwtToken";
 
 const instance = axios.create({
-  baseURL: process.env.REACT_APP_API_ROOT,
-  headers: { "Content-type": "application/json" },
+  baseURL: process.env.REACT_APP_SERVER_API,
   withCredentials: true,
 });
 
 instance.interceptors.request.use(
   (config) => {
-    // 토큰을 같이 전송
-    const accessToken = cookies.get("access_token");
-
-    // 토큰 재발급 요청이 아니라면 access 토큰 전송 차단
-    if (!config.url?.includes("/reissue"))
-      config.headers["authorization"] = `Bearer ${accessToken}`;
+    // console.log("보낸 토큰:",config.headers.Authorization);
 
     return config;
   },
@@ -30,6 +21,10 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   (response) => {
+    if (response.data.token)
+    // console.log("발급 받은 토큰:", response.data.token);
+    axios.defaults.headers.common.Authorization= `Bearer ${response.data.token}`;
+
     if (response.status === 404) {
       console.log("404 Error");
     }
@@ -37,15 +32,17 @@ instance.interceptors.response.use(
     return response;
   },
   async (error) => {
+    if (error.response.data.isLogin === false) return Promise.resolve();
+
     if (error.response?.status === 401) {
       if (axios.isAxiosError(error) && error.response?.status === 401) {
-        // 토큰 재발급을 통해 쿠키에 적용된 상태
-        await reissueAccessToken();
+        // 토큰 재발급을 통해 토큰이 헤더에 적용된 상태
+        await issueAccessToken();
       }
 
       /* ------- 토큰 인증 재요청 과정 ------- */
-      const accessToken = cookies.get("access_token");
-      
+      const accessToken = axios.defaults.headers.common.Authorization;
+
       error.config.headers = {
         Authorization: `Bearer ${accessToken}`,
       };

@@ -4,10 +4,11 @@
     flex-direction: column;
 }
 
-.mainContainer > div {
+.mainContainer > * {
     padding-top: 1rem;
     padding-bottom: 3rem;
     padding-inline: 10%;
+    min-height: calc(100vh - 4rem);
 }
 
 @media screen and (max-width: 767px) {

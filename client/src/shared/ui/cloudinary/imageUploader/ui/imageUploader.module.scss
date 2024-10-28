@@ -33,6 +33,7 @@
 }
 
 .uploadIconBox {
+    width: 100%;
     @include flex-layout(column, center);
     color: rgb(var(--base-rgb-grey-medium));
 }
