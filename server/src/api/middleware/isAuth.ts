@@ -6,24 +6,20 @@ import config from "../../config";
 export default (req: Request, res: Response, next: NextFunction) => {
   const accessToken = req.headers.authorization?.split(" ")[1];
   const refreshToken = req.cookies.token as string;
+  console.log(req.originalUrl);
 
-  if (!refreshToken || !accessToken)
-    return res
-      .status(401)
-      .json({ isLogin: false, message: "로그인 상태가 아닙니다." });
+  if (!refreshToken || !accessToken) return res.status(401).send("토큰 없음");
+  if (!config.jwtAccessKey) return res.status(503).send("서버 secret key 없음");
 
-  if (!config.jwtAccessKey)
-    return res
-      .status(503)
-      .json({ message: "서버의 jwt key가 존재하지 않습니다." });
-
-  jwt.verify(accessToken, config.jwtAccessKey, (err, payload) => {
+  jwt.verify(accessToken, config.jwtAccessKey as string, (err, payload) => {
     if (err) {
-      console.log(err.name);
+      if ((err as jwt.TokenExpiredError).expiredAt) console.log("토큰 만료");
+
       return res.status(401).json({ message: err.name });
     }
 
-    req.user = payload;
+    req.jwtPayload = payload;
+    console.log(req.originalUrl, "끝");
     next();
   });
 };

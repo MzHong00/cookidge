@@ -4,7 +4,7 @@ export interface IRecipe {
     _id: string;
     name: string;
     picture: string[];
-    author_id: IUser["_id"][];
+    author_id: IUser["_id"];
     ingredients: {
       name: string;
       category: string;

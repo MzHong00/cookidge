@@ -35,7 +35,9 @@ export const signup = async (userInputDTO: IUserInputDTO) => {
   }
 };
 
-export const issueToken = (user: IUser, expireTime: string = "10s") => {
+export const issueToken = (user: IUser, expireTime: string = "60s") => {
+  console.log("토큰 재발급");
+  
   try {
     const accessToken = jwt.sign(
       { name: user.name },

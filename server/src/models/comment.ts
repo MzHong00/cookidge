@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 import { IComment } from "../interface/IComment";
 
-const CommentSchema = new Schema({
+const CommentSchema = new Schema<IComment>({
   recipe_id: { type: String, required: true },
   user_id: { type: String, required: true },
   comment: { type: String, required: true },

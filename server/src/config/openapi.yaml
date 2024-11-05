@@ -1,0 +1,258 @@
+openapi: 3.0.3
+info:
+  title: Cookidge API Document
+  description: >-
+    해당 페이지는 Cookidge 백엔드 서버 REST API 문서 입니다.
+  version: 1.0.0
+servers:
+  - url: https://rest-cookidge.vercel.app/api
+tags:
+  - name: user
+    description: 사용자 정보
+  - name: refrigerator
+    description: 냉장고 정보
+  - name: recipe
+    description: 레시피 정보
+paths:
+  /user/me:
+    get:
+      tags:
+        - user
+      summary: 내 정보 가져오기
+      description: jwt 토큰을 사용하여 나의 정보를 가져옵니다.
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: 인증 실패
+          content:
+            application/json:
+              examples:
+                TokenExpired:
+                  summary: Token has expired
+                  value:
+                    message: "The access token has expired."
+                InvalidToken:
+                  summary: Invalid token provided
+                  value:
+                    message: "error message"
+                MissingToken:
+                  summary: Missing authorization token
+                  value:
+                    message: "로그인 상태가 아닙니다."
+        '404':
+          description: Pet not found
+        '422':
+          description: Validation exception
+      security:
+        - petstore_auth:
+            - write:pets
+            - read:pets
+  /user/find:
+    get:
+      tags:
+        - user
+      summary: 사용자 정보 가져오기
+      description: 사용자를 검색하여 데이터를 가져옵니다.
+      responses:
+        '200':
+          description: 응답 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: Pet not found
+        '422':
+          description: Validation exception
+        '503':
+          description: 서버에 jwt key가 존재하지 않습니다.
+  /refrigerator/read:
+    get:
+      tags:
+        - refrigerator
+      summary: 냉장고 정보 가져오기
+      description: 타인의 냉장고는 볼 수 없기 때문에 인증 토큰을 필요로 합니다.
+      responses:
+        '200':
+          description: 응답 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refrigerator'
+  /refrigerator/create:
+    post:
+      tags:
+        - refrigerator
+      summary: 냉장고 생성하기
+      description: 자신의 냉장고를 생성합니다.
+      responses:
+        '201':
+          description: 생성 완료
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: abcd1373a062c4f5e4201234
+        name:
+          type: string
+          example: theUser
+        email:
+          type: string
+          example: abcd@email.com
+        picture:
+          type: string
+          description: clodinary id 또는 이미지 링크
+          example: "https://www.example.com/image1.jpg"
+        plan:
+          type: string
+          example: normal
+          enum:
+            - normal
+            - premium
+        follower:
+          type: array
+          items:
+            type: string
+            example: ["abcd1373a062c4f5e4201234", "efgh1373a062c4f5e4205678"]
+        following:
+          type: array
+          items:
+            type: string
+            example: ["abcd1373a062c4f5e4201234", "efgh1373a062c4f5e4205678"]
+        create_at:
+          type: string
+          format: date-time
+          example: "2024-10-30T12:00:00Z"
+    Refrigerator:
+      type: object
+      properties:
+        name:
+          type: string
+          example: 우리집 냉장고
+        owner_id:
+          type: string
+          example: abcd1373a062c4f5e4201234
+        stored_ingredients:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                example: 당근
+              category:
+                type: string
+                example: 채소
+              quantity:
+                type: string
+                example: "2kg"
+              expired_at:
+                type: string
+                format: date-time
+                example: 2024-11-15T00:00:00Z
+        last_updated:
+          type: string
+          format: date-time
+          example: 2024-10-30T12:45:00Z
+        created_at:
+          type: string
+          format: date-time
+          example: 2024-10-01T08:30:00Z
+    Recipe:
+      type: object
+      properties:
+        name:
+          type: string
+          example: 김치 볶음밥
+        picture:
+          type: array
+          items:
+            type: string
+          example: ["https://www.example.com/image1.jpg", "https://www.example.com/image2.jpg"]
+        author_id:
+          type: string
+          example: abcd1373a062c4f5e4201234
+        ingredients:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                example: 토마토
+              category:
+                type: string
+                example: 채소
+              quantity:
+                type: string
+                example: "1개"
+        introduction:
+          type: string
+          example: "집에서 간단히 만들 수 있는 김치볶음밥입니다."
+        servings:
+          type: integer
+          example: 4
+        cooking_time:
+          type: integer
+          example: 30
+        cooking_steps:
+          type: array
+          items:
+            type: object
+            properties:
+              picture:
+                type: string
+                example: "https://www.example.com/step1.jpg"
+              instruction:
+                type: string
+                example: "김치를 잘게 자르고 파를 기름에 두른다"
+        like_members:
+          type: array
+          items:
+            type: string
+          example: ["abcd1373a062c4f5e4201234", "efgb1373a062c4f5e4201234"]
+        ratting:
+          type: number
+          format: float
+          example: 4.5
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-10-30T12:00:00Z"
+    Comment:
+      type: object
+      properties:
+        recipe_id:
+          type: string
+          example: "recipe123"
+        user_id:
+          type: string
+          example: "abcd1373a062c4f5e4201234"
+        comment:
+          type: string
+          example: "집에서 만들기 굉장히 간편해요!"
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-10-30T12:30:00Z"
+  securitySchemes:
+    petstore_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://petstore3.swagger.io/oauth/authorize
+          scopes:
+            write:pets: modify pets in your account
+            read:pets: read your pets
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header

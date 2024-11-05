@@ -23,3 +23,22 @@
 10.28
 - user fetch /me, /find로 구분
 - isAuth 로직 오류 수정
+
+10.29
+- swagger 학습
+- refrigerator api 구현 중
+
+10.30
+- api 문서 일부 작성
+- 냉장고 데이터 구조 shared members 추가
+
+11.02
+- jwt 인증 오류 해결
+- fridge api 구현 중
+
+11.05
+- 재료 인터페이스 생성
+- ingredient Service, ingredient Interface, refrigerator Service 구현
+
+11.06
+(예정) 냉장고, 재료 서비스 테스트 및 프론트와 연결

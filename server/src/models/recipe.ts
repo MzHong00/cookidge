@@ -13,10 +13,10 @@ const IngredientSchema = new Schema({
   quantity: { type: String, required: true },
 });
 
-const RecipeSchema = new Schema({
+const RecipeSchema = new Schema<IRecipe>({
   name: { type: String, required: true },
   picture: { type: [String], required: true },
-  author_id: [{ type: String, required: true }],
+  author_id: { type: String, required: true },
   ingredients: [IngredientSchema],
   introduction: { type: String, required: true },
   servings: { type: Number, required: true },

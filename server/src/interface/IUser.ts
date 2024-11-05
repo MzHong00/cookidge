@@ -3,9 +3,10 @@ export interface IUser {
   name: string;
   email: string;
   picture: string;
-  plan: "normal" | "premium";
+  introduce: string;
   follower: IUser["_id"][];
   following: IUser["_id"][];
+  plan: "normal" | "premium";
   created_at: Date;
 }
 

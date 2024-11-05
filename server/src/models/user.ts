@@ -2,35 +2,41 @@ import mongoose, { Schema } from "mongoose";
 
 import { IUser } from "../interface/IUser";
 
-const userSchema: Schema = new Schema({
+const userSchema: Schema = new Schema<IUser>({
   name: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   picture: { type: String, required: true },
-  introduce:  { type: String},
+  introduce: { type: String },
   follower: [{ type: mongoose.Schema.Types.ObjectId }],
   following: [{ type: mongoose.Schema.Types.ObjectId }],
-  plan: { type: String, enum: ["normal", "premium"], default: "normal", required: true },
+  plan: {
+    type: String,
+    enum: ["normal", "premium"],
+    default: "normal",
+    required: true,
+  },
   created_at: { type: Date, default: Date.now },
 });
 
-// userSchema.pre('save', async (next) => {
-//  console.log(this);
- 
-//    // 고유한 이름이 생성될 때까지 반복
-//   //  while (true) {
-//   //   // 기본 이름 뒤에 무작위 숫자 추가
-//   //   const randomSuffix = Math.floor(Math.random() * 10000); // 0에서 9999 사이의 무작위 값
+userSchema.pre("save", async (next) => {
+  const user = this as unknown as IUser;
 
-//   //   // 이름 중복 확인
-//   //   const existingUser = await mongoose.models.User.findOne({ name: user.name });
+   while (true) {
+    // 기본 이름 뒤에 무작위 숫자 추가
+    const randomSuffix = Math.floor(Math.random() * 10000); // 0에서 9999 사이의 무작위 값
+    const userAttachRandomNumber = `${user.name}-${randomSuffix}`
 
-//   //   // 중복된 이름이 없다면 루프 탈출
-//   //   if (!existingUser) {
-//   //     break;
-//   //   }
-//   // }
+    // 이름 중복 확인
+    const existingUser = await mongoose.models.User.findOne({ name: userAttachRandomNumber });
 
-//   next();
-// })
+    // 중복된 이름이 없다면 루프 탈출
+    if (!existingUser) {
+      user.name = userAttachRandomNumber;
+      break;
+    }
+  }
+
+  next();
+});
 
 export const User = mongoose.model<IUser>("User", userSchema);
