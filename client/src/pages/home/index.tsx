@@ -1,4 +1,4 @@
-import { type Recipe } from "shared/types";
+import { IRecipe } from "shared/api/recipe";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 import { IconCategoriesBox } from "shared/ui/iconCategoriesBox";
 import { FOOD_TYPE_CATEGORIES } from "entities/recipe/consts/categories";
@@ -32,7 +32,7 @@ export const Home = () => {
   );
 };
 
-const recipeExample1: Recipe = {
+const recipeExample1: IRecipe = {
   _id: "1",
   name: "토마토 파스타",
   picture: ["url1.jpg", "url2.jpg"],

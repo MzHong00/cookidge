@@ -1,4 +1,0 @@
-.ingredientTable tbody {
-    height: clamp(5rem, 20vh, 20rem);
-    overflow-y: auto;
-}

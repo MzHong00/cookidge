@@ -1,24 +1,23 @@
 import { type QueryClient } from "@tanstack/react-query";
-import { fetchUser } from "entities/user";
 import { ActionFunctionArgs, ParamParseKey, Params } from "react-router-dom";
 
+import { UserQueries } from "entities/user";
+
 const Paths = {
-  todoDetail: "/user/:name",
+  userDetail: "/user/:name",
 } as const;
 
 interface SearchUserLoaderArgs extends ActionFunctionArgs {
-  params: Params<ParamParseKey<typeof Paths.todoDetail>>;
+  params: Params<ParamParseKey<typeof Paths.userDetail>>;
 }
 
 export const searchUserLoader =
   (queryClient: QueryClient) =>
   async ({ params }: SearchUserLoaderArgs) => {
     try {
-      const data = await queryClient.fetchQuery({
-        queryKey: ["user", params.name],
-        queryFn: () => fetchUser(params.name as string),
-        staleTime: 10000,
-      });
+      const data = await queryClient.fetchQuery(
+        UserQueries.userQuery(params.name as string)
+      );
 
       return data;
     } catch (error) {

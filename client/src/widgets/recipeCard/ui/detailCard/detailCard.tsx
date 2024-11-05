@@ -2,7 +2,7 @@ import { RiTimer2Line } from "@react-icons/all-files/ri/RiTimer2Line";
 import { RiGroupLine } from "@react-icons/all-files/ri/RiGroupLine";
 import { RiCalendarLine } from "@react-icons/all-files/ri/RiCalendarLine";
 
-import { type Recipe } from "shared/types";
+import { IRecipe } from "shared/api/recipe";
 import { IconBox } from "shared/ui/iconBox";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { CloudinaryImg } from "shared/ui/cloudinary";
@@ -10,7 +10,7 @@ import { LikeButton, RattingButton } from "features/recipe";
 
 import styles from "./detailCard.module.scss";
 
-interface Props extends React.HTMLAttributes<HTMLDivElement>, Recipe {
+interface Props extends React.HTMLAttributes<HTMLDivElement>, IRecipe {
   onClickLike: React.MouseEventHandler;
   onClickStar: React.MouseEventHandler;
 }

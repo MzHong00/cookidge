@@ -4,7 +4,7 @@
     width: 100%;
     padding: 1rem;
     @include app.flex-layout(column);
-    gap: 0;
+    gap: 0.5rem;
     border: 1px solid rgb(var(--base-rgb-grey-light));
     border-radius: 5px;
     background-color: white;
@@ -31,10 +31,4 @@
 .icon {
     min-width: var(--icon-size-medium);
     font-size: var(--icon-size-medium);
-}
-
-@media screen and (max-width:767px) {
-    .container {
-        padding: 0.5rem;
-    }
 }

@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 
-import { type Recipe } from "shared/types";
+import { IRecipe } from "shared/api/recipe";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 import { ChatBox } from "widgets/chat";
 import { DetailCard } from "widgets/recipeCard";
@@ -47,7 +47,7 @@ export const RecipeDetailPage = () => {
   );
 };
 
-const recipeExample1: Recipe = {
+const recipeExample1: IRecipe = {
   _id: "1",
   name: "토마토 파스타",
   picture: ["url1.jpg", "url2.jpg"],

@@ -1,3 +1,1 @@
-export { fetchMe } from "./api/fetchMe";
-
-export { fetchUser } from "./api/fetchUser";
+export { UserQueries } from "./queries/userQueries";

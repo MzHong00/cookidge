@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
-import { createBrowserRouter, Navigate } from "react-router-dom";
 import { QueryClient } from "@tanstack/react-query";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import { RecipeCreationForm } from "features/recipe";
 import { Root, initUserLoader } from "pages/root";
@@ -10,6 +10,9 @@ import { Dashboard } from "pages/dashboard";
 import { RecipeDetailPage } from "pages/recipe";
 import { searchUserLoader } from "pages/user/loader/searchUserLoader";
 import { googleOAuthRedirect } from "features/user";
+import { CreateFridgeForm } from "features/fridge";
+import { getListLoader } from "pages/fridge/index";
+import { FridgeDetail } from "widgets/fridge";
 
 export const queryClient = new QueryClient();
 
@@ -74,16 +77,23 @@ const appRouter = createBrowserRouter([
         element: <Dashboard />,
         children: [
           {
-            path: "",
-            element: <Navigate to={"fridge/1"} />,
-          },
-          {
-            path: "fridge/:id",
+            path: "fridge",
+            loader: getListLoader(queryClient),
             element: (
               <Suspense fallback={"...fridge 페이지 로딩중"}>
                 <FridgePage />
               </Suspense>
             ),
+            children: [{
+              path: ':id',
+              element: (
+                <FridgeDetail />
+              )
+            }]
+          },
+          {
+            path: "fridge/new/create",
+            element: <CreateFridgeForm />,
           },
           {
             path: "recipe",
@@ -99,7 +109,7 @@ const appRouter = createBrowserRouter([
           },
           {
             path: "*",
-            element: <Navigate to={"fridge/1"} />,
+            element: <Navigate to={"fridge"} />,
           },
         ],
       },

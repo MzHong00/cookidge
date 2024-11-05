@@ -109,3 +109,12 @@
             2. redirect페이지에서 home으로 온 뒤, root loader를 발생시킬 때, 헤더에 access token이 undefiend인 상황
             => redirect 로직을 redirect page component 내부에서 실행하는 것 대신, 로직을 로더 함수로 바꾼 후, 라우터에 적용
 - 사용자 fetch를 me와 find로 나눔, find는 다른 사용자의 데이터를 가져올 때 사용
+
+10.30
+- dashboard 뒤로가기 에러 해결
+- type과 api를 shared/api로 통합 
+
+11.05
+- (feature) creationIngredientBox 제거 및 ingredientForm(재료 생성) UI 변경
+- ingredientForm 개발 중
+- 재료 api 및 service 구현

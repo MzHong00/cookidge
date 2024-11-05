@@ -1,11 +1,15 @@
 @use 'app/app.scss';
 
-.itemList {
+.container {
     padding: 0.75rem;
+    box-shadow: 0px 0px 2px 2px rgb(var(--base-rgb-grey-light));
+    border-radius: 5px;
+}
+
+.itemList {
+    padding-block: 1rem;
     @include app.flex-layout(row, center);
     flex-wrap: wrap;
-    border: 1px solid rgb(var(--base-rgb-grey-light));
-    border-radius: 5px;
 }
 
 .item {

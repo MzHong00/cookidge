@@ -1,10 +1,10 @@
 import { ChatItem } from "../chatItem/chatItem";
-import { CreateChat } from "features/chat";
+import { IRecipe } from "shared/api/recipe";
 import { SubjectBox } from "shared/ui/subjectBox";
-import { type Recipe } from "shared/types";
+import { CreateChat } from "features/chat";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  recipe_id: Recipe['_id'];
+  recipe_id: IRecipe['_id'];
 }
 
 export const ChatBox = ({ recipe_id, ...props }: Props) => {

@@ -2,7 +2,7 @@ import { AdvancedImage } from "@cloudinary/react";
 import { CloudinaryImage } from "@cloudinary/url-gen";
 import { Plugins } from "@cloudinary/html";
 
-import { cloudinaryDownload } from "shared/api/cloudinary";
+import { cloudinaryDownload } from "shared/api/cloudinary/cloudinary";
 
 import styles from "./index.module.css";
 

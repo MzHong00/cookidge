@@ -1,17 +1,19 @@
 import { Link } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 import { FaBell } from "@react-icons/all-files/fa/FaBell";
 
-import { IconLink } from "shared/ui/iconLink";
-import { IconButton } from "shared/ui/iconButton";
 import { Logo } from "shared/ui/logo";
+import { IUser } from "shared/api/user";
 import { Navbar } from "shared/ui/navbar";
+import { IconLink } from "shared/ui/iconLink";
 import { useModal } from "shared/hooks/useModal";
-import { useGlobalStore } from "shared/lib/zustand/useStore";
+import { IconButton } from "shared/ui/iconButton";
+import { UserQueries } from "entities/user";
 
 import styles from "./header.module.scss";
 
 export const Header = () => {
-  const user = useGlobalStore((state) => state.user);
+  const user = useQueryClient().getQueryData([UserQueries.keys.me]) as IUser;
   const { modalRef, isOpen, toggleModal } = useModal();
   
   return (

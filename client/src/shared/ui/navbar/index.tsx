@@ -10,7 +10,7 @@ import styles from "./index.module.css";
 
 const navItem = [
   {
-    to: "/dashboard",
+    to: "/dashboard/fridge",
     Icon: RiLayout2Line,
     title: "대시보드",
   },

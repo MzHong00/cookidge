@@ -1,9 +1,9 @@
-import axios from "shared/api/base";
+import axios from "shared/api/axiosBase";
 
 export const googleOAuth = async () => {
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_SERVER_API}/google-oauth/login`
+      `api/google-oauth/login`
     );
 
     window.location.href = response.data;
@@ -18,7 +18,7 @@ export const googleOAuthRedirect = async () => {
 
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_SERVER_API}/google-oauth/callback?code=${oauth_code}`,
+      `api/google-oauth/callback?code=${oauth_code}`,
       { withCredentials: true }
     );
     

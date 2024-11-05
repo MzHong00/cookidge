@@ -16,6 +16,7 @@ export const IconButton = ({
   isCounterVisible = false,
   counterTheme,
   counterValue,
+  color,
   children,
   className,
   ...props
@@ -29,7 +30,7 @@ export const IconButton = ({
           referrerPolicy="no-referrer"
         />
       )}
-      {Icon && <Icon />}
+      {Icon && <Icon color={color}/>}
       {children}
       {isCounterVisible && (
         <div

@@ -1,17 +1,25 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { RiBook2Line } from "@react-icons/all-files/ri/RiBook2Line";
 import { RiHeart2Line } from "@react-icons/all-files/ri/RiHeart2Line";
 import { RiAddLine } from "@react-icons/all-files/ri/RiAddLine";
 import { IoReload } from "@react-icons/all-files/io5/IoReload";
 import { FaMagic } from "@react-icons/all-files/fa/FaMagic";
 
+import { IUser } from "shared/api/user";
 import { IconLink } from "shared/ui/iconLink";
 import { IconButton } from "shared/ui/iconButton";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
+import { UserQueries } from "entities/user";
+import { LoginForm } from "features/user";
 
 import styles from "./recipeMyPage.module.css";
 
 export const RecipeMyPage = () => {
+  const me = useQueryClient().getQueryData([UserQueries.keys.me]) as IUser;
+
+  if (!me) return <LoginForm className={styles.loginForm} />
+
   return (
     <FramerFadeLayout className="flex-column">
       <IconLink

@@ -2,16 +2,16 @@ import { RiTimer2Line } from "@react-icons/all-files/ri/RiTimer2Line";
 import { RiGroupLine } from "@react-icons/all-files/ri/RiGroupLine";
 import { RiArrowRightSLine } from "@react-icons/all-files/ri/RiArrowRightSLine";
 
-import { type Recipe } from "shared/types";
-import { IconLink } from "shared/ui/iconLink";
+import { IRecipe } from "shared/api/recipe";
 import { IconBox } from "shared/ui/iconBox";
+import { IconLink } from "shared/ui/iconLink";
 import { CloudinaryImg } from "shared/ui/cloudinary";
 import { dateGap } from "shared/helper/dateGap";
 import { LikeButton, RattingButton } from "features/recipe";
 
 import styles from "./recipeCard.module.scss";
 
-interface Props extends React.HTMLAttributes<HTMLDivElement>, Recipe {
+interface Props extends React.HTMLAttributes<HTMLDivElement>, IRecipe {
   onClickLike: React.MouseEventHandler;
   onClickStar: React.MouseEventHandler;
   isActiveDetailLink: boolean;

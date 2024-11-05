@@ -1,0 +1,82 @@
+@use 'app/app.scss';
+
+.container {
+    min-height: 24rem;
+    max-width: 64vw;
+    max-height: 64vh;
+    overflow-y: auto;
+    border: none;
+}
+
+.form {
+    height: 100%;
+    @include app.flex-layout(column, stretch, space-between, 0);
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.whiteSpace {
+    height: 100%;
+    flex-grow: 1;
+}
+
+.table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.tableHeader {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 10;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.ingredientTableItem {
+    height: 2rem;
+    vertical-align: baseline;
+}
+
+.ingredientTableItem input,
+.ingredientTableItem select {
+    min-height: 2rem;
+    width: 100%;
+    height: 100%;
+    color: black;
+    border: none;
+    background-color: white;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ingredientTableItem input[type="date"],
+.ingredientTableItem select {
+    width: fit-content;
+}
+
+.ingredientTableItem>:last-child{
+    text-align: center;
+}
+
+.removeButton {
+    padding: 0.25rem;
+    display: inline;
+}
+
+.appendButton {
+    width: fit-content;
+    padding-inline: 0.5rem;
+    gap: 0.5rem;
+    position: sticky;
+    bottom: 0;
+    background-color: white;
+}
+
+.submitButton {
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+    border-radius: 5px;
+    @include app.main-button
+}

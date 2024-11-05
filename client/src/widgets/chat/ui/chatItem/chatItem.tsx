@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 
-import { type Comment } from "shared/types";
+import { IComment } from "shared/api/comment";
 import { IconButton } from "shared/ui/iconButton";
 import { dateGap } from "shared/helper/dateGap";
 
 import styles from "./chatItem.module.css";
 
-interface Props extends React.HTMLAttributes<HTMLDivElement>, Omit<Comment, 'recipe_id'> {}
+interface Props extends React.HTMLAttributes<HTMLDivElement>, Omit<IComment, 'recipe_id'> {}
 
 export const ChatItem = ({
   user_id,

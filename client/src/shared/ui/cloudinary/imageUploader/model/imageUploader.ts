@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CloudinaryImage } from "@cloudinary/url-gen";
 
-import { cloudinaryDownload, cloudinaryUpload } from "shared/api/cloudinary";
+import { cloudinaryDownload, cloudinaryUpload } from "shared/api/cloudinary/cloudinary";
 
 export const useCloudinaryImage = () => {
     const [image, setImage] = useState<CloudinaryImage>();

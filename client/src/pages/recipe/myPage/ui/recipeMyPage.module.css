@@ -13,3 +13,8 @@
 .recommendReloadButton {
     border: 1px solid rgb(var(--base-rgb-grey-light));
 }
+
+.loginForm {
+    width: 100%;
+    margin-inline: auto;
+}

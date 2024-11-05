@@ -5,6 +5,7 @@
 }
 
 :root {
+  --mobile-width: 767px;
   --main-rgb: 167, 202, 255;
   --base-rgb-grey-light: 227, 227, 227;
   --base-rgb-grey-medium: 121, 121, 121;
@@ -72,11 +73,16 @@
 
 @mixin main-button {
   color: white;
-  background-color: rgb(var(--main-rgb));
+  background-color: rgb(var(--main-rgb)) !important;
 }
 
 .main-button {
   @include main-button();
+}
+
+.alert-text {
+  color: red;
+  font-size: 0.75em;
 }
 
 a {
