@@ -23,7 +23,6 @@ const RecipeSchema = new Schema<IRecipe>({
   cooking_time: { type: Number, required: true },
   cooking_steps: [CookingStepSchema],
   like_members: [{ type: String }],
-  ratting: { type: Number, default: 0 },
   created_at: { type: Date, default: Date.now },
 });
 

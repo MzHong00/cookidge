@@ -40,5 +40,7 @@
 - 재료 인터페이스 생성
 - ingredient Service, ingredient Interface, refrigerator Service 구현
 
-11.06
-(예정) 냉장고, 재료 서비스 테스트 및 프론트와 연결
+11.06 ~ 11.07
+- 모든 엔티티의 model, interface, service, api 작성 완료
+    => 테스트 필요
+- celebrate, joi 라이브러리 도입 후 validate 미들웨어 작성 완료

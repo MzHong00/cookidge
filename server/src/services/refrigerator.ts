@@ -1,50 +1,69 @@
 import { IRefrigerator } from "../interface/IRefrigerator";
+import { IUser } from "../interface/IUser";
 import { Refrigerator } from "../models/refrigerator";
 
 export class RefrigeratorService {
+  static async readList(userId: IRefrigerator["owner_id"]) {
+    return await Refrigerator.find(
+      {
+        $or: [
+          { owner_id: userId },
+          { shared_members: { $eleMatch: { $eq: userId } } },
+        ],
+      },
+      "_id name"
+    );
+  }
+
+  static async readDetail(refrigeratorId: IRefrigerator["_id"]) {
+    return await Refrigerator.findById(refrigeratorId);
+  }
+
   static async createRefrigerator(
     refrigeratorName: IRefrigerator["name"],
-    owner_id?: IRefrigerator["owner_id"]
-  ) {
-    if (!owner_id) return console.log("비로그인 상태로 냉장고 생성 요청 거부");
-
-    const query: Partial<IRefrigerator> = {
-      name: refrigeratorName,
-      owner_id: owner_id,
-    };
-
-    return await Refrigerator.create(query);
-  }
-
-  static async readList(owner_id: IRefrigerator["owner_id"]) {
-    return await Refrigerator.find({ owner_id }, "_id name");
-  }
-
-  static async readDetail(
-    targetId: string,
     owner_id: IRefrigerator["owner_id"]
   ) {
-    return await Refrigerator.findOne({
-      _id: targetId,
-      owner_id,
+    return await Refrigerator.create({
+      name: refrigeratorName,
+      owner_id: owner_id,
     });
   }
 
-  static async updateRefrigerator(
-    id: string,
-    updateBody: Partial<IRefrigerator>,
-    owner_id: IRefrigerator["owner_id"]
-  ) {
-    return await Refrigerator.updateOne({ _id: id, owner_id }, updateBody);
+  static async updateRefrigerator(refrigerator: Partial<IRefrigerator>) {
+    return await Refrigerator.findByIdAndUpdate(
+      refrigerator._id,
+      refrigerator,
+      {
+        new: true,
+      }
+    );
   }
 
-  static async deleteRefrigerator(
-    target: string,
-    owner_id: IRefrigerator["owner_id"]
-  ) {
+  static async deleteRefrigerator(refrigeratorId: IRefrigerator["_id"]) {
     return await Refrigerator.deleteOne({
-      _id: target,
-      owner_id,
+      _id: refrigeratorId,
+    });
+  }
+
+  static async addSharedMember(
+    refrigeratorId: IRefrigerator["_id"],
+    member: IUser["_id"]
+  ) {
+    return await Refrigerator.findByIdAndUpdate(refrigeratorId, {
+      $push: {
+        shared_members: member,
+      },
+    });
+  }
+
+  static async removeSharedMember(
+    refrigeratorId: IRefrigerator["_id"],
+    member: IUser["_id"]
+  ) {
+    return await Refrigerator.findByIdAndUpdate(refrigeratorId, {
+      $pull: {
+        shared_members: member,
+      },
     });
   }
 }

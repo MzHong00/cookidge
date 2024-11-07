@@ -13,6 +13,5 @@ export interface IRecipe {
   cooking_time: number;
   cooking_steps: CookingStep[];
   like_members: IUser["_id"][];
-  ratting: number;
   created_at: Date;
 }
