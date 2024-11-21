@@ -4,7 +4,11 @@
     flex-direction: column;
 }
 
-.mainContainer > * {
+.mainContainer {
+    min-height: calc(100vh - 4rem);
+}
+
+.mainContainer>* {
     padding-top: 1rem;
     padding-bottom: 3rem;
     padding-inline: 10%;
@@ -15,7 +19,12 @@
     .root {
         padding-bottom: 3rem;
     }
-    .mainContainer{
+
+    .mainContainer {
         flex-direction: column-reverse;
+    }
+
+    .mainContainer>* {
+        padding: 0.5rem;
     }
 }

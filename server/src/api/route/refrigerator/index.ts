@@ -1,24 +1,22 @@
 import { Router } from "express";
+import { celebrate, Joi, Segments } from "celebrate";
+
 import isAuth from "../../middleware/isAuth";
-import attachCurrentUser from "../../middleware/attachCurrentUser";
 import isOurRefrigerator, {
   isMyRefrigerator,
 } from "../../middleware/isOurRefrigerator";
 import { RefrigeratorService } from "../../../services/refrigerator";
-import { IUser } from "../../../interface/IUser";
-import { celebrate, Joi, Segments } from "celebrate";
-import { IRefrigerator } from "../../../interface/IRefrigerator";
 
 const route = Router();
 
 export default (app: Router) => {
   app.use("/refrigerator", route);
 
-  route.get("/read-list", isAuth, attachCurrentUser, async (req, res) => {
-    const user = req.user as IUser;
+  route.get("/read-list", isAuth, async (req, res) => {
+    const userId = req.jwtPayload.id;
 
     try {
-      const refrigeratorList = await RefrigeratorService.readList(user?._id);
+      const refrigeratorList = await RefrigeratorService.readList(userId);
       res.status(200).json(refrigeratorList);
     } catch (error) {
       console.error("냉장고 목록 조회 중 오류:", error);
@@ -26,38 +24,31 @@ export default (app: Router) => {
     }
   });
 
-  route.get(
-    "/read-detail",
-    isAuth,
-    attachCurrentUser,
-    isOurRefrigerator,
-    async (req, res) => {
-      const recipeId = req.query.recipeId as string;
+  route.get("/read-detail", isAuth, isOurRefrigerator, async (req, res) => {
+    const recipeId = req.query.refrigerator_id as string;
 
-      try {
-        const refrigerator = await RefrigeratorService.readDetail(recipeId);
+    try {
+      const refrigerator = await RefrigeratorService.readDetail(recipeId);
 
-        res.status(200).json(refrigerator);
-      } catch (error) {
-        console.error("냉장고 상세 조회 중 오류:", error);
-        res.status(500).json({ message: "서버 오류" });
-      }
+      res.status(200).json(refrigerator);
+    } catch (error) {
+      console.error("냉장고 상세 조회 중 오류:", error);
+      res.status(500).json({ message: "서버 오류" });
     }
-  );
+  });
 
   route.post(
     "/create",
     celebrate({ [Segments.BODY]: Joi.object({ name: Joi.string() }) }),
     isAuth,
-    attachCurrentUser,
     async (req, res) => {
-      const user = req.user as IUser;
+      const userId = req.jwtPayload.id;
       const refrigeratorName = req.body.name;
 
       try {
         const newRefrigerator = await RefrigeratorService.createRefrigerator(
           refrigeratorName,
-          user._id
+          userId
         );
 
         if (!newRefrigerator) {
@@ -83,7 +74,6 @@ export default (app: Router) => {
     "/update",
     celebrate({ [Segments.BODY]: Joi.object({ name: Joi.string() }) }),
     isAuth,
-    attachCurrentUser,
     isOurRefrigerator,
     async (req, res) => {
       const refrigerator = req.body.fridge;
@@ -105,7 +95,6 @@ export default (app: Router) => {
     "/delete",
     celebrate({ [Segments.BODY]: Joi.object({ id: Joi.string() }) }),
     isAuth,
-    attachCurrentUser,
     isMyRefrigerator,
     async (req, res) => {
       const refrigeratorId = req.body.id;
@@ -130,17 +119,13 @@ export default (app: Router) => {
       }),
     }),
     isAuth,
-    attachCurrentUser,
     isMyRefrigerator,
     async (req, res) => {
-      const refrigeratorId = req.body.id as IRefrigerator["_id"];
-      const memberId = req.body.memberId as IUser["_id"];
+      const { id } = req.body.id;
+      const { memberId } = req.body.memberId;
 
       try {
-        const refrigerator = RefrigeratorService.addSharedMember(
-          refrigeratorId,
-          memberId
-        );
+        const refrigerator = RefrigeratorService.addSharedMember(id, memberId);
 
         res.send(200).json(refrigerator);
       } catch (error) {
@@ -159,15 +144,14 @@ export default (app: Router) => {
       }),
     }),
     isAuth,
-    attachCurrentUser,
     isMyRefrigerator,
     async (req, res) => {
-      const refrigeratorId = req.body.id as IRefrigerator["_id"];
-      const memberId = req.body.memberId as IUser["_id"];
+      const { id } = req.body.id;
+      const { memberId } = req.body;
 
       try {
         const refrigerator = RefrigeratorService.removeSharedMember(
-          refrigeratorId,
+          id,
           memberId
         );
 

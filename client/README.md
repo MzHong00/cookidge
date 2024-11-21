@@ -118,3 +118,82 @@
 - (feature) creationIngredientBox 제거 및 ingredientForm(재료 생성) UI 변경
 - ingredientForm 개발 중
 - 재료 api 및 service 구현
+
+11.08
+- ingredient create 연결 완료
+- ingredient create UI 변경
+- ingredient read 로직 변경
+    =>  from: dashboard에서 모든 냉장고를 모두 queries하는 로직
+        to: 냉장고를 선택할 때, 해당 냉장고만 query하는 로직
+
+11.09
+- ingredient 유통기한 표시 안되는 오류 해결
+    =>  원인: 'YYYY-MM-DD'를 몽고디비의 Date Type에 넣으면 형식이 바뀜
+        해결: 재료 Model의 expired_at 타입 String으로 변경
+
+- 웬만한 react-router-loader 철회
+    원인: 로더를 통한 useFetch 사용 시, fresh한 데이터라고 예측되더라도 다시 fetch하게 됨. 이러면  로더의 역할을 챙기더라도 tanstack query를 사용하는 이유가 없음
+
+- 비 로그인 상태 시, 같은 요청을 5 ~ 6번 보내지는 현상 해결
+    원인: 로더로 fetch하던 me()를 useQuery로 변경하여 에러 발생
+    해결: isLogin을 확인하기 위한 zutand slice 생성 및 axios.interceptor에 적용 후, 로그인 상태 일때만 fetch하도록 변경, root의 로더는 사용하기로 결정
+    
+- 로그아웃 구현
+- (widget) 헤더 유저 토글바 UI 변경
+
+11.11
+- (features) 레시피 생성 react hook form으로 구현
+
+11.12
+- (feature) 레시피 생성 form의 preview image 에러 해결
+    => ★해결: register onChagne 옵션과, preview image를 보여주는 커스텀 훅을 구현
+
+11.13 ~ 11.14
+- form 데이터 전송 시, Blob 파일이 전송이 안되는 현상 해결
+    => axios config에 multipart/form-data 형식으로 전송 or react-hook-form의 Form 컴포넌트 사용
+- form 데이터 전송 시, cooking_steps[].picture의 데이터 구조의 복잡성으로 인하여, cooking_step_pictures에 Blob파일을 모아서 보내는 방식으로 수정
+- recipe 생성 완료 및 recipe detail 페이지 연결 완료
+
+11.15
+- Recipe Infinity Scroll 구현
+
+11.17
+- 불필요한 인증 요청 최소화
+    => tanstack query의 retry 속성 및 enabled
+
+11.18
+- (pages) recipe detail page 구현 완료
+- 홈의 레시피 카드 검색 옵션 구현 완료
+
+11.19
+- (shared) pictures box 구현 완료
+- (features) category box UI 수정
+
+FE개발 ToDo List 중간 점검
+- ✔ 레시피 카드 자세히 보기 제거 후, 다른 항목에 Link 연결하기
+- ✔ 레시피 좋아요 기능
+- ✔ 레시피 댓글 읽기 및 생성 기능
+- ✔ 레시피 마이 페이지 
+- 레시피 댓글 수정 및 제거 기능
+- 레시피 추천 기능
+- 레시피 업데이트 및 삭제
+- 냉장고 UI 수정
+- 냉장고 재료 제거 및 수정 기능
+- 냉장고 재료 유통기한 임박 기능
+- 냉장고 재료 검색 기능
+- 냉장고 재료 정렬 기능
+- 유저 팔로우 기능
+- 유저 프로필 편집 기능
+- 유저의 레시피 UI 수정
+- 유저 검색 기능
+- 유저 프로필 업데이트 및 삭제 기능
+- 알림 기능
+
+11.20
+- 레시피 카드 자세히 보기 제거 후, 다른 항목에 Link 연결하기
+- 레시피 좋아요 기능 구현
+
+11.21
+- 레시피 댓글 읽기 및 생성 기능 구현
+- 레시피 마이 페이지 구현
+- 홈 레시피 목록 슬라이드 scroll-snap-type 적용

@@ -3,5 +3,4 @@ export type {
   IFridge,
   IFridgeList,
   IFridgeFormInput,
-  Ingredient,
 } from "./type";

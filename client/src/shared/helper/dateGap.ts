@@ -1,5 +1,5 @@
-export const dateGap = (date: Date, otherDate: Date = new Date()) => {
-  const diff = Math.abs(date.getTime() - otherDate.getTime());
+export const dateGap = (date: Date|string, otherDate: Date = new Date()) => {
+  const diff = Math.abs(new Date(date).getTime() - otherDate.getTime());
 
   const yearMillis = 1000 * 60 * 60 * 24 * 365;
   const monthMillis = 1000 * 60 * 60 * 24 * 30;
@@ -14,7 +14,7 @@ export const dateGap = (date: Date, otherDate: Date = new Date()) => {
 
   if (diff >= monthMillis) {
     const months = Math.floor(diff / monthMillis);
-    return `${months}월`;
+    return `${months}개월`;
   }
 
   if (diff >= dayMillis) {

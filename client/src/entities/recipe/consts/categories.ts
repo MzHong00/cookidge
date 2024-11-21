@@ -1,24 +1,24 @@
-import { IconCategoriesByClodinary } from "shared/types";
+import { EmojiCatgories} from "shared/types";
 
-export const FOOD_TYPE_CATEGORIES: IconCategoriesByClodinary[] = [
+export const FOOD_CATEGORIES: EmojiCatgories[] = [
   {
-    iconId: "icons8-bibimbap-48_xauq37",
+    emoji: "🍚",
     text: "한식"
   },
   {
-    iconId: "icons8-sushi-48_auhfy4",
+    emoji: "🍣",
     text: "일식",
   },
   {
-    iconId: "icons8-chinese-48_cpwih6",
+    emoji: "🥟",
     text: "중식",
   },
   {
-    iconId: "icons8-pizza-48_covy8b",
+    emoji: "🍕",
     text: "양식",
   },
   {
-    iconId: "icons8-dessert-48_yqmv6y",
+    emoji: "🍰",
     text: "디저트",
   }
 ];

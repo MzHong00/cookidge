@@ -1,20 +1,24 @@
+import mongoose from "mongoose";
+
 import { IComment } from "../interface/IComment";
 import { IRecipe } from "../interface/IRecipe";
-import { IUser } from "../interface/IUser";
 import { Comment } from "../models/comment";
 
 export class CommentService {
-  static async readComments(
-    recipeId: IRecipe["_id"],
-    lastCommentId: IComment["_id"]
-  ) {
+  static async readComments(recipeId: string, lastCommentId: string) {
     try {
-      return await Comment.find({
-        _id: { $lt: lastCommentId },
-        recipe_id: recipeId,
-      })
-        .sort({ _id: -1 })
-        .limit(5);
+      return await Comment.find(
+        {
+          ...(lastCommentId && {
+            _id: {
+              $lt: mongoose.Types.ObjectId.createFromHexString(lastCommentId),
+            },
+          }),
+          recipe_id: mongoose.Types.ObjectId.createFromHexString(recipeId),
+        },
+        {},
+        { sort: { _id: -1 }, limit: 10 }
+      );
     } catch (error) {
       console.error("댓글 읽기 오류:", error);
       throw new Error("댓글을 불러오는 데 실패했습니다.");
@@ -22,9 +26,9 @@ export class CommentService {
   }
 
   static async createComment(
-    userID: IUser["_id"],
-    recipeId: IRecipe["_id"],
-    comment: IComment['comment']
+    userID: string,
+    recipeId: string,
+    comment: IComment["comment"]
   ) {
     try {
       return await Comment.create({
@@ -38,10 +42,7 @@ export class CommentService {
     }
   }
 
-  static async updateComment(
-    commentId: IComment["_id"],
-    comment: IComment["comment"]
-  ) {
+  static async updateComment(commentId: string, comment: IComment["comment"]) {
     try {
       return await Comment.findByIdAndUpdate(
         commentId,

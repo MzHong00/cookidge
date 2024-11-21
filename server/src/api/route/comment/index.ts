@@ -1,10 +1,9 @@
 import { Router, Request, Response } from "express";
-import { Comment } from "../../../models/comment";
-import isAuth from "../../middleware/isAuth";
-import attachCurrentUser from "../../middleware/attachCurrentUser";
-import { CommentService } from "../../../services/comment";
 import { celebrate, Joi, Segments } from "celebrate";
+
+import isAuth from "../../middleware/isAuth";
 import isMyComment from "../../middleware/isMyComment";
+import { CommentService } from "../../../services/comment";
 
 const route = Router();
 
@@ -12,12 +11,12 @@ export default (app: Router) => {
   app.use("/comment", route);
 
   route.get("/read-list", async (req: Request, res: Response) => {
-    const recipeId = req.query.recipe_id as string;
-    const lastCommentId = req.query.last_comment_id as string;
+    const { recipe_id, last_comment_id } = req.query;
+    
     try {
       const comment = await CommentService.readComments(
-        recipeId,
-        lastCommentId
+        recipe_id as string,
+        last_comment_id as string
       );
 
       if (!comment) {
@@ -35,27 +34,25 @@ export default (app: Router) => {
     "/create",
     celebrate({
       [Segments.BODY]: Joi.object({
-        recipe_id: Joi.string().required,
-        comment: Joi.string().required,
+        recipe_id: Joi.string().required(),
+        comment: Joi.string().min(1).max(100).required(),
       }),
     }),
     isAuth,
-    attachCurrentUser,
     async (req: Request, res: Response) => {
-      const userId = req.user?._id as string;
-      const recipeId = req.body.recipe_id as string;
-      const newComment = req.body.comment as string;
-
+      const userId = req.jwtPayload.id;
+      const { recipe_id, comment } = req.body;
+      
       try {
-        const comment = await CommentService.createComment(
+        const newComment = await CommentService.createComment(
           userId,
-          recipeId,
-          newComment
+          recipe_id,
+          comment
         );
 
         res.status(201).json({
           message: "댓글이 성공적으로 생성되었습니다.",
-          comment: comment,
+          comment: newComment,
         });
       } catch (error) {
         console.error(error);
@@ -68,24 +65,19 @@ export default (app: Router) => {
     "/update",
     celebrate({
       [Segments.BODY]: Joi.object({
-        recipe_id: Joi.string().required,
+        comment_id: Joi.string().required,
         comment: Joi.string().required,
       }),
     }),
     isAuth,
-    attachCurrentUser,
     isMyComment,
     async (req: Request, res: Response) => {
-      const recipeId = req.body.recipe_id as string;
-      const willUpdateComment = req.body.comment as string;
+      const { comment_id, comment } = req.body;
 
       try {
-        const comment = await CommentService.updateComment(
-          recipeId,
-          willUpdateComment
-        );
+        const newComment = await CommentService.updateComment(comment_id, comment);
 
-        if (!comment) {
+        if (!newComment) {
           return res
             .status(404)
             .json({ message: "수정할 댓글을 찾을 수 없습니다." });
@@ -93,7 +85,7 @@ export default (app: Router) => {
 
         res.status(200).json({
           message: "댓글이 성공적으로 수정되었습니다.",
-          comment: comment,
+          comment: newComment,
         });
       } catch (error) {
         console.error(error);
@@ -108,13 +100,12 @@ export default (app: Router) => {
       [Segments.BODY]: Joi.object({ recipe_id: Joi.string().required }),
     }),
     isAuth,
-    attachCurrentUser,
     isMyComment,
     async (req: Request, res: Response) => {
-      const recipeId = req.body.recipe_id as string;
+      const { comment_id } = req.body;
 
       try {
-        const comment = await CommentService.deleteComment(recipeId);
+        const comment = await CommentService.deleteComment(comment_id);
 
         if (!comment) {
           return res

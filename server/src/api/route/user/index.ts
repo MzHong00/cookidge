@@ -10,8 +10,8 @@ export default (app: Router) => {
   app.use("/user", route);
 
   route.get("/me", isAuth, async (req: Request, res: Response) => {
-    const me = req.jwtPayload.name;
-    const user = (await User.findOne({ name: me })) as IUser;
+    const meId = req.jwtPayload.id;
+    const user = (await User.findById(meId)) as IUser;
 
     res.status(200).json(user);
   });

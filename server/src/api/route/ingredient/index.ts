@@ -4,13 +4,12 @@ import isAuth from "../../middleware/isAuth";
 import isOurRefrigerator from "../../middleware/isOurRefrigerator";
 import attachCurrentUser from "../../middleware/attachCurrentUser";
 import {
-  deleteIngredientsJoiSchema,
   IIngredient,
-  mutateIngredientsJoiSchema,
+  ingredientsJoiSchema,
 } from "../../../interface/IIngredient";
 import { IngredientService } from "../../../services/ingredient";
 import { IRefrigerator } from "../../../interface/IRefrigerator";
-import { celebrate, Segments } from "celebrate";
+import { celebrate, Joi, Segments } from "celebrate";
 
 const route = Router();
 
@@ -19,14 +18,20 @@ export default (app: Router) => {
 
   route.post(
     "/create",
-    celebrate({ [Segments.BODY]: mutateIngredientsJoiSchema }),
+    celebrate({
+      [Segments.QUERY]: Joi.object({
+        refrigerator_id: Joi.string().required(),
+      }),
+      [Segments.BODY]: Joi.object({
+        ingredients: Joi.array().items(ingredientsJoiSchema),
+      }).required(),
+    }),
     isAuth,
-    attachCurrentUser,
     isOurRefrigerator,
     async (req, res) => {
       const ingredients = req.body.ingredients as IIngredient[];
-      const refrigeratorId = req.body.refrigeratorId as IRefrigerator["_id"];
-
+      const refrigeratorId = req.query.refrigerator_id as string;
+      
       try {
         const createdIngredients = await IngredientService.createIngredient(
           refrigeratorId,
@@ -43,13 +48,19 @@ export default (app: Router) => {
 
   route.patch(
     "/update",
-    celebrate({ [Segments.BODY]: mutateIngredientsJoiSchema }),
+    celebrate({
+      [Segments.QUERY]: Joi.object({
+        refrigerator_id: Joi.string().required(),
+      }),
+      [Segments.BODY]: Joi.object({
+        ingrdients: Joi.array().items(Joi.string()).required(),
+      }),
+    }),
     isAuth,
-    attachCurrentUser,
     isOurRefrigerator,
     async (req, res) => {
       const ingredients = req.body.ingredients as IIngredient[];
-      const refrigeratorId = req.body.refrigeratorId as IRefrigerator["_id"];
+      const refrigeratorId = req.query.refrigeratorId as string;
 
       try {
         const result = await IngredientService.updateIngredients(
@@ -75,14 +86,20 @@ export default (app: Router) => {
 
   route.delete(
     "/delete",
-    celebrate({ [Segments.BODY]: deleteIngredientsJoiSchema }),
+    celebrate({
+      [Segments.QUERY]: Joi.object({
+        refrigerator_id: Joi.string().required(),
+      }),
+      [Segments.BODY]: Joi.object({
+        ingrdients: Joi.array().items(Joi.string()).required(),
+      }),
+    }),
     isAuth,
-    attachCurrentUser,
     isOurRefrigerator,
     async (req, res) => {
       const removeIngredientIds = req.body
         .ingredientIds as IIngredient["_id"][];
-      const refrigeratorId = req.body.refrigeratorId as IRefrigerator["_id"];
+      const refrigeratorId = req.query.refrigeratorId as string;
 
       try {
         const result = await IngredientService.deleteIngredient(

@@ -12,7 +12,7 @@
     cursor: pointer;
 }
 
-.fileInput:hover > svg {
+.fileInput:hover svg {
     transform: translateY(-5px);
     transition-duration: 0.3s;
     transition-timing-function: ease;

@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import { Recipe } from "../../models/recipe";
 
 export default (req: Request, res: Response, next: NextFunction) => {
-  const userId = req.user?._id;
+  const userId = req.jwtPayload.id;
   const recipeId = req.body.recipe_id || req.body.recipe._id;
 
   if (!userId)

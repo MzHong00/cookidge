@@ -5,20 +5,17 @@ import { RiCalendarLine } from "@react-icons/all-files/ri/RiCalendarLine";
 import { IRecipe } from "shared/api/recipe";
 import { IconBox } from "shared/ui/iconBox";
 import { SubjectBox } from "shared/ui/subjectBox";
-import { CloudinaryImg } from "shared/ui/cloudinary";
-import { LikeButton, RattingButton } from "features/recipe";
+import { PicturesBox } from "shared/ui/picturesBox";
+import { LikeButton } from "features/recipe/like";
 
 import styles from "./detailCard.module.scss";
 
-interface Props extends React.HTMLAttributes<HTMLDivElement>, IRecipe {
-  onClickLike: React.MouseEventHandler;
-  onClickStar: React.MouseEventHandler;
-}
+interface Props extends React.HTMLAttributes<HTMLDivElement>, IRecipe {}
 
 export const DetailCard = ({
   _id,
   name,
-  picture,
+  pictures,
   author_id,
   ingredients,
   introduction,
@@ -27,44 +24,32 @@ export const DetailCard = ({
   cooking_steps,
   created_at,
   like_members,
-  ratting,
-  onClickLike,
-  onClickStar,
   children,
   className,
   ...props
-}: Partial<Props>) => {
+}: Props) => {
   return (
-    <article className={`flex-column ${className}`} {...props}>
-      <CloudinaryImg
-        publicId="shish-kebab-417994_640_db1899"
-        className={styles.pictureBox}
-      />
+    <article className={`flex-column-center ${className}`} {...props}>
+      <PicturesBox pictures={pictures} />
       <div className={styles.infoBox}>
         <div className={styles.recipeInfoBar}>
           <div className={styles.infoHeader}>{name && <b>{name}</b>}</div>
-          {(like_members || onClickStar) && (
+          {like_members && (
             <div className="flex-row">
-              {like_members && (
-                <LikeButton
-                  likeCount={like_members.length}
-                  onClick={onClickLike}
-                />
-              )}
-              {ratting && (
-                <RattingButton rattingCount={ratting} onClick={onClickStar} />
+              {like_members && _id && (
+                <LikeButton recipe_id={_id} likeMembers={like_members} />
               )}
             </div>
           )}
 
           <div className={styles.subInfo}>
-            {cooking_time && (
+            {!!cooking_time && (
               <IconBox Icon={RiTimer2Line}>조리시간 {cooking_time}분</IconBox>
             )}
-            {servings && <IconBox Icon={RiGroupLine}>{servings}인분</IconBox>}
+            {!!servings && <IconBox Icon={RiGroupLine}>{servings}인분</IconBox>}
             {created_at && (
               <IconBox Icon={RiCalendarLine}>
-                {created_at.toLocaleDateString()}
+                {`${created_at.toString().substring(0, 10)}`}
               </IconBox>
             )}
           </div>
@@ -74,7 +59,7 @@ export const DetailCard = ({
           <SubjectBox title="재료" className={styles.ingredientBox}>
             <ol>
               {ingredients.map((ingredient) => (
-                <li key={ingredient._id}>
+                <li key={ingredient.name}>
                   {ingredient.name} {ingredient.quantity}
                 </li>
               ))}

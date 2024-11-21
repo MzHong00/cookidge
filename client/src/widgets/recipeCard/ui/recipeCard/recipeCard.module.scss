@@ -3,17 +3,12 @@
 .cardContainer {
     @include app.flex-layout(column);
     gap: 0;
+    border-bottom: 1px solid rgb(var(--base-rgb-grey-light));
     border-radius: 5px;
-    box-shadow: var(--base-box-shadow);
-}
-
-.pictureBox {
-    flex: 1;
 }
 
 .infoBox {
     height: 100%;
-    padding: 1rem;
     @include app.flex-layout(column, start, space-between);
     flex: 1;
 }
@@ -39,7 +34,6 @@
 
 .subInfo>* {
     padding: 0rem;
-
 }
 
 .subInfo svg {
@@ -76,9 +70,4 @@
         border-radius: 0px !important;
         border: none !important;
     }
-}
-
-.recipeDetailButton {
-    width: 100%;
-    flex-direction: row-reverse;
 }

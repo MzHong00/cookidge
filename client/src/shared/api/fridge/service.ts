@@ -1,4 +1,5 @@
 import axios from "shared/api/axiosBase";
+
 import { IFridge } from "./type";
 
 export class FridgeService {
@@ -8,10 +9,10 @@ export class FridgeService {
     return (await axios.get(`${this.root}/read-list`)).data;
   }
 
-  static async fetchFridgeDetailQuery(id: IFridge["_id"]) {
+  static async fetchFridgeDetailQuery(id?: IFridge["_id"]) {
     return (
       await axios.get(`${this.root}/read-detail`, {
-        params: { targetId: id },
+        params: { refrigerator_id: id },
       })
     ).data;
   }

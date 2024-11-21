@@ -1,0 +1,39 @@
+@use 'app/app.scss';
+
+/* 레시피 탭*/
+@media screen and (max-width: 767px) {
+    .myRecipeSection {
+        flex-direction: column !important;
+    }
+    
+    .recipeBoxHeader {
+        justify-content: space-between;
+        gap: 0;
+    }
+}
+
+.myRecipeSection {
+    @include app.flex-layout(row)
+}
+
+.recipeContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    overflow: auto;
+    aspect-ratio: 1;
+}
+
+.recipeBoxHeader {
+    justify-content: start;
+    font-size: clamp(0.5rem, 90%, 1rem);
+    gap: 1rem;
+}
+
+.recommendReloadButton {
+    border: 1px solid rgb(var(--base-rgb-grey-light));
+}
+
+.loginForm {
+    width: 100%;
+    margin-inline: auto;
+}

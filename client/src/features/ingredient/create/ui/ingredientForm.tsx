@@ -1,37 +1,54 @@
-import { RiEditBoxLine } from "@react-icons/all-files/ri/RiEditBoxLine";
+import { useFieldArray, useForm } from "react-hook-form";
 import { CgRemoveR } from "@react-icons/all-files/cg/CgRemoveR";
 import { RiAddLine } from "@react-icons/all-files/ri/RiAddLine";
 
-import { Ingredient } from "shared/api/fridge";
+import { IFridge } from "shared/api/fridge";
+import { IRecipe } from "shared/api/recipe";
+import { IIngredient, IIngredientInputDto } from "shared/api/ingredient";
 import { IconButton } from "shared/ui/iconButton";
 import { SubjectBox } from "shared/ui/subjectBox";
+import { generateKey } from "shared/helper/generateKey";
+import { getDateToISO } from "shared/helper/getDateToISO";
 import {
   INGREDIENT_TABLE_FIELD,
   INGREDIENTS_CATEGORIES,
 } from "entities/fridge";
+import { useCreateIngredientMutation } from "../mutation/ingredientMutation";
 
 import styles from "./ingredientForm.module.scss";
-import { useFieldArray, useForm } from "react-hook-form";
-import { generateKey } from "shared/helper/generateKey";
-import { getDateToISO } from "shared/helper/getDateToISO";
+import { useEffect } from "react";
 
-interface IngredientForm {
-  ingredients: Partial<Ingredient>[]; // 제네릭 타입에 Ingredient 배열을 명시
+interface IngredientInputForm {
+  ingredients: IIngredient[]; // 제네릭 타입에 Ingredient 배열을 명시
 }
 
 interface Props {
-  disabled?: boolean;
+  fridge_id: IRecipe["_id"];
+  stored_ingredients?: IFridge["stored_ingredients"];
+  isReadMode: boolean;
 }
 
-const defaultIngredient = { _id: generateKey(), expired_at: getDateToISO() };
+export const IngredientForm = ({
+  fridge_id,
+  stored_ingredients,
+  isReadMode,
+}: Props) => {
+  const { mutate } = useCreateIngredientMutation(fridge_id);
 
-export const IngredientForm = ({ disabled }: Props) => {
-  const { control, register, handleSubmit, reset } = useForm<IngredientForm>({
-    defaultValues: {
-      ingredients: [defaultIngredient],
-    },
-  });
-
+  const { control, register, handleSubmit, reset } =
+    useForm<IngredientInputForm>({
+      defaultValues: {
+        ingredients: stored_ingredients || [
+          { _id: generateKey(), expired_at: getDateToISO() },
+        ],
+      },
+    });
+  // `stored_ingredients`가 변경될 때마다 `reset` 호출
+  useEffect(() => {
+    if (stored_ingredients) {
+      reset({ ingredients: stored_ingredients });
+    }
+  }, [stored_ingredients, reset]);
   const { fields, append, remove } = useFieldArray({
     name: "ingredients",
     control,
@@ -39,11 +56,17 @@ export const IngredientForm = ({ disabled }: Props) => {
 
   const onClickAppend = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    append(defaultIngredient);
+    append({ _id: generateKey(), expired_at: getDateToISO() } as IIngredient);
   };
 
-  const onSubmit = (data: IngredientForm) => {
-    console.log(data);
+  const onSubmit = (data: IngredientInputForm) => {
+    const ingredients = data.ingredients.map((ingredient) => {
+      const { _id, ...inputIngredientDto } = ingredient;
+      return inputIngredientDto as IIngredientInputDto;
+    });
+
+    mutate(ingredients);
+    reset();
   };
 
   return (
@@ -51,6 +74,11 @@ export const IngredientForm = ({ disabled }: Props) => {
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div style={{ overflowY: "auto" }}>
           <table className={styles.table}>
+            <colgroup className={styles.colgroup}>
+              {Array.from({ length: 5 }).map((_, i) => (
+                <col key={i} />
+              ))}
+            </colgroup>
             <thead className={styles.tableHeader}>
               <tr>
                 {INGREDIENT_TABLE_FIELD.map((filed) => (
@@ -61,12 +89,14 @@ export const IngredientForm = ({ disabled }: Props) => {
             <tbody>
               {fields?.map((ingredient, index) => (
                 <tr key={ingredient._id} className={styles.ingredientTableItem}>
-                  <td style={{ position: "relative" }}>
+                  <td>
                     <select
                       id="category"
                       {...register(`ingredients.${index}.category`, {
                         required: true,
                       })}
+                      className={`${isReadMode && styles.selectDisable}`}
+                      disabled={isReadMode}
                     >
                       {INGREDIENTS_CATEGORIES.map((category) => (
                         <option key={category.text}>
@@ -81,7 +111,7 @@ export const IngredientForm = ({ disabled }: Props) => {
                       {...register(`ingredients.${index}.name`, {
                         required: true,
                       })}
-                      disabled={disabled}
+                      disabled={isReadMode}
                     />
                   </td>
                   <td>
@@ -90,7 +120,7 @@ export const IngredientForm = ({ disabled }: Props) => {
                       {...register(`ingredients.${index}.quantity`, {
                         required: true,
                       })}
-                      disabled={disabled}
+                      disabled={isReadMode}
                     />
                   </td>
                   <td>
@@ -99,37 +129,38 @@ export const IngredientForm = ({ disabled }: Props) => {
                       {...register(`ingredients.${index}.expired_at`, {
                         required: true,
                       })}
-                      disabled={disabled}
+                      disabled={isReadMode}
                     />
                   </td>
-                  <td>
-                    {disabled && (
+                  {!isReadMode && (
+                    <td>
                       <IconButton
-                        Icon={RiEditBoxLine}
-                        className={styles.ingredientActionButton}
+                        Icon={CgRemoveR}
+                        onClick={() => remove(index)}
+                        className={styles.removeButton}
+                        color="red"
                       />
-                    )}
-                    <IconButton
-                      Icon={CgRemoveR}
-                      onClick={() => remove(index)}
-                      className={styles.removeButton}
-                      color="red"
-                    />
-                  </td>
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <IconButton
-          Icon={RiAddLine}
-          className={styles.appendButton}
-          onClick={onClickAppend}
-        >
-          추가
-        </IconButton>
-        <div className={styles.whiteSpace} />
-        <input type="submit" className={styles.submitButton} value="확인" />
+        {!isReadMode && (
+          <>
+            <div className={styles.appendButtonContainer}>
+              <IconButton
+                Icon={RiAddLine}
+                className={styles.appendButton}
+                onClick={onClickAppend}
+              >
+                추가
+              </IconButton>
+            </div>
+            <input type="submit" className={styles.submitButton} value="확인" />
+          </>
+        )}
       </form>
     </SubjectBox>
   );

@@ -1,0 +1,36 @@
+@use 'app/app.scss';
+
+.container {
+    height: 100%;
+    border: 1px solid black;
+    border-radius: 5px;
+    aspect-ratio: 1;
+}
+
+.container:hover svg {
+    transform: scale(0.9);
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+}
+
+.label {
+    width: 100%;
+    height: 100%;
+    @include app.flex-layout(row, center, center, 0);
+    cursor: pointer;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.uploadPlaceholder {
+    @include app.flex-layout(column, center, center, 0.5rem);
+}
+
+.uploadPlaceholder > p {
+    color: rgb(var(--base-rgb-grey-medium));
+}

@@ -1,12 +1,5 @@
 @use 'app/app.scss';
 
-.pictureBox {
-    max-height: 20rem;
-    flex: 1;
-    aspect-ratio: 0;
-    background-color: white;
-}
-
 .infoBox {
     width: 100%;
     height: 100%;
@@ -40,15 +33,6 @@
 
 .subInfo svg {
     font-size: 1rem;
-}
-
-.recipeActionBar>button {
-    padding-inline: 0.25rem;
-}
-
-.chatSection {
-    height: 100%;
-    transition: transform 0.5s ease;
 }
 
 .ingredientBox {

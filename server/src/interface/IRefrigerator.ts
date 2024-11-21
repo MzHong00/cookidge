@@ -1,12 +1,12 @@
+import { ObjectId } from "mongoose";
 import { IIngredient } from "./IIngredient";
-import { IUser } from "./IUser";
 
 export interface IRefrigerator {
-  _id: string;
+  _id: ObjectId;
   name: string;
-  owner_id: IUser["_id"];
+  owner_id: string;
   stored_ingredients: IIngredient[];
-  shared_members: IUser["_id"][];
+  shared_members: string[];
   last_updated: Date;
   created_at: Date;
 }

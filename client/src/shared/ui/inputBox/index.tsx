@@ -12,10 +12,12 @@ export const InputBox = forwardRef<HTMLInputElement, Props>(
   ({ Icon, id, label, className, ...props }, ref) => {
     return (
       <div className={`${className} w-full`}>
-        <label htmlFor={id} className={styles.label}>
-          {Icon && <Icon />}
-          {label}
-        </label>
+        {(label || Icon) && (
+          <label htmlFor={id} className={styles.label}>
+            {Icon && <Icon />}
+            {label}
+          </label>
+        )}
         <input id={id} ref={ref} className={`${styles.input}`} {...props} />
       </div>
     );

@@ -11,7 +11,6 @@ import { useCreateFridgeMutation } from "../mutation/createFridgeMutation";
 
 import styles from "./createFridgeForm.module.css";
 
-
 export const CreateFridgeForm = () => {
   const {
     register,
@@ -23,12 +22,12 @@ export const CreateFridgeForm = () => {
 
   const onSubmit: SubmitHandler<IFridgeFormInput> = (data) => {
     mutate(data.name);
-    navigate('/dashboard/fridge');
+    navigate("/dashboard/fridge");
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <FramerFadeLayout>
+    <FramerFadeLayout>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <SubjectBox title="냉장고 생성" className={styles.subjectBox}>
           <div>
             <InputBox
@@ -52,7 +51,7 @@ export const CreateFridgeForm = () => {
             <IconButton className="main-button">생성</IconButton>
           </div>
         </SubjectBox>
-      </FramerFadeLayout>
-    </form>
+      </form>
+    </FramerFadeLayout>
   );
 };

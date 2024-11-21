@@ -44,3 +44,21 @@
 - 모든 엔티티의 model, interface, service, api 작성 완료
     => 테스트 필요
 - celebrate, joi 라이브러리 도입 후 validate 미들웨어 작성 완료
+
+11.13 ~ 11.14
+- multer 이미지 못 받아오는 현상 수정
+    =>  프론트엔드에서 네트워크 탭에 바이너리 파일로 와야함 (기존에는 [Object FileList])
+- cloudinary와 백엔드 서버 통신 구현
+- cloudinary에 이미지 올릴 경우, transformation 속성으로 최적화 후 DB에 저장하는 방식으로 구현
+    =>  기존에는 eager 속성으로 클라우드 공간을 좀 더 효율적으로 사용하기 위하여 transformation으로 변경
+
+11.19
+- JWT 토큰 Payload 구조 변경
+- 기존의 불필요하게 들어갔던 attachCurrentUser 제거
+
+11.20
+- 레시피 좋아요 api 구현
+
+10.21
+- ObjectId와 string 간의 타입 모호성 명확하게 수정
+- 나의 레시피 api 구현

@@ -1,6 +1,5 @@
-import { Link } from "react-router-dom";
-import { useQueryClient } from "@tanstack/react-query";
 import { FaBell } from "@react-icons/all-files/fa/FaBell";
+import { RiUser3Line } from "@react-icons/all-files/ri/RiUser3Line";
 
 import { Logo } from "shared/ui/logo";
 import { IUser } from "shared/api/user";
@@ -8,14 +7,17 @@ import { Navbar } from "shared/ui/navbar";
 import { IconLink } from "shared/ui/iconLink";
 import { useModal } from "shared/hooks/useModal";
 import { IconButton } from "shared/ui/iconButton";
-import { UserQueries } from "entities/user";
+import { LogoutButton } from "features/user/logout";
 
 import styles from "./header.module.scss";
 
-export const Header = () => {
-  const user = useQueryClient().getQueryData([UserQueries.keys.me]) as IUser;
+interface Props {
+  user?: IUser;
+}
+
+export const Header = ({ user }: Props) => {
   const { modalRef, isOpen, toggleModal } = useModal();
-  
+
   return (
     <header className={styles.header}>
       <Logo />
@@ -43,17 +45,10 @@ export const Header = () => {
         )}
         {isOpen && user && (
           <nav ref={modalRef} className={styles.userMenu}>
-            <Link to={`user/${user.name}`} className={styles.userProfile}>
-              <img
-                src="https://lh3.googleusercontent.com/a/AEdFTp4pPqM6NpOpPqG-cAg1vMo6k6PwFlei8v1deyEJ=s96-c"
-                className={styles.userProfileImage}
-                alt=""
-              />
-              <div>
-                <b>{user?.name}</b>
-                <p>{user?.email}</p>
-              </div>
-            </Link>
+            <IconLink to={`user/${user.name}`} Icon={RiUser3Line}>
+              내 정보
+            </IconLink>
+            <LogoutButton />
           </nav>
         )}
       </div>

@@ -20,3 +20,8 @@
         padding: 0.5rem !important;
     }
 }
+
+.loginForm {
+    width: 100%;
+    margin: auto;
+}

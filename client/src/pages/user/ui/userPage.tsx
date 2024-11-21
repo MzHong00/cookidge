@@ -1,5 +1,5 @@
 import { Link, useLoaderData } from "react-router-dom";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { RiUserAddLine } from "@react-icons/all-files/ri/RiUserAddLine";
 import { RiUserFollowLine } from "@react-icons/all-files/ri/RiUserFollowLine";
 import { RiUserSettingsLine } from "@react-icons/all-files/ri/RiUserSettingsLine";
@@ -10,6 +10,7 @@ import { IconLink } from "shared/ui/iconLink";
 import { IconButton } from "shared/ui/iconButton";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 import { UserQueries } from "entities/user";
+import { RecipeQueries } from "entities/recipe/queries/recipeQueries";
 import { RecipeCard } from "widgets/recipeCard";
 
 import styles from "./userPage.module.scss";
@@ -17,6 +18,9 @@ import styles from "./userPage.module.scss";
 export const UserPage = () => {
   const user = useLoaderData() as IUser;
   const me = useQueryClient().getQueryData([UserQueries.keys.me]) as IUser;
+  const { data: userRecipes, isLoading } = useQuery(
+    RecipeQueries.listByUserQuery(user.name)
+  );
 
   if (!user) return <div>존재하지 않는 사용자입니다.</div>;
 
@@ -76,27 +80,15 @@ export const UserPage = () => {
         </header>
         <hr />
         <div className={styles.userRecipeList}>
-          <Link to={"/recipe/1"}>
-            <RecipeCard
-              name="김치볶음밥"
-              className={styles.userRecipeCard}
-              like_members={["", ""]}
-            />
-          </Link>
-          <Link to={"/recipe/1"}>
-            <RecipeCard
-              name="김치볶음밥"
-              className={styles.userRecipeCard}
-              like_members={["", ""]}
-            />
-          </Link>
-          <Link to={"/recipe/1"}>
-            <RecipeCard
-              name="김치볶음밥"
-              className={styles.userRecipeCard}
-              like_members={["", ""]}
-            />
-          </Link>
+          {userRecipes?.map((recipe) => (
+            <Link to={`/recipe/${recipe._id}`} key={recipe._id}>
+              <RecipeCard
+                key={recipe._id}
+                className={styles.userRecipeCard}
+                {...recipe}
+              />
+            </Link>
+          ))}
         </div>
       </div>
     </FramerFadeLayout>

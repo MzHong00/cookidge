@@ -53,6 +53,11 @@
     gap: 0.5rem;
 }
 
+.userRecipeList > a{
+    width: 300px;
+    height: 300px;
+}
+
 .userRecipeCard>:last-child {
     padding: 0.5rem;
     @include app.flex-layout(row, center, space-between);

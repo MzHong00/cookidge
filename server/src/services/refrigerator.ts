@@ -1,24 +1,27 @@
+import mongoose from "mongoose";
+
 import { IRefrigerator } from "../interface/IRefrigerator";
-import { IUser } from "../interface/IUser";
 import { Refrigerator } from "../models/refrigerator";
 
 export class RefrigeratorService {
+  // 냉장고 리스트 읽기
   static async readList(userId: IRefrigerator["owner_id"]) {
     return await Refrigerator.find(
       {
-        $or: [
-          { owner_id: userId },
-          { shared_members: { $eleMatch: { $eq: userId } } },
-        ],
+        $or: [{ owner_id: userId }, { shared_members: userId }],
       },
       "_id name"
     );
   }
 
-  static async readDetail(refrigeratorId: IRefrigerator["_id"]) {
-    return await Refrigerator.findById(refrigeratorId);
+  // 냉장고 자세히 읽기
+  static async readDetail(refrigeratorId: string) {
+    return await Refrigerator.findById(
+      mongoose.Types.ObjectId.createFromHexString(refrigeratorId)
+    );
   }
 
+  // 냉장고 생성
   static async createRefrigerator(
     refrigeratorName: IRefrigerator["name"],
     owner_id: IRefrigerator["owner_id"]
@@ -39,16 +42,11 @@ export class RefrigeratorService {
     );
   }
 
-  static async deleteRefrigerator(refrigeratorId: IRefrigerator["_id"]) {
-    return await Refrigerator.deleteOne({
-      _id: refrigeratorId,
-    });
+  static async deleteRefrigerator(refrigeratorId: string) {
+    return await Refrigerator.findByIdAndDelete(refrigeratorId);
   }
 
-  static async addSharedMember(
-    refrigeratorId: IRefrigerator["_id"],
-    member: IUser["_id"]
-  ) {
+  static async addSharedMember(refrigeratorId: string, member: string) {
     return await Refrigerator.findByIdAndUpdate(refrigeratorId, {
       $push: {
         shared_members: member,
@@ -56,10 +54,7 @@ export class RefrigeratorService {
     });
   }
 
-  static async removeSharedMember(
-    refrigeratorId: IRefrigerator["_id"],
-    member: IUser["_id"]
-  ) {
+  static async removeSharedMember(refrigeratorId: string, member: string) {
     return await Refrigerator.findByIdAndUpdate(refrigeratorId, {
       $pull: {
         shared_members: member,

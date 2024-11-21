@@ -4,7 +4,7 @@ import { FcGoogle } from "@react-icons/all-files/fc/FcGoogle";
 import { Logo } from "shared/ui/logo";
 import { IconBox } from "shared/ui/iconBox";
 import { SubjectBox } from "shared/ui/subjectBox";
-import { googleOAuth } from "../api/googleOAuth";
+import { OAuthService } from "../../../../shared/api/oauth/service";
 
 import styles from "./loginForm.module.scss";
 
@@ -12,7 +12,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {}
 
 export const LoginForm = ({ className, ...props }: Props) => {
   const googleOAuthHandler = async () => {
-    await googleOAuth();
+    await OAuthService.googleOAuth();
   }
 
   return (

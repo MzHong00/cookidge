@@ -10,7 +10,7 @@
 
 .form {
     height: 100%;
-    @include app.flex-layout(column, stretch, space-between, 0);
+    @include app.flex-layout(column, stretch, space-between, 0.5rem);
     flex-grow: 1;
     overflow-y: auto;
 }
@@ -51,18 +51,24 @@
     white-space: nowrap;
 }
 
-.ingredientTableItem input[type="date"],
-.ingredientTableItem select {
-    width: fit-content;
-}
-
 .ingredientTableItem>:last-child{
     text-align: center;
+}
+
+.selectDisable {
+    -webkit-appearance: none; /* 크롬, 사파리 */
+  -moz-appearance: none; /* 파이어폭스 */
+  appearance: none; /* 기타 브라우저 */
 }
 
 .removeButton {
     padding: 0.25rem;
     display: inline;
+}
+
+.appendButtonContainer {
+    height: 100%;
+    flex-grow: 1;
 }
 
 .appendButton {
@@ -79,4 +85,14 @@
     padding-block: 0.5rem;
     border-radius: 5px;
     @include app.main-button
+}
+
+.colgroup>:last-child {
+    width: 32px;
+}
+
+@media screen and (max-width: 767px) {
+    .container {
+        max-width: none;
+    }
 }

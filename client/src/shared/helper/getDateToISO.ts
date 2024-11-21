@@ -1,6 +1,6 @@
 /**
  * 주어진 일(day) 차이를 현재 날짜에 더하여 YYYY-MM-DD 형식의 문자열로 반환하는 함수
- * @param {number} daysDifference - 현재와의 일(day) 차이 (기본값: 0)
+ * @param {number} afterDay - 현재와의 일(day) 차이 (기본값: 0)
  * @returns {string} YYYY-MM-DD 형태의 날짜 문자열
  */
 export function getDateToISO(afterDay = 0) {

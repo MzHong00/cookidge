@@ -1,0 +1,92 @@
+@use 'app/app.scss';
+
+.formContent {
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+
+.formContent label {
+    font-weight: bold
+}
+
+// 요리 사진 스타일
+.pictureSection {
+    @include app.flex-layout(column)
+}
+
+.pictureLabel {
+    @include app.flex-layout(row, stretch, stretch, 0.25rem);
+}
+
+.pictureUpload {
+    padding-block: 0.5rem;
+    width: 50px;
+    @include app.main-button();
+    border: none;
+}
+
+.previewImageConatiner {
+    @include app.flex-layout(row);
+    flex-wrap: wrap;
+}
+
+.previewImage {
+    width: max(20%, 100px);
+    @include app.flex-layout(row, center, center);
+    overflow: hidden;
+    aspect-ratio: 1;
+}
+
+.previewImage > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.uploaderBox {
+    max-height: min(16rem, 30vh);
+    aspect-ratio: 1;
+}
+
+.categoriesInput{
+    @include app.flex-layout(column, stretch, stretch, 0.25rem);
+}
+
+.categoriesInput > select {
+    height: 3rem;
+}
+
+.stepInputBox {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+}
+
+.stepInputBox > *{
+    width: 100%;
+}
+
+.stepTextArea {
+    padding: 1rem;
+}
+
+.formContent input {
+    border: none;
+    border-bottom: 1px solid grey;
+    font-size: 1em;
+}
+
+.formContent select {
+    border: none;
+}
+
+.appendButton {
+    width: fit-content;
+    background-color: white;
+    transition-duration: 0.3s;
+}
+
+.removeButton {
+    padding-inline: 0;
+    color: red;
+}

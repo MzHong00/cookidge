@@ -1,13 +1,13 @@
 import { useRef, useState } from "react";
 
-import { type CookingStep } from "shared/types";
+import { type CookingStep } from "shared/api/recipe/type";
 import { IconButton } from "shared/ui/iconButton";
 import { SubjectBox } from "shared/ui/subjectBox";
 
 import styles from "./recipeStep.module.scss";
 
 interface Props {
-  recipeSteps: CookingStep[];
+  recipeSteps?: CookingStep[];
 }
 
 export const RecipeStep = ({ recipeSteps }: Props) => {
@@ -46,7 +46,7 @@ export const RecipeStep = ({ recipeSteps }: Props) => {
   return (
     <SubjectBox title="레시피" className={styles.container}>
       <ul className={styles.indicatorContainer}>
-        {Array.from({ length: recipeSteps.length }).map((_, i) => (
+        {Array.from({ length: recipeSteps?.length || 0 }).map((_, i) => (
           <li key={i}>
             <button
               className={`${styles.dotIndicator} ${
@@ -60,7 +60,7 @@ export const RecipeStep = ({ recipeSteps }: Props) => {
       </ul>
 
       <div ref={ref} className={styles.recipeStepSlider}>
-        {recipeSteps.map((step, idx) => (
+        {recipeSteps?.map((step, idx) => (
           <article key={step.instruction} className={styles.recipeStepContent}>
             <img src={step.picture} alt="" className={styles.recipeStepImage} />
             <div className={styles.recipeStepInstruction}>
@@ -75,11 +75,12 @@ export const RecipeStep = ({ recipeSteps }: Props) => {
         <IconButton
           className={styles.stepPrevButton}
           onClick={changeStepByButtonHandler}
-        >이전</IconButton>
-        <IconButton
-          className="main-button"
-          onClick={changeStepByButtonHandler}
-        >다음</IconButton>
+        >
+          이전
+        </IconButton>
+        <IconButton className="main-button" onClick={changeStepByButtonHandler}>
+          다음
+        </IconButton>
       </div>
     </SubjectBox>
   );

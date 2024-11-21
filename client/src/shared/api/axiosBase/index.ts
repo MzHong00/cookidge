@@ -1,6 +1,7 @@
 import axios, { AxiosStatic } from "axios";
 
-import { issueAccessToken } from "../auth/jwtToken";
+import { AuthService } from "../auth/service";
+import { useGlobalStore } from "shared/lib/zustand/useStore";
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_SERVER_API,
@@ -19,10 +20,17 @@ instance.interceptors.request.use(
   }
 );
 
+//isLogin true 기준: Access Token이 발급된 경우
+//isLogin false 기준: Refresh Token이 유효하지 않은 경우
+
 instance.interceptors.response.use(
   (response) => {
-    // console.log("발급 받은 토큰:", response.data.token);
     axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
+
+    if (response.data.token) {
+      const { changeIsLogin } = useGlobalStore.getState();
+      changeIsLogin(true);
+    }
 
     if (response.status === 404) {
       console.log("404 Error");
@@ -31,20 +39,20 @@ instance.interceptors.response.use(
     return response;
   },
   async (error) => {
-    if (error.response.data.isLogin === false) return Promise.resolve();
+    const { isLogin, changeIsLogin } = useGlobalStore.getState();
 
-    if (error.response?.status === 401) {
-      if (axios.isAxiosError(error) && error.response?.status === 401) {
-        // 토큰 재발급을 통해 토큰이 헤더에 적용된 상태
-        await issueAccessToken();
-      }
+    if (error.response.data.isLogin === false) {
+      changeIsLogin(false);
+      return Promise.resolve();
+    }
+
+    if (error.response.status === 401) {
+      if (!isLogin) return Promise.resolve();
+
+      await AuthService.issueAccessToken();
 
       /* ------- 토큰 인증 재요청 과정 ------- */
       const accessToken = axios.defaults.headers.common.Authorization;
-
-      error.config.headers = {
-        Authorization: `${accessToken}`,
-      };
 
       // 기존 요청의 headers에 새로 발급된 access token을 설정
       error.config.headers = {
@@ -58,6 +66,7 @@ instance.interceptors.response.use(
       }
 
       const response = await axios.request(error.config);
+
       return response;
     }
     return Promise.reject(error);

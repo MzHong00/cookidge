@@ -1,11 +1,10 @@
-import { IIngredient } from "../interface/IIngredient";
-import { IRefrigerator } from "../interface/IRefrigerator";
+import { IIngredient, IIngredientInputDto } from "../interface/IIngredient";
 import { Refrigerator } from "../models/refrigerator";
 
 export class IngredientService {
   static async createIngredient(
-    targetRefrigeratorId: IRefrigerator["_id"],
-    ingredients: IIngredient[]
+    targetRefrigeratorId: string,
+    ingredients: IIngredientInputDto[]
   ) {
     return await Refrigerator.findByIdAndUpdate(
       targetRefrigeratorId,
@@ -15,7 +14,7 @@ export class IngredientService {
   }
 
   static async updateIngredients(
-    refrigeratorId: IRefrigerator["_id"],
+    refrigeratorId: string,
     ingredients: IIngredient[]
   ) {
     const bulkOps = ingredients.map((ingredient) => ({
@@ -38,7 +37,7 @@ export class IngredientService {
   }
 
   static async deleteIngredient(
-    refrigeratorId: IRefrigerator["owner_id"],
+    refrigeratorId: string,
     ingredientIds: IIngredient["_id"][]
   ) {
     return await Refrigerator.findByIdAndUpdate(refrigeratorId, {

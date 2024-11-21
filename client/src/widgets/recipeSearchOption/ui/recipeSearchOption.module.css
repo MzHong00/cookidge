@@ -1,0 +1,6 @@
+.searchOptionBar {
+    position: sticky;
+    top: 4rem;
+    background-color: white;
+    z-index: 10;
+}

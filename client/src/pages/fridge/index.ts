@@ -1,2 +1,2 @@
-export { getListLoader } from "./loader/getListLoader";
+export { useMoveToFirstFridge } from "./model/useMoveToFirstFridge";
 export { FridgePage } from "./ui/fridgePage";

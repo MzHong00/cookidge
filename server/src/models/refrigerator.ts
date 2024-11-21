@@ -2,11 +2,21 @@ import mongoose, { Schema } from "mongoose";
 
 import { IRefrigerator } from "../interface/IRefrigerator";
 
+const INGREDIENTS_CATEGORIES_TEXT = [
+  "고기",
+  "채소",
+  "과일",
+  "해산물",
+  "유제품",
+  "견과류",
+  "소스",
+];
+
 const StoredIngredientSchema = new Schema({
   name: { type: String, required: true },
-  category: { type: String, required: true },
+  category: { type: String, enum: INGREDIENTS_CATEGORIES_TEXT, required: true },
   quantity: { type: String, required: true },
-  expired_at: { type: Date, required: true },
+  expired_at: { type: String, required: true },
 });
 
 const RefrigeratorSchema = new Schema<IRefrigerator>({

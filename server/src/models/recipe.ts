@@ -2,8 +2,10 @@ import mongoose, { Schema } from "mongoose";
 
 import { IRecipe } from "../interface/IRecipe";
 
+const FOOD_CATEGORIES = ["한식", "일식", "중식", "양식", "디저트"];
+
 const CookingStepSchema = new Schema({
-  picture: { type: String, required: true },
+  picture: { type: String },
   instruction: { type: String, required: true },
 });
 
@@ -15,14 +17,15 @@ const IngredientSchema = new Schema({
 
 const RecipeSchema = new Schema<IRecipe>({
   name: { type: String, required: true },
-  picture: { type: [String], required: true },
+  pictures: { type: [String], required: true },
   author_id: { type: String, required: true },
-  ingredients: [IngredientSchema],
+  ingredients: { type: [IngredientSchema], required: true },
   introduction: { type: String, required: true },
   servings: { type: Number, required: true },
+  category: { type: String, enum: FOOD_CATEGORIES, required: true, },
   cooking_time: { type: Number, required: true },
-  cooking_steps: [CookingStepSchema],
-  like_members: [{ type: String }],
+  cooking_steps: { type: [CookingStepSchema], required: true },
+  like_members: [{ type: String, default: [] }],
   created_at: { type: Date, default: Date.now },
 });
 

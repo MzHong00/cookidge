@@ -10,17 +10,17 @@ import styles from "./index.module.css";
 
 const navItem = [
   {
-    to: "/dashboard/fridge",
+    to: "dashboard/fridge",
     Icon: RiLayout2Line,
     title: "대시보드",
   },
   {
-    to: "/",
+    to: "",
     Icon: RiHome5Line,
     title: "홈",
   },
   {
-    to: "/search",
+    to: "search",
     Icon: RiSearchLine,
     title: "검색",
   },
@@ -39,7 +39,7 @@ export const Navbar = () => {
           className={styles.navItem}
           style={{
             backgroundColor:
-              `/${location.pathname.split("/")[1]}` === item.to
+              `${location.pathname.split("/")[1]}` === item.to.split("/")[0]
                 ? "whitesmoke"
                 : "transparent",
           }}

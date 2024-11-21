@@ -3,12 +3,13 @@
 .iconButton {
     padding-inline: 1rem;
     padding-block: 0.5rem;
-    @include app.flex-layout(row, center, center);
+    @include app.flex-layout(row, center, center, 0.5rem);
     flex-shrink: 0;
     position: relative;
     border: none;
     border-radius: 5px;
     background-color: inherit;
+    white-space: nowrap;
 }
 
 .iconButton:hover {

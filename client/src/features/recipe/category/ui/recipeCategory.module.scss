@@ -1,0 +1,31 @@
+@use 'app/app.scss';
+
+.categoryBar {
+    @include app.flex-layout(row, stretch, stretch, 0rem);
+}
+
+.categoryBar > button {
+    padding-inline: 0.5rem
+}
+
+.category {
+    @include app.flex-layout(row, stretch, space-between, 0.75rem);
+    flex-wrap: nowrap;
+    border-radius: 0;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+}
+
+.category::-webkit-scrollbar {
+    display: none;
+  }
+
+.category button {
+    border-radius: 10px;
+    transition-duration: 0.3s;
+}
+
+.inActiveButton {
+    visibility: hidden;
+}

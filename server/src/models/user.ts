@@ -9,6 +9,7 @@ const userSchema: Schema = new Schema<IUser>({
   introduce: { type: String },
   follower: [{ type: mongoose.Schema.Types.ObjectId }],
   following: [{ type: mongoose.Schema.Types.ObjectId }],
+  like_recipe: [{ type: mongoose.Schema.Types.ObjectId }],
   plan: {
     type: String,
     enum: ["normal", "premium"],

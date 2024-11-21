@@ -6,6 +6,7 @@ import recipe from "./recipe";
 import ingredient from "./ingredient";
 import refrigerator from "./refrigerator";
 import googleOAuth from "./oauth/googleOAuth";
+import comment from "./comment";
 
 export default () => {
   const app = Router();
@@ -16,6 +17,7 @@ export default () => {
   user(app);
   refrigerator(app);
   recipe(app);
+  comment(app);
   ingredient(app);
 
   return app;

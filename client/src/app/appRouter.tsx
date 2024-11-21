@@ -2,17 +2,16 @@ import { lazy, Suspense } from "react";
 import { QueryClient } from "@tanstack/react-query";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 
-import { RecipeCreationForm } from "features/recipe";
-import { Root, initUserLoader } from "pages/root";
-import { Home } from "pages/home";
+import { OAuthService } from "shared/api/oauth";
+import { RecipeCreationForm } from "features/recipe/create";
+import { CreateFridgeForm } from "features/fridge/create";
+import { FridgeDetail } from "widgets/fridge";
+import { Root } from "pages/root";
+import { Home, searchOptionLoader } from "pages/home";
 import { LoginPage } from "pages/login";
 import { Dashboard } from "pages/dashboard";
 import { RecipeDetailPage } from "pages/recipe";
 import { searchUserLoader } from "pages/user/loader/searchUserLoader";
-import { googleOAuthRedirect } from "features/user";
-import { CreateFridgeForm } from "features/fridge";
-import { getListLoader } from "pages/fridge/index";
-import { FridgeDetail } from "widgets/fridge";
 
 export const queryClient = new QueryClient();
 
@@ -23,7 +22,7 @@ const UserPage = lazy(() =>
 );
 
 const UserEditForm = lazy(() =>
-  import("features/user").then((module) => ({
+  import("features/user/edit").then((module) => ({
     default: module.UserEditForm,
   }))
 );
@@ -44,11 +43,11 @@ const appRouter = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
-    loader: initUserLoader(queryClient),
     errorElement: <Navigate to={"/"} />,
     children: [
       {
         path: "/",
+        loader: searchOptionLoader(),
         element: <Home />,
       },
       {
@@ -74,22 +73,25 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "dashboard",
-        element: <Dashboard />,
+        element: (
+          <Suspense fallback={"...dashboard 페이지 로딩중"}>
+            <Dashboard />
+          </Suspense>
+        ),
         children: [
           {
             path: "fridge",
-            loader: getListLoader(queryClient),
             element: (
               <Suspense fallback={"...fridge 페이지 로딩중"}>
                 <FridgePage />
               </Suspense>
             ),
-            children: [{
-              path: ':id',
-              element: (
-                <FridgeDetail />
-              )
-            }]
+            children: [
+              {
+                path: ":id",
+                element: <FridgeDetail />,
+              },
+            ],
           },
           {
             path: "fridge/new/create",
@@ -121,7 +123,7 @@ const appRouter = createBrowserRouter([
   },
   {
     path: "/oauth-redirect",
-    loader: async () => await googleOAuthRedirect(),
+    loader: async () => await OAuthService.googleOAuthRedirect(),
     element: <Navigate to={"/"} />,
   },
 ]);

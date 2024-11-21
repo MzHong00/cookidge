@@ -1,3 +1,5 @@
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { CgAddR } from "@react-icons/all-files/cg/CgAddR";
 import { CgRemoveR } from "@react-icons/all-files/cg/CgRemoveR";
 import { RiTimer2Line } from "@react-icons/all-files/ri/RiTimer2Line";
@@ -7,26 +9,24 @@ import { IconButton } from "shared/ui/iconButton";
 import { SearchBox } from "shared/ui/searchBox";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { useDialog } from "shared/hooks/useDialog";
+import { FridgeQueries } from "entities/fridge";
+import { IngredientForm } from "features/ingredient/create";
 
 import styles from "./fridgeDetail.module.css";
-import { IFridge } from "shared/api/fridge";
-import { useParams } from "react-router-dom";
-import { useQueryClient } from "@tanstack/react-query";
-import { FridgeQueries } from "entities/fridge";
-import { IngredientForm } from "features/ingredient";
 
 export const FridgeDetail = () => {
   const { id } = useParams();
   const { ref, openDialog, closeDialog } = useDialog();
 
-  const fridgeDetail = useQueryClient().getQueryData([
-    FridgeQueries.keys.detail,
-    id,
-  ]) as IFridge | undefined;
+  const { data: fridgeDetail } = useQuery(FridgeQueries.detailQuery(id));
 
   return (
     <>
-      <p>최근 수정: {fridgeDetail?.last_updated.toLocaleString()}</p>
+      {fridgeDetail?.last_updated && (
+        <p>
+          최근 수정: {new Date(fridgeDetail.last_updated).toLocaleString()}
+        </p>
+      )}
       <div className="flex-row">
         <SubjectBox
           title="재료"
@@ -67,10 +67,18 @@ export const FridgeDetail = () => {
             <option value="category">카테고리 순</option>
           </select>
         </div>
+
+        {id && fridgeDetail?.stored_ingredients && (
+          <IngredientForm
+            fridge_id={id}
+            stored_ingredients={fridgeDetail.stored_ingredients}
+            isReadMode
+          />
+        )}
       </SubjectBox>
 
       <dialog ref={ref} onClick={(e) => closeDialog(e)}>
-        <IngredientForm />
+        {id && <IngredientForm fridge_id={id} isReadMode={false} />}
       </dialog>
     </>
   );

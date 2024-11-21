@@ -1,7 +1,7 @@
 import axios from "axios";
 import { OAuth2Client } from "google-auth-library";
 
-import keys from "../config/googleOAuth2.keys";
+import keys from "../config/keys/googleOAuth2.keys";
 
 const oAuth2Client = new OAuth2Client(
   keys.web.client_id,
