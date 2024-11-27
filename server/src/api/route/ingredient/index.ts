@@ -1,15 +1,13 @@
 import { Router } from "express";
+import { celebrate, Joi, Segments } from "celebrate";
 
 import isAuth from "../../middleware/isAuth";
 import isOurRefrigerator from "../../middleware/isOurRefrigerator";
-import attachCurrentUser from "../../middleware/attachCurrentUser";
 import {
   IIngredient,
   ingredientsJoiSchema,
 } from "../../../interface/IIngredient";
 import { IngredientService } from "../../../services/ingredient";
-import { IRefrigerator } from "../../../interface/IRefrigerator";
-import { celebrate, Joi, Segments } from "celebrate";
 
 const route = Router();
 
@@ -53,20 +51,21 @@ export default (app: Router) => {
         refrigerator_id: Joi.string().required(),
       }),
       [Segments.BODY]: Joi.object({
-        ingrdients: Joi.array().items(Joi.string()).required(),
-      }),
+        ingredients: Joi.array().items(ingredientsJoiSchema),
+      }).required(),
     }),
     isAuth,
     isOurRefrigerator,
     async (req, res) => {
       const ingredients = req.body.ingredients as IIngredient[];
-      const refrigeratorId = req.query.refrigeratorId as string;
-
+      const refrigeratorId = req.query.refrigerator_id as string;
+      
       try {
         const result = await IngredientService.updateIngredients(
           refrigeratorId,
           ingredients
         );
+
         if (!result) {
           return res
             .status(404)
@@ -80,43 +79,6 @@ export default (app: Router) => {
         res
           .status(500)
           .json({ message: "재료 업데이트 중 오류가 발생했습니다." });
-      }
-    }
-  );
-
-  route.delete(
-    "/delete",
-    celebrate({
-      [Segments.QUERY]: Joi.object({
-        refrigerator_id: Joi.string().required(),
-      }),
-      [Segments.BODY]: Joi.object({
-        ingrdients: Joi.array().items(Joi.string()).required(),
-      }),
-    }),
-    isAuth,
-    isOurRefrigerator,
-    async (req, res) => {
-      const removeIngredientIds = req.body
-        .ingredientIds as IIngredient["_id"][];
-      const refrigeratorId = req.query.refrigeratorId as string;
-
-      try {
-        const result = await IngredientService.deleteIngredient(
-          refrigeratorId,
-          removeIngredientIds
-        );
-
-        if (!result) {
-          return res
-            .status(204)
-            .json({ message: "삭제할 재료를 찾을 수 없습니다." });
-        }
-
-        res.status(200).json({ message: "재료 삭제에 성공했습니다." });
-      } catch (error) {
-        console.error("재료 삭제 중 오류 발생:", error);
-        res.status(500).json({ message: "재료 삭제 중 오류가 발생했습니다." });
       }
     }
   );

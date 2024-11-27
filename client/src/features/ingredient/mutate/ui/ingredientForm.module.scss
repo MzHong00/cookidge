@@ -84,7 +84,8 @@
     padding-inline: 1rem;
     padding-block: 0.5rem;
     border-radius: 5px;
-    @include app.main-button
+    @include app.main-button;
+    color:white !important;
 }
 
 .colgroup>:last-child {

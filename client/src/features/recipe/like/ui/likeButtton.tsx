@@ -11,7 +11,7 @@ import {
   useUnlikeMutation,
 } from "../mutation/useLikeMutation";
 import { UserQueries } from "entities/user";
-import { useLikeState } from "../model/useLikeState";
+import { useMemo } from "react";
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   recipe_id: IRecipe["_id"];
@@ -26,22 +26,20 @@ export const LikeButton = ({ recipe_id, likeMembers, ...props }: Props) => {
   const { mutate: likeMutate } = useLikeMutation(recipe_id);
   const { mutate: unlikeMutate } = useUnlikeMutation(recipe_id);
 
-  const { isLike, like, setLikeState, setUnlikeState } = useLikeState(
-    likeMembers,
-    me?._id
+  const isLike = useMemo(
+    () => (me?._id ? likeMembers.includes(me?._id) : false),
+    [likeMembers, me]
   );
 
   const onClickLike = () => {
     if (!me) return navigate("/login");
 
-    setLikeState();
     likeMutate();
   };
 
   const onClickUnlike = () => {
     if (!me) return navigate("/login");
-    
-    setUnlikeState();
+
     unlikeMutate();
   };
 
@@ -52,7 +50,7 @@ export const LikeButton = ({ recipe_id, likeMembers, ...props }: Props) => {
         onClick={onClickUnlike}
         {...props}
       >
-        {like}
+        {likeMembers.length}
       </IconButton>
     );
 
@@ -62,7 +60,7 @@ export const LikeButton = ({ recipe_id, likeMembers, ...props }: Props) => {
       onClick={onClickLike}
       {...props}
     >
-      {like}
+      {likeMembers.length}
     </IconButton>
   );
 };

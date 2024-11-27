@@ -1,28 +1,31 @@
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useParams } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { RiUserAddLine } from "@react-icons/all-files/ri/RiUserAddLine";
-import { RiUserFollowLine } from "@react-icons/all-files/ri/RiUserFollowLine";
 import { RiUserSettingsLine } from "@react-icons/all-files/ri/RiUserSettingsLine";
 
 import { IUser } from "shared/api/user";
 import { IconBox } from "shared/ui/iconBox";
 import { IconLink } from "shared/ui/iconLink";
-import { IconButton } from "shared/ui/iconButton";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 import { UserQueries } from "entities/user";
 import { RecipeQueries } from "entities/recipe/queries/recipeQueries";
+import { FollowButton } from "features/user/follow";
 import { RecipeCard } from "widgets/recipeCard";
 
 import styles from "./userPage.module.scss";
 
 export const UserPage = () => {
-  const user = useLoaderData() as IUser;
-  const me = useQueryClient().getQueryData([UserQueries.keys.me]) as IUser;
-  const { data: userRecipes, isLoading } = useQuery(
-    RecipeQueries.listByUserQuery(user.name)
-  );
+  const { name } = useParams();
 
-  if (!user) return <div>존재하지 않는 사용자입니다.</div>;
+  const me = useQueryClient().getQueryData([UserQueries.keys.me]) as IUser;
+  const {
+    data: user,
+    isLoading: isUserLoading,
+    error: userError,
+  } = useQuery(UserQueries.userQuery(name));
+  const { data: userRecipes } = useQuery(RecipeQueries.listByUserQuery(name));
+
+  if (isUserLoading) return <div>사용자 정보 가져오는 중...</div>;
+  if (!user || userError) return <div>존재하지 않는 사용자입니다.</div>;
 
   return (
     <FramerFadeLayout className="w-full flex-column-center">
@@ -55,20 +58,7 @@ export const UserPage = () => {
                 프로필 편집
               </IconLink>
             ) : (
-              <>
-                <IconButton
-                  Icon={RiUserAddLine}
-                  className={styles.userActionButton}
-                >
-                  팔로우
-                </IconButton>
-                <IconButton
-                  Icon={RiUserFollowLine}
-                  className={styles.userActionButton}
-                >
-                  팔로우 해제
-                </IconButton>
-              </>
+              <FollowButton user={user} />
             )}
           </div>
         </div>
@@ -85,7 +75,8 @@ export const UserPage = () => {
               <RecipeCard
                 key={recipe._id}
                 className={styles.userRecipeCard}
-                {...recipe}
+                pictures={recipe.pictures}
+                isThumbnaileMode={true}
               />
             </Link>
           ))}

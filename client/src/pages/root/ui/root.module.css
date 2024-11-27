@@ -10,7 +10,6 @@
 
 .mainContainer>* {
     padding-top: 1rem;
-    padding-bottom: 3rem;
     padding-inline: 10%;
     min-height: calc(100vh - 4rem);
 }

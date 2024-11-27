@@ -1,6 +1,6 @@
 import axios from "shared/api/axiosBase";
 import { IRecipe } from "../recipe";
-import { IComment } from "./type";
+import { IComment, ICommentDTO } from "./type";
 
 export class CommentService {
   static root = "api/comment";
@@ -12,15 +12,15 @@ export class CommentService {
       last_comment_id: IComment["_id"];
     };
     signal: AbortSignal;
-  }): Promise<IComment[]>{
+  }): Promise<ICommentDTO[]>{
     return (await axios.get(`${this.root}/read-list`, config)).data;
   }
 
   // 댓글 생성
-  static async createCommentMutation(
+  static async createComment(
     recipeId: IRecipe["_id"],
     comment: IComment["comment"]
-  ) {
+  ): Promise<IComment> {
     return (await axios.post(`${this.root}/create`, {
       recipe_id: recipeId,
       comment: comment,
@@ -28,7 +28,7 @@ export class CommentService {
   }
 
   // 댓글 수정
-  static async updateCommentMutation(
+  static async updateComment(
     commentId: IComment["_id"],
     comment: IComment["comment"]
   ) {
@@ -39,7 +39,7 @@ export class CommentService {
   }
 
   // 댓글 삭제
-  static async deleteCommentMutation(commentId: IComment["_id"]) {
+  static async deleteComment(commentId: IComment["_id"]): Promise<IComment> {
     return (await axios.delete(`${this.root}/delete`, {
       data: {
         comment_id: commentId,

@@ -18,14 +18,14 @@ const IngredientSchema = new Schema({
 const RecipeSchema = new Schema<IRecipe>({
   name: { type: String, required: true },
   pictures: { type: [String], required: true },
-  author_id: { type: String, required: true },
+  author_id: {  type: mongoose.Types.ObjectId, required: true },
   ingredients: { type: [IngredientSchema], required: true },
   introduction: { type: String, required: true },
   servings: { type: Number, required: true },
   category: { type: String, enum: FOOD_CATEGORIES, required: true, },
   cooking_time: { type: Number, required: true },
   cooking_steps: { type: [CookingStepSchema], required: true },
-  like_members: [{ type: String, default: [] }],
+  like_members: [{ type: mongoose.Types.ObjectId, default: [] }],
   created_at: { type: Date, default: Date.now },
 });
 

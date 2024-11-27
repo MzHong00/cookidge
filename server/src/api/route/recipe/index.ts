@@ -72,7 +72,7 @@ export default (app: Router) => {
         { name: userName },
         { _id: 1 }
       )) as IUser;
-      const recipes = await RecipeService.readRecipesByUserId(_id.toString());
+      const recipes = await RecipeService.readRecipesByUserId(_id);
 
       if (!recipes) {
         return res.status(200).json({ message: "레시피를 찾을 수 없습니다." });
@@ -89,10 +89,10 @@ export default (app: Router) => {
 
   // 나의 레시피 목록 조회
   route.get("/read-list/me", isAuth,  async (req, res) => {
-    const { id } = req.jwtPayload;
+    const userId = req.userId;
     
     try {
-      const recipes = await RecipeService.readRecipesByUserId(id);
+      const recipes = await RecipeService.readRecipesByUserId(userId);
 
       if (!recipes) {
         return res.status(200).json({ message: "레시피를 찾을 수 없습니다." });
@@ -123,7 +123,7 @@ export default (app: Router) => {
     isAuth,
     attachCurrentUser,
     async (req, res) => {
-      const userId = req.jwtPayload.id;
+      const userId = req.userId;
       const recipeInputDto = req.body as IRecipeInputDto;
       const files = req.files as
         | {
@@ -210,19 +210,34 @@ export default (app: Router) => {
     }
   );
 
+  route.get('/read-list/like', isAuth, async(req, res) => {
+    const userId = req.userId;
+
+    try {
+      const likeRecipes= await RecipeService.readMyLikeRecipes(userId);
+      
+      if(!likeRecipes[0]) return res.status(200).send([])
+
+      res.status(200).json(likeRecipes[0].liked_recipes);
+    } catch (error) {
+      console.error("나의 좋아요 레시피 읽기 중 오류가 발생:", error);
+      res.status(500).json({ message: "나의 좋아요 레시피 읽기 중 오류가 발생했습니다." });
+    }
+  })
+
   // 레시피 좋아요 추가
   route.patch(
     "/like",
     celebrate({ [Segments.BODY]: Joi.object({ recipe_id: Joi.string() }) }),
     isAuth,
     async (req, res) => {
-      const userId = req.jwtPayload.id;
+      const userId = req.userId;
       const recipeId = req.body.recipe_id;
 
       try {
-        const recipe = await RecipeService.like(userId, recipeId);
+        await RecipeService.like(userId, recipeId);
 
-        res.status(200).json({ message: "레시피 좋아요 성공", recipe: recipe });
+        res.status(200).json({ message: "레시피 좋아요 성공" });
       } catch (error) {
         console.error("좋아요 오류 발생:", error);
         res.status(500).json({ message: "좋아요 오류가 발생했습니다." });
@@ -236,7 +251,7 @@ export default (app: Router) => {
     celebrate({ [Segments.BODY]: Joi.object({ recipe_id: Joi.string() }) }),
     isAuth,
     async (req, res) => {
-      const userId = req.jwtPayload.id;
+      const userId = req.userId;
       const recipeId = req.body.recipe_id;
 
       try {

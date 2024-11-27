@@ -1,15 +1,17 @@
 import axios from "shared/api/axiosBase";
 
-import { IIngredient, IIngredientInputDto } from "./type";
+import { IIngredientInputDto } from "./type";
 import { IFridge } from "../fridge";
 
 export class IngredientService {
   static readonly root = "api/ingredient";
 
   static async createIngredientMutation(
-    fridgeId: IFridge["_id"],
-    ingredients: IIngredientInputDto[]
+    ingredients: IIngredientInputDto[],
+    fridgeId?: IFridge["_id"]
   ) {
+    if (!fridgeId) return;
+
     return (
       await axios.post(
         `${this.root}/create`,
@@ -24,9 +26,11 @@ export class IngredientService {
   }
 
   static async updateIngredientMutation(
-    fridgeId: IFridge["_id"],
-    ingredients: IIngredient[]
+    ingredients: IIngredientInputDto[],
+    fridgeId?: IFridge["_id"]
   ) {
+    if (!fridgeId) return;
+
     return (
       await axios.patch(
         `${this.root}/update`,
@@ -38,15 +42,5 @@ export class IngredientService {
         }
       )
     ).data;
-  }
-
-  static async deleteIngredientMutation(
-    fridgeId: IFridge["_id"],
-    ingredients: IIngredient["_id"][]
-  ) {
-    return await axios.delete(`${this.root}/delete`, {
-      data: { ingredients: ingredients },
-      params: { refrigerator_id: fridgeId },
-    });
   }
 }

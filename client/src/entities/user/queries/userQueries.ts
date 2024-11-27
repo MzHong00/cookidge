@@ -6,7 +6,7 @@ import { useGlobalStore } from "shared/lib/zustand/useStore";
 export class UserQueries {
   static readonly keys = {
     me: "me",
-    other: "user",
+    user: "user",
   };
 
   static readonly staleTime = 60 * 60 * 1000;
@@ -23,11 +23,13 @@ export class UserQueries {
     });
   }
 
-  static userQuery(name: string) {
+  static userQuery(name?: string) {
     return queryOptions({
-      queryKey: [this.keys.other, name],
+      queryKey: [this.keys.user, name],
       queryFn: async () => await UserService.fetchUser(name),
       staleTime: this.staleTime,
+      enabled: !!name,
+      retry: false
     });
   }
 }

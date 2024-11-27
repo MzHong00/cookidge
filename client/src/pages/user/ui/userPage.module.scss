@@ -24,13 +24,6 @@
     color: rgb(var(--base-rgb-grey-medium));
 }
 
-.userActionButton {
-    padding-block: 0.25rem;
-    padding-inline: 0.5rem;
-    border-radius: 30px;
-    border: 1px solid silver;
-}
-
 .profileEditButton {
     color: white;
     background-color: rgb(var(--main-rgb));
@@ -50,16 +43,9 @@
 .userRecipeList {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 0.5rem;
-}
-
-.userRecipeList > a{
-    width: 300px;
-    height: 300px;
 }
 
 .userRecipeCard>:last-child {
-    padding: 0.5rem;
     @include app.flex-layout(row, center, space-between);
 }
 
@@ -79,5 +65,6 @@
 
     .userRecipeCard>:last-child {
         gap: 0;
+        padding-inline: 0.5rem;
     }
 }

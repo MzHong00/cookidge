@@ -1,6 +1,5 @@
 export {
   useCreateIngredientMutation,
-  useDeleteIngredientMutation,
   useUpdateIngredientMutation,
 } from "./mutation/ingredientMutation";
 

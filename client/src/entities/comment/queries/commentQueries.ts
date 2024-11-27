@@ -7,6 +7,8 @@ export class CommentQueries {
     comment: "comment",
   };
 
+  static staleTime = 24 * 60 * 1000
+
   static infiniteQuery(recipeId: IRecipe["_id"]) {
     return infiniteQueryOptions({
       queryKey: [this.keys.comment, recipeId],
@@ -25,6 +27,7 @@ export class CommentQueries {
         const lastComment = lastPage.at(-1);
         return lastComment?._id;
       },
+      staleTime: this.staleTime
     });
   }
 }

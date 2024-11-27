@@ -4,6 +4,7 @@ import { IUser } from "../user";
 import {
   IRecipe,
   IRecipeCard,
+  IRecipeDetailDTO,
   IRecipeInputDto,
   RecipeFilterQuery,
 } from "./type";
@@ -11,8 +12,8 @@ import {
 export class RecipeService {
   static readonly root = "api/recipe";
 
-  static async readRecipe(id?: IRecipe["_id"]) {
-    return (await axios.get(`${this.root}/read/detail/${id}`)).data;
+  static async readRecipe(id?: IRecipe["_id"]): Promise<IRecipeDetailDTO> {
+    return (await axios.get(`${this.root}/read/detail/${id}`)).data[0];
   }
 
   static async readRecipeList(config: {
@@ -28,7 +29,9 @@ export class RecipeService {
     return (await axios.get(`${this.root}/read-list/me`, config)).data;
   }
 
-  static async readRecipeListByUser(userName: IUser["name"]) {
+  static async readRecipeListByUser(userName?: IUser["name"]) {
+    if(!userName) return;
+    
     return (await axios.get(`${this.root}/read/user/${userName}`)).data;
   }
 
@@ -52,6 +55,13 @@ export class RecipeService {
         recipeId: recipeId,
       },
     });
+  }
+
+  static async readMyLikeRecieps(config: { signal: AbortSignal }) {
+    return (await axios.get(`${this.root}/read-list/like`, config)).data as {
+      _id: string;
+      pictures: IRecipe["pictures"];
+    }[];
   }
 
   static async likeRecipe(recipeId: IRecipe["_id"]) {

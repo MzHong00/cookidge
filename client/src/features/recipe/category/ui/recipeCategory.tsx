@@ -10,8 +10,7 @@ import { useRecipeCategoriesParams } from "..";
 import styles from "./recipeCategory.module.scss";
 
 export const RecipeCategory = memo(() => {
-  const { categoriesParams, onClickCategories } =
-    useRecipeCategoriesParams();
+  const { categoriesParams, onClickCategories } = useRecipeCategoriesParams();
   const {
     ref,
     isLeftActive,
@@ -34,7 +33,7 @@ export const RecipeCategory = memo(() => {
               onClick={onClickCategories}
               data-category={category.text}
               className={`${
-                categoriesParams === category.text && "main-button"
+                categoriesParams.includes(category.text) && "main-button"
               }`}
             >
               {category.emoji} {category.text}

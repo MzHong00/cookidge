@@ -1,8 +1,9 @@
 import Joi from "joi";
 import { IUser } from "./IUser";
+import { ObjectId } from "mongoose";
 
 export interface IRecipe {
-  _id: string;
+  _id: ObjectId;
   name: string;
   pictures: string[];
   author_id: IUser["_id"];

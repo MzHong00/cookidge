@@ -1,8 +1,8 @@
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
-
 import config from "../../config";
-import { CustomJwtPayload } from "../../config/types/express";
+import mongoose from "mongoose";
+
 
 export default (req: Request, res: Response, next: NextFunction) => {
   const accessToken = req.headers.authorization?.split(" ")[1];
@@ -39,7 +39,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
       });
     }
 
-    req.jwtPayload = payload as CustomJwtPayload;
+    req.userId =  mongoose.Types.ObjectId.createFromHexString((payload as JwtPayload).id);
 
     next();
   });

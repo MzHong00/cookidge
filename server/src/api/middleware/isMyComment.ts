@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import { Comment } from "../../models/comment";
 
 export default (req: Request, res: Response, next: NextFunction) => {
-  const userId = req.jwtPayload.id;
+  const userId = req.userId;
   const commentId = req.body.comment_id || req.body.comment._id;
 
   if (!userId)

@@ -9,10 +9,15 @@ import styles from "./picturesBox.module.scss";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   pictures: IRecipe["pictures"];
-  isShowNavigation?: boolean
+  isThumbnaileMode?: boolean;
 }
 
-export const PicturesBox = ({ pictures, isShowNavigation=true,className, ...props }: Props) => {
+export const PicturesBox = ({
+  pictures,
+  isThumbnaileMode = false,
+  className,
+  ...props
+}: Props) => {
   const {
     ref,
     index,
@@ -36,7 +41,7 @@ export const PicturesBox = ({ pictures, isShowNavigation=true,className, ...prop
           </div>
         ))}
       </div>
-      {isShowNavigation && pictures.length > 1 && (
+      {!isThumbnaileMode && pictures.length > 1 && (
         <nav className={styles.indicatorContainer}>
           <IconButton
             Icon={RiArrowDropLeftLine}

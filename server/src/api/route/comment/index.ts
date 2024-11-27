@@ -4,6 +4,7 @@ import { celebrate, Joi, Segments } from "celebrate";
 import isAuth from "../../middleware/isAuth";
 import isMyComment from "../../middleware/isMyComment";
 import { CommentService } from "../../../services/comment";
+import mongoose from "mongoose";
 
 const route = Router();
 
@@ -12,11 +13,18 @@ export default (app: Router) => {
 
   route.get("/read-list", async (req: Request, res: Response) => {
     const { recipe_id, last_comment_id } = req.query;
-    
+
+    const recipeObjectId = mongoose.Types.ObjectId.createFromHexString(
+      recipe_id as string
+    );
+    const lastCommentObjectId = last_comment_id
+      ? mongoose.Types.ObjectId.createFromHexString(last_comment_id as string)
+      : undefined;
+
     try {
       const comment = await CommentService.readComments(
-        recipe_id as string,
-        last_comment_id as string
+        recipeObjectId,
+        lastCommentObjectId
       );
 
       if (!comment) {
@@ -40,9 +48,9 @@ export default (app: Router) => {
     }),
     isAuth,
     async (req: Request, res: Response) => {
-      const userId = req.jwtPayload.id;
+      const userId = req.userId;
       const { recipe_id, comment } = req.body;
-      
+
       try {
         const newComment = await CommentService.createComment(
           userId,
@@ -50,10 +58,7 @@ export default (app: Router) => {
           comment
         );
 
-        res.status(201).json({
-          message: "댓글이 성공적으로 생성되었습니다.",
-          comment: newComment,
-        });
+        res.status(201).json(newComment);
       } catch (error) {
         console.error(error);
         res.status(500).json({ message: "댓글 생성에 실패했습니다." });
@@ -65,8 +70,8 @@ export default (app: Router) => {
     "/update",
     celebrate({
       [Segments.BODY]: Joi.object({
-        comment_id: Joi.string().required,
-        comment: Joi.string().required,
+        comment_id: Joi.string().required(),
+        comment: Joi.string().required(),
       }),
     }),
     isAuth,
@@ -75,7 +80,10 @@ export default (app: Router) => {
       const { comment_id, comment } = req.body;
 
       try {
-        const newComment = await CommentService.updateComment(comment_id, comment);
+        const newComment = await CommentService.updateComment(
+          comment_id,
+          comment
+        );
 
         if (!newComment) {
           return res
@@ -95,9 +103,9 @@ export default (app: Router) => {
   );
 
   route.delete(
-    "/:commentId",
+    "/delete",
     celebrate({
-      [Segments.BODY]: Joi.object({ recipe_id: Joi.string().required }),
+      [Segments.BODY]: Joi.object({ comment_id: Joi.string().required() }),
     }),
     isAuth,
     isMyComment,
@@ -113,7 +121,7 @@ export default (app: Router) => {
             .json({ message: "삭제할 댓글을 찾을 수 없습니다." });
         }
 
-        res.status(200).json({ message: "댓글이 성공적으로 삭제되었습니다." });
+        res.status(200).json(comment);
       } catch (error) {
         console.error(error);
         res.status(500).json({ message: "댓글 삭제에 실패했습니다." });

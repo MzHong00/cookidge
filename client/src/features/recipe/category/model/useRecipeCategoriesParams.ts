@@ -1,24 +1,38 @@
 import { useSearchParams } from "react-router-dom";
 
+const CATEGORIES_KEY = "categories";
+
 export const useRecipeCategoriesParams = () => {
   const [categoriesParams, setSortParams] = useSearchParams();
 
-  const onClickCategories = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onClickCategories = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
 
-    const category = e.currentTarget.dataset.category || "";
+    const clickedCategory = e.currentTarget.dataset.category || "";
 
-    if(categoriesParams.get('categories') === category) {
-      categoriesParams.delete('categories')
-    } else{
-      categoriesParams.set("categories", category);
+    const curCategories = categoriesParams.getAll(CATEGORIES_KEY);
+    const isDuplicated = curCategories.includes(clickedCategory);
+
+    if (isDuplicated) {
+      categoriesParams.delete(CATEGORIES_KEY);
+
+      const newCategories = curCategories.filter(
+        (category) => category !== clickedCategory
+      );
+      newCategories.forEach((category) => {
+        categoriesParams.append(CATEGORIES_KEY, category);
+      });
+    } else {
+      categoriesParams.append(CATEGORIES_KEY, clickedCategory);
     }
 
     setSortParams(categoriesParams);
   };
 
   return {
-    categoriesParams: categoriesParams.get('categories'),
+    categoriesParams: categoriesParams.getAll(CATEGORIES_KEY),
     onClickCategories,
   };
 };

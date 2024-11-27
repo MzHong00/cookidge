@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { CgAddR } from "@react-icons/all-files/cg/CgAddR";
-import { CgRemoveR } from "@react-icons/all-files/cg/CgRemoveR";
+import { RiCloseLine } from "@react-icons/all-files/ri/RiCloseLine";
+import { RiEditBoxLine } from "@react-icons/all-files/ri/RiEditBoxLine";
 import { RiTimer2Line } from "@react-icons/all-files/ri/RiTimer2Line";
 import { RiSeedlingLine } from "@react-icons/all-files/ri/RiSeedlingLine";
 
@@ -10,20 +11,28 @@ import { SearchBox } from "shared/ui/searchBox";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { useDialog } from "shared/hooks/useDialog";
 import { FridgeQueries } from "entities/fridge";
-import { IngredientForm } from "features/ingredient/create";
+import {
+  IngredientForm,
+  useCreateIngredientMutation,
+  useUpdateIngredientMutation,
+} from "features/ingredient/mutate";
 
 import styles from "./fridgeDetail.module.css";
+import { useState } from "react";
 
 export const FridgeDetail = () => {
   const { id } = useParams();
   const { ref, openDialog, closeDialog } = useDialog();
+  const [isReadMode, setIsReadMode] = useState<boolean>(true);
 
   const { data: fridgeDetail } = useQuery(FridgeQueries.detailQuery(id));
+  const { mutate: createIngredientMutation } = useCreateIngredientMutation(id);
+  const { mutate: updateIngredientMutation } = useUpdateIngredientMutation(id);
 
   return (
     <>
       {fridgeDetail?.last_updated && (
-        <p>
+        <p className={styles.lastUpdateText}>
           최근 수정: {new Date(fridgeDetail.last_updated).toLocaleString()}
         </p>
       )}
@@ -58,7 +67,12 @@ export const FridgeDetail = () => {
           >
             재료 추가
           </IconButton>
-          <IconButton Icon={CgRemoveR}>재료 소모</IconButton>
+          <IconButton
+            Icon={isReadMode ? RiEditBoxLine : RiCloseLine}
+            onClick={() => setIsReadMode((prev) => !prev)}
+          >
+            {isReadMode ? "재료 수정" : "수정 취소"}
+          </IconButton>
         </div>
         <div className={styles.ingredientActions}>
           <SearchBox />
@@ -70,15 +84,22 @@ export const FridgeDetail = () => {
 
         {id && fridgeDetail?.stored_ingredients && (
           <IngredientForm
-            fridge_id={id}
+            mutateFn={updateIngredientMutation}
+            onSubmitAttach={() => setIsReadMode((prev) => !prev)}
             stored_ingredients={fridgeDetail.stored_ingredients}
-            isReadMode
+            isReadMode={isReadMode}
           />
         )}
       </SubjectBox>
 
       <dialog ref={ref} onClick={(e) => closeDialog(e)}>
-        {id && <IngredientForm fridge_id={id} isReadMode={false} />}
+        {id && (
+          <IngredientForm
+          mutateFn={createIngredientMutation}
+            onSubmitAttach={() => closeDialog()}
+            isReadMode={false}
+          />
+        )}
       </dialog>
     </>
   );

@@ -10,6 +10,11 @@
     flex-direction: row-reverse;
 }
 
+.lastUpdateText {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
 /* 재료 탭 */
 .ingredientContainer {
     padding-inline: 10%;
@@ -17,6 +22,7 @@
 
 .ingredientControls {
     display: flex;
+    gap: 1rem;
 }
 
 .ingredientActions {

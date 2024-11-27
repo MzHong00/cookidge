@@ -1,24 +1,51 @@
+import { IComment } from "../interface/IComment";
+import { Comment } from "../models/comment";
+import { IRecipe } from "../interface/IRecipe";
+import { IUser } from "../interface/IUser";
 import mongoose from "mongoose";
 
-import { IComment } from "../interface/IComment";
-import { IRecipe } from "../interface/IRecipe";
-import { Comment } from "../models/comment";
-
 export class CommentService {
-  static async readComments(recipeId: string, lastCommentId: string) {
+  static async readComments(
+    recipeId: IRecipe["_id"] | mongoose.mongo.BSON.ObjectId,
+    lastCommentId?: IRecipe["_id"] | mongoose.mongo.BSON.ObjectId
+  ) {
     try {
-      return await Comment.find(
+      return await Comment.aggregate([
         {
-          ...(lastCommentId && {
-            _id: {
-              $lt: mongoose.Types.ObjectId.createFromHexString(lastCommentId),
-            },
-          }),
-          recipe_id: mongoose.Types.ObjectId.createFromHexString(recipeId),
+          $match: {
+            ...(lastCommentId && {
+              _id: {
+                $lt: lastCommentId,
+              },
+            }),
+            recipe_id: recipeId,
+          },
         },
-        {},
-        { sort: { _id: -1 }, limit: 10 }
-      );
+        { $sort: { _id: -1 } },
+        { $limit: 10 },
+        {
+          $lookup: {
+            from: "users",
+            localField: "user_id",
+            foreignField: "_id",
+            as: "user",
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            recipeId_id: 1,
+            user_id: 1,
+            comment: 1,
+            created_at: 1,
+            user: {
+              _id: 1,
+              name: 1,
+              picture: 1,
+            },
+          },
+        },
+      ]);
     } catch (error) {
       console.error("댓글 읽기 오류:", error);
       throw new Error("댓글을 불러오는 데 실패했습니다.");
@@ -26,8 +53,8 @@ export class CommentService {
   }
 
   static async createComment(
-    userID: string,
-    recipeId: string,
+    userID: IUser["_id"],
+    recipeId: IRecipe["_id"],
     comment: IComment["comment"]
   ) {
     try {
@@ -42,7 +69,10 @@ export class CommentService {
     }
   }
 
-  static async updateComment(commentId: string, comment: IComment["comment"]) {
+  static async updateComment(
+    commentId: IComment["_id"],
+    comment: IComment["comment"]
+  ) {
     try {
       return await Comment.findByIdAndUpdate(
         commentId,
@@ -55,7 +85,7 @@ export class CommentService {
     }
   }
 
-  static async deleteComment(commentId: string) {
+  static async deleteComment(commentId: IComment["_id"]) {
     try {
       return await Comment.findByIdAndDelete(commentId);
     } catch (error) {

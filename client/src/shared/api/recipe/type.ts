@@ -37,6 +37,10 @@ export interface IRecipeInputDto
   cooking_step_pictures: (File | undefined)[];
 }
 
+export interface IRecipeDetailDTO extends IRecipe {
+  user: IUser[];
+}
+
 export interface CookingStep {
   picture?: string;
   instruction: string;

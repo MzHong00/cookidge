@@ -1,9 +1,10 @@
+import { useEffect } from "react";
+import { UseMutateFunction } from "@tanstack/react-query";
 import { useFieldArray, useForm } from "react-hook-form";
 import { CgRemoveR } from "@react-icons/all-files/cg/CgRemoveR";
 import { RiAddLine } from "@react-icons/all-files/ri/RiAddLine";
 
 import { IFridge } from "shared/api/fridge";
-import { IRecipe } from "shared/api/recipe";
 import { IIngredient, IIngredientInputDto } from "shared/api/ingredient";
 import { IconButton } from "shared/ui/iconButton";
 import { SubjectBox } from "shared/ui/subjectBox";
@@ -13,28 +14,26 @@ import {
   INGREDIENT_TABLE_FIELD,
   INGREDIENTS_CATEGORIES,
 } from "entities/fridge";
-import { useCreateIngredientMutation } from "../mutation/ingredientMutation";
 
 import styles from "./ingredientForm.module.scss";
-import { useEffect } from "react";
 
 interface IngredientInputForm {
-  ingredients: IIngredient[]; // 제네릭 타입에 Ingredient 배열을 명시
+  ingredients: IIngredient[];
 }
 
 interface Props {
-  fridge_id: IRecipe["_id"];
+  onSubmitAttach: () => void;
   stored_ingredients?: IFridge["stored_ingredients"];
-  isReadMode: boolean;
+  isReadMode?: boolean;
+  mutateFn: UseMutateFunction<any, Error, IIngredientInputDto[], unknown>;
 }
 
 export const IngredientForm = ({
-  fridge_id,
+  mutateFn,
+  onSubmitAttach,
   stored_ingredients,
-  isReadMode,
+  isReadMode = false,
 }: Props) => {
-  const { mutate } = useCreateIngredientMutation(fridge_id);
-
   const { control, register, handleSubmit, reset } =
     useForm<IngredientInputForm>({
       defaultValues: {
@@ -43,18 +42,20 @@ export const IngredientForm = ({
         ],
       },
     });
+
   // `stored_ingredients`가 변경될 때마다 `reset` 호출
   useEffect(() => {
     if (stored_ingredients) {
       reset({ ingredients: stored_ingredients });
     }
   }, [stored_ingredients, reset]);
+
   const { fields, append, remove } = useFieldArray({
     name: "ingredients",
     control,
   });
 
-  const onClickAppend = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onClickAppendField = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     append({ _id: generateKey(), expired_at: getDateToISO() } as IIngredient);
   };
@@ -65,7 +66,8 @@ export const IngredientForm = ({
       return inputIngredientDto as IIngredientInputDto;
     });
 
-    mutate(ingredients);
+    onSubmitAttach();
+    mutateFn(ingredients);
     reset();
   };
 
@@ -153,7 +155,7 @@ export const IngredientForm = ({
               <IconButton
                 Icon={RiAddLine}
                 className={styles.appendButton}
-                onClick={onClickAppend}
+                onClick={onClickAppendField}
               >
                 추가
               </IconButton>

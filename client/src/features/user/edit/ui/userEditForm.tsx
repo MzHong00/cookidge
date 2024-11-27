@@ -5,7 +5,6 @@ import { InputBox } from "shared/ui/inputBox";
 import { TextArea } from "shared/ui/textArea";
 import { IconButton } from "shared/ui/iconButton";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
-import { CloduinaryImageUploader } from "shared/ui/cloudinary";
 import { UserQueries } from "entities/user";
 
 import styles from "./userEditForm.module.css";
@@ -16,9 +15,9 @@ export const UserEditForm = () => {
   return (
     <form className={styles.form}>
       <FramerFadeLayout className="flex-column-center">
-        <CloduinaryImageUploader
-          name="picture"
-          defaultImgSrc={me?.picture}
+        <img
+          src={me?.picture}
+          alt=""
           className={styles.profilesPicture}
         />
         <InputBox label="이메일" id="email" value={me?.email} disabled />

@@ -9,7 +9,6 @@ export interface IUser {
   introduce: string;
   follower: IUser["_id"][];
   following: IUser["_id"][];
-  like_recipe: IRecipe["_id"][];
   plan: "normal" | "premium";
   created_at: Date;
 }

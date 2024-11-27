@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import {
   Form,
   FormSubmitHandler,
@@ -16,7 +17,7 @@ import { IconButton } from "shared/ui/iconButton";
 import { InfoTooltip } from "shared/ui/infoToolTip";
 import { ItemSelectionBox } from "shared/ui/itemSelection";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
-import { IRecipeInputDto } from "shared/api/recipe/type";
+import { IRecipe, IRecipeInputDto } from "shared/api/recipe/type";
 import { FOOD_CATEGORIES } from "entities/recipe";
 import { INGREDIENTS_CATEGORIES } from "entities/fridge";
 import { RECIPE_INPUT_SECTION } from "../consts/consts";
@@ -28,8 +29,9 @@ import { useCreateRecipeMutation } from "../mutation/createRecipeMutation";
 import styles from "./recipeCreationForm.module.scss";
 
 export const RecipeCreationForm = () => {
-  const { mutate, isPending } = useCreateRecipeMutation();
-
+  const navigate = useNavigate();
+  const { mutate,isPending } = useCreateRecipeMutation();
+  
   const { activeSection, changeSectionHandler } = useSelectInput();
 
   const { register, control, watch } = useForm<IRecipeInputDto>({
@@ -58,6 +60,8 @@ export const RecipeCreationForm = () => {
   });
 
   const onSubmit: FormSubmitHandler<IRecipeInputDto> = ({ data }) => {
+    if(isPending) return;
+    
     const binaryCookingStepPictures = data.cooking_steps.map((step) => ({
       ...step,
       picture: undefined,
@@ -71,7 +75,9 @@ export const RecipeCreationForm = () => {
       cooking_steps: binaryCookingStepPictures,
     };
 
-    mutate(finalForm);
+    mutate(finalForm, {onSuccess: (data: IRecipe) => {
+      navigate(`/recipe/${data._id}`)
+    }});
   };
 
   return (
@@ -249,6 +255,7 @@ export const RecipeCreationForm = () => {
             className="main-button"
           />
         </SubjectBox>
+        {isPending && <span>레시피 생성 중...</span>}
       </Form>
     </FramerFadeLayout>
   );

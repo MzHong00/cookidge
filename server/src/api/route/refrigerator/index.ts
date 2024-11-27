@@ -13,7 +13,7 @@ export default (app: Router) => {
   app.use("/refrigerator", route);
 
   route.get("/read-list", isAuth, async (req, res) => {
-    const userId = req.jwtPayload.id;
+    const userId = req.userId;
 
     try {
       const refrigeratorList = await RefrigeratorService.readList(userId);
@@ -42,7 +42,7 @@ export default (app: Router) => {
     celebrate({ [Segments.BODY]: Joi.object({ name: Joi.string() }) }),
     isAuth,
     async (req, res) => {
-      const userId = req.jwtPayload.id;
+      const userId = req.userId;
       const refrigeratorName = req.body.name;
 
       try {
@@ -97,7 +97,7 @@ export default (app: Router) => {
     isAuth,
     isMyRefrigerator,
     async (req, res) => {
-      const refrigeratorId = req.body.id;
+      const refrigeratorId = req.body.id as string;
 
       try {
         await RefrigeratorService.deleteRefrigerator(refrigeratorId);

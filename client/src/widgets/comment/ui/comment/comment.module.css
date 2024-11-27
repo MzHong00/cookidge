@@ -9,14 +9,19 @@
     padding: 0.5rem;
 }
 
-.nameBar > :first-child {
-    display: inline;
+.nameBar {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.75rem;
 }
 
-.nameBar > :nth-child(2) {
-    margin-inline: 0.5rem;
-    display: inline;
-    font-size: small;
+.nameBar>:first-child {
+    font-size: 1rem;
+}
+
+.actionBar {
+    padding-left: 0.5rem;
+    color: grey
 }
 
 .comment {

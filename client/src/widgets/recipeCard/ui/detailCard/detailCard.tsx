@@ -2,15 +2,15 @@ import { RiTimer2Line } from "@react-icons/all-files/ri/RiTimer2Line";
 import { RiGroupLine } from "@react-icons/all-files/ri/RiGroupLine";
 import { RiCalendarLine } from "@react-icons/all-files/ri/RiCalendarLine";
 
-import { IRecipe } from "shared/api/recipe";
 import { IconBox } from "shared/ui/iconBox";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { PicturesBox } from "shared/ui/picturesBox";
 import { LikeButton } from "features/recipe/like";
 
 import styles from "./detailCard.module.scss";
+import { IRecipeDetailDTO } from "shared/api/recipe/type";
 
-interface Props extends React.HTMLAttributes<HTMLDivElement>, IRecipe {}
+interface Props extends React.HTMLAttributes<HTMLDivElement>, IRecipeDetailDTO {}
 
 export const DetailCard = ({
   _id,
@@ -24,6 +24,7 @@ export const DetailCard = ({
   cooking_steps,
   created_at,
   like_members,
+  user,
   children,
   className,
   ...props

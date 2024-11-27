@@ -12,7 +12,7 @@ import { LikeButton } from "features/recipe/like";
 import styles from "./recipeCard.module.scss";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement>, IRecipe {
-  isShowNavigation?: boolean;
+  isThumbnaileMode?: boolean;
 }
 
 export const RecipeCard = ({
@@ -25,53 +25,53 @@ export const RecipeCard = ({
   cooking_time,
   created_at,
   like_members,
-  isShowNavigation,
+  isThumbnaileMode= false,
   className,
   children,
   ...props
 }: Partial<Props>) => {
-  console.log(_id);
-
   return (
-    <article className={`${styles.cardContainer} ${className}`} {...props}>
-      <FramerFadeLayout>
-        {pictures && (
-          <PicturesBox
-            pictures={pictures}
-            isShowNavigation={isShowNavigation}
-          />
+    <FramerFadeLayout>
+      <article className={`${styles.cardContainer} ${className}`} {...props}>
+        {like_members && _id && (
+          <div className={styles.recipeActionBar}>
+            <LikeButton recipe_id={_id} likeMembers={like_members} />
+          </div>
         )}
-        <div className={styles.infoBox}>
-          <div className="flex-column">
-            <Link to={`recipe/${_id}`} className={styles.infoHeader}>
-              {name && <b>{name}</b>}
-              {created_at && <p>{dateGap(created_at)}전</p>}
-            </Link>
-            {(cooking_time || servings) && (
-              <div className={styles.subInfo}>
-                {cooking_time && (
-                  <IconBox Icon={RiTimer2Line}>
-                    조리시간 {cooking_time}분
-                  </IconBox>
+        {pictures && (
+          <PicturesBox pictures={pictures} isThumbnaileMode={isThumbnaileMode} />
+        )}
+        {!isThumbnaileMode && (
+          <Link to={`recipe/${_id}`}>
+            <div className={styles.infoBox}>
+              <div className="flex-column">
+                {(name || created_at) && (
+                  <div className={styles.infoHeader}>
+                    {name && <b>{name}</b>}
+                    {created_at && <p>{dateGap(created_at)}전</p>}
+                  </div>
                 )}
-                {servings && (
-                  <IconBox Icon={RiGroupLine}>{servings}인분</IconBox>
+                {(cooking_time || servings) && (
+                  <div className={styles.subInfo}>
+                    {cooking_time !== undefined && (
+                      <IconBox Icon={RiTimer2Line}>
+                        조리시간 {cooking_time}분
+                      </IconBox>
+                    )}
+                    {servings !== undefined && (
+                      <IconBox Icon={RiGroupLine}>{servings}인분</IconBox>
+                    )}
+                  </div>
+                )}
+
+                {introduction && (
+                  <p className={styles.introduction}>{introduction}</p>
                 )}
               </div>
-            )}
-
-            {introduction && (
-              <p className={styles.introduction}>{introduction}</p>
-            )}
-          </div>
-
-          {like_members && _id && (
-            <div className={styles.recipeActionBar}>
-              <LikeButton recipe_id={_id} likeMembers={like_members} />
             </div>
-          )}
-        </div>
-      </FramerFadeLayout>
-    </article>
+          </Link>
+        )}
+      </article>
+    </FramerFadeLayout>
   );
 };

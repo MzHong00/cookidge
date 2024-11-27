@@ -1,15 +1,14 @@
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
 import config from "../config";
 import { User } from "../models/user";
 import { IUser, type IUserInputDTO } from "../interface/IUser";
-import { CustomJwtPayload } from "../config/types/express";
 
 // oauth는 로그인와 회원가입을 같이 처리해야 하기 때문에 oAuthLogin 함수 이름으로 설정
 export const oAuthLogin = async (userInputDTO: IUserInputDTO) => {
   try {
-    const member = await User.findOne({ email: userInputDTO.email }).exec();
-
+    const member = await User.findOne({ email: userInputDTO.email });
+    
     // 신규 회원이라면, 회원가입
     if (!member) {
       const newMember = await signup(userInputDTO);
@@ -25,16 +24,16 @@ export const oAuthLogin = async (userInputDTO: IUserInputDTO) => {
       access_token: issueToken({ id: member._id.toString() }),
     };
   } catch (error) {
-    throw new Error("Login Error");
+    throw new Error(`Login Error ${error}`);
   }
 };
 
-export const signup = async (userInputDTO: IUserInputDTO): Promise<IUser> => {
+export const signup = async (userInputDto: IUserInputDTO): Promise<IUser> => {
   try {
     return await User.create({
-      name: userInputDTO.name,
-      email: userInputDTO.email,
-      picture: userInputDTO.picture,
+      name: userInputDto.name,
+      email: userInputDto.email,
+      picture: userInputDto.picture,
     });
   } catch (error) {
     throw new Error(`Signup error: ${error}`);
@@ -42,7 +41,7 @@ export const signup = async (userInputDTO: IUserInputDTO): Promise<IUser> => {
 };
 
 export const issueToken = (
-  payload: CustomJwtPayload,
+  payload: JwtPayload,
   expireTime: string = "1h"
 ) => {
   try {

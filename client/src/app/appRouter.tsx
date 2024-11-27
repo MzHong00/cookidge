@@ -11,7 +11,6 @@ import { Home, searchOptionLoader } from "pages/home";
 import { LoginPage } from "pages/login";
 import { Dashboard } from "pages/dashboard";
 import { RecipeDetailPage } from "pages/recipe";
-import { searchUserLoader } from "pages/user/loader/searchUserLoader";
 
 export const queryClient = new QueryClient();
 
@@ -56,7 +55,6 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "user/:name",
-        loader: searchUserLoader(queryClient),
         element: (
           <Suspense fallback={"...사용자 페이지 로딩 중"}>
             <UserPage />

@@ -23,7 +23,8 @@ export const RecipeMyPage = () => {
 
   const me = queryClient.getQueryData<IUser | undefined>([UserQueries.keys.me]);
   const { data: myRecipes } = useQuery(RecipeQueries.myListQuery(me?.name));
-
+  const { data: myLikeRecipes } = useQuery(RecipeQueries.myLikeQuery(me?.name));
+  
   if (!me) return <LoginForm className={styles.loginForm} />;
 
   return (
@@ -43,7 +44,7 @@ export const RecipeMyPage = () => {
               <Link to={`/recipe/${recipe._id}`} key={recipe._id}>
                 <RecipeCard
                   pictures={recipe.pictures}
-                  isShowNavigation={false}
+                  isThumbnaileMode={true}
                 />
               </Link>
             ))}
@@ -54,7 +55,16 @@ export const RecipeMyPage = () => {
           title="좋아요 누른 레시피"
           headerClassName={styles.recipeBoxHeader}
         >
-          <div className={styles.recipeContainer}></div>
+          <div className={styles.recipeContainer}>
+            {myLikeRecipes?.map((recipe) => (
+              <Link to={`/recipe/${recipe._id}`} key={recipe._id}>
+              <RecipeCard
+                pictures={recipe.pictures}
+                isThumbnaileMode={true}
+              />
+            </Link>
+            ))}
+          </div>
         </SubjectBox>
       </div>
 

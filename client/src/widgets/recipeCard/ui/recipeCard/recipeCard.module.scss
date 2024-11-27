@@ -3,8 +3,7 @@
 .cardContainer {
     @include app.flex-layout(column);
     gap: 0;
-    border-bottom: 1px solid rgb(var(--base-rgb-grey-light));
-    border-radius: 5px;
+    border-top: 1px solid rgb(var(--base-rgb-grey-light));
 }
 
 .infoBox {
@@ -46,7 +45,7 @@
 }
 
 .recipeActionBar {
-    @include app.flex-layout(row, stretch, center);
+    @include app.flex-layout(row, stretch, stretch);
 }
 
 .recipeActionBar>button {

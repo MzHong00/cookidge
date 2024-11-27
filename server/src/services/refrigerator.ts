@@ -1,5 +1,3 @@
-import mongoose from "mongoose";
-
 import { IRefrigerator } from "../interface/IRefrigerator";
 import { Refrigerator } from "../models/refrigerator";
 
@@ -16,9 +14,7 @@ export class RefrigeratorService {
 
   // 냉장고 자세히 읽기
   static async readDetail(refrigeratorId: string) {
-    return await Refrigerator.findById(
-      mongoose.Types.ObjectId.createFromHexString(refrigeratorId)
-    );
+    return await Refrigerator.findById(refrigeratorId);
   }
 
   // 냉장고 생성
@@ -46,7 +42,10 @@ export class RefrigeratorService {
     return await Refrigerator.findByIdAndDelete(refrigeratorId);
   }
 
-  static async addSharedMember(refrigeratorId: string, member: string) {
+  static async addSharedMember(
+    refrigeratorId: IRefrigerator["_id"],
+    member: IRefrigerator["shared_members"]
+  ) {
     return await Refrigerator.findByIdAndUpdate(refrigeratorId, {
       $push: {
         shared_members: member,
@@ -54,7 +53,10 @@ export class RefrigeratorService {
     });
   }
 
-  static async removeSharedMember(refrigeratorId: string, member: string) {
+  static async removeSharedMember(
+    refrigeratorId: IRefrigerator["_id"],
+    member: IRefrigerator["shared_members"]
+  ) {
     return await Refrigerator.findByIdAndUpdate(refrigeratorId, {
       $pull: {
         shared_members: member,

@@ -21,10 +21,10 @@ const StoredIngredientSchema = new Schema({
 
 const RefrigeratorSchema = new Schema<IRefrigerator>({
   name: { type: String, required: true },
-  owner_id: { type: String, required: true },
+  owner_id: {  type: mongoose.Types.ObjectId, required: true },
   stored_ingredients: [StoredIngredientSchema],
   last_updated: { type: Date, default: Date.now },
-  shared_members: [{ type: String }],
+  shared_members: [{ type: mongoose.Types.ObjectId }],
   created_at: { type: Date, default: Date.now },
 });
 

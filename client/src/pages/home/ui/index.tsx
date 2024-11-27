@@ -12,28 +12,31 @@ import styles from "./index.module.scss";
 
 export const Home = () => {
   const params = useLoaderData() as RecipeFilterQuery;
-  const { data: recipes, fetchNextPage, hasNextPage } = useInfiniteQuery(
-    RecipeQueries.infinityQuery(params)
-  );
-  
-  const { setTarget } = useIntersectionObserver({ hasNextPage, fetchNextPage });
 
+  const {
+    data: recipes,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery(RecipeQueries.infinityQuery(params));
+
+  const { setTarget } = useIntersectionObserver({ hasNextPage, fetchNextPage});
+  
   return (
     <FramerFadeLayout className={styles.cardListContainer}>
       <RecipeSearchOption />
 
       <div className={styles.recipeList}>
-      {recipes?.pages.map((page) =>
-        page.map((recipe) => (
-          <RecipeCard
-            key={recipe._id}
-            {...recipe}
-            className={styles.homeRecipeCard}
-          />
-        ))
-      )}
+        {recipes?.pages.map((page) =>
+          page.map((recipe) => (
+            <RecipeCard
+              key={recipe._id}
+              {...recipe}
+              className={styles.homeRecipeCard}
+            />
+          ))
+        )}
+        <p id="observer" ref={setTarget} style={{ height: "10%" }} />
       </div>
-      <div id="observer" ref={setTarget} style={{ height: "10%" }} />
     </FramerFadeLayout>
   );
 };

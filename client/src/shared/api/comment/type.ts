@@ -8,3 +8,7 @@ export interface IComment {
   comment: string;
   created_at: Date;
 }
+
+export interface ICommentDTO extends IComment {
+  user: Pick<IUser, "_id"|"name"|"picture">[]
+}

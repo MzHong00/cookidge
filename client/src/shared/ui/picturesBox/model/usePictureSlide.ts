@@ -6,12 +6,12 @@ export const usePictureSlide = () => {
 
   const onClickPrev = () => {
     const moveDistance = ref.current?.clientWidth;
-    ref.current?.scrollTo({ left: -(moveDistance || 0) });
+    ref.current?.scrollBy({ left: -(moveDistance || 0) });
   };
 
   const onClickNext = () => {
     const moveDistance = ref.current?.clientWidth;
-    ref.current?.scrollTo({ left: moveDistance });
+    ref.current?.scrollBy({ left: moveDistance });
   };
 
   const onClickSlideByIndicator = (e: MouseEvent<HTMLButtonElement>) => {

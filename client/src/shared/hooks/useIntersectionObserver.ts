@@ -2,13 +2,13 @@ import { useCallback, useEffect, useState } from "react";
 import { InfiniteQueryObserverResult } from "@tanstack/react-query";
 
 interface IuseIntersectionObserverProps {
-  threshold?: number;
+  options?: IntersectionObserverInit
   hasNextPage: boolean | undefined;
   fetchNextPage: () => Promise<InfiniteQueryObserverResult>;
 }
 
 export const useIntersectionObserver = ({
-  threshold = 0,
+  options,
   hasNextPage,
   fetchNextPage,
 }: IuseIntersectionObserverProps) => {
@@ -31,16 +31,14 @@ export const useIntersectionObserver = ({
     if (!target) return;
 
     //ointersection observer 인스턴스 생성
-    const observer = new IntersectionObserver(observerCallback, {
-      threshold,
-    });
+    const observer = new IntersectionObserver(observerCallback, options);
 
     // 타겟 관찰 시작
     observer.observe(target);
 
     // 관찰 멈춤
     return () => observer.disconnect();
-  }, [observerCallback, threshold, target]);
+  }, [observerCallback, options, target]);
 
   return { setTarget };
 };

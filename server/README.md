@@ -59,6 +59,16 @@
 11.20
 - 레시피 좋아요 api 구현
 
-10.21
+11.21
 - ObjectId와 string 간의 타입 모호성 명확하게 수정
 - 나의 레시피 api 구현
+
+11.24 ~ 11.25
+- 모든 데이터 모델링 참조관계에서 string의 id를 objectId 형식으로 모두 수정
+- 댓글 find -> aggregate로 user의 name과 picture을 받기 위해 조인
+- categories 다중 선택 가능으로 변경
+- 좋아요 순 정렬 오류 해결 => find를 aggregate로 like_members배열을 숫자로 계산후 정렬
+
+11.26
+- 몽고디비 모델 pre함수 에러 해결 => 화살표 함수 this 스코프 문제
+- 개발자 본인을 제외한 다른 유저 로그인 오류 해결 => google console 설정 변경
