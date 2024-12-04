@@ -9,7 +9,7 @@ import routes from "../api/route";
 
 export default (app: Express) => {
   const corsOptions = {
-    origin: "http://localhost:3000",
+    // origin: "http://localhost:3000",
     credentials: true,
   };
   const swaggerYaml = YAML.load(
