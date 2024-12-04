@@ -21,13 +21,15 @@ export const Home = () => {
 
   const { setTarget } = useIntersectionObserver({ hasNextPage, fetchNextPage});
   
+  console.log(recipes);
+  
   return (
     <FramerFadeLayout className={styles.cardListContainer}>
       <RecipeSearchOption />
 
       <div className={styles.recipeList}>
         {recipes?.pages.map((page) =>
-          page.map((recipe) => (
+          page?.map((recipe) => (
             <RecipeCard
               key={recipe._id}
               {...recipe}
