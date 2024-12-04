@@ -8,6 +8,8 @@ export default {
     token_uri: "https://oauth2.googleapis.com/token",
     auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
     client_secret: config.googleOAuthSecret,
-    redirect_uris: ["http://localhost:3000/oauth-redirect"],
+    redirect_uris: [
+      config.frontEndOrigin || "http://localhost:3000/oauth-redirect",
+    ],
   },
 };
