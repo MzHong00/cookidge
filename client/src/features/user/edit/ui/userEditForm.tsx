@@ -22,7 +22,6 @@ export const UserEditForm = () => {
     watch,
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm<IUserInputDTO>({
     defaultValues: {
       name: me?.name,

@@ -3,9 +3,7 @@ import { RecipeCategory } from "features/recipe/category";
 
 import styles from "./recipeSearchOption.module.css";
 
-interface Props {}
-
-export const RecipeSearchOption = ({}: Props) => {
+export const RecipeSearchOption = () => {
   return (
     <div className={styles.searchOptionBar}>
       <RecipeCategory />

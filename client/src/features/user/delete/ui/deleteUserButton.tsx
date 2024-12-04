@@ -7,6 +7,8 @@ export const DeleteUserButton = ({ style, ...props }: Props) => {
   const { mutate, isPending } = useDeleteUserMutation();
 
   const onClickDeleteUser = () => {
+    if(isPending) return;
+    
     mutate(undefined, {
       onSuccess: () => {
         window.history.replaceState(null, "", '/')

@@ -1,6 +1,6 @@
 import { useRef, useState, type MouseEvent } from "react";
 
-export const usePictureSlide = <T>() => {
+export const usePictureSlide = () => {
   const ref = useRef<HTMLUListElement>(null);
   const [index, setIndex] = useState<number>(0);
 

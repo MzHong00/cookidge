@@ -36,7 +36,6 @@ export const RecipeForm = ({ onSubmit, defalutValues }: Props) => {
   const {
     register,
     control,
-    formState: { errors },
     watch,
   } = useForm<IRecipeInputDTO>({
     defaultValues: defalutValues,

@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 import { IRecipe } from "shared/api/recipe";
 import { SubjectBox } from "shared/ui/subjectBox";
