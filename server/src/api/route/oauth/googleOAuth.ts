@@ -26,7 +26,7 @@ export default (app: Router) => {
         .cookie("token", refresh_token, {
           httpOnly: true,
           secure: true,
-          sameSite: "strict",
+          sameSite: "none",
         })
         .send({ token: access_token });
     } catch (error) {
