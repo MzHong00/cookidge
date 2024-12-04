@@ -1,0 +1,8 @@
+@use 'app/app.scss';
+
+.followButton {
+    padding: 0.5rem;
+    @include app.main-button();
+    border-radius: 30px;
+    border: 1px solid silver;
+}

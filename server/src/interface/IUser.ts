@@ -1,8 +1,9 @@
-import { ObjectId } from "mongoose";
-import { IRecipe } from "./IRecipe";
+import mongoose, { ObjectId } from "mongoose";
+
+import { PagenationOptions } from "./types";
 
 export interface IUser {
-  _id: ObjectId;
+  _id: ObjectId | mongoose.mongo.BSON.ObjectId;
   name: string;
   email: string;
   picture: string;
@@ -13,8 +14,12 @@ export interface IUser {
   created_at: Date;
 }
 
-export interface IUserInputDTO {
-  name: IUser["name"];
-  email: IUser["email"];
-  picture: IUser["email"];
+export interface IUserSearchQueryOptions extends PagenationOptions {
+  user_name?: IUser['name']
 }
+
+export interface IUserCreateInputDTO
+  extends Pick<IUser, "name" | "picture" | "email"> {}
+
+export interface IUserUpdateInputDTO
+  extends Pick<IUser, "name" | "introduce" | "picture"> {}

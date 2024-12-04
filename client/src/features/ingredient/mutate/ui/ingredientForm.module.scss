@@ -4,6 +4,7 @@
     min-height: 24rem;
     max-width: 64vw;
     max-height: 64vh;
+    padding-inline: 0.5rem;
     overflow-y: auto;
     border: none;
 }
@@ -55,12 +56,6 @@
     text-align: center;
 }
 
-.selectDisable {
-    -webkit-appearance: none; /* 크롬, 사파리 */
-  -moz-appearance: none; /* 파이어폭스 */
-  appearance: none; /* 기타 브라우저 */
-}
-
 .removeButton {
     padding: 0.25rem;
     display: inline;
@@ -94,6 +89,7 @@
 
 @media screen and (max-width: 767px) {
     .container {
+        padding-inline: 0;
         max-width: none;
     }
 }

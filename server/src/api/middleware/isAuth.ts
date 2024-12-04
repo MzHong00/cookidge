@@ -1,8 +1,8 @@
+import mongoose from "mongoose";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
-import config from "../../config";
-import mongoose from "mongoose";
 
+import config from "../../config";
 
 export default (req: Request, res: Response, next: NextFunction) => {
   const accessToken = req.headers.authorization?.split(" ")[1];

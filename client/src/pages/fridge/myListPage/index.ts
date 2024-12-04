@@ -1,0 +1,1 @@
+export { FridgeMyListPage } from "./ui/fridgeMyListPage";

@@ -1,33 +1,31 @@
 import { HTMLAttributes, useMemo } from "react";
-import { useQueryClient } from "@tanstack/react-query";
 import { RiUserAddLine } from "@react-icons/all-files/ri/RiUserAddLine";
 import { RiUserFollowLine } from "@react-icons/all-files/ri/RiUserFollowLine";
 
 import { IUser } from "shared/api/user";
 import { IconButton } from "shared/ui/iconButton";
-import { UserQueries } from "entities/user";
 import {
   useFollowMutation,
   useUnfollowMutation,
 } from "../mutation/followMutation";
 
-import styles from "./followButton.module.css";
+import styles from "./followButton.module.scss";
 
 interface Props extends HTMLAttributes<HTMLButtonElement> {
+  meId?: IUser["_id"];
   user: IUser;
 }
 
-export const FollowButton = ({ user, className, ...props }: Props) => {
-  const me = useQueryClient().getQueryData([UserQueries.keys.me]) as IUser | undefined;
+export const FollowButton = ({ meId, user, className, ...props }: Props) => {
   const { mutate: mutateFollow } = useFollowMutation(user._id, user.name);
   const { mutate: mutateUnfollow } = useUnfollowMutation(user._id, user.name);
-
+  
   const isFollow = useMemo(
-    () => user.follower.includes(me?._id||""),
-    [me?._id, user.follower]
+    () => user.follower.includes(meId||""),
+    [meId, user.follower]
   );
 
-  if(!me) return null;
+  if (!meId) return null;
 
   if (isFollow)
     return (

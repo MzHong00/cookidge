@@ -1,0 +1,10 @@
+.profile {
+    min-width: 40px;
+    min-height: 40px;
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 100%;
+    aspect-ratio: 1;
+}

@@ -9,7 +9,7 @@ export const useCreateFridgeMutation = () => {
   return useMutation({
     mutationKey: [FridgeQueries.keys.list, 'create'],
     mutationFn: (fridgeName: string) =>
-      FridgeService.createFridgeMutation(fridgeName),
+      FridgeService.createFridge(fridgeName),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [FridgeQueries.keys.list],

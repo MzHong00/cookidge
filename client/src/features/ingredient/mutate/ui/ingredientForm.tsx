@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { UseMutateFunction } from "@tanstack/react-query";
 import { useFieldArray, useForm } from "react-hook-form";
 import { CgRemoveR } from "@react-icons/all-files/cg/CgRemoveR";
@@ -24,7 +23,6 @@ interface IngredientInputForm {
 interface Props {
   onSubmitAttach: () => void;
   stored_ingredients?: IFridge["stored_ingredients"];
-  isReadMode?: boolean;
   mutateFn: UseMutateFunction<any, Error, IIngredientInputDto[], unknown>;
 }
 
@@ -32,7 +30,6 @@ export const IngredientForm = ({
   mutateFn,
   onSubmitAttach,
   stored_ingredients,
-  isReadMode = false,
 }: Props) => {
   const { control, register, handleSubmit, reset } =
     useForm<IngredientInputForm>({
@@ -42,13 +39,6 @@ export const IngredientForm = ({
         ],
       },
     });
-
-  // `stored_ingredients`가 변경될 때마다 `reset` 호출
-  useEffect(() => {
-    if (stored_ingredients) {
-      reset({ ingredients: stored_ingredients });
-    }
-  }, [stored_ingredients, reset]);
 
   const { fields, append, remove } = useFieldArray({
     name: "ingredients",
@@ -97,8 +87,6 @@ export const IngredientForm = ({
                       {...register(`ingredients.${index}.category`, {
                         required: true,
                       })}
-                      className={`${isReadMode && styles.selectDisable}`}
-                      disabled={isReadMode}
                     >
                       {INGREDIENTS_CATEGORIES.map((category) => (
                         <option key={category.text}>
@@ -113,7 +101,6 @@ export const IngredientForm = ({
                       {...register(`ingredients.${index}.name`, {
                         required: true,
                       })}
-                      disabled={isReadMode}
                     />
                   </td>
                   <td>
@@ -122,7 +109,6 @@ export const IngredientForm = ({
                       {...register(`ingredients.${index}.quantity`, {
                         required: true,
                       })}
-                      disabled={isReadMode}
                     />
                   </td>
                   <td>
@@ -131,10 +117,8 @@ export const IngredientForm = ({
                       {...register(`ingredients.${index}.expired_at`, {
                         required: true,
                       })}
-                      disabled={isReadMode}
                     />
                   </td>
-                  {!isReadMode && (
                     <td>
                       <IconButton
                         Icon={CgRemoveR}
@@ -143,13 +127,11 @@ export const IngredientForm = ({
                         color="red"
                       />
                     </td>
-                  )}
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        {!isReadMode && (
           <>
             <div className={styles.appendButtonContainer}>
               <IconButton
@@ -162,7 +144,6 @@ export const IngredientForm = ({
             </div>
             <input type="submit" className={styles.submitButton} value="확인" />
           </>
-        )}
       </form>
     </SubjectBox>
   );

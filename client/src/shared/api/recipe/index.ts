@@ -2,7 +2,9 @@ export { RecipeService } from "./service";
 
 export type {
   IRecipe,
-  IRecipeInputDto,
-  CookingStep,
+  IRecipeCard,
+  IRecipeInputDTO,
+  IDetailRecipeResponseDTO,
+  ICookingStep,
   RecipeFilterQuery
 } from "./type";

@@ -1,45 +1,22 @@
 import { useState } from "react";
 
 import { IRecipe } from "shared/api/recipe";
-import { ICommentDTO } from "shared/api/comment/type";
 import { IconButton } from "shared/ui/iconButton";
 import { useCreateCommentMutation } from "../mutation/createCommentMutation";
 
 import styles from "./createComment.module.scss";
-import { useQueryClient } from "@tanstack/react-query";
-import { UserQueries } from "entities/user";
-import { IUser } from "shared/api/user";
 
 interface Props {
   recipeId: IRecipe["_id"];
-  setNewTempComments: React.Dispatch<React.SetStateAction<ICommentDTO[]>>;
 }
 
-export const CreateComment = ({ recipeId, setNewTempComments }: Props) => {
-  const queryClient = useQueryClient();
+export const CreateComment = ({ recipeId }: Props) => {
 
   const [comment, setComment] = useState<string>("");
   const { mutate } = useCreateCommentMutation(recipeId);
-  const me = queryClient.getQueryData([UserQueries.keys.me]) as IUser;
 
   const onClickCreateComment = () => {
-    mutate(comment, {
-      onSuccess: (data) => {
-        setNewTempComments((prev) => [
-          {
-            ...data,
-            user: [
-              {
-                _id: me._id,
-                name: me.name,
-                picture: me.picture,
-              },
-            ],
-          },
-          ...prev,
-        ]);
-      },
-    });
+    mutate(comment);
     setComment("");
   };
 

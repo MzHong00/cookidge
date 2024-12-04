@@ -1,32 +1,68 @@
 import axios from "shared/api/axiosBase";
 
 import { IFridge } from "./type";
+import { IUser } from "../user";
 
 export class FridgeService {
   static readonly root = "api/refrigerator";
 
-  static async fetchFridgeListQuery() {
+  static async fetchFridgeList() {
     return (await axios.get(`${this.root}/read-list`)).data;
   }
 
-  static async fetchFridgeDetailQuery(id?: IFridge["_id"]) {
+  static async fetchFridgeDetail(fridgeId?: IFridge["_id"]): Promise<IFridge> {
     return (
       await axios.get(`${this.root}/read-detail`, {
-        params: { refrigerator_id: id },
+        params: { refrigerator_id: fridgeId },
       })
     ).data;
   }
 
-  static async createFridgeMutation(fridgeName: IFridge["name"]) {
+  static async createFridge(fridgeName: IFridge["name"]) {
     return (await axios.post(`${this.root}/create`, { name: fridgeName })).data;
   }
 
-  static async updateFridgeMutation(fridge: IFridge) {
-    return (await axios.patch(`${this.root}/update`, { refrigerator: fridge }))
-      .data;
+  static async updateFridge(
+    fridgeId?: IFridge["_id"],
+    fridgeName?: IFridge["name"]
+  ) {
+    return (
+      await axios.patch(`${this.root}/update`, {
+        refrigerator_id: fridgeId,
+        refrigerator_name: fridgeName,
+      })
+    ).data;
   }
 
-  static async deleteFridgeMutation(id: IFridge["_id"]) {
-    return await axios.delete(`${this.root}/delete`, { data: { id: id } });
+  static async deleteFridge(fridgeId: IFridge["_id"]) {
+    return (
+      await axios.delete(`${this.root}/delete`, {
+        data: { refrigerator_id: fridgeId },
+      })
+    ).data;
+  }
+
+  static async addSharedMember(
+    fridgeId?: IFridge["_id"],
+    memberId?: IUser["_id"]
+  ) {
+    return (
+      await axios.patch(`${this.root}/shared-member/add`, {
+        refrigerator_id: fridgeId,
+        member_id: memberId,
+      })
+    ).data;
+  }
+
+  static async removeSharedMember(
+    fridgeId?: IFridge["_id"],
+    memberId?: IUser["_id"]
+  ) {
+    return (
+      await axios.patch(`${this.root}/shared-member/remove`, {
+        refrigerator_id: fridgeId,
+        member_id: memberId,
+      })
+    ).data;
   }
 }

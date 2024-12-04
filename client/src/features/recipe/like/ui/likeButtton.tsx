@@ -13,12 +13,12 @@ import {
 import { UserQueries } from "entities/user";
 import { useMemo } from "react";
 
-interface Props extends React.HTMLAttributes<HTMLButtonElement> {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   recipe_id: IRecipe["_id"];
   likeMembers: IRecipe["like_members"];
 }
 
-export const LikeButton = ({ recipe_id, likeMembers, ...props }: Props) => {
+export const LikeButton = ({ recipe_id, likeMembers, disabled, ...props }: Props) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -48,6 +48,8 @@ export const LikeButton = ({ recipe_id, likeMembers, ...props }: Props) => {
       <IconButton
         Icon={() => <RiHeart3Fill color="red" />}
         onClick={onClickUnlike}
+        style={{...(disabled && {cursor: "default"})}}
+        disabled={disabled}
         {...props}
       >
         {likeMembers.length}
@@ -58,7 +60,9 @@ export const LikeButton = ({ recipe_id, likeMembers, ...props }: Props) => {
     <IconButton
       Icon={() => <RiHeart3Line color="red" />}
       onClick={onClickLike}
-      {...props}
+        disabled={disabled}
+        style={{...(disabled && {cursor: "default"})}}
+        {...props}
     >
       {likeMembers.length}
     </IconButton>

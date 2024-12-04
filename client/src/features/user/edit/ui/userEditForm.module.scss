@@ -1,0 +1,11 @@
+@use 'app/app.scss';
+
+.form {
+    @include app.flex-layout(column, center, center)
+}
+
+.uploadPictureButton {
+    width: 200px;
+    border-radius: 100%;
+    overflow: hidden;
+}

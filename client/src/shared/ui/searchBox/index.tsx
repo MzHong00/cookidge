@@ -4,13 +4,13 @@ import { IconButton } from "../iconButton";
 
 import styles from "./index.module.css";
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {}
+interface Props extends React.InputHTMLAttributes<HTMLInputElement> {}
 
 export const SearchBox = ({ className, ...props }: Props) => {
   return (
-    <div className={`${styles.container} ${className}`} {...props}>
+    <div className={`${styles.container} ${className}`} >
       <IconButton Icon={RiSearchLine} />
-      <input type="search" placeholder="재료 이름" />
+      <input type="search" {...props}/>
     </div>
   );
 };

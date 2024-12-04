@@ -1,0 +1,19 @@
+@use 'app/app.scss';
+
+.navArrow {
+    padding-inline: 0;
+    font-size: 1.5rem;
+}
+
+.searchTagetBox {
+    width: fit-content;
+    margin-inline: auto;
+    @include app.flex-layout(row, stretch, stretch, 0);
+    background-color: rgb(var(--base-rgb-grey-light));
+    color: white;
+    border-radius: 20%;
+}
+
+.searchTagetBox > button {
+    transition-duration: 0.3s;
+}

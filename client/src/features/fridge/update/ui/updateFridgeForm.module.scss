@@ -1,0 +1,15 @@
+@use 'app/app.scss';
+
+.errorMessage {
+    height: 1rem;
+}
+
+.submitButton {
+    margin-left: auto;
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+    @include app.main-button();
+    border-radius: 5px;
+    vertical-align: bottom;
+    color: white !important;
+}

@@ -1,39 +1,36 @@
 import { lazy, Suspense } from "react";
-import { QueryClient } from "@tanstack/react-query";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import { OAuthService } from "shared/api/oauth";
-import { RecipeCreationForm } from "features/recipe/create";
 import { CreateFridgeForm } from "features/fridge/create";
-import { FridgeDetail } from "widgets/fridge";
+import { RecipeSearchBox } from "widgets/recipeSearch";
+import { UserSearchBox } from "widgets/userSearch";
 import { Root } from "pages/root";
-import { Home, searchOptionLoader } from "pages/home";
 import { LoginPage } from "pages/login";
+import { SearchPage } from "pages/search";
 import { Dashboard } from "pages/dashboard";
-import { RecipeDetailPage } from "pages/recipe";
-
-export const queryClient = new QueryClient();
+import { Home, searchOptionLoader } from "pages/home";
+import { RecipeDetailPage } from "pages/recipe/detailPage";
+import { RecipeCreatePage } from "pages/recipe/createPage";
+import { RecipeUpdatePage } from "pages/recipe/updatePage";
+import { UserSettingPage } from "pages/user/userSettingPage";
+import { FridgeDetailPage } from "pages/fridge/detailPage";
+import { FridgeSettingPage } from "pages/fridge/settingPage";
 
 const UserPage = lazy(() =>
-  import("pages/user").then((module) => ({
+  import("pages/user/userDetailPage").then((module) => ({
     default: module.UserPage,
   }))
 );
 
-const UserEditForm = lazy(() =>
-  import("features/user/edit").then((module) => ({
-    default: module.UserEditForm,
-  }))
-);
-
-const FridgePage = lazy(() =>
-  import("pages/fridge/index").then((module) => ({
-    default: module.FridgePage,
+const FridgeMyListPage = lazy(() =>
+  import("pages/fridge/myListPage").then((module) => ({
+    default: module.FridgeMyListPage,
   }))
 );
 
 const RecipeMyPage = lazy(() =>
-  import("pages/recipe/index").then((module) => ({
+  import("pages/recipe/myPage").then((module) => ({
     default: module.RecipeMyPage,
   }))
 );
@@ -54,6 +51,24 @@ const appRouter = createBrowserRouter([
         element: <RecipeDetailPage />,
       },
       {
+        path: "search",
+        element: <SearchPage />,
+        children: [
+          {
+            index: true, // 기본 경로 설정
+            element: <Navigate to="user" replace />,
+          },
+          {
+            path: "recipe",
+            element: <RecipeSearchBox />,
+          },
+          {
+            path: "user",
+            element: <UserSearchBox />,
+          },
+        ],
+      },
+      {
         path: "user/:name",
         element: (
           <Suspense fallback={"...사용자 페이지 로딩 중"}>
@@ -65,7 +80,7 @@ const appRouter = createBrowserRouter([
         path: "setting",
         element: (
           <Suspense fallback={"...사용자 편집 폼 로딩 중"}>
-            <UserEditForm />
+            <UserSettingPage />
           </Suspense>
         ),
       },
@@ -78,17 +93,25 @@ const appRouter = createBrowserRouter([
         ),
         children: [
           {
+            index: true,
+            element: <Navigate to={"fridge"} replace />,
+          },
+          {
             path: "fridge",
             element: (
               <Suspense fallback={"...fridge 페이지 로딩중"}>
-                <FridgePage />
+                <FridgeMyListPage />
               </Suspense>
             ),
             children: [
               {
-                path: ":id",
-                element: <FridgeDetail />,
+                path: "detail/:id",
+                element: <FridgeDetailPage />,
               },
+              {
+                path: 'setting/:id',
+                element: <FridgeSettingPage />
+              }
             ],
           },
           {
@@ -105,11 +128,11 @@ const appRouter = createBrowserRouter([
           },
           {
             path: "recipe/create",
-            element: <RecipeCreationForm />,
+            element: <RecipeCreatePage />,
           },
           {
-            path: "*",
-            element: <Navigate to={"fridge"} />,
+            path: "recipe/update",
+            element: <RecipeUpdatePage />,
           },
         ],
       },

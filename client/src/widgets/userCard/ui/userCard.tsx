@@ -1,26 +1,30 @@
 import { Link } from "react-router-dom";
 
 import { IUser } from "shared/api/user";
-import { FollowButton } from "features/user/follow";
+import { ProfileImage } from "shared/ui/profileImage";
 
 import styles from "./userCard.module.scss";
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  user: IUser;
-}
+interface Props
+  extends React.HTMLAttributes<HTMLDivElement>,
+    Pick<IUser, "name" | "picture"> {}
 
-export const UserCard = ({ user, className, ...props }: Props) => {  
+export const UserCard = ({
+  name,
+  picture,
+  className,
+  children,
+  ...props
+}: Props) => {
   return (
     <div className={`${className} ${styles.container}`} {...props}>
       <section className={styles.info}>
-        <Link to={`/user/${user.name}`}>
-          <img src={user.picture} alt="" className={styles.img} />
+        <Link to={`/user/${name}`}>
+          <ProfileImage src={picture} className={styles.img} />
         </Link>
-        <b>{user.name}</b>
+        <b className={styles.name}>{name}</b>
       </section>
-      <section className={styles.action}>
-        <FollowButton user={user} className={styles.followButton}/>
-      </section>
+      {children}
     </div>
   );
 };

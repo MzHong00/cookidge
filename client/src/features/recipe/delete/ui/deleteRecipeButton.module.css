@@ -1,0 +1,4 @@
+.deleteButton {
+    color: rgb(var(--base-rgb-grey-medium));
+    padding: 0;
+}

@@ -7,7 +7,7 @@ export class CommentQueries {
     comment: "comment",
   };
 
-  static staleTime = 24 * 60 * 1000
+  static staleTime = 5 * 60 * 1000
 
   static infiniteQuery(recipeId: IRecipe["_id"]) {
     return infiniteQueryOptions({

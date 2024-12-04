@@ -3,7 +3,11 @@ import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 import { IUser } from "shared/api/user";
 import { RecipeService } from "shared/api/recipe/service";
 import { IRecipe, RecipeFilterQuery } from "shared/api/recipe";
-import { IRecipeDetailDTO } from "shared/api/recipe/type";
+import {
+  IRecipePictureDTO,
+  IRecipeQueryOption,
+  IRecipeRecommendRequestDTO,
+} from "shared/api/recipe/type";
 
 export class RecipeQueries {
   static readonly keys = {
@@ -11,29 +15,36 @@ export class RecipeQueries {
     list: "list",
     user: "user",
     like: "like",
+    search: "search",
+    recommend: "recommend",
     infinite: "infinite",
   };
 
-  static readonly staleTime = 60 * 60 * 1000;
+  static readonly staleTime = {
+    root: 60 * 60 * 1000,
+    search: 60 * 1000,
+  };
 
   // 유저 레시피 목록 조회
   static listByUserQuery(userName?: IUser["name"]) {
-    return queryOptions<IRecipe[]>({
+    return queryOptions<IRecipePictureDTO[]>({
       queryKey: [this.keys.root, this.keys.list, this.keys.user, userName],
-      queryFn: () => RecipeService.readRecipeListByUser(userName),
-      staleTime: this.staleTime,
+      queryFn: () =>
+        RecipeService.readRecipeListByUser(userName as IUser["name"]),
+      staleTime: this.staleTime.root,
       enabled: !!userName,
-      retry: false
+      retry: false,
     });
   }
 
   // 레시피 상세 조회
   static detailQuery(recipeId?: IRecipe["_id"]) {
-    return queryOptions<IRecipeDetailDTO>({
+    return queryOptions({
       queryKey: [this.keys.root, recipeId],
       queryFn: () => RecipeService.readRecipe(recipeId),
-      staleTime: this.staleTime,
+      staleTime: this.staleTime.root,
       enabled: !!recipeId,
+      retry: false,
     });
   }
 
@@ -41,8 +52,8 @@ export class RecipeQueries {
   static myListQuery(userName?: IUser["name"]) {
     return queryOptions({
       queryKey: [this.keys.root, this.keys.list, this.keys.user, userName],
-      queryFn: ({ signal }) => RecipeService.readMyRecipe({ signal: signal }),
-      staleTime: this.staleTime,
+      queryFn: ({ signal }) => RecipeService.readMyRecipe({ signal }),
+      staleTime: this.staleTime.root,
       enabled: !!userName,
     });
   }
@@ -52,8 +63,48 @@ export class RecipeQueries {
     return queryOptions({
       queryKey: [this.keys.root, this.keys.list, this.keys.like, userName],
       queryFn: ({ signal }) => RecipeService.readMyLikeRecieps({ signal }),
-      staleTime: this.staleTime,
+      staleTime: this.staleTime.root,
       enabled: !!userName,
+    });
+  }
+
+  // 레시피 추천
+  static recommendQuery(recommendParams: IRecipeRecommendRequestDTO) {
+    return queryOptions({
+      queryKey: [this.keys.root, this.keys.list, this.keys.recommend],
+      queryFn: ({ signal }) =>
+        RecipeService.recommnedRecipe({
+          signal,
+          params: recommendParams,
+        }),
+      enabled: false,
+    });
+  }
+
+  // 레시피 검색 무한 스크롤
+  static infinitySearchQuery(option: Partial<IRecipeQueryOption>) {
+    const { query, limit = "3" } = option || {};
+
+    return infiniteQueryOptions({
+      queryKey: [this.keys.root, this.keys.search, query],
+      queryFn: ({ pageParam, signal }) =>
+        RecipeService.searchRecipe({
+          signal,
+          params: {
+            query: query,
+            offset: pageParam * Number(limit),
+            limit: limit,
+          },
+        }),
+      initialPageParam: 0,
+      getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
+        if (lastPage?.length === 0) return;
+
+        return lastPageParam + 1;
+      },
+      staleTime: this.staleTime.search,
+      enabled: !!query,
+      retry: false,
     });
   }
 
@@ -73,7 +124,7 @@ export class RecipeQueries {
         RecipeService.readRecipeList({
           params: {
             limit,
-            offset: pageParam * limit,
+            offset: pageParam * Number(limit),
             categories,
             sort,
           },

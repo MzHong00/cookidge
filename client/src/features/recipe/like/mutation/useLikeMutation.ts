@@ -44,30 +44,32 @@ export const useLikeMutation = (recipeId: IRecipe["_id"]) => {
       ) as IRecipe;
 
       // 무한 스크롤 레시피 목록에 좋아요만 반영
-      queryClient.setQueryData(
-        infiniteRecipesQueryKey,
-        (data: InfiniteData<IRecipe[]>) => ({
-          ...data,
-          pages: data.pages.map((page) =>
-            page.map((recipe) =>
-              recipe._id === recipeId
-                ? {
-                    ...recipe,
-                    like_members: [...recipe.like_members, me._id],
-                  }
-                : recipe
-            )
-          ),
-        })
-      );
+      if (prevInfiniteRecipes) {
+        queryClient.setQueryData(
+          infiniteRecipesQueryKey,
+          (data: InfiniteData<IRecipe[]>) => ({
+            ...data,
+            pages: data.pages.map((page) =>
+              page.map((recipe) =>
+                recipe._id === recipeId
+                  ? {
+                      ...recipe,
+                      like_members: [...recipe.like_members, me._id],
+                    }
+                  : recipe
+              )
+            ),
+          })
+        );
+      }
 
-      if(prevDetailRecipe){
+      if (prevDetailRecipe) {
         queryClient.setQueryData(detailRecipeQueryKey, (recipe: IRecipe) => ({
           ...recipe,
           like_members: [...recipe.like_members, me._id],
         }));
       }
-      
+
       return { prevInfiniteRecipes, prevDetailRecipe };
     },
     onSettled: async () => {
@@ -76,8 +78,6 @@ export const useLikeMutation = (recipeId: IRecipe["_id"]) => {
         queryClient.invalidateQueries({
           queryKey: [root, list, like, me.name],
         }),
-        // 레시피 detail page에 좋아요 반영
-        queryClient.invalidateQueries({ queryKey: detailRecipeQueryKey }),
       ]);
     },
     onError: async (err, variables, context) => {
@@ -129,29 +129,33 @@ export const useUnlikeMutation = (recipeId: IRecipe["_id"]) => {
       ) as IRecipe;
 
       // 무한 스크롤 레시피 목록에 좋아요만 반영
-      queryClient.setQueryData(
-        infiniteRecipesQueryKey,
-        (data: InfiniteData<IRecipe[]>) => ({
-          ...data,
-          pages: data.pages.map((page) =>
-            page.map((recipe) =>
-              recipe._id === recipeId
-                ? {
-                    ...recipe,
-                    like_members: recipe.like_members.filter(
-                      (member) => member !== me._id
-                    ),
-                  }
-                : recipe
-            )
-          ),
-        })
-      );
+      if (prevInfiniteRecipes) {
+        queryClient.setQueryData(
+          infiniteRecipesQueryKey,
+          (data: InfiniteData<IRecipe[]>) => ({
+            ...data,
+            pages: data.pages.map((page) =>
+              page.map((recipe) =>
+                recipe._id === recipeId
+                  ? {
+                      ...recipe,
+                      like_members: recipe.like_members.filter(
+                        (member) => member !== me._id
+                      ),
+                    }
+                  : recipe
+              )
+            ),
+          })
+        );
+      }
 
-      if(prevDetailRecipe){
+      if (prevDetailRecipe) {
         queryClient.setQueryData(detailRecipeQueryKey, (recipe: IRecipe) => ({
           ...recipe,
-          like_members: recipe.like_members.filter((member) => member !== me._id),
+          like_members: recipe.like_members.filter(
+            (member) => member !== me._id
+          ),
         }));
       }
 
@@ -163,8 +167,6 @@ export const useUnlikeMutation = (recipeId: IRecipe["_id"]) => {
         queryClient.invalidateQueries({
           queryKey: [root, list, like, me.name],
         }),
-        // 레시피 detail page에 좋아요 반영
-        queryClient.invalidateQueries({ queryKey: detailRecipeQueryKey }),
       ]);
     },
     onError: async (err, variables, context) => {

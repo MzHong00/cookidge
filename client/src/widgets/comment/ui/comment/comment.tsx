@@ -9,10 +9,9 @@ import { DeleteCommentButton } from "features/comment/delete";
 
 import styles from "./comment.module.css";
 import { ICommentDTO } from "shared/api/comment/type";
+import { ProfileImage } from "shared/ui/profileImage";
 
-interface Props
-  extends React.HTMLAttributes<HTMLDivElement>,ICommentDTO{
-  }
+interface Props extends React.HTMLAttributes<HTMLDivElement>, ICommentDTO {}
 
 export const Comment = ({
   user,
@@ -29,10 +28,9 @@ export const Comment = ({
   return (
     <div className={`${styles.container} ${className}`} {...props}>
       <Link to={`/user/${user[0].name}`}>
-        <IconButton
-          src={user[0].picture}
-          className={styles.profileButton}
-        />
+        <IconButton className={styles.profileButton}>
+          <ProfileImage src={user[0].picture} />
+        </IconButton>
       </Link>
       <div className={styles.contentBox}>
         <header className={styles.nameBar}>

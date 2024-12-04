@@ -1,3 +1,5 @@
+import { PagenationParams } from "shared/types";
+
 export interface IUser {
   _id: string;
   name: string;
@@ -8,4 +10,20 @@ export interface IUser {
   following: IUser["_id"][];
   plan: "normal" | "premium";
   created_at: string;
+}
+
+export interface IUserInfiniteQueryParams extends PagenationParams {
+  user_name: IUser["name"];
+}
+
+export interface IUserPicture extends Pick<IUser, "_id" | "picture" | "name"> {}
+
+export interface IUserSearchDTO
+  extends Pick<IUser, "_id" | "name" | "picture"> {
+  introduce: string;
+  follower_count: string | number;
+}
+
+export interface IUserInputDTO extends Pick<IUser, "name" | "introduce"> {
+  picture: FileList;
 }

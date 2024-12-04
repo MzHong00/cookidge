@@ -1,0 +1,1 @@
+export { useShareMemberMutation } from "./mutation/shareMemberMutation copy";

@@ -1,0 +1,41 @@
+.container {
+    min-height: 24rem;
+    max-width: 64vw;
+    max-height: 64vh;
+    padding-inline: 0.5rem;
+    overflow-y: auto;
+    border: none;
+}
+
+.table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.tableHeader {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 10;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.ingredientTableItem {
+    height: 2rem;
+}
+
+.ingredientTableItem > td {
+    padding: 0.25rem;
+}
+
+.ingredientTableItem > td:first-child {
+    white-space: nowrap;
+}
+
+@media screen and (max-width: 767px) {
+    .container {
+        padding-inline: 0;
+        max-width: none;
+    }
+}

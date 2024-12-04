@@ -2,11 +2,16 @@ import mongoose from "mongoose";
 import {
   IRecipe,
   IRecipeInput,
+  IRecipeQueryOption,
+  IRecipeRecommendDTO,
   IRecipeSearchOption,
 } from "../interface/IRecipe";
 import { Recipe } from "../models/recipe";
 import { Like } from "../models/like";
 import { IUser } from "../interface/IUser";
+import { mongooseTransaction } from "../lib/mongoose/transaction";
+import { Comment } from "../models/comment";
+import { IIngredient } from "../interface/IIngredient";
 
 enum Sort {
   "최신순" = "_id",
@@ -27,16 +32,17 @@ export class RecipeService {
           as: "user",
         },
       },
+      { $unwind: "$user" },
       {
         $project: {
           user: {
             introduce: 0,
             following: 0,
             plan: 0,
-            created_at:0
-          }
-        }
-      }
+            created_at: 0,
+          },
+        },
+      },
     ]);
   }
 
@@ -79,17 +85,12 @@ export class RecipeService {
     ]);
   }
 
-  static async readRecipesByUserId(userId: IUser["_id"]) {
+  static async readUserRecipes(userId: IUser["_id"]) {
     return await Recipe.find(
       { author_id: userId },
       {
         _id: 1,
-        name: 1,
         pictures: 1,
-        author_id: 1,
-        introduction: 1,
-        like_members: 1,
-        created_at: 1,
       }
     );
   }
@@ -101,12 +102,59 @@ export class RecipeService {
     });
   }
 
-  static async updateRecipe(recipe: IRecipe) {
-    return await Recipe.findByIdAndUpdate(recipe._id, recipe, { new: true });
+  static async updateRecipe(recipeId: string, recipe: IRecipeInput) {
+    return await Recipe.findByIdAndUpdate(recipeId, recipe, { new: true });
   }
 
   static async deleteRecipe(recipeId: IRecipe["_id"]) {
-    return await Recipe.findByIdAndDelete(recipeId);
+    await Promise.all([
+      Recipe.deleteOne({ _id: recipeId }),
+      Comment.deleteMany({ recipe_id: recipeId }),
+      Like.deleteMany({ recipe_id: recipeId }),
+    ]);
+  }
+
+  static async searchRecipes(option: IRecipeQueryOption) {
+    const { query, limit = 5, offset } = option || {};
+
+    return await Recipe.aggregate([
+      { $match: { name: { $regex: query } } },
+      { $addFields: { like_count: { $size: "$like_members" } } },
+      { $sort: { like_count: -1 } },
+      { $skip: Number(offset) },
+      { $limit: Number(limit) },
+      { $project: { ingredients: 0, cooking_steps: 0 } },
+    ]);
+  }
+
+  static async recommentRecipes(recommendDTO: IRecipeRecommendDTO) {
+    const {categories, my_ingredients} = recommendDTO;
+
+    return await Recipe.aggregate([
+      {
+        $addFields: {
+          matched_ingredients: {
+            $setIntersection: [
+              { $map: { input: "$ingredients", as: "ingredient", in: "$$ingredient.name"} },
+              my_ingredients
+            ]
+          }
+        }
+      },
+      {
+        $addFields: {
+          match_count: { $size: "$matched_ingredients"}
+        }
+      },
+      { $sort: { match_count: -1 } },
+      { $limit: 4 },
+      { $project: {
+        name: 1,
+        pictures: 1,
+        like_members: 1,
+        matched_ingredients: 1
+      }}
+    ])
   }
 
   static async readMyLikeRecipes(userId: IUser["_id"]) {
@@ -115,57 +163,40 @@ export class RecipeService {
       {
         $lookup: {
           from: "recipes",
-          localField: "like_recipe_ids",
+          localField: "recipe_id",
           foreignField: "_id",
           as: "liked_recipes",
+        },
+      },
+      { $unwind: "$liked_recipes" },
+      {
+        $project: {
+          liked_recipes: {
+            _id: 1,
+            pictures: 1,
+          },
         },
       },
     ]);
   }
 
   static async like(userId: IUser["_id"], recipeId: IRecipe["_id"]) {
-    const session = await mongoose.startSession();
-
-    try {
-      session.startTransaction();
+    mongooseTransaction(async () => {
       await Recipe.findByIdAndUpdate(recipeId, {
         $push: { like_members: userId },
       });
 
-      await Like.findOneAndUpdate(
-        { user_id: userId },
-        { $push: { like_recipe_ids: recipeId } },
-        { upsert: true }
-      );
-
-      await session.commitTransaction();
-    } catch (error) {
-      await session.abortTransaction();
-      console.log(error);
-    } finally {
-      session.endSession();
-    }
+      await Like.create({ user_id: userId, recipe_id: recipeId });
+    });
   }
 
   static async unlike(userId: IUser["_id"], recipeId: IRecipe["_id"]) {
-    const session = await mongoose.startSession();
-
-    try {
-      session.startTransaction();
+    mongooseTransaction(async () => {
       await Recipe.findByIdAndUpdate(recipeId, {
         $pull: { like_members: userId },
       });
 
-      await Like.findOneAndUpdate(
-        { user_id: userId },
-        { $pull: { like_recipe_ids: recipeId } }
-      );
-      session.commitTransaction();
-    } catch (error) {
-      console.log(error);
-      session.abortTransaction();
-    } finally {
-      session.endSession();
-    }
+      await Like.deleteOne({ user_id: userId, recipe_id: recipeId });
+    });
   }
 }

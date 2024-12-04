@@ -1,16 +1,20 @@
 import { Request, Response, NextFunction } from "express";
+import mongoose from "mongoose";
 
 import { Recipe } from "../../models/recipe";
 
-export default (req: Request, res: Response, next: NextFunction) => {
+export default async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.userId;
-  const recipeId = req.body.recipe_id || req.body.recipe._id;
+  const recipeId = req.query._id as string | undefined;
+
+  if (!recipeId)
+    return res.status(404).json({ message: "레시피 ID가 없습니다." });
 
   if (!userId)
     return res.status(401).json({ message: "로그인 상태가 아닙니다." });
 
-  const isMyRecipe = Recipe.findOne({
-    _id: recipeId,
+  const isMyRecipe = await Recipe.findOne({
+    _id: mongoose.Types.ObjectId.createFromHexString(recipeId),
     author_id: userId,
   });
 

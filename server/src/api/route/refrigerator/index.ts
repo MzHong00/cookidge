@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Router } from "express";
 import { celebrate, Joi, Segments } from "celebrate";
 
@@ -28,9 +29,11 @@ export default (app: Router) => {
     const recipeId = req.query.refrigerator_id as string;
 
     try {
-      const refrigerator = await RefrigeratorService.readDetail(recipeId);
+      const refrigerator = await RefrigeratorService.readDetail(
+        mongoose.Types.ObjectId.createFromHexString(recipeId)
+      );
 
-      res.status(200).json(refrigerator);
+      res.status(200).json(...refrigerator);
     } catch (error) {
       console.error("냉장고 상세 조회 중 오류:", error);
       res.status(500).json({ message: "서버 오류" });
@@ -43,7 +46,7 @@ export default (app: Router) => {
     isAuth,
     async (req, res) => {
       const userId = req.userId;
-      const refrigeratorName = req.body.name;
+      const refrigeratorName = req.body.name as string;
 
       try {
         const newRefrigerator = await RefrigeratorService.createRefrigerator(
@@ -72,15 +75,23 @@ export default (app: Router) => {
 
   route.patch(
     "/update",
-    celebrate({ [Segments.BODY]: Joi.object({ name: Joi.string() }) }),
+    celebrate({
+      [Segments.BODY]: Joi.object({
+        refrigerator_id: Joi.string(),
+        refrigerator_name: Joi.string(),
+      }),
+    }),
     isAuth,
     isOurRefrigerator,
     async (req, res) => {
-      const refrigerator = req.body.fridge;
-
+      const { refrigerator_id, refrigerator_name } = req.body as {
+        refrigerator_id: string;
+        refrigerator_name: string;
+      };
       try {
         const result = await RefrigeratorService.updateRefrigerator(
-          refrigerator
+          refrigerator_id,
+          refrigerator_name
         );
 
         res.status(200).json(result);
@@ -93,14 +104,18 @@ export default (app: Router) => {
 
   route.delete(
     "/delete",
-    celebrate({ [Segments.BODY]: Joi.object({ id: Joi.string() }) }),
+    celebrate({
+      [Segments.BODY]: Joi.object({ refrigerator_id: Joi.string() }),
+    }),
     isAuth,
     isMyRefrigerator,
     async (req, res) => {
-      const refrigeratorId = req.body.id as string;
+      const { refrigerator_id } = req.body as {
+        refrigerator_id: string;
+      };
 
       try {
-        await RefrigeratorService.deleteRefrigerator(refrigeratorId);
+        await RefrigeratorService.deleteRefrigerator(refrigerator_id);
 
         res.status(200).json({ message: "냉장고 삭제에 성공했습니다." });
       } catch (error) {
@@ -111,23 +126,28 @@ export default (app: Router) => {
   );
 
   route.patch(
-    "/add-shared-member",
+    "/shared-member/add",
     celebrate({
       [Segments.BODY]: Joi.object({
-        id: Joi.string(),
-        member: Joi.array().items(Joi.string()),
+        refrigerator_id: Joi.string().required(),
+        member_id: Joi.string().required(),
       }),
     }),
     isAuth,
     isMyRefrigerator,
     async (req, res) => {
-      const { id } = req.body.id;
-      const { memberId } = req.body.memberId;
+      const { refrigerator_id, member_id } = req.body as {
+        refrigerator_id: string;
+        member_id: string;
+      };
 
       try {
-        const refrigerator = RefrigeratorService.addSharedMember(id, memberId);
+        await RefrigeratorService.addSharedMember(
+          refrigerator_id,
+          mongoose.Types.ObjectId.createFromHexString(member_id)
+        );
 
-        res.send(200).json(refrigerator);
+        res.status(200).json({ message: "공유 멤버 초대를 성공했습니다." });
       } catch (error) {
         console.error("냉장고 공유 멤버 설정 오류:", error);
         res.status(500).json({ message: "서버 오류" });
@@ -136,26 +156,28 @@ export default (app: Router) => {
   );
 
   route.patch(
-    "/remove-shared-member",
+    "/shared-member/remove",
     celebrate({
       [Segments.BODY]: Joi.object({
-        id: Joi.string(),
-        member: Joi.array().items(Joi.string()),
+        refrigerator_id: Joi.string().required(),
+        member_id: Joi.string().required(),
       }),
     }),
     isAuth,
     isMyRefrigerator,
     async (req, res) => {
-      const { id } = req.body.id;
-      const { memberId } = req.body;
+      const { refrigerator_id, member_id } = req.body as {
+        refrigerator_id: string;
+        member_id: string;
+      };
 
       try {
-        const refrigerator = RefrigeratorService.removeSharedMember(
-          id,
-          memberId
+        await RefrigeratorService.removeSharedMember(
+          refrigerator_id,
+          mongoose.Types.ObjectId.createFromHexString(member_id)
         );
 
-        res.send(200).json(refrigerator);
+        res.status(200).json({ message: "공유 멤버 삭제를 성공했습니다." });
       } catch (error) {
         console.error("냉장고 공유 멤버 설정 오류:", error);
         res.status(500).json({ message: "서버 오류" });

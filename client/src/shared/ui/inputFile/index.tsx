@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 
-import { RiUpload2Line  } from "@react-icons/all-files/ri/RiUpload2Line";
+import { RiUpload2Line } from "@react-icons/all-files/ri/RiUpload2Line";
 
 import styles from "./index.module.scss";
 
@@ -11,7 +11,10 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 export const InputFile = forwardRef<HTMLInputElement, Props>(
-  ({ introduction, previewUrl, file, id, className, style,color, ...props }, ref) => {
+  (
+    { introduction, previewUrl, file, id, className, style, color, ...props },
+    ref
+  ) => {
     return (
       <div className={`${className} ${styles.container}`} style={style}>
         <label htmlFor={id} className={styles.label}>
@@ -19,7 +22,7 @@ export const InputFile = forwardRef<HTMLInputElement, Props>(
             <img src={previewUrl} alt="" className={styles.image} />
           ) : (
             <div className={styles.uploadPlaceholder}>
-              <RiUpload2Line size={24} color={color}/>
+              <RiUpload2Line size={24} color={color} />
               {introduction && (
                 <p className={styles.introduction}>
                   {introduction || "이미지 추가"}
@@ -28,6 +31,7 @@ export const InputFile = forwardRef<HTMLInputElement, Props>(
             </div>
           )}
         </label>
+        
         <input
           id={id}
           ref={ref}

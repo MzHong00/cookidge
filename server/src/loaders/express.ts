@@ -12,13 +12,15 @@ export default (app: Express) => {
     origin: "http://localhost:3000",
     credentials: true,
   };
-  const swaggerYaml = YAML.load(path.join(__dirname, "../config/swagger/openapi.yaml"));
+  const swaggerYaml = YAML.load(
+    path.join(__dirname, "../config/swagger/openapi.yaml")
+  );
 
   app.use(cors(corsOptions));
   app.use(cookieParser());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
-  
+
   app.use("/api", routes());
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerYaml));
 };

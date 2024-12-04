@@ -1,10 +1,17 @@
 import { useEffect, useState } from "react";
+import { ICookingStep } from "shared/api/recipe/type";
 
-export const usePreviewStepPicture = () => {
+export const usePreviewStepPicture = (cookingStep?: ICookingStep[]) => {
   const [stepPictures, setStepPictures] = useState<{
     [key: string]: string | undefined;
-  }>({});
+  }>({
+    ...cookingStep?.reduce((prev, cur, curIdx) => ({
+      ...prev,
+      [`cooking_steps.${curIdx}.picture`]: cur.picture
+    }), {})
+  });
 
+  
   const onChangeStepPreviewPicture = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -16,6 +23,8 @@ export const usePreviewStepPicture = () => {
 
   useEffect(() => {
     return () => {
+      console.log("bye");
+      
       Object.values(stepPictures).forEach((url) => {
         if (url) {
           URL.revokeObjectURL(url);

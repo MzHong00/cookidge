@@ -34,7 +34,7 @@ export class CommentService {
         {
           $project: {
             _id: 1,
-            recipeId_id: 1,
+            recipe_id: 1,
             user_id: 1,
             comment: 1,
             created_at: 1,

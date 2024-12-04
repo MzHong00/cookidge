@@ -3,11 +3,16 @@
 .cardContainer {
     @include app.flex-layout(column);
     gap: 0;
-    border-top: 1px solid rgb(var(--base-rgb-grey-light));
+    border-bottom: 1px solid rgb(var(--base-rgb-grey-light));
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.containerBottomSection{
+    padding-inline: 0.5rem;
 }
 
 .infoBox {
-    height: 100%;
     @include app.flex-layout(column, start, space-between);
     flex: 1;
 }

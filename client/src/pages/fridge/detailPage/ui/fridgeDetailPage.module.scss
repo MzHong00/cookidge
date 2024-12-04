@@ -1,0 +1,40 @@
+@use 'app/app.scss';
+
+
+.fridgeConfigContainer {
+    @include app.flex-layout(row-reverse);
+    position: relative;
+}
+
+.fridgeConfigButton {
+    width: fit-content;
+    background-color: white;
+    border: 1px solid rgb(var(--base-rgb-grey-light));
+    padding: 1rem;
+}
+
+.fridgeConfigButton:hover {
+    filter: none;
+}
+
+.fridgeActionBar {
+    @include app.flex-layout(column);
+    gap: 0;
+    position: absolute;
+    top: 125%;
+    right: 0%;
+    background-color: white;
+    border: 1px solid rgb(var(--base-rgb-grey-light));
+    overflow: hidden;
+    box-shadow: 0px 0px 2px 4px whitesmoke;
+}
+
+.fridgeActionBar>*:hover {
+    border-radius: 0;
+    background-color: whitesmoke;
+    filter: none;
+}
+
+.lastestUpdate {
+    text-align: end;
+}

@@ -2,10 +2,10 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 
 import config from "../config";
 import { User } from "../models/user";
-import { IUser, type IUserInputDTO } from "../interface/IUser";
+import { IUser, type IUserCreateInputDTO } from "../interface/IUser";
 
 // oauth는 로그인와 회원가입을 같이 처리해야 하기 때문에 oAuthLogin 함수 이름으로 설정
-export const oAuthLogin = async (userInputDTO: IUserInputDTO) => {
+export const oAuthLogin = async (userInputDTO: IUserCreateInputDTO) => {
   try {
     const member = await User.findOne({ email: userInputDTO.email });
     
@@ -28,7 +28,7 @@ export const oAuthLogin = async (userInputDTO: IUserInputDTO) => {
   }
 };
 
-export const signup = async (userInputDto: IUserInputDTO): Promise<IUser> => {
+export const signup = async (userInputDto: IUserCreateInputDTO): Promise<IUser> => {
   try {
     return await User.create({
       name: userInputDto.name,

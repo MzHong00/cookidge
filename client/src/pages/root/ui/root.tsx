@@ -9,8 +9,8 @@ import { Footer } from "widgets/footer";
 import styles from "./root.module.css";
 
 export const Root = () => {
-  const { data: user, isLoading } = useQuery(UserQueries.meQuery());
   const location = useLocation();
+  const { data: user, isLoading } = useQuery(UserQueries.meQuery());
 
   return (
     <div className={styles.root}>

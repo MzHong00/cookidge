@@ -16,7 +16,9 @@ export const CreateFridgeForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFridgeFormInput>();
+  } = useForm<IFridgeFormInput>({
+    mode: "onBlur"
+  });
   const navigate = useNavigate();
   const { mutate } = useCreateFridgeMutation();
 

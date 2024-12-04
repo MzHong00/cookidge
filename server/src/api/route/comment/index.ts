@@ -1,17 +1,17 @@
-import { Router, Request, Response } from "express";
+import mongoose from "mongoose";
+import { Router } from "express";
 import { celebrate, Joi, Segments } from "celebrate";
 
 import isAuth from "../../middleware/isAuth";
 import isMyComment from "../../middleware/isMyComment";
 import { CommentService } from "../../../services/comment";
-import mongoose from "mongoose";
 
 const route = Router();
 
 export default (app: Router) => {
   app.use("/comment", route);
 
-  route.get("/read-list", async (req: Request, res: Response) => {
+  route.get("/read-list", async (req, res) => {
     const { recipe_id, last_comment_id } = req.query;
 
     const recipeObjectId = mongoose.Types.ObjectId.createFromHexString(
@@ -47,7 +47,7 @@ export default (app: Router) => {
       }),
     }),
     isAuth,
-    async (req: Request, res: Response) => {
+    async (req, res) => {
       const userId = req.userId;
       const { recipe_id, comment } = req.body;
 
@@ -76,7 +76,7 @@ export default (app: Router) => {
     }),
     isAuth,
     isMyComment,
-    async (req: Request, res: Response) => {
+    async (req, res) => {
       const { comment_id, comment } = req.body;
 
       try {
@@ -109,7 +109,7 @@ export default (app: Router) => {
     }),
     isAuth,
     isMyComment,
-    async (req: Request, res: Response) => {
+    async (req, res) => {
       const { comment_id } = req.body;
 
       try {

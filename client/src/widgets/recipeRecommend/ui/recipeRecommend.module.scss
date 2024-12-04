@@ -1,0 +1,19 @@
+@use 'app/app.scss';
+
+.recipeList {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1rem;
+}
+
+.recipeCard {
+    font-size: 0.85rem;
+    padding-bottom: 0.5em;
+}
+
+@media screen and (max-width: 767px) {
+    .recipeList {
+        grid-template-columns: 1fr 1fr;
+    }
+
+}

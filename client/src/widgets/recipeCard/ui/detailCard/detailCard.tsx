@@ -8,9 +8,9 @@ import { PicturesBox } from "shared/ui/picturesBox";
 import { LikeButton } from "features/recipe/like";
 
 import styles from "./detailCard.module.scss";
-import { IRecipeDetailDTO } from "shared/api/recipe/type";
+import { IDetailRecipeResponseDTO } from "shared/api/recipe/type";
 
-interface Props extends React.HTMLAttributes<HTMLDivElement>, IRecipeDetailDTO {}
+interface Props extends React.HTMLAttributes<HTMLDivElement>, IDetailRecipeResponseDTO {}
 
 export const DetailCard = ({
   _id,

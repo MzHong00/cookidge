@@ -13,6 +13,7 @@ import styles from "./recipeCard.module.scss";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement>, IRecipe {
   isThumbnaileMode?: boolean;
+  isDisabledLike?: boolean;
 }
 
 export const RecipeCard = ({
@@ -25,7 +26,8 @@ export const RecipeCard = ({
   cooking_time,
   created_at,
   like_members,
-  isThumbnaileMode= false,
+  isDisabledLike = false,
+  isThumbnaileMode = false,
   className,
   children,
   ...props
@@ -33,44 +35,54 @@ export const RecipeCard = ({
   return (
     <FramerFadeLayout>
       <article className={`${styles.cardContainer} ${className}`} {...props}>
-        {like_members && _id && (
-          <div className={styles.recipeActionBar}>
-            <LikeButton recipe_id={_id} likeMembers={like_members} />
-          </div>
-        )}
         {pictures && (
-          <PicturesBox pictures={pictures} isThumbnaileMode={isThumbnaileMode} />
+          <PicturesBox
+            pictures={pictures}
+            isThumbnaileMode={isThumbnaileMode}
+          />
         )}
-        {!isThumbnaileMode && (
-          <Link to={`recipe/${_id}`}>
-            <div className={styles.infoBox}>
-              <div className="flex-column">
-                {(name || created_at) && (
-                  <div className={styles.infoHeader}>
-                    {name && <b>{name}</b>}
-                    {created_at && <p>{dateGap(created_at)}전</p>}
-                  </div>
-                )}
-                {(cooking_time || servings) && (
-                  <div className={styles.subInfo}>
-                    {cooking_time !== undefined && (
-                      <IconBox Icon={RiTimer2Line}>
-                        조리시간 {cooking_time}분
-                      </IconBox>
-                    )}
-                    {servings !== undefined && (
-                      <IconBox Icon={RiGroupLine}>{servings}인분</IconBox>
-                    )}
-                  </div>
-                )}
+        <div className={styles.containerBottomSection}>
+          {!isThumbnaileMode && (
+            <Link to={`/recipe/${_id}`}>
+              <div className={styles.infoBox}>
+                <div className="flex-column">
+                  {(name || created_at) && (
+                    <div className={styles.infoHeader}>
+                      {name && <b>{name}</b>}
+                      {created_at && <p>{dateGap(created_at)}전</p>}
+                    </div>
+                  )}
+                  {(cooking_time || servings) && (
+                    <div className={styles.subInfo}>
+                      {cooking_time !== undefined && (
+                        <IconBox Icon={RiTimer2Line}>
+                          조리시간 {cooking_time}분
+                        </IconBox>
+                      )}
+                      {servings !== undefined && (
+                        <IconBox Icon={RiGroupLine}>{servings}인분</IconBox>
+                      )}
+                    </div>
+                  )}
 
-                {introduction && (
-                  <p className={styles.introduction}>{introduction}</p>
-                )}
+                  {introduction && (
+                    <p className={styles.introduction}>{introduction}</p>
+                  )}
+                </div>
               </div>
+            </Link>
+          )}
+          {like_members && _id && (
+            <div className={styles.recipeActionBar}>
+              <LikeButton
+                recipe_id={_id}
+                likeMembers={like_members}
+                disabled={isDisabledLike}
+              />
             </div>
-          </Link>
-        )}
+          )}
+          {children}
+        </div>
       </article>
     </FramerFadeLayout>
   );

@@ -6,6 +6,7 @@ import { IUser } from "shared/api/user";
 import { Navbar } from "shared/ui/navbar";
 import { IconLink } from "shared/ui/iconLink";
 import { useModal } from "shared/hooks/useModal";
+import { ProfileImage } from "shared/ui/profileImage";
 import { IconButton } from "shared/ui/iconButton";
 import { LogoutButton } from "features/user/logout";
 
@@ -32,11 +33,9 @@ export const Header = ({ user }: Props) => {
               counterTheme="red"
               className={styles.iconButton}
             />
-            <IconButton
-              src={user.picture}
-              className={styles.iconButton}
-              onClick={toggleModal}
-            />
+            <IconButton className={styles.iconButton} onClick={toggleModal}>
+              <ProfileImage src={user.picture} />
+            </IconButton>
           </>
         ) : (
           <IconLink to="/login" className={styles.loginButton}>

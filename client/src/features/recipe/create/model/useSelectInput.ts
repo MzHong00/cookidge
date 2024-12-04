@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { RECIPE_INPUT_SECTION } from "../consts/consts";
+import { RECIPE_INPUT_SECTION } from "../../../../entities/recipe/consts/consts";
 
 type SectionType = (typeof RECIPE_INPUT_SECTION)[number];
 

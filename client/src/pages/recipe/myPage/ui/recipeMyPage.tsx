@@ -3,12 +3,9 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { RiBook2Line } from "@react-icons/all-files/ri/RiBook2Line";
 import { RiHeart2Line } from "@react-icons/all-files/ri/RiHeart2Line";
 import { RiAddLine } from "@react-icons/all-files/ri/RiAddLine";
-import { IoReload } from "@react-icons/all-files/io5/IoReload";
-import { FaMagic } from "@react-icons/all-files/fa/FaMagic";
 
 import { IUser } from "shared/api/user";
 import { IconLink } from "shared/ui/iconLink";
-import { IconButton } from "shared/ui/iconButton";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 import { UserQueries } from "entities/user";
@@ -57,9 +54,9 @@ export const RecipeMyPage = () => {
         >
           <div className={styles.recipeContainer}>
             {myLikeRecipes?.map((recipe) => (
-              <Link to={`/recipe/${recipe._id}`} key={recipe._id}>
+              <Link to={`/recipe/${recipe.liked_recipes._id}`} key={recipe.liked_recipes._id}>
               <RecipeCard
-                pictures={recipe.pictures}
+                pictures={recipe.liked_recipes.pictures}
                 isThumbnaileMode={true}
               />
             </Link>
@@ -67,20 +64,6 @@ export const RecipeMyPage = () => {
           </div>
         </SubjectBox>
       </div>
-
-      <SubjectBox
-        title="레시피 추천"
-        subtitle="현재 냉장고 재료를 기반으로 한 추천 레시피"
-      >
-        <section className="flex-row">
-          <IconButton Icon={IoReload} className={styles.recommendReloadButton}>
-            레시피 추천
-          </IconButton>
-          <IconButton Icon={FaMagic} className="main-button">
-            AI 추천
-          </IconButton>
-        </section>
-      </SubjectBox>
     </FramerFadeLayout>
   );
 };

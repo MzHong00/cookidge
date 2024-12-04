@@ -4,7 +4,7 @@ export interface IIngredient {
     name: string;
     category: string;
     quantity: string;
-    expired_at?: string;
+    expired_at: string;
   }
   
 export interface IIngredientInputDto extends Omit<IIngredient, "_id"> {}

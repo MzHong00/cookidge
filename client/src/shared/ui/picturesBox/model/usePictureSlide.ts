@@ -1,7 +1,7 @@
 import { useRef, useState, type MouseEvent } from "react";
 
-export const usePictureSlide = () => {
-  const ref = useRef<HTMLDivElement>(null);
+export const usePictureSlide = <T>() => {
+  const ref = useRef<HTMLUListElement>(null);
   const [index, setIndex] = useState<number>(0);
 
   const onClickPrev = () => {
@@ -23,7 +23,7 @@ export const usePictureSlide = () => {
     ref.current?.scrollTo({ left: moveDistance });
   };
 
-  const onScrollDetectIndex = (e: MouseEvent<HTMLDivElement>) => {
+  const onScrollDetectIndex = (e: MouseEvent<HTMLUListElement>) => {
     const leftScroll = e.currentTarget.scrollLeft;
     const clientWidth = ref.current?.clientWidth;
 

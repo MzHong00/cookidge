@@ -1,0 +1,25 @@
+@use 'app/app.scss';
+
+.page {
+    max-width: 850px;
+    margin: auto;
+    @include app.flex-layout(column, stretch, space-between);
+}
+
+.deleteButton {
+    margin-block: 1rem;
+    float: right;
+    transition-timing-function: ease;
+    transition-duration: 0.2s;
+    opacity: 0.3;
+}
+.deleteButton:hover {
+    opacity: 0.8;
+}
+
+@media screen and (max-width:767px) {
+    .page {
+        width: 100% !important;
+        padding-inline: 1rem;
+    }
+}

@@ -1,13 +1,13 @@
 import { useRef, useState } from "react";
 
-import { type CookingStep } from "shared/api/recipe/type";
+import { type ICookingStep } from "shared/api/recipe/type";
 import { IconButton } from "shared/ui/iconButton";
 import { SubjectBox } from "shared/ui/subjectBox";
 
 import styles from "./recipeStep.module.scss";
 
 interface Props {
-  recipeSteps?: CookingStep[];
+  recipeSteps?: ICookingStep[];
 }
 
 export const RecipeStep = ({ recipeSteps }: Props) => {

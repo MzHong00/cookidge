@@ -1,0 +1,17 @@
+@use 'app/app.scss';
+
+.container {
+    @include app.flex-layout(row, stretch, stretch, 0.25rem);
+    flex-wrap: wrap;
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1), 0px -2px 4px rgba(0, 0, 0, 0.1)
+}
+
+.fridgeButton {
+    padding-block: 0.75rem;
+    border-radius: 0;
+    transition-duration: 0.3s;
+}
+
+.activeFridge {
+    background-color: white;
+}

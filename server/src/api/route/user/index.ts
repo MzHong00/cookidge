@@ -1,9 +1,14 @@
 import { Router } from "express";
 
 import isAuth from "../../middleware/isAuth";
-import { IUserInputDTO } from "../../../interface/IUser";
 import { celebrate, Joi, Segments } from "celebrate";
 import { UserService } from "../../../services/user";
+import {
+  IUserSearchQueryOptions,
+  IUserUpdateInputDTO,
+} from "../../../interface/IUser";
+import { upload } from "../../middleware/multer";
+import { CloudinaryService } from "../../../services/cloudinary";
 
 const route = Router();
 
@@ -16,11 +21,15 @@ export default (app: Router) => {
     try {
       const me = await UserService.readUserById(meId);
 
-      if (!me) return res.status(404).json({ message: "내 정보가 없습니다." });
+      if (!me)
+        return res.status(404).json({ message: "내 정보를 찾을 수 없습니다." });
 
       res.status(200).json(me);
     } catch (error) {
-      res.status(500).json({ message: "내 정보 검색 중 오류가 발생했습니다." });
+      console.log(error);
+      res
+        .status(500)
+        .json({ message: "내 정보를 가져오는 중 오류가 발생했습니다." });
     }
   });
 
@@ -37,56 +46,89 @@ export default (app: Router) => {
 
         res.status(200).json(user);
       } catch (error) {
-        res.status(500).json({ message: "유저 검색 중 오류가 발생했습니다." });
+        console.log(error);
+        res
+          .status(500)
+          .json({ message: "유저를 가져오는 중 오류가 발생했습니다." });
+      }
+    }
+  );
+
+  route.get(
+    "/search",
+    celebrate({
+      [Segments.QUERY]: Joi.object({
+        user_name: Joi.string().required(),
+        limit: Joi.string(),
+        offset: Joi.string(),
+      }),
+    }),
+    async (req, res) => {
+      const searchQuery = req.query as IUserSearchQueryOptions;
+
+      try {
+        const users = await UserService.searchUser(searchQuery);
+        
+        res.status(200).json(users);
+      } catch (error) {
+        console.log(error);
+        res
+          .status(500)
+          .json({ message: "유저를 검색하는 중 오류가 발생했습니다." });
       }
     }
   );
 
   route.patch(
     "/update",
+    upload.single("picture[]"),
     celebrate({
       [Segments.BODY]: Joi.object({
-        name: Joi.string().required(),
+        name: Joi.string(),
+        introduce: Joi.string(),
       }),
     }),
     isAuth,
     async (req, res) => {
-      const { name, picture } = req.body as IUserInputDTO;
+      const userId = req.userId;
+      const { name, introduce } = req.body as IUserUpdateInputDTO;
+      const file = req.file;
+
+      const picture = await CloudinaryService.uploadFile(file, { width: 200 });
 
       try {
-        // 로직 추가 예정
-        res.status(200).json({ message: "Update route working" });
-      } catch (error) {
-        res.status(500).json({ message: "Error in update route" });
-      }
-    }
-  );
-
-  route.delete(
-    "/delete/:id",
-    celebrate({
-      [Segments.PARAMS]: Joi.object({
-        id: Joi.string().required(),
-      }),
-    }),
-    isAuth,
-    async (req, res) => {
-      const { id } = req.params;
-
-      try {
-        const user = await UserService.deleteUser(id);
-
-        if (!user)
-          return res
-            .status(200)
-            .json({ message: "사용자가 존재하지 않습니다." });
+        const user = await UserService.updateUser(userId, {
+          ...(name && { name }),
+          ...(introduce && { introduce }),
+          ...(picture && { picture: picture.url }),
+        });
 
         res.status(200).json(user);
       } catch (error) {
-        res.status(500).json({ message: "Error in delete route" });
+        console.log(error);
+        res
+          .status(500)
+          .json({ message: "내 정보를 업데이트하는 중 오류가 발생했습니다." });
       }
     }
   );
+
+  route.delete("/delete", isAuth, async (req, res) => {
+    const userId = req.userId;
+
+    try {
+      const user = await UserService.deleteUser(userId);
+      res
+        .status(200)
+        .clearCookie("token")
+        .json({ message: "계정이 성공적으로 삭제되었습니다." });
+    } catch (error) {
+      console.log(error);
+      res
+        .status(500)
+        .json({ message: "계정을 삭제하는 중 오류가 발생했습니다." });
+    }
+  });
 
   route.patch(
     "/follow",
@@ -105,7 +147,8 @@ export default (app: Router) => {
 
         res.status(200).json(user);
       } catch (error) {
-        res.status(500).json({ message: "Error in follow route" });
+        console.log(error);
+        res.status(500).json({ message: "팔로우 중 오류가 발생했습니다." });
       }
     }
   );
@@ -127,7 +170,8 @@ export default (app: Router) => {
 
         res.status(200).json(user);
       } catch (error) {
-        res.status(500).json({ message: "Error in unfollow route" });
+        console.log(error);
+        res.status(500).json({ message: "언팔로우 중 오류가 발생했습니다." });
       }
     }
   );

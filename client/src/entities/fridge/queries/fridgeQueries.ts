@@ -1,6 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 
-import { FridgeService, IFridge, IFridgeList } from "shared/api/fridge";
+import { FridgeService, IFridgeList } from "shared/api/fridge";
 import { useGlobalStore } from "shared/lib/zustand/useStore";
 
 export class FridgeQueries {
@@ -16,16 +16,16 @@ export class FridgeQueries {
 
     return queryOptions<IFridgeList[]>({
       queryKey: [this.keys.list],
-      queryFn: async () => await FridgeService.fetchFridgeListQuery(),
+      queryFn: async () => await FridgeService.fetchFridgeList(),
       staleTime: this.staleTime,
       enabled: isLogin,
     });
   }
 
   static detailQuery(id?: string) {
-    return queryOptions<IFridge>({
+    return queryOptions({
       queryKey: [this.keys.detail, id],
-      queryFn: async () => await FridgeService.fetchFridgeDetailQuery(id),
+      queryFn: async () => await FridgeService.fetchFridgeDetail(id),
       staleTime: this.staleTime,
       enabled: !!id,
     });

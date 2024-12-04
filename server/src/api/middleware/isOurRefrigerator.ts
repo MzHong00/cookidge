@@ -6,7 +6,7 @@ import { IRefrigerator } from "../../interface/IRefrigerator";
 
 export default async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.userId;
-  const refrigeratorId = req.query.refrigerator_id || req.body.refrigerator._id;
+  const refrigeratorId = req.query.refrigerator_id || req.body.refrigerator_id;
   
   if (!userId)
     return res.status(401).json({ message: "로그인 상태가 아닙니다." });
@@ -26,18 +26,18 @@ export default async (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-export const isMyRefrigerator = (
+export const isMyRefrigerator = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   const userId = req.userId;
-  const refrigeratorId = req.body.refrigerator_id || req.body.refrigerator._id;
+  const refrigeratorId = req.body.refrigerator_id;
 
   if (!userId)
     return res.status(401).json({ message: "로그인 상태가 아닙니다." });
 
-  const refrigerator = Refrigerator.findOne({
+  const refrigerator = await Refrigerator.findOne({
     _id: refrigeratorId,
     owner_id: userId,
   }) as unknown as IRefrigerator | null;

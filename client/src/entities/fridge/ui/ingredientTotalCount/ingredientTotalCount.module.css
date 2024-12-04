@@ -1,0 +1,4 @@
+.header {
+    font-size: clamp(0.75rem, 2.5vw, 1rem);
+    flex-direction: row-reverse;
+}

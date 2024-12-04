@@ -1,26 +1,27 @@
 @use 'app/app.scss';
 
 .container {
-    padding: 10px;
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
     @include app.flex-layout(row, stretch, space-between);
     background: rgba(255, 255, 255, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 15px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 }
 
 .info {
     @include app.flex-layout(row, center)
 }
 
-.action {
-    @include app.flex-layout(row, center);
+.name {
+    white-space: nowrap;
 }
 
 .img {
     width: 40px;
     height: 40px;
-    border-radius: 100%;
 }
 
 .followButton {

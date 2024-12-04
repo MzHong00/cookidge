@@ -1,38 +1,27 @@
-import { useState } from "react";
+import React, { forwardRef } from "react";
+
 import styles from "./index.module.css";
 
 interface Props extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label: string;
+  length?: number | string;
 }
 
-export const TextArea = ({
-  label,
-  name,
-  maxLength,
-  ...props
-}: Props) => {
-  const [text, setText] = useState("");
-
-  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setText(e.target.value);
-  };
-
-  return (
-    <div className={styles.container}>
-      <label htmlFor={name}>
-        {label}
-      </label>
-      <textarea
-        id={name}
-        name={name}
-        value={text}
-        maxLength={maxLength}
-        onChange={handleTextChange}
-        {...props}
-      />
-      <div className={styles.textCounter}>
-        {text.length}/{maxLength}
+export const TextArea = forwardRef<HTMLTextAreaElement, Props>(
+  ({ id, label, length ,maxLength, ...props }, ref) => {
+    return (
+      <div className={styles.container}>
+        <label htmlFor={id}>{label}</label>
+        <textarea
+          id={id}
+          maxLength={maxLength}
+          ref={ref} // Attach the forwarded ref here
+          {...props}
+        />
+        <div className={styles.textCounter}>
+          {length}/{maxLength}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);

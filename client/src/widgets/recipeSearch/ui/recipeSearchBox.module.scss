@@ -1,0 +1,37 @@
+@use 'app/app.scss';
+
+.container {
+    @include app.flex-layout(column);
+}
+
+.recipeCard {
+    width: fit-content;
+}
+
+.searchRecipeList {
+    @include app.flex-layout(row);
+    flex-wrap: wrap;
+}
+
+.searchInput {
+    padding: 1rem;
+}
+
+.inputContainer {
+    padding-inline: 1rem;
+    @include app.flex-layout(row, center);
+    border: 1px solid silver;
+    border-radius: 10px;
+}
+
+
+@media screen and (max-width: 767px) {
+    .searchRecipeList {
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+
+    .recipeCard {
+        width: 100%;
+    }
+}

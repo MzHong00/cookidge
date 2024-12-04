@@ -1,0 +1,26 @@
+@use 'app/app.scss';
+
+.container {
+    @include app.flex-layout(column);
+}
+
+.searchInput {
+    padding: 1rem;
+}
+
+.userInfoSection {
+    width: 100%;
+    @include app.flex-layout(row, center, space-between);
+    overflow: hidden;
+}
+
+.userIntroduce {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: rgb(var(--base-rgb-grey-medium));
+}
+
+.userFollow {
+    @include app.flex-layout(row, center, stretch, 0.5rem);
+}

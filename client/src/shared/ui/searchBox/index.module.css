@@ -19,4 +19,5 @@
     padding-inline: 0.5rem;
     border: none;
     outline: none;
+    font-size: inherit;
 }

@@ -1,5 +1,4 @@
 import {
-  InfiniteData,
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
@@ -11,19 +10,14 @@ import { IRecipe } from "shared/api/recipe";
 
 export const useDeleteCommentMutation = (recipeId: IRecipe["_id"]) => {
   const queryClient = useQueryClient();
-
+  console.log(recipeId);
+  
   return useMutation({
     mutationFn: (id: IComment["_id"]) => CommentService.deleteComment(id),
-    onSuccess: (deletedComment) => {
-      queryClient.setQueryData(
-        [CommentQueries.keys.comment, recipeId],
-        (data: InfiniteData<IComment[]>) => ({
-          ...data,
-          pages: data.pages.map((page) =>
-            page.filter((comment) => comment._id !== deletedComment._id)
-          ),
-        })
-      );
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [CommentQueries.keys.comment, recipeId],
+      });
     },
   });
 };

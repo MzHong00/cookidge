@@ -1,12 +1,21 @@
 import axios from "shared/api/axiosBase";
 
 import { type IUser } from ".";
+import {
+  IUserInfiniteQueryParams,
+  IUserInputDTO,
+  IUserSearchDTO,
+} from "./type";
 
 export class UserService {
   static readonly root = "api/user";
 
   static async fetchMe(): Promise<IUser> {
-    const response = await axios.get(`${this.root}/me`);
+    const response = await axios.get(`${this.root}/me`, {
+      headers: {
+        "Cache-Control": "no-cache", // 캐시를 사용하지 않음
+      },
+    });
 
     return response.data;
   }
@@ -21,10 +30,19 @@ export class UserService {
     return response.data;
   }
 
-  static async updateUser(updateData: IUser) {
+  static async searchUser(config: {
+    signal: AbortSignal;
+    params: IUserInfiniteQueryParams;
+  }): Promise<IUserSearchDTO[]> {
+    return (await axios.get(`${this.root}/search`, config)).data;
+  }
+
+  static async updateUser(updateData: IUserInputDTO): Promise<IUser> {
     return (
-      await axios.patch(`${this.root}/update`, {
-        updateData,
+      await axios.patch(`${this.root}/update`, updateData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       })
     ).data;
   }

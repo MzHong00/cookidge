@@ -1,0 +1,19 @@
+.profilePicture {
+    width: 50px;
+}
+.profilePicture:hover {
+    border: 2px solid silver;
+    box-shadow: 0px 0px 2px 2px silver;
+}
+
+
+.removeButton {
+    margin-left: auto;
+    margin-block: 0.5rem;
+    color: wheat;
+    background-color: rgb(red, 0.8);
+}
+
+.activeButton {
+    box-shadow: 0px 0px 1px 4px silver;
+}
