@@ -1,5 +1,6 @@
 interface Config {
   port: string;
+  frontEndOrigin: string;
   jwtSecretKey: string;
   mongodbPassword: string;
   mongodbName: string;
@@ -12,6 +13,7 @@ interface Config {
 
 const config: Partial<Config> = {
   port: process.env.PORT,
+  frontEndOrigin: process.env.FRONT_END_ORIGIN,
   jwtSecretKey: process.env.JWT_SECRET_KEY,
   mongodbPassword: process.env.MONGODB_ADMIN_PASSWORD,
   mongodbName: process.env.MONGODB_NAME,

@@ -5,11 +5,12 @@ import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
 import path from "path"; // path 모듈 import
 
+import config from "../config";
 import routes from "../api/route";
 
 export default (app: Express) => {
   const corsOptions = {
-    // origin: "http://localhost:3000",
+    origin: config.frontEndOrigin || "http://localhost:3000",
     credentials: true,
   };
   const swaggerYaml = YAML.load(
