@@ -9,7 +9,7 @@ export default {
     auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
     client_secret: config.googleOAuthSecret,
     redirect_uris: [
-      config.frontEndOrigin || "http://localhost:3000/oauth-redirect",
+      config.googleOAuthRedirectUrl || "http://localhost:3000/oauth-redirect",
     ],
   },
 };

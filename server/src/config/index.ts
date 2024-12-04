@@ -4,6 +4,7 @@ interface Config {
   jwtSecretKey: string;
   mongodbPassword: string;
   mongodbName: string;
+  googleOAuthRedirectUrl: string;
   googleOAuthClientId: string;
   googleOAuthSecret: string;
   clodinaryCloudName: string;
@@ -17,6 +18,7 @@ const config: Partial<Config> = {
   jwtSecretKey: process.env.JWT_SECRET_KEY,
   mongodbPassword: process.env.MONGODB_ADMIN_PASSWORD,
   mongodbName: process.env.MONGODB_NAME,
+  googleOAuthRedirectUrl: process.env.GOOGLE_OAUTH_REDIRECT_URL,
   googleOAuthClientId: process.env.CLIENT_ID,
   googleOAuthSecret: process.env.CLIENT_SECRET,
   clodinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME,
