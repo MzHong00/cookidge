@@ -1,3 +1,7 @@
+import env from "dotenv";
+
+env.config();
+
 interface Config {
   port: string;
   frontEndOrigin: string;

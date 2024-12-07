@@ -9,15 +9,15 @@ import attachCurrentUser from "../../middleware/attachCurrentUser";
 import {
   IRecipeSearchOption,
   IRecipeInput,
-  IRecipeInputDto,
   recipeInputJoiSchema,
   IRecipeQueryOption,
-  IRecipeRecommendDTO,
+  IRecipe,
 } from "../../../interface/IRecipe";
 import { IUser } from "../../../interface/IUser";
 import { User } from "../../../models/user";
 import { RecipeService } from "../../../services/recipe";
 import { CloudinaryService } from "../../../services/cloudinary";
+import { IIngredient } from "../../../interface/IIngredient";
 
 const route = Router();
 
@@ -139,7 +139,10 @@ export default (app: Router) => {
     attachCurrentUser,
     async (req, res) => {
       const userId = req.userId;
-      const recipeInputDto = req.body as IRecipeInputDto;
+      const recipeInputDto = req.body as IRecipeInput & {
+        cooking_step_instructions?: string[];
+        cooking_step_pictures?: string[];
+      };
       const files = req.files as
         | {
             "pictures[]": Express.Multer.File[];
@@ -184,14 +187,23 @@ export default (app: Router) => {
   // 레시피 수정
   route.put("/update", upload.any(), isAuth, isMyRecipe, async (req, res) => {
     const recipeId = req.query._id as string;
-    const recipeInputDto = req.body as IRecipeInputDto;
+    const recipeInputDto = req.body as IRecipeInput & {
+      cooking_step_instructions?: string[];
+      cooking_step_pictures?: string[];
+    };
     const files = req.files as Express.Multer.File[];
 
     const cookingStepPictureKeys = Object.keys(recipeInputDto).filter((key) =>
       key.includes("cooking_step_pictures")
     );
     const cookingStepArray = cookingStepPictureKeys.map(
-      (key) => recipeInputDto[key as keyof IRecipeInputDto]
+      (key) =>
+        recipeInputDto[
+          key as keyof (IRecipeInput & {
+            cooking_step_instructions?: string[];
+            cooking_step_pictures?: string[];
+          })
+        ]
     ) as string[];
 
     // multer로 받은 picture 배열
@@ -291,7 +303,7 @@ export default (app: Router) => {
 
     try {
       const recipes = await RecipeService.searchRecipes(queryOptions);
-      
+
       res.status(200).json(recipes);
     } catch (error) {
       console.error("레시피 검색 중 오류 발생:", error);
@@ -300,23 +312,34 @@ export default (app: Router) => {
   });
 
   // 레시피 추천
-  route.get("/recommend", celebrate({
-    [Segments.QUERY]: Joi.object({
-      categories: Joi.array().items(Joi.string()),
-      my_ingredients: Joi.array().items(Joi.string())
-    })
-  }), async (req, res) => {
-    const recipeRecommendDTO = req.query as unknown as IRecipeRecommendDTO;
+  route.get(
+    "/recommend",
+    celebrate({
+      [Segments.QUERY]: Joi.object({
+        categories: Joi.array().items(Joi.string()),
+        my_ingredients: Joi.array().items(Joi.string()),
+      }),
+    }),
+    async (req, res) => {
+      const recipeRecommendDTO = req.query as {
+        categories?: IRecipe["category"][];
+        my_ingredients: IIngredient["name"][];
+      };
 
-    try {
-      const recipes = await RecipeService.recommentRecipes(recipeRecommendDTO);
+      try {
+        const recipes = await RecipeService.recommendRecipes(
+          recipeRecommendDTO
+        );
 
-      res.status(200).json(recipes);
-    } catch (error) {
-      console.error("레시피 추천 중 오류 발생:", error);
-      res.status(500).json({ message: "레시피 추천 중 오류가 발생했습니다." });
+        res.status(200).json(recipes);
+      } catch (error) {
+        console.error("레시피 추천 중 오류 발생:", error);
+        res
+          .status(500)
+          .json({ message: "레시피 추천 중 오류가 발생했습니다." });
+      }
     }
-  });
+  );
 
   // 나의 좋아요 레시피 가져오기
   route.get("/read-list/like", isAuth, async (req, res) => {

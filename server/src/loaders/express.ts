@@ -1,16 +1,18 @@
 import express, { type Express } from "express";
-import cookieParser from "cookie-parser";
 import cors from "cors";
-import swaggerUi from "swagger-ui-express";
+import path from "path";
 import YAML from "yamljs";
-import path from "path"; // path 모듈 import
+import cookieParser from "cookie-parser";
+import swaggerUi from "swagger-ui-express";
 
 import config from "../config";
 import routes from "../api/route";
 
 export default (app: Express) => {
+  console.log(config.frontEndOrigin);
+  
   const corsOptions = {
-    origin: config.frontEndOrigin || "http://localhost:3000",
+    origin: config.frontEndOrigin,
     credentials: true,
   };
   const swaggerYaml = YAML.load(

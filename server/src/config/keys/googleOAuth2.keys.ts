@@ -9,7 +9,7 @@ export default {
     auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
     client_secret: config.googleOAuthSecret,
     redirect_uris: [
-      "https://cookidge.vercel.app/oauth-redirect",
+      config.googleOAuthRedirectUrl,
     ],
   },
 };

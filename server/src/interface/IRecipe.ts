@@ -5,16 +5,12 @@ import { IUser } from "./IUser";
 import { PagenationOptions } from "./types";
 import { IIngredient } from "./IIngredient";
 
-export interface IRecipe {
+export type IRecipe = {
   _id: ObjectId | mongoose.mongo.BSON.ObjectId;
   name: string;
   pictures: string[];
   author_id: IUser["_id"];
-  ingredients: {
-    name: string;
-    category: string;
-    quantity: string;
-  }[];
+  ingredients: Omit<IIngredient, 'expired_at'>[];
   introduction: string;
   servings: number;
   category: string;
@@ -24,27 +20,12 @@ export interface IRecipe {
   created_at: Date;
 }
 
-export interface ICookingStep {
+export type ICookingStep = {
   picture: string | undefined;
   instruction: string;
 }
 
-export interface IRecipeInput
-  extends Omit<IRecipe, "_id" | "author_id" | "like_members" | "created_at"> {}
-
-export interface IRecipeInputDto
-  extends Omit<IRecipe, "_id" | "author_id" | "like_members" | "created_at"> {
-  cooking_step_instructions?: string[];
-  cooking_step_pictures?: string[];
-}
-
-export interface IRecipeSearchDTO
-  extends Omit<IRecipe, "ingredients" | "cooking_steps"> {}
-
-export interface IRecipeRecommendDTO {
-  categories?: IRecipe["category"][];
-  my_ingredients: IIngredient["name"][];
-}
+export type IRecipeInput = Omit<IRecipe, "_id" | "author_id" | "like_members" | "created_at"> 
 
 export interface IRecipeQueryOption extends PagenationOptions {
   query?: string;

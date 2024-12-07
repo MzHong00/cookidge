@@ -1,6 +1,6 @@
 import express from "express";
-import config from "../src/config";
 
+import config from "../src/config";
 import loaders from "../src/loaders";
 
 async function server() {
@@ -9,7 +9,7 @@ async function server() {
   await loaders({
     expressApp: app,
   });
-  
+
   app.listen(config.port, () => {
     console.log(`http://localhost:${config.port}`);
   });

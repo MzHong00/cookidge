@@ -1,6 +1,7 @@
+import { ObjectId } from "mongoose";
+
 import { IUser } from "./IUser";
 import { IRecipe } from "./IRecipe";
-import { ObjectId } from "mongoose";
 
 export interface IComment {
   _id: ObjectId;

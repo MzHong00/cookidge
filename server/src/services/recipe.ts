@@ -3,7 +3,6 @@ import {
   IRecipe,
   IRecipeInput,
   IRecipeQueryOption,
-  IRecipeRecommendDTO,
   IRecipeSearchOption,
 } from "../interface/IRecipe";
 import { Recipe } from "../models/recipe";
@@ -123,38 +122,57 @@ export class RecipeService {
       { $sort: { like_count: -1 } },
       { $skip: Number(offset) },
       { $limit: Number(limit) },
-      { $project: { ingredients: 0, cooking_steps: 0 } },
+      {
+        $project: {
+          author_id: 0,
+          ingredients: 0,
+          category: 0,
+          cooking_steps: 0,
+        },
+      },
     ]);
   }
 
-  static async recommentRecipes(recommendDTO: IRecipeRecommendDTO) {
-    const {categories, my_ingredients} = recommendDTO;
+  static async recommendRecipes(recommendDTO: {
+    categories?: IRecipe["category"][];
+    my_ingredients: IIngredient["name"][];
+  }) {
+    const { categories, my_ingredients } = recommendDTO;
 
     return await Recipe.aggregate([
       {
         $addFields: {
           matched_ingredients: {
             $setIntersection: [
-              { $map: { input: "$ingredients", as: "ingredient", in: "$$ingredient.name"} },
-              my_ingredients
-            ]
-          }
-        }
+              {
+                $map: {
+                  input: "$ingredients",
+                  as: "ingredient",
+                  in: "$$ingredient.name",
+                },
+              },
+              my_ingredients,
+            ],
+          },
+        },
       },
       {
         $addFields: {
-          match_count: { $size: "$matched_ingredients"}
-        }
+          match_count: { $size: "$matched_ingredients" },
+        },
       },
       { $sort: { match_count: -1 } },
       { $limit: 4 },
-      { $project: {
-        name: 1,
-        pictures: 1,
-        like_members: 1,
-        matched_ingredients: 1
-      }}
-    ])
+      {
+        $project: {
+          author_id: 0,
+          ingredients: 0,
+          category: 0,
+          cooking_steps: 0,
+          match_count: 0,
+        },
+      },
+    ]);
   }
 
   static async readMyLikeRecipes(userId: IUser["_id"]) {
