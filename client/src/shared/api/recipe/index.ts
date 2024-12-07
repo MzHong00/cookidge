@@ -4,7 +4,7 @@ export type {
   IRecipe,
   IRecipeCard,
   IRecipeInputDTO,
-  IDetailRecipeResponseDTO,
+  IRecipeJoinUser,
   ICookingStep,
   RecipeFilterQuery
 } from "./type";

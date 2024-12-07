@@ -15,10 +15,6 @@
 }
 
 @media screen and (max-width: 767px) {
-    .root {
-        padding-bottom: 3rem;
-    }
-
     .mainContainer {
         flex-direction: column-reverse;
     }

@@ -1,4 +1,3 @@
-import { FaBell } from "@react-icons/all-files/fa/FaBell";
 import { RiUser3Line } from "@react-icons/all-files/ri/RiUser3Line";
 
 import { Logo } from "shared/ui/logo";
@@ -26,13 +25,13 @@ export const Header = ({ user }: Props) => {
       <div className={styles.userBar}>
         {user ? (
           <>
-            <IconButton
+            {/* <IconButton
               Icon={FaBell}
               isCounterVisible
               counterValue={0}
               counterTheme="red"
               className={styles.iconButton}
-            />
+            /> */}
             <IconButton className={styles.iconButton} onClick={toggleModal}>
               <ProfileImage src={user.picture} />
             </IconButton>

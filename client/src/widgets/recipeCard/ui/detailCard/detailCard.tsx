@@ -5,12 +5,12 @@ import { RiCalendarLine } from "@react-icons/all-files/ri/RiCalendarLine";
 import { IconBox } from "shared/ui/iconBox";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { PicturesBox } from "shared/ui/picturesBox";
+import { IRecipeJoinUser } from "shared/api/recipe/type";
 import { LikeButton } from "features/recipe/like";
 
 import styles from "./detailCard.module.scss";
-import { IDetailRecipeResponseDTO } from "shared/api/recipe/type";
 
-interface Props extends React.HTMLAttributes<HTMLDivElement>, IDetailRecipeResponseDTO {}
+interface Props extends React.HTMLAttributes<HTMLDivElement>, IRecipeJoinUser {}
 
 export const DetailCard = ({
   _id,

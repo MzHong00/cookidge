@@ -2,7 +2,7 @@ import { IUser } from "../user";
 import { IIngredient } from "../ingredient";
 import { PagenationParams } from "shared/types";
 
-export interface IRecipe {
+export type IRecipe = {
   _id: string;
   name: string;
   pictures: string[];
@@ -15,67 +15,49 @@ export interface IRecipe {
   cooking_steps: ICookingStep[];
   like_members: IUser["_id"][];
   created_at: string;
-}
+};
+export type IRecipeCard = Pick<
+  IRecipe,
+  | "_id"
+  | "name"
+  | "pictures"
+  | "introduction"
+  | "servings"
+  | "cooking_time"
+  | "created_at"
+> &
+  Partial<Pick<IRecipe, "like_members">>;
+export type IRecipeJoinUser = IRecipe & { user: IUser };
+export type IRecipePictureDTO = Pick<IRecipe, "_id" | "pictures">;
 
-export interface IRecipeCard
-  extends Omit<IRecipe, "ingredients" | "cooking_steps" | "category"> {}
+export type ICookingStep = {
+  picture?: string;
+  instruction: string;
+};
 
-export interface IRecipeInputDTO
-  extends Pick<
-    IRecipe,
-    | "_id"
-    | "name"
-    | "ingredients"
-    | "introduction"
-    | "servings"
-    | "category"
-    | "cooking_time"
-  > {
+export type IRecipeQueryOption = PagenationParams & {
+  query?: string;
+};
+
+export type RecipeFilterQuery = PagenationParams & {
+  categories?: IRecipe["category"][];
+  sort?: "time" | "like";
+};
+
+export type IRecipeInputDTO = Pick<
+  IRecipe,
+  | "_id"
+  | "name"
+  | "ingredients"
+  | "introduction"
+  | "servings"
+  | "category"
+  | "cooking_time"
+> & {
   pictures: FileList | string[];
   cooking_steps: {
     picture?: File[];
     instruction: string;
   }[];
   cooking_step_pictures: (File | undefined)[];
-}
-
-export interface IRecipePictureDTO {
-  _id: IRecipe["_id"];
-  pictures: IRecipe["pictures"];
-}
-
-export interface ISearchRecipeResponseDTO
-  extends Omit<
-    IDetailRecipeResponseDTO,
-    "like_members" | "ingredients" | "cooking_steps"
-  > {
-  like_count: number | string;
-}
-
-export interface IRecipeRecommendRequestDTO {
-  categories?: IRecipe["category"][];
-  my_ingredients?: IIngredient["name"][];
-}
-
-export interface IRecipeRecommendResponseDTO
-  extends Pick<IRecipe, "_id" | "name" | "pictures" | "like_members"> {
-  matched_ingredients:IIngredient["name"][];
-}
-
-export interface IDetailRecipeResponseDTO extends IRecipe {
-  user: IUser;
-}
-
-export interface ICookingStep {
-  picture?: string;
-  instruction: string;
-}
-
-export interface IRecipeQueryOption extends PagenationParams {
-  query?: string;
-}
-
-export interface RecipeFilterQuery extends PagenationParams {
-  categories?: IRecipe["category"][];
-  sort?: "time" | "like";
-}
+};

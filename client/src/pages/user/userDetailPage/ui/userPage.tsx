@@ -5,12 +5,12 @@ import { RiUserSettingsLine } from "@react-icons/all-files/ri/RiUserSettingsLine
 import { IUser } from "shared/api/user";
 import { IconBox } from "shared/ui/iconBox";
 import { IconLink } from "shared/ui/iconLink";
+import { PicturesBox } from "shared/ui/picturesBox";
 import { ProfileImage } from "shared/ui/profileImage";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 import { UserQueries } from "entities/user";
 import { RecipeQueries } from "entities/recipe/queries/recipeQueries";
 import { FollowButton } from "features/user/follow";
-import { RecipeCard } from "widgets/recipeCard";
 
 import styles from "./userPage.module.scss";
 
@@ -73,11 +73,9 @@ export const UserPage = () => {
         <div className={styles.userRecipeList}>
           {userRecipes?.map((recipe) => (
             <Link to={`/recipe/${recipe._id}`} key={recipe._id}>
-              <RecipeCard
-                key={recipe._id}
+              <PicturesBox
                 className={styles.userRecipeCard}
-                pictures={recipe.pictures}
-                isThumbnaileMode={true}
+                pictures={[recipe.pictures[0]]}
               />
             </Link>
           ))}

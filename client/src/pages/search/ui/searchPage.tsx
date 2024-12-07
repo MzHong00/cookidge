@@ -30,6 +30,7 @@ export const SearchPage = () => {
         <div className={styles.searchTagetBox}>
           {Array.from(Object.entries(searchTypes)).map(([url, value]) => (
             <IconButton
+              key={value}
               className={`${pathname.includes(url) && "main-button"}`}
               onClick={() => {
                 navigate(`/search/${url}`, {replace: true});

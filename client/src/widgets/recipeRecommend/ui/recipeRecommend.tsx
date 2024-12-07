@@ -5,10 +5,10 @@ import { FaMagic } from "@react-icons/all-files/fa/FaMagic";
 import { IconButton } from "shared/ui/iconButton";
 import { IIngredient } from "shared/api/ingredient";
 import { SubjectBox } from "shared/ui/subjectBox";
-import { RecipeQueries } from "entities/recipe";
-import { RecipeCard } from "widgets/recipeCard";
+import { RecipeCard, RecipeQueries } from "entities/recipe";
 
 import styles from "./recipeRecommend.module.scss";
+import { LikeButton } from "features/recipe/like";
 
 interface Props extends React.HTMLAttributes<HTMLElement> {
   my_ingredients?: IIngredient[];
@@ -54,15 +54,22 @@ export const RecipeRecommend = ({
         </IconButton>
       </div>
       <div className={styles.recipeList}>
-        {recipes?.map((recipe) => (
+        {recipes?.map(({ matched_ingredients, ...recipe }) => (
           <RecipeCard
             key={recipe._id}
             className={styles.recipeCard}
-            isDisabledLike
-            {...recipe}
+            recipe={recipe}
           >
-            포함된 재료({recipe.matched_ingredients.length}):{" "}
-            {recipe.matched_ingredients.join(", ")}
+            <div>
+              <LikeButton
+                recipe_id={recipe._id}
+                likeMembers={recipe.like_members}
+              />
+              <div>
+                포함된 재료({matched_ingredients.length}):{" "}
+                {matched_ingredients.join(", ")}
+              </div>
+            </div>
           </RecipeCard>
         ))}
       </div>

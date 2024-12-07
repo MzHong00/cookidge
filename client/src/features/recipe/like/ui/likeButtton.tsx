@@ -15,10 +15,15 @@ import { useMemo } from "react";
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   recipe_id: IRecipe["_id"];
-  likeMembers: IRecipe["like_members"];
+  likeMembers?: IRecipe["like_members"];
 }
 
-export const LikeButton = ({ recipe_id, likeMembers, disabled, ...props }: Props) => {
+export const LikeButton = ({
+  recipe_id,
+  likeMembers = [],
+  disabled,
+  ...props
+}: Props) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -48,7 +53,7 @@ export const LikeButton = ({ recipe_id, likeMembers, disabled, ...props }: Props
       <IconButton
         Icon={() => <RiHeart3Fill color="red" />}
         onClick={onClickUnlike}
-        style={{...(disabled && {cursor: "default"})}}
+        style={{ ...(disabled && { cursor: "default" }) }}
         disabled={disabled}
         {...props}
       >
@@ -60,9 +65,9 @@ export const LikeButton = ({ recipe_id, likeMembers, disabled, ...props }: Props
     <IconButton
       Icon={() => <RiHeart3Line color="red" />}
       onClick={onClickLike}
-        disabled={disabled}
-        style={{...(disabled && {cursor: "default"})}}
-        {...props}
+      disabled={disabled}
+      style={{ ...(disabled && { cursor: "default" }) }}
+      {...props}
     >
       {likeMembers.length}
     </IconButton>

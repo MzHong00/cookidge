@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { RecipeForm } from "features/recipe/create";
-import { IDetailRecipeResponseDTO, IRecipeInputDTO } from "shared/api/recipe";
+import {IRecipeInputDTO, IRecipeJoinUser } from "shared/api/recipe";
 import { useUpdateRecipeMutation } from "features/recipe/update";
 import { FormSubmitHandler } from "react-hook-form";
 
@@ -10,7 +10,7 @@ export const RecipeUpdatePage = () => {
   const navigate = useNavigate();
 
   const { author_id, like_members, created_at, user, ...inputRecipe } =
-    location.state as IDetailRecipeResponseDTO;
+    location.state as IRecipeJoinUser;
     
   const { mutate, isPending } = useUpdateRecipeMutation(inputRecipe._id);
   

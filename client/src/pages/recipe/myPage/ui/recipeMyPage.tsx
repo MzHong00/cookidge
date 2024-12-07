@@ -11,9 +11,9 @@ import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 import { UserQueries } from "entities/user";
 import { RecipeQueries } from "entities/recipe";
 import { LoginForm } from "features/user/login";
-import { RecipeCard } from "widgets/recipeCard";
 
 import styles from "./recipeMyPage.module.scss";
+import { PicturesBox } from "shared/ui/picturesBox";
 
 export const RecipeMyPage = () => {
   const queryClient = useQueryClient();
@@ -21,7 +21,7 @@ export const RecipeMyPage = () => {
   const me = queryClient.getQueryData<IUser | undefined>([UserQueries.keys.me]);
   const { data: myRecipes } = useQuery(RecipeQueries.myListQuery(me?.name));
   const { data: myLikeRecipes } = useQuery(RecipeQueries.myLikeQuery(me?.name));
-  
+
   if (!me) return <LoginForm className={styles.loginForm} />;
 
   return (
@@ -39,10 +39,7 @@ export const RecipeMyPage = () => {
           <div className={styles.recipeContainer}>
             {myRecipes?.map((recipe) => (
               <Link to={`/recipe/${recipe._id}`} key={recipe._id}>
-                <RecipeCard
-                  pictures={recipe.pictures}
-                  isThumbnaileMode={true}
-                />
+                <PicturesBox pictures={[recipe.pictures[0]]} />
               </Link>
             ))}
           </div>
@@ -54,12 +51,12 @@ export const RecipeMyPage = () => {
         >
           <div className={styles.recipeContainer}>
             {myLikeRecipes?.map((recipe) => (
-              <Link to={`/recipe/${recipe.liked_recipes._id}`} key={recipe.liked_recipes._id}>
-              <RecipeCard
-                pictures={recipe.liked_recipes.pictures}
-                isThumbnaileMode={true}
-              />
-            </Link>
+              <Link
+                to={`/recipe/${recipe.liked_recipes._id}`}
+                key={recipe.liked_recipes._id}
+              >
+                <PicturesBox pictures={[recipe.liked_recipes.pictures[0]]} />
+              </Link>
             ))}
           </div>
         </SubjectBox>

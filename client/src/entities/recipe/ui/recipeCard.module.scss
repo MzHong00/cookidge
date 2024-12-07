@@ -1,33 +1,33 @@
 @use 'app/app.scss';
 
 .cardContainer {
-    @include app.flex-layout(column);
-    gap: 0;
+    max-width: 500px;
+    @include app.flex-layout(column, stretch, stretch, 0);
     border-bottom: 1px solid rgb(var(--base-rgb-grey-light));
-    border-radius: 10px;
     overflow: hidden;
 }
 
-.containerBottomSection{
-    padding-inline: 0.5rem;
-}
-
 .infoBox {
-    @include app.flex-layout(column, start, space-between);
+    padding-inline: 0.5em;
+    padding-bottom: 0.25rem;
+    @include app.flex-layout(column, start, space-between, 0.5em);
     flex: 1;
 }
 
-.infoHeader {
-    @include app.text-ellipsis;
+.infoHeaderBar {
+    width: 100%;
+    @include app.flex-layout(row, flex-end, stretch, 0.5rem);
 }
 
-.infoHeader>* {
-    display: inline;
+.title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    flex-shrink: 2;
 }
 
-.infoHeader>:first-child {
-    font-size: 1.5em;
-    margin-right: 0.5rem;
+.created_at {
+    white-space: nowrap
 }
 
 .subInfo {
@@ -49,22 +49,14 @@
     overflow-y: auto;
 }
 
-.recipeActionBar {
-    @include app.flex-layout(row, stretch, stretch);
-}
-
-.recipeActionBar>button {
-    padding-inline: 0.25rem;
-}
-
 .chatSection {
     height: 100%;
     transition: transform 0.5s ease;
 }
 
 @media screen and (max-width:767px) {
-    .cardContainer {
-        border-radius: 0px;
+    .infoBox {
+        gap: 0;
     }
 
     .chatSection {

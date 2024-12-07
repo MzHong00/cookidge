@@ -256,3 +256,17 @@ ToDo List. 11.27
 - 냉장고 재료 UI 수정
     => 기존 form으로 display한 것을 (entites)재료 리스트로 분리 
 - 냉장고 공유 멤버 기능 구현
+
+Todo List.
+- 냉장고 공유 신청을 수락 및 거절하는 방식으로 수정
+- 레시피 추천 시, 필터 기능과 무한 스크롤 수정
+- 레시피 AI 추천 기능 구현
+
+12.07 
+- 메인 화면 Root Container 스크롤 제거
+- Home 반응형 UI 레시피 카드 하나의 카드가 한 화면에 다들어 오도록 수정 
+#### Code Refactoring
+- RecipeCard 컴포넌트, 계층 widgets => entities 
+=> 내부의 Like Button을 제거 및 불필요한 코드 전부 제거
+- 레시피 id와 pictures만 필요한 컴포넌트의 경우 RecipeCard가 아닌 PicutresBox 컴포넌트를 사용
+- 중복되거나 재사용이 적은 타입 리팩토링

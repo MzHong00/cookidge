@@ -4,20 +4,18 @@ import { IUser } from "../user";
 import {
   IRecipe,
   IRecipeCard,
-  IDetailRecipeResponseDTO,
+  IRecipeJoinUser,
   IRecipeInputDTO,
   RecipeFilterQuery,
   IRecipePictureDTO,
-  ISearchRecipeResponseDTO,
   IRecipeQueryOption,
-  IRecipeRecommendRequestDTO,
-  IRecipeRecommendResponseDTO,
 } from "./type";
+import { IIngredient } from "../ingredient";
 
 export class RecipeService {
   static readonly root = "api/recipe";
 
-  static async readRecipe(id?: IRecipe["_id"]): Promise<IDetailRecipeResponseDTO> {
+  static async readRecipe(id?: IRecipe["_id"]): Promise<IRecipeJoinUser> {
     return (await axios.get(`${this.root}/read/detail/${id}`)).data[0];
   }
 
@@ -68,15 +66,24 @@ export class RecipeService {
 
   static async searchRecipe(config: {
     signal: AbortSignal;
-    params: IRecipeQueryOption
-  }): Promise<ISearchRecipeResponseDTO[]> {
+    params: IRecipeQueryOption;
+  }): Promise<IRecipeCard[]> {
     return (await axios.get(`${this.root}/search`, config)).data;
   }
 
   static async recommnedRecipe(config: {
-    signal: AbortSignal,
-    params: IRecipeRecommendRequestDTO
-  }): Promise<IRecipeRecommendResponseDTO[]> {
+    signal: AbortSignal;
+    params: {
+      categories?: IRecipe["category"][];
+      my_ingredients?: IIngredient["name"][];
+    };
+  }): Promise<
+    Array<
+      IRecipeCard & {
+        matched_ingredients: IIngredient["name"][];
+      }
+    >
+  > {
     return (await axios.get(`${this.root}/recommend`, config)).data;
   }
 

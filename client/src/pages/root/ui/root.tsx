@@ -10,13 +10,13 @@ import styles from "./root.module.css";
 
 export const Root = () => {
   const location = useLocation();
-  const { data: user, isLoading } = useQuery(UserQueries.meQuery());
+  const { data: user } = useQuery(UserQueries.meQuery());
 
   return (
     <div className={styles.root}>
       <ScrollToTop />
       <Header user={user} />
-      <main className={styles.mainContainer}>{!isLoading && <Outlet />}</main>
+      <main className={styles.mainContainer}><Outlet /></main>
       {location.pathname !== "/" && <Footer />}
     </div>
   );

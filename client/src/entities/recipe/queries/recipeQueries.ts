@@ -1,12 +1,12 @@
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
 import { IUser } from "shared/api/user";
+import { IIngredient } from "shared/api/ingredient";
 import { RecipeService } from "shared/api/recipe/service";
 import { IRecipe, RecipeFilterQuery } from "shared/api/recipe";
 import {
   IRecipePictureDTO,
   IRecipeQueryOption,
-  IRecipeRecommendRequestDTO,
 } from "shared/api/recipe/type";
 
 export class RecipeQueries {
@@ -69,7 +69,10 @@ export class RecipeQueries {
   }
 
   // 레시피 추천
-  static recommendQuery(recommendParams: IRecipeRecommendRequestDTO) {
+  static recommendQuery(recommendParams: {
+    categories?: IRecipe["category"][];
+    my_ingredients?: IIngredient["name"][];
+  }) {
     return queryOptions({
       queryKey: [this.keys.root, this.keys.list, this.keys.recommend],
       queryFn: ({ signal }) =>

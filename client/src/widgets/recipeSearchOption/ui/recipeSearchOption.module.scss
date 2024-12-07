@@ -1,4 +1,8 @@
 .searchOptionBar {
+    width: 100%;
+    max-width: 500px;
+    margin-inline: auto;
+    padding-block: 0.5rem;
     position: sticky;
     top: 4rem;
     background-color: white;
