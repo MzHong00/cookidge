@@ -6,8 +6,8 @@ import { ProfileImage } from "shared/ui/profileImage";
 import { useUnshareMemberMutation } from "..";
 
 import styles from "./unshareMemberBox.module.css";
-import { FridgeQueries } from "entities/fridge";
-import { useQueryClient } from "@tanstack/react-query";
+import { useConfirmDialogActions } from "shared/lib/zustand";
+import { IUser } from "shared/api/user";
 
 interface Props {
   fridge_id: IFridge["_id"];
@@ -15,26 +15,24 @@ interface Props {
 }
 
 export const UnshareMemberBox = ({ fridge_id, allowed_users }: Props) => {
-  const queryClient = useQueryClient();
-  const [selectedUserId, setSelectedUserId] = useState<string>();
-
-  const { mutate, isPending } = useUnshareMemberMutation(fridge_id);
+  const [selectedUser, setSelectedUser] = useState<Pick<IUser, "_id" | "name">>(
+    { _id: "", name: "" }
+  );
+  const { openDialogMessage } = useConfirmDialogActions();
+  const { mutateAsync, isPending } = useUnshareMemberMutation(
+    fridge_id,
+    selectedUser._id
+  );
 
   const onClickUnshareMember = () => {
-    if (!selectedUserId || isPending) return;
+    if (!selectedUser.name || isPending) return;
 
-    mutate(selectedUserId, {
-      onSuccess: () => {
-        queryClient.setQueryData(
-          [FridgeQueries.keys.detail, fridge_id],
-          (data: IFridge) => ({
-            ...data,
-            allowed_users: data.allowed_users?.filter(
-              (user) => user._id !== selectedUserId
-            ),
-          })
-        );
+    openDialogMessage({
+      message: `${selectedUser.name}와의 냉장고 공유를 그만 하시겠습니까?`,
+      requestFn: async () => {
+        await mutateAsync();
       },
+      option: { backspace: false}
     });
   };
 
@@ -44,15 +42,15 @@ export const UnshareMemberBox = ({ fridge_id, allowed_users }: Props) => {
         {allowed_users?.map((user) => (
           <button
             key={user._id}
-            onClick={() => {
-              setSelectedUserId(user._id);
+            title={user.name}
+            onClick={(e) => {
+              setSelectedUser({ _id: user._id, name: e.currentTarget.title });
             }}
           >
             <ProfileImage
               src={user.picture}
-              title={user.name}
               className={`${styles.profilePicture} ${
-                selectedUserId === user._id && styles.activeButton
+                selectedUser._id === user._id && styles.activeButton
               }`}
             />
           </button>

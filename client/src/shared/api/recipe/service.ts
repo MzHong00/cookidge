@@ -1,4 +1,4 @@
-import axios from "shared/api/axiosBase";
+import axios from "shared/lib/axios";
 
 import { IUser } from "../user";
 import {
@@ -84,6 +84,8 @@ export class RecipeService {
       }
     >
   > {
+    if(config.params.my_ingredients?.length===0) return [];
+
     return (await axios.get(`${this.root}/recommend`, config)).data;
   }
 

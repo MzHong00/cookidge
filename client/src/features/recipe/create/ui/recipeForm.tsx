@@ -232,7 +232,7 @@ export const RecipeForm = ({ onSubmit, defalutValues }: Props) => {
         <SubjectBox>
           <InputBox
             type="submit"
-            value={"레시피 생성하기"}
+            value={"확 인"}
             className="main-button"
           />
         </SubjectBox>

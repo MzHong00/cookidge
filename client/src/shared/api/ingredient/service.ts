@@ -1,4 +1,4 @@
-import axios from "shared/api/axiosBase";
+import axios from "shared/lib/axios";
 
 import { IIngredientInputDto } from "./type";
 import { IFridge } from "../fridge";

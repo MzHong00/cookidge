@@ -1,20 +1,23 @@
-import { useLocation, useNavigate } from "react-router-dom";
-
-import { RecipeForm } from "features/recipe/create";
-import {IRecipeInputDTO, IRecipeJoinUser } from "shared/api/recipe";
-import { useUpdateRecipeMutation } from "features/recipe/update";
+import { useLocation} from "react-router-dom";
 import { FormSubmitHandler } from "react-hook-form";
+
+import { useConfirmDialogActions } from "shared/lib/zustand";
+import { IRecipeInputDTO, IRecipeJoinUser } from "shared/api/recipe";
+import { RecipeForm } from "features/recipe/create";
+import { useUpdateRecipeMutation } from "features/recipe/update";
 
 export const RecipeUpdatePage = () => {
   const location = useLocation();
-  const navigate = useNavigate();
+  const { openDialogMessage } = useConfirmDialogActions();
 
   const { author_id, like_members, created_at, user, ...inputRecipe } =
     location.state as IRecipeJoinUser;
-    
-  const { mutate, isPending } = useUpdateRecipeMutation(inputRecipe._id);
-  
-  const onSubmit: FormSubmitHandler<IRecipeInputDTO> = async ({ data: recipe }) => {
+
+  const { mutateAsync, isPending } = useUpdateRecipeMutation(inputRecipe._id);
+
+  const onSubmit: FormSubmitHandler<IRecipeInputDTO> = async ({
+    data: recipe,
+  }) => {
     if (isPending) return;
 
     const formData = new FormData();
@@ -42,11 +45,12 @@ export const RecipeUpdatePage = () => {
         );
       }
     });
-    
-    mutate(formData, {
-      onSettled: () => {
-        navigate(`/recipe/${recipe._id}`)
-      }
+
+    openDialogMessage({
+      message: `레시피를 업데이트하시겠습니까?`,
+      requestFn: async () => {
+        await mutateAsync(formData);
+      },
     });
   };
 

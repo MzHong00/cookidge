@@ -1,4 +1,4 @@
-import axios from "shared/api/axiosBase";
+import axios from "shared/lib/axios";
 
 export class AuthService {
   static readonly api = "api/auth";

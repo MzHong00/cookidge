@@ -1,8 +1,7 @@
+import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { RiUserSettingsLine } from "@react-icons/all-files/ri/RiUserSettingsLine";
 
-import { IUser } from "shared/api/user";
 import { IconBox } from "shared/ui/iconBox";
 import { IconLink } from "shared/ui/iconLink";
 import { PicturesBox } from "shared/ui/picturesBox";
@@ -17,19 +16,17 @@ import styles from "./userPage.module.scss";
 export const UserPage = () => {
   const { name } = useParams();
 
-  const me = useQueryClient().getQueryData([UserQueries.keys.me]) as IUser;
-  const {
-    data: user,
-    isLoading: isUserLoading,
-    error: userError,
-  } = useQuery(UserQueries.userQuery(name));
+  const { data: user, isLoading: isUserLoading } = useQuery(
+    UserQueries.userQuery(name)
+  );
+  const { data: me } = useQuery(UserQueries.meQuery());
   const { data: userRecipes } = useQuery(RecipeQueries.listByUserQuery(name));
 
   if (isUserLoading) return <div>사용자 정보 가져오는 중...</div>;
-  if (!user || userError) return <div>존재하지 않는 사용자입니다.</div>;
+  if (!user) return <div>존재하지 않는 사용자입니다.</div>;
 
   return (
-    <FramerFadeLayout className="w-full flex-column-center">
+    <FramerFadeLayout className={styles.container}>
       <div className={styles.userInfoContainer}>
         <ProfileImage src={user?.picture} className={styles.profilesPicture} />
         <div className={styles.userInfo}>

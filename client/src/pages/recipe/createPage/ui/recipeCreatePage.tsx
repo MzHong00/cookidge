@@ -1,23 +1,31 @@
+import { FormSubmitHandler } from "react-hook-form";
+
+import { IRecipeInputDTO } from "shared/api/recipe";
+import { useConfirmDialogActions } from "shared/lib/zustand";
 import { RecipeForm } from "features/recipe/create";
 import { useCreateRecipeMutation } from "features/recipe/create/mutation/createRecipeMutation";
-import { FormSubmitHandler } from "react-hook-form";
-import { IRecipeInputDTO } from "shared/api/recipe";
 
 export const RecipeCreatePage = () => {
-  const { mutate, isPending } = useCreateRecipeMutation();
+  const { mutateAsync, isPending } = useCreateRecipeMutation();
+  const { openDialogMessage } = useConfirmDialogActions();
 
   const onSubmit: FormSubmitHandler<IRecipeInputDTO> = async ({ data }) => {
     if (isPending) return;
 
-    mutate({
-      ...data,
-      cooking_steps: data.cooking_steps.map((step) => ({
-        instruction: step.instruction
-      })),
-      cooking_step_pictures: data.cooking_steps.map(
-        (step) => step.picture?.[0]
-      ),
-    });
+    openDialogMessage({
+      message: `${data.name} 레시피를 생성하시겠습니까?`,
+      requestFn: async () => {
+        await mutateAsync({
+          ...data,
+          cooking_steps: data.cooking_steps.map((step) => ({
+            instruction: step.instruction
+          })),
+          cooking_step_pictures: data.cooking_steps.map(
+            (step) => step.picture?.[0]
+          ),
+        });
+      }
+    })
   };
 
   return <RecipeForm onSubmit={onSubmit} />;

@@ -1,7 +1,7 @@
 import axios, { AxiosStatic } from "axios";
 
-import { AuthService } from "../auth/service";
-import { useGlobalStore } from "shared/lib/zustand/useStore";
+import { AuthService } from "shared/api/auth/service";
+import { useAuthStore } from "shared/lib/zustand";
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_SERVER_API,
@@ -22,13 +22,12 @@ instance.interceptors.request.use(
 
 //isLogin true 기준: Access Token이 발급된 경우
 //isLogin false 기준: Refresh Token이 유효하지 않은 경우
-
 instance.interceptors.response.use(
   (response) => {
     axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
 
     if (response.data.token) {
-      const { changeIsLogin } = useGlobalStore.getState();
+      const { changeIsLogin } = useAuthStore.getState();
       changeIsLogin(true);
     }
 
@@ -39,7 +38,7 @@ instance.interceptors.response.use(
     return response;
   },
   async (error) => {
-    const { isLogin, changeIsLogin } = useGlobalStore.getState();
+    const { isLogin, changeIsLogin } = useAuthStore.getState();
 
     if (error.response.data.isLogin === false) {
       changeIsLogin(false);
@@ -69,6 +68,7 @@ instance.interceptors.response.use(
 
       return response;
     }
+    
     return Promise.reject(error);
   }
 );

@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { IFridgeFormInput } from "shared/api/fridge";
@@ -7,24 +6,32 @@ import { IconLink } from "shared/ui/iconLink";
 import { IconButton } from "shared/ui/iconButton";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
+import { useConfirmDialogActions } from "shared/lib/zustand";
 import { useCreateFridgeMutation } from "../mutation/createFridgeMutation";
 
 import styles from "./createFridgeForm.module.css";
 
 export const CreateFridgeForm = () => {
+  const { openDialogMessage } = useConfirmDialogActions();
+  const { mutateAsync, isPending } = useCreateFridgeMutation();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IFridgeFormInput>({
-    mode: "onBlur"
+    mode: "onBlur",
   });
-  const navigate = useNavigate();
-  const { mutate } = useCreateFridgeMutation();
 
   const onSubmit: SubmitHandler<IFridgeFormInput> = (data) => {
-    mutate(data.name);
-    navigate("/dashboard/fridge");
+    if (isPending) return;
+
+    openDialogMessage({
+      message: `${data.name} 냉장고를 생성하시겠습니까?`,
+      requestFn: async () => {
+        await mutateAsync(data.name);
+      },
+    });
   };
 
   return (

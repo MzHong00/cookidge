@@ -9,6 +9,6 @@ export interface IComment {
   created_at: Date;
 }
 
-export interface ICommentDTO extends IComment {
+export interface ICommentJoinUser extends IComment {
   user: Pick<IUser, "_id"|"name"|"picture">[]
 }

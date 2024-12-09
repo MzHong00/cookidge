@@ -4,7 +4,6 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import { OAuthService } from "shared/api/oauth";
 import { CreateFridgeForm } from "features/fridge/create";
 import { RecipeSearchBox } from "widgets/recipeSearch";
-import { UserSearchBox } from "widgets/userSearch";
 import { Root } from "pages/root";
 import { LoginPage } from "pages/login";
 import { SearchPage } from "pages/search";
@@ -16,6 +15,7 @@ import { RecipeUpdatePage } from "pages/recipe/updatePage";
 import { UserSettingPage } from "pages/user/userSettingPage";
 import { FridgeDetailPage } from "pages/fridge/detailPage";
 import { FridgeSettingPage } from "pages/fridge/settingPage";
+import { UserSearchBox } from "entities/user";
 
 const UserPage = lazy(() =>
   import("pages/user/userDetailPage").then((module) => ({

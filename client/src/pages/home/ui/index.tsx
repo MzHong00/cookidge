@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { useLoaderData } from "react-router-dom";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
@@ -13,6 +14,7 @@ import styles from "./index.module.scss";
 
 export const Home = () => {
   const params = useLoaderData() as RecipeFilterQuery;
+  const recipeContainerRef = useRef<HTMLDivElement>(null);
 
   const {
     data: recipes,
@@ -20,13 +22,17 @@ export const Home = () => {
     hasNextPage,
   } = useInfiniteQuery(RecipeQueries.infinityQuery(params));
 
-  const { setTarget } = useIntersectionObserver({ hasNextPage, fetchNextPage });
+  const { setTarget } = useIntersectionObserver({
+    hasNextPage,
+    fetchNextPage,
+    options: { root: recipeContainerRef.current, rootMargin: "800px" },
+  });
 
   return (
     <FramerFadeLayout className={styles.container}>
       <RecipeSearchOption />
 
-      <div className={styles.recipeList}>
+      <div ref={recipeContainerRef} className={styles.recipeList}>
         {recipes?.pages.map((page) =>
           page.map((recipe) => (
             <RecipeCard
@@ -41,7 +47,7 @@ export const Home = () => {
             </RecipeCard>
           ))
         )}
-        <p id="observer" ref={setTarget} style={{ height: "10%" }} />
+        <p id="observer" ref={setTarget} style={{ height: "10%" }}></p>
       </div>
     </FramerFadeLayout>
   );

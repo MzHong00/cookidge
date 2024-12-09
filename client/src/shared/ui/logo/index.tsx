@@ -1,6 +1,6 @@
 import { ImSpoonKnife } from "@react-icons/all-files/im/ImSpoonKnife";
 
-import { IconLink } from "../iconLink";
+import { IconBox } from "../iconBox";
 
 import styles from "./index.module.css";
 
@@ -10,12 +10,8 @@ interface Props {
 
 export const Logo = ({ className }: Props) => {
   return (
-    <IconLink
-      to={"/"}
-      Icon={ImSpoonKnife}
-      className={`${className} ${styles.logo}`}
-    >
+    <IconBox Icon={ImSpoonKnife} className={`${className} ${styles.logo}`}>
       <span>Cookidge</span>
-    </IconLink>
+    </IconBox>
   );
 };

@@ -1,19 +1,25 @@
 import { IconButton } from "shared/ui/iconButton";
+import { useConfirmDialogActions } from "shared/lib/zustand";
 import { useDeleteUserMutation } from "../mutation/deleteUserMutation";
+import { useNavigate } from "react-router-dom";
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
 export const DeleteUserButton = ({ style, ...props }: Props) => {
-  const { mutate, isPending } = useDeleteUserMutation();
+  const navigate = useNavigate();
+  const { mutateAsync, isPending } = useDeleteUserMutation();
+  const { openDialogMessage } = useConfirmDialogActions();
 
   const onClickDeleteUser = () => {
-    if(isPending) return;
-    
-    mutate(undefined, {
-      onSuccess: () => {
-        window.history.replaceState(null, "", '/')
-        window.location.reload(); // 페이지 새로고침을 추가하여 UI가 최신 상태로 반영되도록 함
+    if (isPending) return;
+
+    openDialogMessage({
+      message: "정말 회원을 탈퇴하시겠습니까?",
+      requestFn: async () => {
+        await mutateAsync();
+        navigate("/");
       },
+      option: { backspace: false },
     });
   };
 

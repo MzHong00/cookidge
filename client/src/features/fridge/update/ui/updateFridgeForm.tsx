@@ -6,14 +6,16 @@ import { useUpdateFridgeMutation } from "../mutation/updateFridgeMutation";
 
 import styles from "./updateFridgeForm.module.scss";
 import { SubjectBox } from "shared/ui/subjectBox";
+import { useConfirmDialogActions } from "shared/lib/zustand";
 
 interface Props {
   fridge_id: IFridge["_id"];
-  defaultName?: string
+  defaultName?: string;
 }
 
 export const UpdateFridgeForm = ({ fridge_id, defaultName }: Props) => {
-  const { mutate, isPending } = useUpdateFridgeMutation(fridge_id);
+  const { openDialogMessage } = useConfirmDialogActions();
+  const { mutateAsync, isPending } = useUpdateFridgeMutation(fridge_id);
 
   const {
     register,
@@ -21,14 +23,19 @@ export const UpdateFridgeForm = ({ fridge_id, defaultName }: Props) => {
     formState: { errors },
   } = useForm<IFridgeFormInput>({
     defaultValues: {
-      name: defaultName
+      name: defaultName,
     },
     mode: "onBlur",
   });
 
   const onSubmit: SubmitHandler<IFridgeFormInput> = (data) => {
     if (isPending) return;
-    mutate(data.name);
+    openDialogMessage({
+      message: `${data.name}(으)로 이름을 바꾸시겠습니까?`,
+      requestFn: async () => {
+        await mutateAsync(data.name);
+      },
+    });
   };
 
   return (

@@ -1,39 +1,29 @@
+import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+
+import { SubjectBox } from "shared/ui/subjectBox";
 import { FridgeQueries } from "entities/fridge";
-import { useShareMemberMutation } from "features/fridge/share";
 import { UnshareMemberBox } from "features/fridge/unshare/ui/unshareMemberBox";
 import { UpdateFridgeForm } from "features/fridge/update";
-import { useParams } from "react-router-dom";
-import { SubjectBox } from "shared/ui/subjectBox";
-import { UserSearchBox } from "widgets/userSearch";
+import { ShareMemberBox } from "features/fridge/share";
 
 export const FridgeSettingPage = () => {
-  const { id: fridgde_id } = useParams();
+  const { id: fridge_id } = useParams();
 
-  const { data: fridge } = useQuery(FridgeQueries.detailQuery(fridgde_id));
-  const { mutate, isPending } = useShareMemberMutation(fridgde_id);
+  const { data: fridge } = useQuery(FridgeQueries.detailQuery(fridge_id));
 
-  const onClickAddSharedMember = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    const userId = e.currentTarget.dataset?.user_id;
-    if (!userId || isPending) return;
-
-    mutate(userId);
-  };
-
-  if (!fridgde_id) return null;
+  if (!fridge_id) return null;
 
   return (
     <div className="flex-column">
-      <UpdateFridgeForm fridge_id={fridgde_id} defaultName={fridge?.name} />
+      <UpdateFridgeForm fridge_id={fridge_id} defaultName={fridge?.name} />
       <SubjectBox title="공유 멤버 관리">
-        <UserSearchBox
-          actionButtonText="초대"
-          onClickUserAction={onClickAddSharedMember}
+        <ShareMemberBox
+          fridge_id={fridge_id}
+          allowed_users={fridge?.allowed_users}
         />
         <UnshareMemberBox
-          fridge_id={fridgde_id}
+          fridge_id={fridge_id}
           allowed_users={fridge?.allowed_users}
         />
       </SubjectBox>

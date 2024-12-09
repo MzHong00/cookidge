@@ -1,4 +1,4 @@
-import axios from "shared/api/axiosBase";
+import axios from "shared/lib/axios";
 
 import { type IUser } from ".";
 import {
@@ -16,7 +16,7 @@ export class UserService {
         "Cache-Control": "no-cache", // 캐시를 사용하지 않음
       },
     });
-
+    
     return response.data;
   }
 

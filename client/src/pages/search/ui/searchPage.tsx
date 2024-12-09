@@ -1,7 +1,7 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { RiArrowLeftSLine } from "@react-icons/all-files/ri/RiArrowLeftSLine";
 
 import { IconButton } from "shared/ui/iconButton";
+import { BackspaceButton } from "shared/ui/backspaceButton";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 
 import styles from "./searchPage.module.scss";
@@ -17,15 +17,7 @@ export const SearchPage = () => {
 
   return (
     <FramerFadeLayout className="flex-column">
-      <nav>
-        <IconButton
-          Icon={RiArrowLeftSLine}
-          className={styles.navArrow}
-          onClick={() => {
-            navigate(-1);
-          }}
-        />
-      </nav>
+      <BackspaceButton />
       <div>
         <div className={styles.searchTagetBox}>
           {Array.from(Object.entries(searchTypes)).map(([url, value]) => (

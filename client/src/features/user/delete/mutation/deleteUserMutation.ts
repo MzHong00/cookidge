@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import { IUser, UserService } from "shared/api/user";
 import { UserQueries } from "entities/user";
-import { UserService } from "shared/api/user";
 
 export const useDeleteUserMutation = () => {
   const queryClient = useQueryClient();
@@ -9,7 +9,12 @@ export const useDeleteUserMutation = () => {
   return useMutation({
     mutationFn: () => UserService.deleteUser(),
     onSuccess: () => {
-      queryClient.removeQueries({ queryKey: [UserQueries.keys.me] });
+      const { me, user } = UserQueries.keys;
+
+      const myData = queryClient.getQueryData([me]) as IUser;
+
+      queryClient.removeQueries({ queryKey: [me] });
+      queryClient.removeQueries({ queryKey: [user, myData.name] });
     },
   });
 };

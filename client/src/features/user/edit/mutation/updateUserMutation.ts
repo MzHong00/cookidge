@@ -1,12 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { UserQueries } from "entities/user";
-import { useNavigate } from "react-router-dom";
 import { UserService } from "shared/api/user";
 import { IUserInputDTO } from "shared/api/user/type";
+import { UserQueries } from "entities/user";
 
 export const useUpdateUserMutation = () => {
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -16,8 +14,6 @@ export const useUpdateUserMutation = () => {
       queryClient.invalidateQueries({ queryKey: [UserQueries.keys.me] }),
       queryClient.invalidateQueries({ queryKey: [UserQueries.keys.user, ] })
     ])
-
-    navigate(`/user/${user?.name}`)
     },
   });
 };

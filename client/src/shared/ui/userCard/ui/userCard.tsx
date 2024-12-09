@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import { IUser } from "shared/api/user";
+import { type IUser } from "shared/api/user";
 import { ProfileImage } from "shared/ui/profileImage";
 
 import styles from "./userCard.module.scss";

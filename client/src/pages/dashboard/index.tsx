@@ -1,4 +1,4 @@
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Outlet, useLocation } from "react-router-dom";
 
 import { IconLink } from "shared/ui/iconLink";
@@ -10,37 +10,31 @@ import { LoginForm } from "features/user/login";
 import styles from "./index.module.css";
 
 export const Dashboard = () => {
-  const location = useLocation();
-  const dashboardEndPoint = location.pathname.split("/")[2];
-  const me = useQueryClient().getQueryData([UserQueries.keys.me]);
+  const dashboardEndPoint = useLocation().pathname.split("/")[2];
+  const { data: user, isLoading } = useQuery(UserQueries.meQuery());
 
   const dashboardTab = {
     fridge: "냉장고",
     recipe: "레시피",
   };
 
+  if(isLoading) return <div>사용자 가져오는 중...</div>
+  if (!user) return <LoginForm className={styles.loginForm} />;
+
   return (
     <FramerFadeLayout className={styles.dashboardPage}>
-      {me ? (
-        <>
-          <ItemSelectionBox>
-            {Object.entries(dashboardTab).map((tab) => (
-              <IconLink
-                key={tab[1]}
-                to={`${tab[0]}`}
-                className={
-                  dashboardEndPoint === tab[0] ? styles.activeTab : undefined
-                }
-              >
-                {tab[1]}
-              </IconLink>
-            ))}
-          </ItemSelectionBox>
-          <Outlet />
-        </>
-      ) : (
-        <LoginForm className={styles.loginForm} />
-      )}
+      <ItemSelectionBox>
+        {Object.entries(dashboardTab).map(([url, text]) => (
+          <IconLink
+            key={url}
+            to={`${url}`}
+            className={`${dashboardEndPoint === url && styles.activeTab}`}
+          >
+            {text}
+          </IconLink>
+        ))}
+      </ItemSelectionBox>
+      <Outlet />
     </FramerFadeLayout>
   );
 };

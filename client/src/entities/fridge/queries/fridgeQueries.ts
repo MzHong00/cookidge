@@ -1,7 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 
 import { FridgeService, IFridgeList } from "shared/api/fridge";
-import { useGlobalStore } from "shared/lib/zustand/useStore";
 
 export class FridgeQueries {
   static readonly keys = {
@@ -12,13 +11,11 @@ export class FridgeQueries {
   static readonly staleTime = 60 * 60 * 1000;
 
   static listQuery() {
-    const { isLogin } = useGlobalStore.getState();
-
     return queryOptions<IFridgeList[]>({
       queryKey: [this.keys.list],
       queryFn: async () => await FridgeService.fetchFridgeList(),
       staleTime: this.staleTime,
-      enabled: isLogin,
+      retry: false
     });
   }
 

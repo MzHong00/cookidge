@@ -81,6 +81,7 @@ export class RecipeQueries {
           params: recommendParams,
         }),
       enabled: false,
+      retry: false
     });
   }
 
@@ -139,6 +140,7 @@ export class RecipeQueries {
 
         return lastPageParam + 1;
       },
+      staleTime: this.staleTime.root,
     });
   }
 }

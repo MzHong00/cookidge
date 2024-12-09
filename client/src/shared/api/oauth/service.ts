@@ -1,4 +1,4 @@
-import axios from "shared/api/axiosBase";
+import axios from "shared/lib/axios";
 
 export class OAuthService {
   static async googleOAuth() {

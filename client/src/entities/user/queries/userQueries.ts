@@ -2,7 +2,6 @@ import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
 import { IUser, UserService } from "shared/api/user";
 import { IUserInfiniteQueryParams } from "shared/api/user/type";
-import { useGlobalStore } from "shared/lib/zustand/useStore";
 
 export class UserQueries {
   static readonly keys = {
@@ -11,16 +10,17 @@ export class UserQueries {
     infinite: "inifinite",
   };
 
-  static readonly staleTime = 60 * 60 * 1000;
+  static readonly staleTime = {
+    root: 60 * 60 * 1000,
+    search: 30 * 1000
+  }
 
   static meQuery() {
-    const { isLogin } = useGlobalStore.getState();
-
     return queryOptions({
       queryKey: [this.keys.me],
-      queryFn: async () => await UserService.fetchMe(),
-      staleTime: this.staleTime,
-      enabled: isLogin,
+      queryFn: () => UserService.fetchMe(),
+      staleTime: this.staleTime.root,
+      refetchOnWindowFocus: false,
       retry: false,
     });
   }
@@ -28,8 +28,8 @@ export class UserQueries {
   static userQuery(name?: IUser["name"]) {
     return queryOptions({
       queryKey: [this.keys.user, name],
-      queryFn: async () => await UserService.fetchUser(name),
-      staleTime: this.staleTime,
+      queryFn: () => UserService.fetchUser(name),
+      staleTime: this.staleTime.root,
       enabled: !!name,
       retry: false,
     });
@@ -56,6 +56,7 @@ export class UserQueries {
         return lastPageParam + 1;
       },
       enabled: !!user_name,
+      staleTime: this.staleTime.search,
       retry: false,
     });
   }

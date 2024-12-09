@@ -1,14 +1,22 @@
 import { RiLogoutBoxLine } from "@react-icons/all-files/ri/RiLogoutBoxLine";
-import { AuthService } from "shared/api/auth";
 
+import { AuthService } from "shared/api/auth";
 import { IconButton } from "shared/ui/iconButton";
+import { useConfirmDialogActions } from "shared/lib/zustand";
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {}
 
 export const LogoutButton = (props: Props) => {
+  const { openDialogMessage } = useConfirmDialogActions();
   const onClickLogout = async () => {
-    await AuthService.logout();
-    window.location.reload();
+    openDialogMessage({
+      message: "로그아웃 하시겠습니까?",
+      requestFn: async () => {
+        await AuthService.logout();
+        window.location.reload();
+      },
+      option: { backspace: false },
+    });
   };
 
   return (

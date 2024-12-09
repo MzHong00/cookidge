@@ -270,3 +270,18 @@ Todo List.
 => 내부의 Like Button을 제거 및 불필요한 코드 전부 제거
 - 레시피 id와 pictures만 필요한 컴포넌트의 경우 RecipeCard가 아닌 PicutresBox 컴포넌트를 사용
 - 중복되거나 재사용이 적은 타입 리팩토링
+
+12.08
+- zustand Global Store 제거 후, auth 스토어와 confirm dialog 스토어 생성
+- mutate 함수에 onMutate가 없어 useMutation안에 loading을 넣어야 됐음 -> mutateAsync로 loading 상태를 쉽게 처리
+
+12.09
+- 모든 features에 confirm dialog 적용
+- 홈 레시피 목록 무한스크롤 rootMargin 설정 
+    => 에러해결: rootMargin을 사용하려면 root가 있어야 하고, root는 따로 설정 안하면 null 즉 브라우저의 viewport
+    => 그러나 home의 레시피 목록 스크롤은 브라우저의 스크롤이 아닌, recipeList의 스크롤임 
+    => 따라서 해당 recipeList의 ref를 얻어내고 그 ref를 root에 넣어야한다.
+#### Code Refactoring
+- mutate ingredient => create, update로 나눔
+- serachBox 리팩토링 FSD 계층 관계 entities로 낮춤
+- confirm dialog 리팩토링 및 옵션 추가 (뒤로가기 자동 선택 가능) => 모든 features의 navigate를 제거할 수 있었음

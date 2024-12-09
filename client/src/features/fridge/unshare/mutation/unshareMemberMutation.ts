@@ -1,13 +1,27 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { IUser } from "shared/api/user";
-import { FridgeService, IFridge } from "shared/api/fridge";
+import { type IUser } from "shared/api/user";
+import { FridgeService, type IFridge } from "shared/api/fridge";
+import { FridgeQueries } from "entities/fridge";
 
-export const useUnshareMemberMutation = (fridgeId?: IFridge["_id"]) => {
+export const useUnshareMemberMutation = (
+  fridgeId: IFridge["_id"],
+  member_id: IUser["_id"]
+) => {
+  const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (member_id: IUser["_id"]) =>
-      FridgeService.removeSharedMember(fridgeId, member_id),
-
+    mutationFn: () => FridgeService.removeSharedMember(fridgeId, member_id),
+    onSuccess: () => {
+      queryClient.setQueryData(
+        [FridgeQueries.keys.detail, fridgeId],
+        (data: IFridge) => ({
+          ...data,
+          allowed_users: data.allowed_users?.filter(
+            (user) => user._id !== member_id
+          ),
+        })
+      );
+    },
     retry: false,
   });
 };

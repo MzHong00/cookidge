@@ -1,10 +1,9 @@
-import { useNavigate } from "react-router-dom";
-
 import { IRecipe } from "shared/api/recipe";
 import { IconButton } from "shared/ui/iconButton";
 import { useDeleteRecipeMutation } from "../mutation/deleteRecipeMutation";
 
 import styles from "./deleteRecipeButton.module.css";
+import { useConfirmDialogActions } from "shared/lib/zustand";
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   recipeId: IRecipe["_id"];
@@ -15,15 +14,18 @@ export const DeleteRecipeButton = ({
   className,
   ...props
 }: Props) => {
-  const navigate = useNavigate();
-  const { mutate, isPending } = useDeleteRecipeMutation(recipeId);
+  const { openDialogMessage } = useConfirmDialogActions();
+  const { mutateAsync, isPending } = useDeleteRecipeMutation(recipeId);
 
   const onClicDeleteRecipe = () => {
     if (isPending) return;
 
-    mutate(undefined, {onSuccess: () => {
-      navigate(-1)
-    }});
+    openDialogMessage({
+      message: "레시피를 삭제하시겠습니까?",
+      requestFn: async () => {
+        await mutateAsync();
+      },
+    });
   };
 
   return (

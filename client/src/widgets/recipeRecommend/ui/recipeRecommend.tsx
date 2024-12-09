@@ -31,7 +31,6 @@ export const RecipeRecommend = ({
 
   const onClickRecommendRecipe = () => {
     if (isLoading) return;
-
     refetch();
   };
 

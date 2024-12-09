@@ -6,6 +6,7 @@
 
 /* 재료 탭 */
 .ingredientContainer {
+    @include app.flex-layout(column, center, center);
     padding-inline: 10%;
 }
 

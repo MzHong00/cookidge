@@ -16,14 +16,16 @@ export const CommentBox = ({ recipe_id, ...props }: Props) => {
     CommentQueries.infiniteQuery(recipe_id)
   );
   const { setTarget } = useIntersectionObserver({ hasNextPage, fetchNextPage });
-  
+
   return (
     <SubjectBox title="댓글" {...props}>
       <CreateComment recipeId={recipe_id} />
 
       <div className="flex-column">
         {data?.pages.map((page) =>
-          page.map((comment) => <Comment key={comment._id} {...comment} />)
+          page.map((comment) => (
+            <Comment key={comment._id} commentData={comment} />
+          ))
         )}
         <div id="observer" ref={setTarget} style={{ height: "10%" }} />
       </div>

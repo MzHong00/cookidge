@@ -5,7 +5,7 @@ import { SearchBox } from "shared/ui/searchBox";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 import { useIntersectionObserver } from "shared/hooks/useIntersectionObserver";
 import { RecipeCard, RecipeQueries } from "entities/recipe";
-import { useParamsDebounce } from "../model/useParamsDebounce";
+import { useParamsDebounce } from "../../../shared/hooks/useParamsDebounce";
 
 import styles from "./recipeSearchBox.module.scss";
 

@@ -3,8 +3,8 @@ import { Router } from "express";
 import { celebrate, Joi, Segments } from "celebrate";
 
 import isAuth from "../../middleware/isAuth";
-import isMyComment from "../../middleware/isMyComment";
 import { CommentService } from "../../../services/comment";
+import { deleteCommentAuthorization, isMyComment } from "../../middleware/commentAuthorization";
 
 const route = Router();
 
@@ -105,10 +105,13 @@ export default (app: Router) => {
   route.delete(
     "/delete",
     celebrate({
-      [Segments.BODY]: Joi.object({ comment_id: Joi.string().required() }),
+      [Segments.BODY]: Joi.object({
+        comment_id: Joi.string().required(),
+        author_id: Joi.string().required(),
+      }),
     }),
     isAuth,
-    isMyComment,
+    deleteCommentAuthorization,
     async (req, res) => {
       const { comment_id } = req.body;
 

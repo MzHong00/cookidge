@@ -1,5 +1,4 @@
-import axios from "shared/api/axiosBase";
-
+import axios from "shared/lib/axios";
 import { IFridge } from "./type";
 import { IUser } from "../user";
 

@@ -1,4 +1,3 @@
-import { UseMutateFunction } from "@tanstack/react-query";
 import { useFieldArray, useForm } from "react-hook-form";
 import { CgRemoveR } from "@react-icons/all-files/cg/CgRemoveR";
 import { RiAddLine } from "@react-icons/all-files/ri/RiAddLine";
@@ -14,23 +13,26 @@ import {
   INGREDIENTS_CATEGORIES,
 } from "entities/fridge";
 
-import styles from "./ingredientForm.module.scss";
+import styles from "./updateIngredientForm.module.scss";
+import { useUpdateIngredientMutation } from "..";
 
 interface IngredientInputForm {
   ingredients: IIngredient[];
 }
 
 interface Props {
+  fridge_id: IFridge["_id"];
   onSubmitAttach: () => void;
   stored_ingredients?: IFridge["stored_ingredients"];
-  mutateFn: UseMutateFunction<any, Error, IIngredientInputDto[], unknown>;
 }
 
-export const IngredientForm = ({
-  mutateFn,
+export const UpdateIngredientForm = ({
+  fridge_id,
   onSubmitAttach,
   stored_ingredients,
 }: Props) => {
+  const { mutate } = useUpdateIngredientMutation(fridge_id);
+
   const { control, register, handleSubmit, reset } =
     useForm<IngredientInputForm>({
       defaultValues: {
@@ -57,7 +59,7 @@ export const IngredientForm = ({
     });
 
     onSubmitAttach();
-    mutateFn(ingredients);
+    mutate(ingredients);
     reset();
   };
 
@@ -119,31 +121,31 @@ export const IngredientForm = ({
                       })}
                     />
                   </td>
-                    <td>
-                      <IconButton
-                        Icon={CgRemoveR}
-                        onClick={() => remove(index)}
-                        className={styles.removeButton}
-                        color="red"
-                      />
-                    </td>
+                  <td>
+                    <IconButton
+                      Icon={CgRemoveR}
+                      onClick={() => remove(index)}
+                      className={styles.removeButton}
+                      color="red"
+                    />
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-          <>
-            <div className={styles.appendButtonContainer}>
-              <IconButton
-                Icon={RiAddLine}
-                className={styles.appendButton}
-                onClick={onClickAppendField}
-              >
-                추가
-              </IconButton>
-            </div>
-            <input type="submit" className={styles.submitButton} value="확인" />
-          </>
+        <>
+          <div className={styles.appendButtonContainer}>
+            <IconButton
+              Icon={RiAddLine}
+              className={styles.appendButton}
+              onClick={onClickAppendField}
+            >
+              추가
+            </IconButton>
+          </div>
+          <input type="submit" className={styles.submitButton} value="확인" />
+        </>
       </form>
     </SubjectBox>
   );

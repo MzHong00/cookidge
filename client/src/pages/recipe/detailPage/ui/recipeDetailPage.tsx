@@ -8,7 +8,7 @@ import { RecipeQueries } from "entities/recipe/queries/recipeQueries";
 import { UserQueries } from "entities/user";
 import { FollowButton } from "features/user/follow";
 import { DeleteRecipeButton } from "features/recipe/delete";
-import { UserCard } from "widgets/userCard";
+import { UserCard } from "shared/ui/userCard";
 import { CommentBox } from "widgets/comment";
 import { DetailCard } from "widgets/recipeCard";
 import { RecipeStep } from "widgets/recipeStep";
@@ -30,7 +30,7 @@ export const RecipeDetailPage = () => {
     <FramerFadeLayout className={styles.container}>
       <UserCard name={recipe.user.name} picture={recipe.user.picture}>
         {me?._id === recipe.user._id ? (
-          <section>
+          <section className="flex-row-center">
             <Link to={`/dashboard/recipe/update`} state={recipe}>
               수정
             </Link>

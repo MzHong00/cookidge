@@ -1,6 +1,6 @@
-import axios from "shared/api/axiosBase";
+import axios from "shared/lib/axios";
 import { IRecipe } from "../recipe";
-import { IComment, ICommentDTO } from "./type";
+import { IComment, ICommentJoinUser } from "./type";
 
 export class CommentService {
   static root = "api/comment";
@@ -12,7 +12,7 @@ export class CommentService {
       last_comment_id: IComment["_id"];
     };
     signal: AbortSignal;
-  }): Promise<ICommentDTO[]>{
+  }): Promise<ICommentJoinUser[]> {
     return (await axios.get(`${this.root}/read-list`, config)).data;
   }
 
@@ -21,10 +21,12 @@ export class CommentService {
     recipeId: IRecipe["_id"],
     comment: IComment["comment"]
   ): Promise<IComment> {
-    return (await axios.post(`${this.root}/create`, {
-      recipe_id: recipeId,
-      comment: comment,
-    })).data;
+    return (
+      await axios.post(`${this.root}/create`, {
+        recipe_id: recipeId,
+        comment: comment,
+      })
+    ).data;
   }
 
   // 댓글 수정
@@ -32,18 +34,26 @@ export class CommentService {
     commentId: IComment["_id"],
     comment: IComment["comment"]
   ) {
-    return (await axios.patch(`${this.root}/update`, {
-      comment_id: commentId,
-      comment,
-    })).data;
+    return (
+      await axios.patch(`${this.root}/update`, {
+        comment_id: commentId,
+        comment,
+      })
+    ).data;
   }
 
   // 댓글 삭제
-  static async deleteComment(commentId: IComment["_id"]): Promise<IComment> {
-    return (await axios.delete(`${this.root}/delete`, {
-      data: {
-        comment_id: commentId,
-      },
-    })).data;
+  static async deleteComment(
+    commentId: IComment["_id"],
+    authorId: IRecipe["author_id"]
+  ): Promise<IComment> {
+    return (
+      await axios.delete(`${this.root}/delete`, {
+        data: {
+          comment_id: commentId,
+          author_id: authorId,
+        },
+      })
+    ).data;
   }
 }

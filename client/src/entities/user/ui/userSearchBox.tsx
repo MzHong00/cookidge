@@ -3,13 +3,13 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { RiUser3Line } from "@react-icons/all-files/ri/RiUser3Line";
 
 import { SearchBox } from "shared/ui/searchBox";
+import { IconButton } from "shared/ui/iconButton";
+import { UserCard } from "shared/ui/userCard";
+import { useParamsDebounce } from "shared/hooks/useParamsDebounce";
 import { useIntersectionObserver } from "shared/hooks/useIntersectionObserver";
 import { UserQueries } from "entities/user";
-import { useParamsDebounce } from "widgets/recipeSearch";
-import { UserCard } from "widgets/userCard";
 
 import styles from "./userSearchBox.module.scss";
-import { IconButton } from "shared/ui/iconButton";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   actionButtonText?: string;
@@ -56,6 +56,7 @@ export const UserSearchBox = ({
                     className="main-button"
                     onClick={onClickUserAction}
                     data-user_id={user._id}
+                    data-user_name={user.name}
                   >{`${actionButtonText || "선택"}`}</IconButton>
                 )}
               </div>

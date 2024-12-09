@@ -9,15 +9,12 @@ import { IconButton } from "shared/ui/iconButton";
 import { SearchBox } from "shared/ui/searchBox";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { useDialog } from "shared/hooks/useDialog";
-import {
-  IngredientForm,
-  useCreateIngredientMutation,
-  useUpdateIngredientMutation,
-} from "features/ingredient/mutate";
+import { IngredientList } from "entities/ingredient";
+import { CreateIngredientForm } from "features/ingredient/create";
+import { UpdateIngredientForm } from "features/ingredient/update";
 import { useFilterIngredients, useSortIngredients } from "..";
 
 import styles from "./myIngredientBox.module.scss";
-import { IngredientList } from "entities/ingredient";
 
 const INGREDIENT_SORT_TYPES = ["카테고리", "유통기한"];
 
@@ -28,13 +25,6 @@ interface Props {
 export const MyIngredientBox = ({ fridge }: Props) => {
   const { ref, openDialog, closeDialog } = useDialog();
   const [isReadMode, setIsReadMode] = useState<boolean>(true);
-
-  const { mutate: createIngredientMutation } = useCreateIngredientMutation(
-    fridge._id
-  );
-  const { mutate: updateIngredientMutation } = useUpdateIngredientMutation(
-    fridge._id
-  );
 
   const storedIngredients = useMemo(
     () => [...fridge.stored_ingredients],
@@ -47,10 +37,7 @@ export const MyIngredientBox = ({ fridge }: Props) => {
 
   return (
     <>
-      <SubjectBox
-        title={fridge.name}
-        className={`${styles.ingredientContainer} flex-column-center`}
-      >
+      <SubjectBox title={fridge.name} className={styles.ingredientContainer}>
         <div className={styles.ingredientControls}>
           <IconButton
             Icon={CgAddR}
@@ -82,8 +69,8 @@ export const MyIngredientBox = ({ fridge }: Props) => {
             stored_ingredients={filterValue ? filterResult : sortResult}
           />
         ) : (
-          <IngredientForm
-            mutateFn={updateIngredientMutation}
+          <UpdateIngredientForm
+            fridge_id={fridge._id}
             onSubmitAttach={() => setIsReadMode((prev) => !prev)}
             stored_ingredients={filterValue ? filterResult : sortResult}
           />
@@ -91,8 +78,8 @@ export const MyIngredientBox = ({ fridge }: Props) => {
       </SubjectBox>
 
       <dialog ref={ref} onClick={(e) => closeDialog(e)}>
-        <IngredientForm
-          mutateFn={createIngredientMutation}
+        <CreateIngredientForm
+          fridge_id={fridge._id}
           onSubmitAttach={() => closeDialog()}
         />
       </dialog>

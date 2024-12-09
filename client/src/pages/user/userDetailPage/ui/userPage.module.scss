@@ -1,5 +1,11 @@
 @use 'app/app.scss';
 
+.container {
+    width: 100%;
+    padding-bottom: 3rem;
+    @include app.flex-layout(column, center, center);
+}
+
 .userInfoContainer {
     width: 100%;
     max-width: 800px;

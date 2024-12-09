@@ -1,11 +1,11 @@
-import { StateCreator } from "zustand";
+import { create } from "zustand";
 
-export interface UserSlice {
+interface AuthStore {
   isLogin: boolean;
   changeIsLogin: (isLogin: boolean) => void;
 }
 
-export const userSlice: StateCreator<UserSlice> = (set) => ({
+export const useAuthStore = create<AuthStore>()((set) => ({
   isLogin: true,
   changeIsLogin: (isLogin: boolean) => set(() => ({ isLogin: isLogin })),
-});
+}));

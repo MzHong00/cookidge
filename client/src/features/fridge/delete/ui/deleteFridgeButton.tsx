@@ -1,20 +1,25 @@
 import { IconButton } from "shared/ui/iconButton";
 import { IFridge } from "shared/api/fridge";
+import { useConfirmDialogActions } from "shared/lib/zustand";
 import { useDeleteFridgeMutation } from "..";
-import { useNavigate } from "react-router-dom";
 
 interface Props {
   id: IFridge["_id"];
 }
 
 export const DeleteFridgeButton = ({ id }: Props) => {
-  const navigate = useNavigate();
-  const { mutate, isPending } = useDeleteFridgeMutation(id);
+  const { mutateAsync, isPending } = useDeleteFridgeMutation(id);
+  const { openDialogMessage } = useConfirmDialogActions();
 
   const onClickDeleteFridge = () => {
     if (isPending) return;
-    mutate();
-    navigate(-1);
+
+    openDialogMessage({
+      message: "냉장고를 삭제하시겠습니까?",
+      requestFn: async () => {
+        await mutateAsync();
+      },
+    });
   };
 
   return <IconButton onClick={onClickDeleteFridge}>삭제</IconButton>;

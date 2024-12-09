@@ -18,18 +18,3 @@ export const useCreateIngredientMutation = (fridgeId?: IFridge["_id"]) => {
     },
   });
 };
-
-export const useUpdateIngredientMutation = (fridgeId?: IFridge["_id"]) => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationKey: [FridgeQueries.keys.detail, fridgeId],
-    mutationFn: async (ingredients: IIngredientInputDto[]) =>
-      await IngredientService.updateIngredientMutation(ingredients, fridgeId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [FridgeQueries.keys.detail, fridgeId],
-      });
-    },
-  });
-};
