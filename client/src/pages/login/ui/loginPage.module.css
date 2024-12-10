@@ -1,8 +1,46 @@
 .page {
     height: 100vh;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(to right top, rgb(var(--main-rgb)), white);
+    opacity: 1;
+    background-color: rgb(var(--main-rgb), 0.9);
+    overflow: hidden;
+}
+
+.loginForm {
+    border: 1px solid rgb(var(--base-rgb-grey-light));
+    z-index: 10;
+}
+
+.page::before,
+.page::after {
+    content: "";
+    position: absolute;
+    top: -40%;
+    left: 40%;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(172, 172, 172, 0) 30%);
+    animation: pulse 15s infinite;
+}
+
+.page::after {
+    top: 40%;
+    left: -40%;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1.0);
+    }
+
+    50% {
+        transform: scale(2.0);
+    }
 }

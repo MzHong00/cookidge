@@ -3,12 +3,20 @@
 .container {
     width: 500px;
     height: 500px;
+    padding-inline: 50px;
     @include app.flex-layout(column, center, center, 2rem);
+    border: none;
+    border-radius: 30px;
 }
 
 .logo {
     @include app.flex-layout(column, center, center);
     font-size: 2rem !important;
+}
+
+.content {
+    width: 100%;
+    @include app.flex-layout(column, center, center);
 }
 
 .introduce {
@@ -30,16 +38,8 @@
     border-radius: 100%;
 }
 
-.kakaoOAuth {
-    background-color: yellow;
-}
-
-.kakaoOAuth > b{
-    margin: auto;
-}
-
 .googleOAuth {
-    border: 1px solid whitesmoke;
+    border: 1px solid rgb(var(--base-rgb-grey-light));
 }
 
 .googleOAuth > b{

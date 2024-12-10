@@ -2,6 +2,7 @@ import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
 import { IUser, UserService } from "shared/api/user";
 import { IUserInfiniteQueryParams } from "shared/api/user/type";
+import { useAuthStore } from "shared/lib/zustand";
 
 export class UserQueries {
   static readonly keys = {
@@ -12,15 +13,18 @@ export class UserQueries {
 
   static readonly staleTime = {
     root: 60 * 60 * 1000,
-    search: 30 * 1000
-  }
+    search: 30 * 1000,
+  };
 
   static meQuery() {
+    const { isLogin } = useAuthStore.getState();
+
     return queryOptions({
       queryKey: [this.keys.me],
       queryFn: () => UserService.fetchMe(),
       staleTime: this.staleTime.root,
       refetchOnWindowFocus: false,
+      enabled: isLogin,
       retry: false,
     });
   }
