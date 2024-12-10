@@ -1,13 +1,13 @@
 import { useState } from "react";
 
+import { IUser } from "shared/api/user";
 import { IFridge } from "shared/api/fridge";
 import { IconButton } from "shared/ui/iconButton";
 import { ProfileImage } from "shared/ui/profileImage";
+import { useConfirmDialogActions } from "shared/lib/zustand";
 import { useUnshareMemberMutation } from "..";
 
 import styles from "./unshareMemberBox.module.css";
-import { useConfirmDialogActions } from "shared/lib/zustand";
-import { IUser } from "shared/api/user";
 
 interface Props {
   fridge_id: IFridge["_id"];
@@ -18,6 +18,7 @@ export const UnshareMemberBox = ({ fridge_id, allowed_users }: Props) => {
   const [selectedUser, setSelectedUser] = useState<Pick<IUser, "_id" | "name">>(
     { _id: "", name: "" }
   );
+
   const { openDialogMessage } = useConfirmDialogActions();
   const { mutateAsync, isPending } = useUnshareMemberMutation(
     fridge_id,

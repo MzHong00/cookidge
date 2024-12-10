@@ -31,13 +31,11 @@ instance.interceptors.response.use(
       changeIsLogin(true);
     }
 
-    if (response.status === 404) {
-      console.log("404 Error");
-    }
-
     return response;
   },
   async (error) => {
+
+    
     const { isLogin, changeIsLogin } = useAuthStore.getState();
 
     if (error.response.data.isLogin === false) {
@@ -68,7 +66,7 @@ instance.interceptors.response.use(
 
       return response;
     }
-    
+
     return Promise.reject(error);
   }
 );

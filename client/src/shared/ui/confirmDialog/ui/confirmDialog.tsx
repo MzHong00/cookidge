@@ -8,21 +8,22 @@ import styles from "./confirmDialog.module.scss";
 
 export const ConfirmDialog = () => {
   const navigate = useNavigate();
-  const { ref } = useHandleShowingDialog();
 
+  const { ref } = useHandleShowingDialog();
   const { isOpen, isLoading, payload, actions } = useConfirmDialogStore();
   const { message, requestFn, option } = payload;
 
   const onClickConfirm = async () => {
-    const { backspace } = option;
-    console.log(backspace);
-    
-
     actions.setIsLoading(true);
-    await requestFn();
-    actions.closeDialog();
-
-    if (backspace) navigate(-1);
+    
+    try {
+      await requestFn();
+      option.backspace && navigate(-1);
+    } catch (error) {
+    } finally {
+      actions.setIsLoading(false);
+      actions.closeDialog();
+    }
   };
 
   if (!isOpen) return null;

@@ -14,6 +14,10 @@
     @include app.flex-layout(column, center, stretch, 0.5rem)
 }
 
+.header > p {
+    text-align: center;
+}
+
 .actionBar {
     @include app.flex-layout(row)
 }

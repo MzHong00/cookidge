@@ -1,2 +1,2 @@
 export { ShareMemberBox } from "./ui/shareMemberBox";
-export { useShareMemberMutation } from "./mutation/shareMemberMutation copy";
+export { useShareMemberMutation } from "./mutation/shareMemberMutation";

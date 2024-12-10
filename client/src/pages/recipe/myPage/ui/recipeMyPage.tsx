@@ -7,13 +7,13 @@ import { RiAddLine } from "@react-icons/all-files/ri/RiAddLine";
 import { IUser } from "shared/api/user";
 import { IconLink } from "shared/ui/iconLink";
 import { SubjectBox } from "shared/ui/subjectBox";
+import { PicturesBox } from "shared/ui/picturesBox";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 import { UserQueries } from "entities/user";
 import { RecipeQueries } from "entities/recipe";
 import { LoginForm } from "features/user/login";
 
 import styles from "./recipeMyPage.module.scss";
-import { PicturesBox } from "shared/ui/picturesBox";
 
 export const RecipeMyPage = () => {
   const queryClient = useQueryClient();

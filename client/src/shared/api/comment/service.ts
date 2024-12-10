@@ -20,7 +20,7 @@ export class CommentService {
   static async createComment(
     recipeId: IRecipe["_id"],
     comment: IComment["comment"]
-  ): Promise<IComment> {
+  ): Promise<{ message: string }> {
     return (
       await axios.post(`${this.root}/create`, {
         recipe_id: recipeId,
@@ -29,11 +29,11 @@ export class CommentService {
     ).data;
   }
 
-  // 댓글 수정
+  // 댓글 수정 (※ 아직 미사용)
   static async updateComment(
     commentId: IComment["_id"],
     comment: IComment["comment"]
-  ) {
+  ): Promise<{ message: string }> {
     return (
       await axios.patch(`${this.root}/update`, {
         comment_id: commentId,
@@ -46,7 +46,7 @@ export class CommentService {
   static async deleteComment(
     commentId: IComment["_id"],
     authorId: IRecipe["author_id"]
-  ): Promise<IComment> {
+  ): Promise<{ message: string }> {
     return (
       await axios.delete(`${this.root}/delete`, {
         data: {

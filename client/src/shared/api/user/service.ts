@@ -16,7 +16,7 @@ export class UserService {
         "Cache-Control": "no-cache", // 캐시를 사용하지 않음
       },
     });
-    
+
     return response.data;
   }
 
@@ -37,7 +37,9 @@ export class UserService {
     return (await axios.get(`${this.root}/search`, config)).data;
   }
 
-  static async updateUser(updateData: IUserInputDTO): Promise<IUser> {
+  static async updateUser(
+    updateData: IUserInputDTO
+  ): Promise<{ message: string }> {
     return (
       await axios.patch(`${this.root}/update`, updateData, {
         headers: {
@@ -48,7 +50,7 @@ export class UserService {
   }
 
   // 유저 삭제
-  static async deleteUser() {
+  static async deleteUser(): Promise<{ message: string }> {
     return (await axios.delete(`${this.root}/delete`)).data;
   }
 

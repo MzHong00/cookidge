@@ -38,7 +38,9 @@ export class RecipeService {
     return (await axios.get(`${this.root}/read/user/${userName}`)).data;
   }
 
-  static async createRecipe(IRecipeInputDTO: IRecipeInputDTO) {
+  static async createRecipe(
+    IRecipeInputDTO: IRecipeInputDTO
+  ): Promise<{ message: string }> {
     return (
       await axios.post(`${this.root}/create`, IRecipeInputDTO, {
         headers: {
@@ -48,7 +50,10 @@ export class RecipeService {
     ).data;
   }
 
-  static async updateRecipe(recipeId: IRecipe["_id"], recipe: FormData) {
+  static async updateRecipe(
+    recipeId: IRecipe["_id"],
+    recipe: FormData
+  ): Promise<{ message: string }> {
     return (
       await axios.put(`${this.root}/update`, recipe, {
         params: { _id: recipeId },
@@ -56,12 +61,16 @@ export class RecipeService {
     ).data;
   }
 
-  static async deleteRecipe(recipeId: IRecipe["_id"]) {
-    return await axios.delete(`${this.root}/delete`, {
-      params: {
-        _id: recipeId,
-      },
-    });
+  static async deleteRecipe(
+    recipeId: IRecipe["_id"]
+  ): Promise<{ message: string }> {
+    return (
+      await axios.delete(`${this.root}/delete`, {
+        params: {
+          _id: recipeId,
+        },
+      })
+    ).data;
   }
 
   static async searchRecipe(config: {
@@ -84,7 +93,7 @@ export class RecipeService {
       }
     >
   > {
-    if(config.params.my_ingredients?.length===0) return [];
+    if (config.params.my_ingredients?.length === 0) return [];
 
     return (await axios.get(`${this.root}/recommend`, config)).data;
   }

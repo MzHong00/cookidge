@@ -1,0 +1,24 @@
+@use 'app/app.scss';
+
+.alertList {
+    width: 100%;
+    @include app.flex-layout(column, center);
+    position: fixed;
+    top: 4.5rem;
+    left: 0;
+    z-index: 100;
+}
+
+.alert {
+    width: fit-content;
+    max-width: 800px;
+    padding-inline: 2rem;
+    padding-block: 1rem;
+    @include app.flex-layout(row, center, center);
+    border-radius: 5px;
+    color: white;
+}
+
+.alert > svg {
+    font-size: 1.35rem;
+}
