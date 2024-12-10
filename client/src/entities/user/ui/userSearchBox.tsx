@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { RiUser3Line } from "@react-icons/all-files/ri/RiUser3Line";
+import { RiUserReceived2Line } from "@react-icons/all-files/ri/RiUserReceived2Line";
 
 import { SearchBox } from "shared/ui/searchBox";
 import { IconButton } from "shared/ui/iconButton";
@@ -49,7 +49,7 @@ export const UserSearchBox = ({
             <section className={styles.userInfoSection}>
               <div className={styles.userIntroduce}>{user.introduce}</div>
               <div className={styles.userFollow}>
-                <RiUser3Line />
+                <RiUserReceived2Line />
                 <span>{user.follower_count}</span>
                 {onClickUserAction && (
                   <IconButton
