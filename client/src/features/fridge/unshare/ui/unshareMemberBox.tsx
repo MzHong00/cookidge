@@ -4,7 +4,7 @@ import { IUser } from "shared/api/user";
 import { IFridge } from "shared/api/fridge";
 import { IconButton } from "shared/ui/iconButton";
 import { ProfileImage } from "shared/ui/profileImage";
-import { useConfirmDialogActions } from "shared/lib/zustand";
+import { useConfirmDialogActions } from "shared/ui/confirmDialog";
 import { useUnshareMemberMutation } from "..";
 
 import styles from "./unshareMemberBox.module.css";

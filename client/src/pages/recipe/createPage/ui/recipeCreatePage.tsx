@@ -1,7 +1,7 @@
 import { FormSubmitHandler } from "react-hook-form";
 
 import { IRecipeInputDTO } from "shared/api/recipe";
-import { useConfirmDialogActions } from "shared/lib/zustand";
+import { useConfirmDialogActions } from "shared/ui/confirmDialog";
 import { RecipeForm } from "features/recipe/create";
 import { useCreateRecipeMutation } from "features/recipe/create/mutation/createRecipeMutation";
 

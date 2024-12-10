@@ -2,7 +2,7 @@ import { RiLogoutBoxLine } from "@react-icons/all-files/ri/RiLogoutBoxLine";
 
 import { AuthService } from "shared/api/auth";
 import { IconButton } from "shared/ui/iconButton";
-import { useConfirmDialogActions } from "shared/lib/zustand";
+import { useConfirmDialogActions } from "shared/ui/confirmDialog";
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {}
 

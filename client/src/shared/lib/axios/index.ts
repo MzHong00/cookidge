@@ -1,7 +1,7 @@
 import axios, { AxiosStatic } from "axios";
 
 import { AuthService } from "shared/api/auth/service";
-import { useAuthStore } from "shared/lib/zustand";
+import { useAuthStore } from "../zustand";
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_SERVER_API,

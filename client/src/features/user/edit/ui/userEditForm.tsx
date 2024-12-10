@@ -7,7 +7,7 @@ import { InputFile } from "shared/ui/inputFile";
 import { IconButton } from "shared/ui/iconButton";
 import { IUserInputDTO } from "shared/api/user/type";
 import { BackspaceButton } from "shared/ui/backspaceButton";
-import { useConfirmDialogActions } from "shared/lib/zustand";
+import { useConfirmDialogActions } from "shared/ui/confirmDialog";
 import { usePreviewImages } from "shared/hooks/usePreviewImages";
 import { useUpdateUserMutation } from "../mutation/updateUserMutation";
 import { UserQueries } from "entities/user";

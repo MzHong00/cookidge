@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import {
   useConfirmDialogActions,
   useConfirmDialogIsOpen,
-} from "shared/lib/zustand/confirmDialogStore";
+} from "shared/ui/confirmDialog/model/confirmDialogStore";
 
 export const useHandleShowingDialog = () => {
   const dialogRef = useRef<HTMLDialogElement>(null);

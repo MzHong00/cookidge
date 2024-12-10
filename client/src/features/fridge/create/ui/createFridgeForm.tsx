@@ -6,7 +6,7 @@ import { IconLink } from "shared/ui/iconLink";
 import { IconButton } from "shared/ui/iconButton";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
-import { useConfirmDialogActions } from "shared/lib/zustand";
+import { useConfirmDialogActions } from "shared/ui/confirmDialog";
 import { useCreateFridgeMutation } from "../mutation/createFridgeMutation";
 
 import styles from "./createFridgeForm.module.css";

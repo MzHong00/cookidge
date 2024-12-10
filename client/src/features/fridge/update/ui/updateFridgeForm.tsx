@@ -6,7 +6,7 @@ import { useUpdateFridgeMutation } from "../mutation/updateFridgeMutation";
 
 import styles from "./updateFridgeForm.module.scss";
 import { SubjectBox } from "shared/ui/subjectBox";
-import { useConfirmDialogActions } from "shared/lib/zustand";
+import { useConfirmDialogActions } from "shared/ui/confirmDialog";
 
 interface Props {
   fridge_id: IFridge["_id"];

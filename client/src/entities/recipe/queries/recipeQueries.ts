@@ -141,6 +141,7 @@ export class RecipeQueries {
         return lastPageParam + 1;
       },
       staleTime: this.staleTime.root,
+      retry: false
     });
   }
 }

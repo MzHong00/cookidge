@@ -1,6 +1,6 @@
 import { IconButton } from "shared/ui/iconButton";
 import { IFridge } from "shared/api/fridge";
-import { useConfirmDialogActions } from "shared/lib/zustand";
+import { useConfirmDialogActions } from "shared/ui/confirmDialog";
 import { useDeleteFridgeMutation } from "..";
 
 interface Props {

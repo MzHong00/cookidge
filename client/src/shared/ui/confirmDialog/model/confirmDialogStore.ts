@@ -47,7 +47,6 @@ export const useConfirmDialogStore = create<ConfirmDialog>()((set) => ({
   },
 }));
 
-// Custom hooks
 export const useConfirmDialogIsLoading = () =>
   useConfirmDialogStore((state) => state.isLoading);
 

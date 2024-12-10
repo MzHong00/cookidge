@@ -3,7 +3,7 @@ import { IconButton } from "shared/ui/iconButton";
 import { useDeleteRecipeMutation } from "../mutation/deleteRecipeMutation";
 
 import styles from "./deleteRecipeButton.module.css";
-import { useConfirmDialogActions } from "shared/lib/zustand";
+import { useConfirmDialogActions } from "shared/ui/confirmDialog";
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   recipeId: IRecipe["_id"];

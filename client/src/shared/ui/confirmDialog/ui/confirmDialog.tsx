@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import { Logo } from "shared/ui/logo";
-import { useConfirmDialogStore } from "shared/lib/zustand/confirmDialogStore";
-import { useHandleShowingDialog } from "../model/useHandleShowingDialog";
+import { useHandleShowingDialog, useConfirmDialogStore } from "..";
 
 import styles from "./confirmDialog.module.scss";
 
@@ -15,7 +14,7 @@ export const ConfirmDialog = () => {
 
   const onClickConfirm = async () => {
     actions.setIsLoading(true);
-    
+
     try {
       await requestFn();
       option.backspace && navigate(-1);

@@ -1,7 +1,7 @@
 import { useLocation} from "react-router-dom";
 import { FormSubmitHandler } from "react-hook-form";
 
-import { useConfirmDialogActions } from "shared/lib/zustand";
+import { useConfirmDialogActions } from "shared/ui/confirmDialog";
 import { IRecipeInputDTO, IRecipeJoinUser } from "shared/api/recipe";
 import { RecipeForm } from "features/recipe/create";
 import { useUpdateRecipeMutation } from "features/recipe/update";
