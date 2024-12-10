@@ -167,14 +167,9 @@ export default (app: Router) => {
       };
 
       try {
-        const recipe = await RecipeService.createRecipe(userId, recipeInput);
-        if (!recipe) {
-          return res
-            .status(200)
-            .json({ message: "레시피 생성에 실패했습니다." });
-        }
-
-        res.status(201).json(recipe);
+        await RecipeService.createRecipe(userId, recipeInput);
+        
+        res.status(201).json({ message: "레시피 생성에 성공하였습니다." });
       } catch (error) {
         console.error("레시피 생성 중 오류 발생:", error);
         res
@@ -262,9 +257,9 @@ export default (app: Router) => {
     };
 
     try {
-      const newRecipe = await RecipeService.updateRecipe(recipeId, recipe);
+      await RecipeService.updateRecipe(recipeId, recipe);
 
-      res.status(200).json(newRecipe);
+      res.status(200).json({ message: "레시피 업데이트에 성공했습니다." });
     } catch (error) {
       console.error("레시피 업데이트 중 오류 발생:", error);
       res
@@ -287,7 +282,7 @@ export default (app: Router) => {
           mongoose.Types.ObjectId.createFromHexString(recipeId)
         );
 
-        res.status(200).json({ message: "레시피 삭제 성공" });
+        res.status(200).json({ message: "레시피 삭제를 성공했습니다." });
       } catch (error) {
         console.error("레시피 삭제 중 오류 발생:", error);
         res

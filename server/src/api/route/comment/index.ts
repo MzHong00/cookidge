@@ -52,13 +52,13 @@ export default (app: Router) => {
       const { recipe_id, comment } = req.body;
 
       try {
-        const newComment = await CommentService.createComment(
+        await CommentService.createComment(
           userId,
           recipe_id,
           comment
         );
 
-        res.status(201).json(newComment);
+        res.status(201).json({ message: "댓글 생성에 성공했습니다." });
       } catch (error) {
         console.error(error);
         res.status(500).json({ message: "댓글 생성에 실패했습니다." });
@@ -85,14 +85,8 @@ export default (app: Router) => {
           comment
         );
 
-        if (!newComment) {
-          return res
-            .status(404)
-            .json({ message: "수정할 댓글을 찾을 수 없습니다." });
-        }
-
         res.status(200).json({
-          message: "댓글이 성공적으로 수정되었습니다.",
+          message: "댓글 수정에 성공했습니다.",
           comment: newComment,
         });
       } catch (error) {
@@ -124,7 +118,7 @@ export default (app: Router) => {
             .json({ message: "삭제할 댓글을 찾을 수 없습니다." });
         }
 
-        res.status(200).json(comment);
+        res.status(200).json({ message: "댓글 삭제에 성공했습니다." });
       } catch (error) {
         console.error(error);
         res.status(500).json({ message: "댓글 삭제에 실패했습니다." });

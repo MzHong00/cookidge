@@ -29,14 +29,13 @@ export default (app: Router) => {
     async (req, res) => {
       const ingredients = req.body.ingredients as IIngredient[];
       const refrigeratorId = req.query.refrigerator_id as string;
-      
-      try {
-        const createdIngredients = await IngredientService.createIngredient(
-          refrigeratorId,
-          ingredients
-        );
 
-        res.status(201).json(createdIngredients);
+      try {
+        await IngredientService.createIngredient(refrigeratorId, ingredients);
+
+        res.status(201).json({
+          message: "재료가 생성에 성공하였습니다.",
+        });
       } catch (error) {
         console.error("재료 생성 중 오류 발생:", error);
         res.status(500).json({ message: "재료 생성 중 오류가 발생했습니다." });
@@ -59,26 +58,16 @@ export default (app: Router) => {
     async (req, res) => {
       const ingredients = req.body.ingredients as IIngredient[];
       const refrigeratorId = req.query.refrigerator_id as string;
-      
-      try {
-        const result = await IngredientService.updateIngredients(
-          refrigeratorId,
-          ingredients
-        );
 
-        if (!result) {
-          return res
-            .status(404)
-            .json({ message: "업데이트할 재료를 찾을 수 없습니다." });
-        }
+      try {
+        await IngredientService.updateIngredients(refrigeratorId, ingredients);
+
         res
           .status(200)
-          .json({ message: "재료가 성공적으로 업데이트되었습니다." });
+          .json({ message: "재료 업데이트에 성공하였습니다." });
       } catch (error) {
         console.error("재료 업데이트 중 오류 발생:", error);
-        res
-          .status(500)
-          .json({ message: "재료 업데이트 중 오류가 발생했습니다." });
+        res.status(500).json({ message: "재료 업데이트 오류가 발생했습니다." });
       }
     }
   );

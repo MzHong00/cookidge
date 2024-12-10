@@ -97,13 +97,15 @@ export default (app: Router) => {
       const picture = await CloudinaryService.uploadFile(file, { width: 200 });
 
       try {
-        const user = await UserService.updateUser(userId, {
+        await UserService.updateUser(userId, {
           ...(name && { name }),
           ...(introduce && { introduce }),
           ...(picture && { picture: picture.url }),
         });
 
-        res.status(200).json(user);
+        res.status(200).json({
+          message: "사용자 정보 수정에 성공하였습니다."
+        });
       } catch (error) {
         console.log(error);
         res
@@ -117,7 +119,8 @@ export default (app: Router) => {
     const userId = req.userId;
 
     try {
-      const user = await UserService.deleteUser(userId);
+      await UserService.deleteUser(userId);
+      
       res
         .status(200)
         .clearCookie("token")

@@ -21,7 +21,7 @@ export default (app: Router) => {
       res.status(200).json(refrigeratorList);
     } catch (error) {
       console.error("냉장고 목록 조회 중 오류:", error);
-      res.status(500).json({ message: "서버 오류" });
+      res.status(500).json({ message: "냉장고 목록 조회에 실패했습니다." });
     }
   });
 
@@ -36,7 +36,7 @@ export default (app: Router) => {
       res.status(200).json(...refrigerator);
     } catch (error) {
       console.error("냉장고 상세 조회 중 오류:", error);
-      res.status(500).json({ message: "서버 오류" });
+      res.status(500).json({ message: "냉장고 상세 조회에 실패했습니다." });
     }
   });
 
@@ -49,26 +49,19 @@ export default (app: Router) => {
       const refrigeratorName = req.body.name as string;
 
       try {
-        const newRefrigerator = await RefrigeratorService.createRefrigerator(
-          refrigeratorName,
-          userId
-        );
+        await RefrigeratorService.createRefrigerator(refrigeratorName, userId);
 
-        if (!newRefrigerator) {
-          return res
-            .status(401)
-            .json({ message: "냉장고 생성에 실패했습니다." });
-        }
-
-        res.status(201).json(newRefrigerator);
+        res.status(201).json({
+          message: "냉장고 생성에 성공했습니다.",
+        });
       } catch (error: any) {
         if (error.code === 11000) {
           console.error("중복된 필드:", error.keyValue);
-          res.status(422).json({ message: "중복된 냉장고 이름입니다." });
-        } else {
-          console.error("냉장고 저장 중 오류가 발생했습니다:", error);
-          res.status(500).json({ message: "서버 오류" });
+          return res.status(422).json({ message: "중복된 냉장고 이름입니다." });
         }
+
+        console.error("냉장고 생성 중 오류가 발생했습니다:", error);
+        res.status(500).json({ message: "냉장고 생성에 실패했습니다." });
       }
     }
   );
@@ -88,16 +81,19 @@ export default (app: Router) => {
         refrigerator_id: string;
         refrigerator_name: string;
       };
+
       try {
-        const result = await RefrigeratorService.updateRefrigerator(
+        await RefrigeratorService.updateRefrigerator(
           refrigerator_id,
           refrigerator_name
         );
 
-        res.status(200).json(result);
+        res.status(200).json({
+          message: "냉장고 수정에 성공했습니다.",
+        });
       } catch (error) {
         console.error("냉장고 업데이트 중 오류:", error);
-        res.status(500).json({ message: "서버 오류" });
+        res.status(500).json({ message: "냉장고 업데이트에 실패했습니다." });
       }
     }
   );
@@ -120,7 +116,7 @@ export default (app: Router) => {
         res.status(200).json({ message: "냉장고 삭제에 성공했습니다." });
       } catch (error) {
         console.error("냉장고 삭제 중 오류:", error);
-        res.status(500).json({ message: "서버 오류" });
+        res.status(500).json({ message: "냉장고 삭제에 실패했습니다." });
       }
     }
   );
@@ -149,8 +145,8 @@ export default (app: Router) => {
 
         res.status(200).json({ message: "공유 멤버 초대를 성공했습니다." });
       } catch (error) {
-        console.error("냉장고 공유 멤버 설정 오류:", error);
-        res.status(500).json({ message: "서버 오류" });
+        console.error("냉장고 공유 멤버 추가 중 오류:", error);
+        res.status(500).json({ message: "공유 멤버 추가에 실패했습니다." });
       }
     }
   );
@@ -179,8 +175,8 @@ export default (app: Router) => {
 
         res.status(200).json({ message: "공유 멤버 삭제를 성공했습니다." });
       } catch (error) {
-        console.error("냉장고 공유 멤버 설정 오류:", error);
-        res.status(500).json({ message: "서버 오류" });
+        console.error("냉장고 공유 멤버 삭제 중 오류:", error);
+        res.status(500).json({ message: "공유 멤버 삭제에 실패했습니다." });
       }
     }
   );
