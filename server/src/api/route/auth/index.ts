@@ -12,7 +12,10 @@ export default (app: Router) => {
   route.post("/logout", (_, res) => {
     res
       .status(200)
-      .clearCookie("token")
+      .clearCookie("token", {
+        sameSite: "none",
+        secure: true
+      })
       .json({ message: "Logged out successfully" });
   });
 

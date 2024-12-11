@@ -10,8 +10,6 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    console.log("보낸 토큰:", config.headers.Authorization);
-
     return config;
   },
   (error) => {
