@@ -201,7 +201,7 @@ export class RecipeService {
   static async like(userId: IUser["_id"], recipeId: IRecipe["_id"]) {
     mongooseTransaction(async () => {
       await Recipe.findByIdAndUpdate(recipeId, {
-        $push: { like_members: userId },
+        $addToSet: { like_members: userId },
       });
 
       await Like.create({ user_id: userId, recipe_id: recipeId });
