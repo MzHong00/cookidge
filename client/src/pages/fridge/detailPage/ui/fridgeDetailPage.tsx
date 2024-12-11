@@ -46,7 +46,7 @@ export const FridgeDetailPage = () => {
         )}
       </div>
       <SubjectBox title="공유자">
-        <SharedMemberList allowed_users={fridgeDetail.allowed_users}/>
+        <SharedMemberList allowed_users={fridgeDetail.allowed_users} />
       </SubjectBox>
 
       <div className="flex-row">
@@ -54,7 +54,10 @@ export const FridgeDetailPage = () => {
         <IngredientNearExpiry ingredients={fridgeDetail.stored_ingredients} />
       </div>
 
-      <RecipeRecommend my_ingredients={fridgeDetail.stored_ingredients} />
+      <RecipeRecommend
+        fridge_id={fridgeDetail._id}
+        my_ingredients={fridgeDetail.stored_ingredients}
+      />
 
       <p className={styles.lastestUpdate}>
         최근 수정: {new Date(fridgeDetail.last_updated).toLocaleString()}

@@ -1,13 +1,11 @@
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
-import { IUser } from "shared/api/user";
-import { IIngredient } from "shared/api/ingredient";
+import { type IUser } from "shared/api/user";
+import { type IFridge } from "shared/api/fridge";
+import { type IIngredient } from "shared/api/ingredient";
 import { RecipeService } from "shared/api/recipe/service";
-import { IRecipe, RecipeFilterQuery } from "shared/api/recipe";
-import {
-  IRecipePictureDTO,
-  IRecipeQueryOption,
-} from "shared/api/recipe/type";
+import { type IRecipe, RecipeFilterQuery } from "shared/api/recipe";
+import { IRecipePictureDTO, IRecipeQueryOption } from "shared/api/recipe/type";
 
 export class RecipeQueries {
   static readonly keys = {
@@ -69,19 +67,32 @@ export class RecipeQueries {
   }
 
   // 레시피 추천
-  static recommendQuery(recommendParams: {
+  static recommendQuery(params: {
+    fridge_id: IFridge["_id"];
     categories?: IRecipe["category"][];
     my_ingredients?: IIngredient["name"][];
   }) {
+    const { fridge_id, categories, my_ingredients } = params;
+
     return queryOptions({
-      queryKey: [this.keys.root, this.keys.list, this.keys.recommend],
+      queryKey: [
+        this.keys.root,
+        this.keys.list,
+        this.keys.recommend,
+        fridge_id,
+      ],
       queryFn: ({ signal }) =>
         RecipeService.recommnedRecipe({
           signal,
-          params: recommendParams,
+          params: {
+            categories,
+            my_ingredients,
+          },
         }),
+      select: (data) =>
+        data?.filter((recipe) => recipe.matched_ingredients.length !== 0),
       enabled: false,
-      retry: false
+      retry: false,
     });
   }
 
@@ -141,7 +152,7 @@ export class RecipeQueries {
         return lastPageParam + 1;
       },
       staleTime: this.staleTime.root,
-      retry: false
+      retry: false,
     });
   }
 }

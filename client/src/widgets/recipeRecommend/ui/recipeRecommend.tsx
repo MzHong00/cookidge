@@ -2,19 +2,22 @@ import { useQuery } from "@tanstack/react-query";
 import { IoReload } from "@react-icons/all-files/io5/IoReload";
 import { FaMagic } from "@react-icons/all-files/fa/FaMagic";
 
+import { type IFridge } from "shared/api/fridge";
 import { IconButton } from "shared/ui/iconButton";
-import { IIngredient } from "shared/api/ingredient";
+import { type IIngredient } from "shared/api/ingredient";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { RecipeCard, RecipeQueries } from "entities/recipe";
-
-import styles from "./recipeRecommend.module.scss";
 import { LikeButton } from "features/recipe/like";
 
+import styles from "./recipeRecommend.module.scss";
+
 interface Props extends React.HTMLAttributes<HTMLElement> {
+  fridge_id: IFridge['_id'];
   my_ingredients?: IIngredient[];
 }
 
 export const RecipeRecommend = ({
+  fridge_id,
   my_ingredients,
   className,
   ...props
@@ -25,6 +28,7 @@ export const RecipeRecommend = ({
     refetch,
   } = useQuery(
     RecipeQueries.recommendQuery({
+      fridge_id: fridge_id,
       my_ingredients: my_ingredients?.map((ingredient) => ingredient.name),
     })
   );
