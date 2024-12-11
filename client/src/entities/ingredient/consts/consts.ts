@@ -1,7 +1,7 @@
 import { EmojiCatgories } from "shared/types";
 
+export const INGREDIENT_SORT_TYPES = ["카테고리", "유통기한"];
 export const INGREDIENT_TABLE_FIELD = ["분류", "이름", "수량", "유통기한"];
-
 export const INGREDIENTS_CATEGORIES: EmojiCatgories[] = [
   {
     emoji: "🍖",

@@ -11,10 +11,10 @@ import { getDateToISO } from "shared/helper/getDateToISO";
 import {
   INGREDIENT_TABLE_FIELD,
   INGREDIENTS_CATEGORIES,
-} from "entities/fridge";
+} from "entities/ingredient";
+import { useUpdateIngredientMutation } from "..";
 
 import styles from "./updateIngredientForm.module.scss";
-import { useUpdateIngredientMutation } from "..";
 
 interface IngredientInputForm {
   ingredients: IIngredient[];

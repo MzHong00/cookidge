@@ -1,4 +1,3 @@
-import { UseMutateFunction } from "@tanstack/react-query";
 import { useFieldArray, useForm } from "react-hook-form";
 import { CgRemoveR } from "@react-icons/all-files/cg/CgRemoveR";
 import { RiAddLine } from "@react-icons/all-files/ri/RiAddLine";
@@ -12,10 +11,10 @@ import { getDateToISO } from "shared/helper/getDateToISO";
 import {
   INGREDIENT_TABLE_FIELD,
   INGREDIENTS_CATEGORIES,
-} from "entities/fridge";
+} from "entities/ingredient";
+import { useCreateIngredientMutation } from "..";
 
 import styles from "./createIngredientForm.module.scss";
-import { useCreateIngredientMutation } from "..";
 
 interface IngredientInputForm {
   ingredients: IIngredient[];

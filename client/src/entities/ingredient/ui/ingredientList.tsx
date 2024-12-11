@@ -1,6 +1,6 @@
 import { IFridge } from "shared/api/fridge";
 import { SubjectBox } from "shared/ui/subjectBox";
-import { INGREDIENT_TABLE_FIELD } from "entities/fridge";
+import { INGREDIENT_TABLE_FIELD } from "..";
 
 import styles from './ingredientList.module.scss'
 

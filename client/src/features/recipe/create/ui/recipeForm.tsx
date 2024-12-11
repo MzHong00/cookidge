@@ -19,7 +19,7 @@ import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 import { IRecipeInputDTO } from "shared/api/recipe/type";
 import { usePreviewImages } from "shared/hooks/usePreviewImages";
 import { FOOD_CATEGORIES, RECIPE_INPUT_SECTION } from "entities/recipe";
-import { INGREDIENTS_CATEGORIES } from "entities/fridge";
+import { INGREDIENTS_CATEGORIES } from "entities/ingredient";
 import { useSelectInput } from "../model/useSelectInput";
 import { usePreviewStepPicture } from "../model/useStepPreview";
 
