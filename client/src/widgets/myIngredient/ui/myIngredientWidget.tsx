@@ -14,7 +14,7 @@ import { CreateIngredientForm } from "features/ingredient/create";
 import { UpdateIngredientForm } from "features/ingredient/update";
 import { useFilterIngredients, useSortIngredients } from "..";
 
-import styles from "./myIngredientBox.module.scss";
+import styles from "./myIngredientWidget.module.scss";
 
 const INGREDIENT_SORT_TYPES = ["카테고리", "유통기한"];
 
@@ -22,7 +22,7 @@ interface Props {
   fridge: IFridge;
 }
 
-export const MyIngredientBox = ({ fridge }: Props) => {
+export const MyIngredientWidget = ({ fridge }: Props) => {
   const { ref, openDialog, closeDialog } = useDialog();
   const [isReadMode, setIsReadMode] = useState<boolean>(true);
 

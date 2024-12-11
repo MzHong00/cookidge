@@ -9,14 +9,14 @@ import { SubjectBox } from "shared/ui/subjectBox";
 import { RecipeCard, RecipeQueries } from "entities/recipe";
 import { LikeButton } from "features/recipe/like";
 
-import styles from "./recipeRecommend.module.scss";
+import styles from "./recipeRecommendWidget.module.scss";
 
 interface Props extends React.HTMLAttributes<HTMLElement> {
-  fridge_id: IFridge['_id'];
+  fridge_id: IFridge["_id"];
   my_ingredients?: IIngredient[];
 }
 
-export const RecipeRecommend = ({
+export const RecipeRecommendWidget = ({
   fridge_id,
   my_ingredients,
   className,

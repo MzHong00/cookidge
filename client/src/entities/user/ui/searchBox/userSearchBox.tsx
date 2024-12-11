@@ -4,10 +4,9 @@ import { RiUserReceived2Line } from "@react-icons/all-files/ri/RiUserReceived2Li
 
 import { SearchBox } from "shared/ui/searchBox";
 import { IconButton } from "shared/ui/iconButton";
-import { UserCard } from "shared/ui/userCard";
 import { useParamsDebounce } from "shared/hooks/useParamsDebounce";
 import { useIntersectionObserver } from "shared/hooks/useIntersectionObserver";
-import { UserQueries } from "entities/user";
+import { UserCard, UserQueries } from "../..";
 
 import styles from "./userSearchBox.module.scss";
 

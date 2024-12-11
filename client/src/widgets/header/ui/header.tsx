@@ -22,7 +22,9 @@ export const Header = () => {
       <Link to={"/"}>
         <Logo />
       </Link>
+
       <Navbar />
+      
       <div className={styles.userBar}>
         {user ? (
           <>

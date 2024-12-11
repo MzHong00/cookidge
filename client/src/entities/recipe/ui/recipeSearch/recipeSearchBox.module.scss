@@ -1,9 +1,5 @@
 @use 'app/app.scss';
 
-.container {
-    @include app.flex-layout(column);
-}
-
 .recipeCard {
     width: fit-content;
 }
@@ -11,10 +7,6 @@
 .searchRecipeList {
     @include app.flex-layout(row);
     flex-wrap: wrap;
-}
-
-.searchInput {
-    padding: 1rem;
 }
 
 .inputContainer {

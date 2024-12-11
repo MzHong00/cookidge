@@ -3,7 +3,7 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import { OAuthService } from "shared/api/oauth";
 import { CreateFridgeForm } from "features/fridge/create";
-import { RecipeSearchBox } from "widgets/recipeSearch";
+import { RecipeSearchWidget } from "widgets/recipeSearch";
 import { Root } from "pages/root";
 import { LoginPage } from "pages/login";
 import { SearchPage } from "pages/search";
@@ -60,7 +60,7 @@ const appRouter = createBrowserRouter([
           },
           {
             path: "recipe",
-            element: <RecipeSearchBox />,
+            element: <RecipeSearchWidget />,
           },
           {
             path: "user",

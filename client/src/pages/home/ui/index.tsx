@@ -8,7 +8,7 @@ import { useIntersectionObserver } from "shared/hooks/useIntersectionObserver";
 import { RecipeCard } from "entities/recipe";
 import { RecipeQueries } from "entities/recipe/queries/recipeQueries";
 import { LikeButton } from "features/recipe/like";
-import { RecipeSearchOption } from "widgets/recipeSearchOption";
+import { RecipeSearchOptionWidget } from "widgets/recipeSearchOption";
 
 import styles from "./index.module.scss";
 
@@ -30,7 +30,7 @@ export const Home = () => {
 
   return (
     <FramerFadeLayout className={styles.container}>
-      <RecipeSearchOption />
+      <RecipeSearchOptionWidget />
 
       <div ref={recipeContainerRef} className={styles.recipeList}>
         {recipes?.pages.map((page) =>

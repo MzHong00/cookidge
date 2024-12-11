@@ -1,1 +1,1 @@
-export { RecipeRecommend } from "./ui/recipeRecommend";
+export { RecipeRecommendWidget } from "./ui/recipeRecommendWidget";

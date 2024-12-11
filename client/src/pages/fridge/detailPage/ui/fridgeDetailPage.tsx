@@ -14,8 +14,8 @@ import {
   SharedMemberList,
 } from "entities/fridge";
 import { DeleteFridgeButton } from "features/fridge/delete";
-import { MyIngredientBox } from "widgets/myIngredient";
-import { RecipeRecommend } from "widgets/recipeRecommend";
+import { MyIngredientWidget } from "widgets/myIngredient";
+import { RecipeRecommendWidget } from "widgets/recipeRecommend";
 
 import styles from "./fridgeDetailPage.module.scss";
 
@@ -55,7 +55,7 @@ export const FridgeDetailPage = () => {
         <IngredientNearExpiry ingredients={fridgeDetail.stored_ingredients} />
       </div>
 
-      <RecipeRecommend
+      <RecipeRecommendWidget
         fridge_id={fridgeDetail._id}
         my_ingredients={fridgeDetail.stored_ingredients}
       />
@@ -64,7 +64,7 @@ export const FridgeDetailPage = () => {
         최근 수정: {new Date(fridgeDetail.last_updated).toLocaleString()}
       </p>
 
-      <MyIngredientBox fridge={fridgeDetail} />
+      <MyIngredientWidget fridge={fridgeDetail} />
     </FramerFadeLayout>
   );
 };

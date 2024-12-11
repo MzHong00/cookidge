@@ -1,0 +1,1 @@
+export { RecipeDetailWidget } from "./ui/recipeDetailWidget";

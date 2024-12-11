@@ -3,38 +3,40 @@ import { RiGroupLine } from "@react-icons/all-files/ri/RiGroupLine";
 import { RiCalendarLine } from "@react-icons/all-files/ri/RiCalendarLine";
 
 import { IconBox } from "shared/ui/iconBox";
-import { SubjectBox } from "shared/ui/subjectBox";
+import { IRecipe } from "shared/api/recipe/type";
 import { PicturesBox } from "shared/ui/picturesBox";
-import { IRecipeJoinUser } from "shared/api/recipe/type";
 import { LikeButton } from "features/recipe/like";
 
-import styles from "./detailCard.module.scss";
+import styles from "./recipeDetailWidget.module.scss";
 
-interface Props extends React.HTMLAttributes<HTMLDivElement>, IRecipeJoinUser {}
+interface Props {
+  recipe: IRecipe;
+}
 
-export const DetailCard = ({
-  _id,
-  name,
-  pictures,
-  author_id,
-  ingredients,
-  introduction,
-  servings,
-  cooking_time,
-  cooking_steps,
-  created_at,
-  like_members,
-  user,
-  children,
-  className,
+export const RecipeDetailWidget = ({
+  recipe,
   ...props
 }: Props) => {
+  const {
+    _id,
+    name,
+    pictures,
+    ingredients,
+    introduction,
+    servings,
+    cooking_time,
+    created_at,
+    like_members,
+  } = recipe;
+
   return (
-    <article className={`flex-column-center ${className}`} {...props}>
+    <article className={styles.container} {...props}>
       <PicturesBox pictures={pictures} />
+
       <div className={styles.infoBox}>
         <div className={styles.recipeInfoBar}>
           <div className={styles.infoHeader}>{name && <b>{name}</b>}</div>
+
           {like_members && (
             <div className="flex-row">
               {like_members && _id && (
@@ -56,16 +58,15 @@ export const DetailCard = ({
           </div>
           {introduction && <p>{introduction}</p>}
         </div>
+
         {ingredients && (
-          <SubjectBox title="재료" className={styles.ingredientBox}>
-            <ol>
-              {ingredients.map((ingredient) => (
-                <li key={ingredient.name}>
-                  {ingredient.name} {ingredient.quantity}
-                </li>
-              ))}
-            </ol>
-          </SubjectBox>
+          <ul>
+            {ingredients.map((ingredient) => (
+              <li key={ingredient.name} className={styles.ingredient}>
+                {ingredient.name} {ingredient.quantity}
+              </li>
+            ))}
+          </ul>
         )}
       </div>
     </article>

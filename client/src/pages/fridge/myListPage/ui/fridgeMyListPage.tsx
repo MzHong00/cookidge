@@ -3,7 +3,7 @@ import { RiAddLine } from "@react-icons/all-files/ri/RiAddLine";
 
 import { IconLink } from "shared/ui/iconLink";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
-import { FridgeList } from "widgets/fridgeList";
+import { FridgeList } from "entities/fridge";
 
 export const FridgeMyListPage = () => {
 

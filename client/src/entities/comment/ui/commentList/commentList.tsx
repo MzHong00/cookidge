@@ -1,23 +1,43 @@
 import { Link } from "react-router-dom";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient, useInfiniteQuery } from "@tanstack/react-query";
 
 import { IUser } from "shared/api/user";
+import { IRecipe } from "shared/api/recipe";
 import { dateGap } from "shared/helper/dateGap";
 import { IconButton } from "shared/ui/iconButton";
-import { ICommentJoinUser } from "shared/api/comment/type";
 import { ProfileImage } from "shared/ui/profileImage";
+import { ICommentJoinUser } from "shared/api/comment/type";
+import { useIntersectionObserver } from "shared/hooks/useIntersectionObserver";
 import { UserQueries } from "entities/user";
+import { RecipeQueries } from "entities/recipe";
+import { CommentQueries } from "entities/comment";
 import { DeleteCommentButton } from "features/comment/delete";
 
 import styles from "./comment.module.css";
-import { IRecipe } from "shared/api/recipe";
-import { RecipeQueries } from "entities/recipe";
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  commentData: ICommentJoinUser;
+interface Props {
+  recipe_id: IRecipe["_id"];
 }
 
-export const Comment = ({ commentData, className, ...props }: Props) => {
+export const CommentList = ({ recipe_id }: Props) => {
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
+    CommentQueries.infiniteQuery(recipe_id)
+  );
+  const { setTarget } = useIntersectionObserver({ hasNextPage, fetchNextPage });
+
+  return (
+    <div className="flex-column">
+      {data?.pages.map((page) =>
+        page.map((comment) => (
+          <Comment key={comment._id} commentData={comment} />
+        ))
+      )}
+      <div id="observer" ref={setTarget} style={{ height: "10%" }} />
+    </div>
+  );
+};
+
+export const Comment = ({ commentData }: { commentData: ICommentJoinUser }) => {
   const { _id, user_id, recipe_id, comment, created_at, user } = commentData;
 
   const queryClient = useQueryClient();
@@ -32,7 +52,7 @@ export const Comment = ({ commentData, className, ...props }: Props) => {
     recipe && (user_id === me?._id || recipe.author_id === me?._id);
 
   return (
-    <div className={`${styles.container} ${className}`} {...props}>
+    <div className={styles.container}>
       <Link to={`/user/${user[0].name}`}>
         <IconButton className={styles.profileButton}>
           <ProfileImage src={user[0].picture} />

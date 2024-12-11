@@ -1,18 +1,15 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
-import { SearchBox } from "shared/ui/searchBox";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 import { useIntersectionObserver } from "shared/hooks/useIntersectionObserver";
 import { RecipeCard, RecipeQueries } from "entities/recipe";
-import { useParamsDebounce } from "../../../shared/hooks/useParamsDebounce";
 
 import styles from "./recipeSearchBox.module.scss";
 
-export const RecipeSearchBox = () => {
+export const RecipeSearchList = () => {
   const [searchParams] = useSearchParams();
-  const { value, onChangeRecipeSearch } = useParamsDebounce();
-
+  
   const {
     data: recipePages,
     hasNextPage,
@@ -23,14 +20,7 @@ export const RecipeSearchBox = () => {
   const { setTarget } = useIntersectionObserver({ hasNextPage, fetchNextPage });
 
   return (
-    <div className={styles.container}>
-      <SearchBox
-        value={value}
-        placeholder="요리 제목을 입력하세요"
-        className={styles.searchInput}
-        onChange={onChangeRecipeSearch}
-      />
-
+    <div>
       <FramerFadeLayout>
         <ul className={styles.searchRecipeList}>
           {recipePages?.pages.map((recipes) =>

@@ -1,1 +1,1 @@
-export { RecipeSearchBox } from "./ui/recipeSearchBox";
+export { RecipeSearchWidget } from "./ui/recipeSearchWidget";

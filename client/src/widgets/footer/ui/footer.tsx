@@ -5,9 +5,6 @@ export const Footer = () => {
     <div className={`${styles.footer} flex-column-center`}>
       <span>&copy; 2024 Cookidge.</span>
       <ul className="flex-row">
-        {/* <li>
-          <Link to={"help"}>개인정보 처리방침</Link>
-        </li> */}
         <li>
           Emoji by{" "}
           <a
