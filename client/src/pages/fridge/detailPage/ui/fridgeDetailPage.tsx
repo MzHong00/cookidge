@@ -45,6 +45,7 @@ export const FridgeDetailPage = () => {
           </div>
         )}
       </div>
+      
       <SubjectBox title="공유자">
         <SharedMemberList allowed_users={fridgeDetail.allowed_users} />
       </SubjectBox>

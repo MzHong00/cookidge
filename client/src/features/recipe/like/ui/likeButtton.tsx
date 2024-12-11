@@ -53,7 +53,10 @@ export const LikeButton = ({
       <IconButton
         Icon={() => <RiHeart3Fill color="red" />}
         onClick={onClickUnlike}
-        style={{ ...(disabled && { cursor: "default" }) }}
+        style={{
+          paddingInline: 0,
+          ...(disabled && { cursor: "default" }),
+        }}
         disabled={disabled}
         {...props}
       >

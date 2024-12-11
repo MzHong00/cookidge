@@ -43,6 +43,7 @@ export const Home = () => {
               <LikeButton
                 recipe_id={recipe._id}
                 likeMembers={recipe.like_members}
+                style={{ paddingInline: 0 }}
               />
             </RecipeCard>
           ))

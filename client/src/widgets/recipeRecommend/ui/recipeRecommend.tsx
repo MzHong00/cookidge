@@ -67,6 +67,7 @@ export const RecipeRecommend = ({
               <LikeButton
                 recipe_id={recipe._id}
                 likeMembers={recipe.like_members}
+                disabled
               />
               <div>
                 포함된 재료({matched_ingredients.length}):{" "}
