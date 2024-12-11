@@ -80,3 +80,10 @@
 
 12.02
 - 레시피 추천 api 구현
+
+12.11
+- create, update, delete 응답 데이터 제거 후 message로 응답 (불필요한 리소스 응답 제거)
+
+12.12
+- 배포 환경 로그아웃 오류 해결 (logout api의 clearCookie sameSite="none"설정)
+

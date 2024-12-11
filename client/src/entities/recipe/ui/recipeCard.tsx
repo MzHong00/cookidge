@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import { RiTimer2Line } from "@react-icons/all-files/ri/RiTimer2Line";
 import { RiGroupLine } from "@react-icons/all-files/ri/RiGroupLine";
 
-import { IRecipeCard } from "shared/api/recipe";
 import { IconBox } from "shared/ui/iconBox";
 import { dateGap } from "shared/helper/dateGap";
+import { IRecipeCard } from "shared/api/recipe";
 import { PicturesBox } from "shared/ui/picturesBox";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 
@@ -33,7 +33,7 @@ export const RecipeCard = ({
 
   return (
     <FramerFadeLayout>
-      <article className={`${styles.cardContainer} ${className}`} {...props}>
+      <article className={`${styles.container} ${className}`} {...props}>
         {pictures.length !== 0 && <PicturesBox pictures={pictures} />}
         <div>
           <Link to={`/recipe/${_id}`} className={styles.infoBox}>

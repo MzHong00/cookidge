@@ -3,7 +3,7 @@
 .container {
     width: 500px;
     height: 500px;
-    padding-inline: 50px;
+    padding-inline: 5%;
     @include app.flex-layout(column, center, center, 2rem);
     border: none;
     border-radius: 30px;
