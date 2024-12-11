@@ -1,7 +1,7 @@
 @use 'app/app.scss';
 
 .container {
-    max-width: 500px;
+    width: 500px;
     @include app.flex-layout(column, stretch, stretch, 0);
     border-bottom: 1px solid rgb(var(--base-rgb-grey-light));
     overflow: hidden;

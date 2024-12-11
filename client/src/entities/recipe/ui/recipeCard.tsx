@@ -37,17 +37,15 @@ export const RecipeCard = ({
         {pictures.length !== 0 && <PicturesBox pictures={pictures} />}
         <div>
           <Link to={`/recipe/${_id}`} className={styles.infoBox}>
-                <div className={styles.infoHeaderBar}>
-                  <h2 className={styles.title}>{name}</h2>
-                  <span className={styles.created_at}>{dateGap(created_at)}전</span>
-                </div>
-                <div className={styles.subInfo}>
-                  <IconBox Icon={RiTimer2Line}>
-                    조리시간 {cooking_time}분
-                  </IconBox>
-                  <IconBox Icon={RiGroupLine}>{servings}인분</IconBox>
-                </div>
-                <p className={styles.introduction}>{introduction}</p>
+            <div className={styles.infoHeaderBar}>
+              <h2 className={styles.title}>{name}</h2>
+              <span className={styles.created_at}>{dateGap(created_at)}전</span>
+            </div>
+            <div className={styles.subInfo}>
+              <IconBox Icon={RiTimer2Line}>조리시간 {cooking_time}분</IconBox>
+              <IconBox Icon={RiGroupLine}>{servings}인분</IconBox>
+            </div>
+            <p className={styles.introduction}>{introduction}</p>
           </Link>
           {children}
         </div>
