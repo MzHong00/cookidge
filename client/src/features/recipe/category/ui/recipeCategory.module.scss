@@ -1,11 +1,11 @@
 @use 'app/app.scss';
 
-.categoryBar {
+.container {
     @include app.flex-layout(row, stretch, stretch, 0rem);
 }
 
-.categoryBar > button {
-    padding-inline: 0.5rem
+.container>button {
+    padding-inline: 0.25rem
 }
 
 .category {
@@ -19,7 +19,7 @@
 
 .category::-webkit-scrollbar {
     display: none;
-  }
+}
 
 .category button {
     border-radius: 10px;

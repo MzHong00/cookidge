@@ -38,7 +38,7 @@ export const RecipeCard = ({
         <div style={{paddingInline: '0.5em'}}>
           <Link to={`/recipe/${_id}`} className={styles.infoBox}>
             <div className={styles.infoHeaderBar}>
-              <h2 className={styles.title}>{name}</h2>
+              <h3 className={styles.title}>{name}</h3>
               <span className={styles.created_at}>{dateGap(created_at)}전</span>
             </div>
             <div className={styles.subInfo}>

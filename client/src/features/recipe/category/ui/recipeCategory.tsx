@@ -4,8 +4,7 @@ import { RiArrowRightSLine } from "@react-icons/all-files/ri/RiArrowRightSLine";
 
 import { IconButton } from "shared/ui/iconButton";
 import { FOOD_CATEGORIES } from "entities/recipe";
-import { useSlideControl } from "..";
-import { useRecipeCategoriesParams } from "..";
+import { useSlideControl, useRecipeCategoriesParams } from "..";
 
 import styles from "./recipeCategory.module.scss";
 
@@ -20,7 +19,7 @@ export const RecipeCategory = memo(() => {
   } = useSlideControl();
 
   return (
-    <nav className={styles.categoryBar}>
+    <nav className={styles.container}>
       <IconButton
         Icon={RiArrowLeftSLine}
         onClick={onClickMoveLeft}
