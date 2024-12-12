@@ -1,0 +1,11 @@
+@use 'app/app.scss';
+
+.container {
+    min-width: 40px;
+    min-height: 40px;
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 100%;
+    aspect-ratio: 1;
+    @include app.skeletonShimmer();
+}

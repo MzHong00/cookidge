@@ -7,7 +7,7 @@ import { RiAddLine } from "@react-icons/all-files/ri/RiAddLine";
 import { IUser } from "shared/api/user";
 import { IconLink } from "shared/ui/iconLink";
 import { SubjectBox } from "shared/ui/subjectBox";
-import { PicturesBox } from "shared/ui/picturesBox";
+import { PicturesBox, PicturesBoxSkeleton } from "shared/ui/picturesBox";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 import { UserQueries } from "entities/user";
 import { RecipeQueries } from "entities/recipe";
@@ -19,8 +19,12 @@ export const RecipeMyPage = () => {
   const queryClient = useQueryClient();
 
   const me = queryClient.getQueryData<IUser | undefined>([UserQueries.keys.me]);
-  const { data: myRecipes } = useQuery(RecipeQueries.myListQuery(me?.name));
-  const { data: myLikeRecipes } = useQuery(RecipeQueries.myLikeQuery(me?.name));
+  const { data: myRecipes, isLoading: isMyRecipeLoading } = useQuery(
+    RecipeQueries.myListQuery(me?.name)
+  );
+  const { data: myLikeRecipes, isLoading: isLikeRecipeLoading } = useQuery(
+    RecipeQueries.myLikeQuery(me?.name)
+  );
 
   if (!me) return <LoginForm className={styles.loginForm} />;
 
@@ -37,6 +41,11 @@ export const RecipeMyPage = () => {
           headerClassName={styles.recipeBoxHeader}
         >
           <div className={styles.recipeContainer}>
+            {isMyRecipeLoading &&
+              Array.from({ length: Math.floor(Math.random() * 9) }).map(
+                (_, i) => <PicturesBoxSkeleton key={i} />
+              )}
+
             {myRecipes?.map((recipe) => (
               <Link to={`/recipe/${recipe._id}`} key={recipe._id}>
                 <PicturesBox pictures={[recipe.pictures[0]]} />
@@ -50,6 +59,11 @@ export const RecipeMyPage = () => {
           headerClassName={styles.recipeBoxHeader}
         >
           <div className={styles.recipeContainer}>
+            {isLikeRecipeLoading &&
+              Array.from({ length: Math.floor(Math.random() * 9) }).map(
+                (_, i) => <PicturesBoxSkeleton key={i} />
+              )}
+
             {myLikeRecipes?.map((recipe) => (
               <Link
                 to={`/recipe/${recipe.liked_recipes._id}`}

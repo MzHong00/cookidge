@@ -5,7 +5,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { RecipeFilterQuery } from "shared/api/recipe";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 import { useIntersectionObserver } from "shared/hooks/useIntersectionObserver";
-import { RecipeCard } from "entities/recipe";
+import { RecipeCard, RecipeCardSkeleton } from "entities/recipe";
 import { RecipeQueries } from "entities/recipe/queries/recipeQueries";
 import { LikeButton } from "features/recipe/like";
 import { RecipeSearchOptionWidget } from "widgets/recipeSearchOption";
@@ -20,6 +20,7 @@ export const Home = () => {
     data: recipes,
     fetchNextPage,
     hasNextPage,
+    isFetching,
   } = useInfiniteQuery(RecipeQueries.infinityQuery(params));
 
   const { setTarget } = useIntersectionObserver({
@@ -47,6 +48,12 @@ export const Home = () => {
               />
             </RecipeCard>
           ))
+        )}
+        {isFetching && (
+          <>
+            <RecipeCardSkeleton />
+            <RecipeCardSkeleton />
+          </>
         )}
         <p id="observer" ref={setTarget} style={{ height: "10%" }}></p>
       </div>

@@ -4,7 +4,7 @@ import { RiUserSettingsLine } from "@react-icons/all-files/ri/RiUserSettingsLine
 
 import { IconBox } from "shared/ui/iconBox";
 import { IconLink } from "shared/ui/iconLink";
-import { PicturesBox } from "shared/ui/picturesBox";
+import { PicturesBox, PicturesBoxSkeleton } from "shared/ui/picturesBox";
 import { ProfileImage } from "shared/ui/profileImage";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 import { UserQueries } from "entities/user";
@@ -20,7 +20,9 @@ export const UserPage = () => {
     UserQueries.userQuery(name)
   );
   const { data: me } = useQuery(UserQueries.meQuery());
-  const { data: userRecipes } = useQuery(RecipeQueries.listByUserQuery(name));
+  const { data: userRecipes, isLoading: isRecipeLoading } = useQuery(
+    RecipeQueries.listByUserQuery(name)
+  );
 
   if (isUserLoading) return <div>사용자 정보 가져오는 중...</div>;
   if (!user) return <div>존재하지 않는 사용자입니다.</div>;
@@ -68,6 +70,10 @@ export const UserPage = () => {
         </header>
         <hr />
         <div className={styles.userRecipeList}>
+          {isRecipeLoading &&
+            Array.from({ length: 3 }).map((_, i) => (
+              <PicturesBoxSkeleton key={i} />
+            ))}
           {userRecipes?.map((recipe) => (
             <Link to={`/recipe/${recipe._id}`} key={recipe._id}>
               <PicturesBox

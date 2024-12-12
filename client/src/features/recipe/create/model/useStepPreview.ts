@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import { ICookingStep } from "shared/api/recipe/type";
 
 export const usePreviewStepPicture = (cookingStep?: ICookingStep[]) => {
@@ -23,8 +24,6 @@ export const usePreviewStepPicture = (cookingStep?: ICookingStep[]) => {
 
   useEffect(() => {
     return () => {
-      console.log("bye");
-      
       Object.values(stepPictures).forEach((url) => {
         if (url) {
           URL.revokeObjectURL(url);

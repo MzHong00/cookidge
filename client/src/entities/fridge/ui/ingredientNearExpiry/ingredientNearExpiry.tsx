@@ -6,18 +6,17 @@ import { IIngredient } from "shared/api/ingredient";
 import styles from "./ingredientNearExpiry.module.css";
 
 interface Props {
+  threshHold: number;
   ingredients: IIngredient[];
 }
 
-const THRESHOLD = 5;
-
-export const IngredientNearExpiry = ({ ingredients }: Props) => {
+export const IngredientNearExpiry = ({ ingredients, threshHold }: Props) => {
   const nearExpiredIngredients = ingredients.filter((ingredient) => {
     const dayMillis = 1000 * 60 * 60 * 24;
     const diffDay =
       (new Date(ingredient.expired_at).getTime() - Date.now()) / dayMillis;
 
-    return diffDay <= THRESHOLD;
+    return diffDay <= threshHold;
   });
 
   return (
@@ -27,7 +26,7 @@ export const IngredientNearExpiry = ({ ingredients }: Props) => {
       headerClassName={styles.header}
     >
       <h1>{nearExpiredIngredients.length}</h1>
-      <p>{THRESHOLD}일 이내 유통기한 만료 재료 수</p>
+      <p>{threshHold}일 이내 유통기한 만료 재료 수</p>
     </SubjectBox>
   );
 };

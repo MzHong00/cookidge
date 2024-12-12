@@ -1,4 +1,4 @@
-import styles from "./index.module.css";
+import styles from './profileImage.module.css'
 
 interface Props extends React.ImgHTMLAttributes<HTMLImageElement> {}
 

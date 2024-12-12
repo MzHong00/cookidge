@@ -1,6 +1,5 @@
 @use 'app/app.scss';
 
-
 .fridgeConfigContainer {
     @include app.flex-layout(row-reverse);
     position: relative;

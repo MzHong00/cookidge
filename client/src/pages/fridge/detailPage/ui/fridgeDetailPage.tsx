@@ -17,13 +17,21 @@ import { DeleteFridgeButton } from "features/fridge/delete";
 import { MyIngredientWidget } from "widgets/myIngredient";
 import { RecipeRecommendWidget } from "widgets/recipeRecommend";
 
+import { FridgeDetailPageSkeleton } from "./fridgeDetailPageSkeleton";
+
 import styles from "./fridgeDetailPage.module.scss";
+
+const THRESHOLD = 5;
 
 export const FridgeDetailPage = () => {
   const { id } = useParams();
 
-  const { data: fridgeDetail } = useQuery(FridgeQueries.detailQuery(id));
+  const { data: fridgeDetail, isFetching } = useQuery(
+    FridgeQueries.detailQuery(id)
+  );
   const { modalRef, isOpen, toggleModal } = useModal();
+
+  if (isFetching) return <FridgeDetailPageSkeleton threshHold={THRESHOLD} />;
 
   if (!id || !fridgeDetail) return null;
 
@@ -45,14 +53,17 @@ export const FridgeDetailPage = () => {
           </div>
         )}
       </div>
-      
+
       <SubjectBox title="공유자">
         <SharedMemberList allowed_users={fridgeDetail.allowed_users} />
       </SubjectBox>
 
       <div className="flex-row">
         <IngredientTotalCount count={fridgeDetail.stored_ingredients?.length} />
-        <IngredientNearExpiry ingredients={fridgeDetail.stored_ingredients} />
+        <IngredientNearExpiry
+          threshHold={THRESHOLD}
+          ingredients={fridgeDetail.stored_ingredients}
+        />
       </div>
 
       <RecipeRecommendWidget

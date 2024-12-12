@@ -1,0 +1,38 @@
+@use 'app/app.scss';
+
+.count {
+    width: 2em;
+    height: 2em;
+    @include app.skeletonShimmer();
+}
+
+.header {
+    font-size: clamp(0.75rem, 2.5vw, 1rem);
+    flex-direction: row-reverse;
+}
+
+.expiredAt {
+    margin-left: auto;
+    width: 20em;
+    height: 1.25em;
+    @include app.skeletonShimmer();
+}
+
+.ingredientBox {
+    padding-block: 1rem;
+    padding-inline: 10%;
+}
+
+.fridgeTitle {
+    width: 10rem;
+    height: 2.25em;
+    margin-inline: auto;
+    margin-bottom: 4rem;
+    @include app.skeletonShimmer();
+}
+
+.ingredientList {
+    width: 100%;
+    height: 36rem;
+    @include app.skeletonShimmer();
+}

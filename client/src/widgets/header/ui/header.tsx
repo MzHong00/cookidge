@@ -6,7 +6,7 @@ import { Logo } from "shared/ui/logo";
 import { Navbar } from "shared/ui/navbar";
 import { IconLink } from "shared/ui/iconLink";
 import { useModal } from "shared/hooks/useModal";
-import { ProfileImage } from "shared/ui/profileImage";
+import { ProfileImage, ProfileImageSkeleton } from "shared/ui/profileImage";
 import { IconButton } from "shared/ui/iconButton";
 import { UserQueries } from "entities/user";
 import { LogoutButton } from "features/user/logout";
@@ -15,7 +15,7 @@ import styles from "./header.module.scss";
 
 export const Header = () => {
   const { modalRef, isOpen, toggleModal } = useModal();
-  const { data: user } = useQuery(UserQueries.meQuery());
+  const { data: user, isFetching } = useQuery(UserQueries.meQuery());
 
   return (
     <header className={styles.header}>
@@ -24,7 +24,7 @@ export const Header = () => {
       </Link>
 
       <Navbar />
-      
+
       <div className={styles.userBar}>
         {user ? (
           <>
@@ -42,9 +42,15 @@ export const Header = () => {
             )}
           </>
         ) : (
-          <IconLink to="/login" className={styles.loginButton}>
-            로그인
-          </IconLink>
+          <>
+            {isFetching ? (
+              <ProfileImageSkeleton />
+            ) : (
+              <IconLink to="/login" className={styles.loginButton}>
+                로그인
+              </IconLink>
+            )}
+          </>
         )}
       </div>
     </header>
