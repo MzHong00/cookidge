@@ -1,7 +1,7 @@
 @use 'app/app.scss';
 
 .container {
-    width: 500px;
+    max-width: 500px;
     height: 500px;
     padding-inline: 5%;
     @include app.flex-layout(column, center, center, 2rem);
