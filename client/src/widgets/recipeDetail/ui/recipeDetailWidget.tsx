@@ -5,6 +5,7 @@ import { RiCalendarLine } from "@react-icons/all-files/ri/RiCalendarLine";
 import { IconBox } from "shared/ui/iconBox";
 import { IRecipe } from "shared/api/recipe/type";
 import { PicturesBox } from "shared/ui/picturesBox";
+import { INGREDIENTS_CATEGORIES } from "entities/ingredient";
 import { LikeButton } from "features/recipe/like";
 
 import styles from "./recipeDetailWidget.module.scss";
@@ -13,10 +14,7 @@ interface Props {
   recipe: IRecipe;
 }
 
-export const RecipeDetailWidget = ({
-  recipe,
-  ...props
-}: Props) => {
+export const RecipeDetailWidget = ({ recipe, ...props }: Props) => {
   const {
     _id,
     name,
@@ -58,11 +56,15 @@ export const RecipeDetailWidget = ({
           </div>
           {introduction && <p>{introduction}</p>}
         </div>
-
         {ingredients && (
-          <ul>
+          <ul className={styles.ingredientList}>
             {ingredients.map((ingredient) => (
               <li key={ingredient.name} className={styles.ingredient}>
+                {
+                  INGREDIENTS_CATEGORIES.find(
+                    (cate) => cate.text === ingredient.category
+                  )?.emoji
+                }
                 {ingredient.name} {ingredient.quantity}
               </li>
             ))}
