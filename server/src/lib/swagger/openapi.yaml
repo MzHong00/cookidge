@@ -45,19 +45,25 @@ paths:
                   value:
                     message: "로그인 상태가 아닙니다."
         '404':
-          description: Pet not found
-        '422':
-          description: Validation exception
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          description: 내 정보를 찾을 수 없습니다.
+        '500':
+          description: 서버 내부 오류
+          content:
+            application/json:
+              example:
+                message: "내 정보를 가져오는 중 오류가 발생했습니다."
   /user/find:
     get:
       tags:
         - user
       summary: 사용자 정보 가져오기
       description: 사용자를 검색하여 데이터를 가져옵니다.
+      parameters:
+        - name: user_name
+          in: query
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: 응답 성공
@@ -65,34 +71,154 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-        '404':
-          description: Pet not found
-        '422':
-          description: Validation exception
-        '503':
-          description: 서버에 jwt key가 존재하지 않습니다.
-  /refrigerator/read:
+        '500':
+          description: 유저를 가져오는 중 오류 발생
+          content:
+            application/json:
+              example:
+                message: "유저를 가져오는 중 오류가 발생했습니다."
+  /user/search:
     get:
       tags:
-        - refrigerator
-      summary: 냉장고 정보 가져오기
-      description: 타인의 냉장고는 볼 수 없기 때문에 인증 토큰을 필요로 합니다.
+        - user
+      summary: 유저 검색
+      description: 이름으로 유저를 검색합니다.
+      parameters:
+        - name: user_name
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: string
+        - name: offset
+          in: query
+          schema:
+            type: string
       responses:
         '200':
-          description: 응답 성공
+          description: 유저 검색 결과
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Refrigerator'
-  /refrigerator/create:
-    post:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '500':
+          description: 유저 검색 중 오류 발생
+          content:
+            application/json:
+              example:
+                message: "유저를 검색하는 중 오류가 발생했습니다."
+  /user/update:
+    patch:
       tags:
-        - refrigerator
-      summary: 냉장고 생성하기
-      description: 자신의 냉장고를 생성합니다.
+        - user
+      summary: 사용자 정보 업데이트
+      description: 사용자 정보를 수정합니다.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                introduce:
+                  type: string
+                picture[]:
+                  type: string
+                  format: binary
       responses:
-        '201':
-          description: 생성 완료
+        '200':
+          description: 사용자 정보 수정 성공
+          content:
+            application/json:
+              example:
+                message: "사용자 정보 수정에 성공하였습니다."
+        '500':
+          description: 사용자 정보 수정 중 오류
+          content:
+            application/json:
+              example:
+                message: "내 정보를 업데이트하는 중 오류가 발생했습니다."
+  /user/delete:
+    delete:
+      tags:
+        - user
+      summary: 사용자 계정 삭제
+      description: 계정을 삭제하고 토큰을 만료 처리합니다.
+      responses:
+        '200':
+          description: 계정 삭제 성공
+          content:
+            application/json:
+              example:
+                message: "계정이 성공적으로 삭제되었습니다."
+        '500':
+          description: 계정 삭제 중 오류
+          content:
+            application/json:
+              example:
+                message: "계정을 삭제하는 중 오류가 발생했습니다."
+  /user/follow:
+    patch:
+      tags:
+        - user
+      summary: 팔로우 추가
+      description: 다른 사용자를 팔로우합니다.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                follow_user_id:
+                  type: string
+                  required: true
+      responses:
+        '200':
+          description: 팔로우 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: 팔로우 중 오류
+          content:
+            application/json:
+              example:
+                message: "팔로우 중 오류가 발생했습니다."
+  /user/unfollow:
+    patch:
+      tags:
+        - user
+      summary: 언팔로우
+      description: 다른 사용자를 언팔로우합니다.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                unfollow_user_id:
+                  type: string
+                  required: true
+      responses:
+        '200':
+          description: 언팔로우 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: 언팔로우 중 오류
+          content:
+            application/json:
+              example:
+                message: "언팔로우 중 오류가 발생했습니다."
 components:
   schemas:
     User:

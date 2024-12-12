@@ -16,7 +16,7 @@ export default (app: Express) => {
     credentials: true,
   };
   const swaggerYaml = YAML.load(
-    path.join(__dirname, "../config/swagger/openapi.yaml")
+    path.join(__dirname, "../lib/swagger/openapi.yaml")
   );
 
   app.use(cors(corsOptions));
