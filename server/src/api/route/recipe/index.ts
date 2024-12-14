@@ -159,7 +159,7 @@ export default (app: Router) => {
 
       const recipeInput: IRecipeInput = {
         ...recipeInputDto,
-        pictures: pictures?.map((picture) => picture?.url) as string[],
+        pictures: pictures?.map((picture) => picture?.secure_url) as string[],
         cooking_steps: recipeInputDto.cooking_steps?.map((step, index) => ({
           ...step,
           picture: cookingStepPictures?.[index]?.url,
