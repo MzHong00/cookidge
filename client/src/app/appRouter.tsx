@@ -16,6 +16,7 @@ import { UserSettingPage } from "pages/user/userSettingPage";
 import { FridgeDetailPage } from "pages/fridge/detailPage";
 import { FridgeSettingPage } from "pages/fridge/settingPage";
 import { UserSearchBox } from "entities/user";
+import { RankPage } from "pages/rank";
 
 const UserPage = lazy(() =>
   import("pages/user/userDetailPage").then((module) => ({
@@ -136,6 +137,10 @@ const appRouter = createBrowserRouter([
           },
         ],
       },
+      {
+        path: 'rank',
+        element: <RankPage/>
+      }
     ],
   },
   {
