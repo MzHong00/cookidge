@@ -9,8 +9,6 @@ import config from "../config";
 import routes from "../api/route";
 
 export default (app: Express) => {
-  console.log(config.frontEndOrigin);
-  
   const corsOptions = {
     origin: config.frontEndOrigin,
     credentials: true,

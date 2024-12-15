@@ -34,11 +34,16 @@ export class CloudinaryService {
   }
 
   static async uploadFiles(files: Express.Multer.File[]) {
-    if(!files) return;
-
     const images = files.map((file) => this.uploadFile(file));
     const uploads = await Promise.all(images);
 
     return uploads;
+  }
+
+  static async deleteFiles(files: string[]) {
+    const result = cloudinary.api.delete_resources(files);
+    console.log(result);
+
+    return result;
   }
 }

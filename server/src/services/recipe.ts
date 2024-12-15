@@ -11,6 +11,8 @@ import { IUser } from "../interface/IUser";
 import { mongooseTransaction } from "../lib/mongoose/transaction";
 import { Comment } from "../models/comment";
 import { IIngredient } from "../interface/IIngredient";
+import { CloudinaryService } from "./cloudinary";
+import logger from "../loaders/logger";
 
 enum Sort {
   "최신순" = "_id",
@@ -106,11 +108,21 @@ export class RecipeService {
   }
 
   static async deleteRecipe(recipeId: IRecipe["_id"]) {
-    await Promise.all([
-      Recipe.deleteOne({ _id: recipeId }),
+    const deletedResults = await Promise.all([
+      Recipe.findByIdAndDelete({ _id: recipeId }),
       Comment.deleteMany({ recipe_id: recipeId }),
       Like.deleteMany({ recipe_id: recipeId }),
     ]);
+
+    // 제거된 recipe의 모든 사진들을 cloudinary에서 제거
+    const deletedRecipe = deletedResults[0] as IRecipe;
+    const deletePictureUrls = [
+      ...deletedRecipe.pictures,
+      ...deletedRecipe.cooking_steps.map((step) => step.picture),
+    ];
+    const picturePublicIds = deletePictureUrls.map((url) => url.split("/").slice(7).join("/").split(".")[0])
+
+    await CloudinaryService.deleteFiles(picturePublicIds);
   }
 
   static async searchRecipes(option: IRecipeQueryOption) {

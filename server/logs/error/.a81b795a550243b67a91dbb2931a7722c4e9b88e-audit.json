@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": false,
+        "amount": 30
+    },
+    "auditLog": "C:\\Users\\rkawk\\Desktop\\project\\foocipe\\server\\logs\\error\\.a81b795a550243b67a91dbb2931a7722c4e9b88e-audit.json",
+    "files": [
+        {
+            "date": 1734167442417,
+            "name": "C:\\Users\\rkawk\\Desktop\\project\\foocipe\\server\\logs\\error\\2024-12-14.error.log",
+            "hash": "9e6c4a58e35c617ce0c4d525f6a8074f891320f73fc93b83500bc28a7a9f5e81"
+        }
+    ],
+    "hashType": "sha256"
+}
