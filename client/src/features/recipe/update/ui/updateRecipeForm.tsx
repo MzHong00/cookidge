@@ -1,9 +1,4 @@
-import {
-  Form,
-  FormSubmitHandler,
-  useFieldArray,
-  useForm,
-} from "react-hook-form";
+import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { RiTimer2Line } from "@react-icons/all-files/ri/RiTimer2Line";
 import { RiGroupLine } from "@react-icons/all-files/ri/RiGroupLine";
 import { RiAddLine } from "@react-icons/all-files/ri/RiAddLine";
@@ -16,34 +11,34 @@ import { IconButton } from "shared/ui/iconButton";
 import { InfoTooltip } from "shared/ui/infoToolTip";
 import { ItemSelectionBox } from "shared/ui/itemSelection";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
-import { IRecipeInputDTO } from "shared/api/recipe/type";
+import { useConfirmDialogActions } from "shared/ui/confirmDialog";
+import { type IRecipeForm } from "shared/api/recipe/type";
 import { usePreviewImages } from "shared/hooks/usePreviewImages";
-import { FOOD_CATEGORIES, RECIPE_INPUT_SECTION } from "entities/recipe";
 import { INGREDIENTS_CATEGORIES } from "entities/ingredient";
-import { useSelectInput } from "../model/useSelectInput";
-import { usePreviewStepPicture } from "../model/useStepPreview";
+import { FOOD_CATEGORIES, RECIPE_INPUT_SECTION } from "entities/recipe";
+import { useUpdateRecipeMutation } from "..";
+import { usePreviewStepPicture, useSelectInput } from "../../create";
 
-import styles from "./recipeForm.module.scss";
+import styles from "../../create/ui/createRecipeForm.module.scss";
 
 interface Props {
-  onSubmit: FormSubmitHandler<IRecipeInputDTO>
-  defalutValues?: IRecipeInputDTO;
+  defalutValues: IRecipeForm;
 }
 
-export const RecipeForm = ({ onSubmit, defalutValues }: Props) => {
+export const UpdateRecipeForm = ({ defalutValues }: Props) => {
+  const { openDialogMessage } = useConfirmDialogActions();
+  const { mutateAsync, isPending } = useUpdateRecipeMutation(defalutValues._id);
   const { activeSection, changeSectionHandler } = useSelectInput();
-  
-  const {
-    register,
-    control,
-    watch,
-  } = useForm<IRecipeInputDTO>({
+
+  const { register, control, watch, handleSubmit } = useForm<IRecipeForm>({
     defaultValues: defalutValues,
     mode: "onBlur",
   });
   const previewFoodImages = usePreviewImages(watch("pictures"));
-  const { stepPictures, onChangeStepPreviewPicture } = usePreviewStepPicture(defalutValues?.cooking_steps as any);
-  
+  const { stepPictures, onChangeStepPreviewPicture } = usePreviewStepPicture(
+    defalutValues?.cooking_steps as any
+  );
+
   const {
     fields: ingredientFields,
     append: ingredientAppend,
@@ -62,9 +57,27 @@ export const RecipeForm = ({ onSubmit, defalutValues }: Props) => {
     control,
   });
 
+  const onSubmit: SubmitHandler<IRecipeForm> = async (data) => {
+    if (isPending) return;
+
+    openDialogMessage({
+      message: `레시피를 업데이트하시겠습니까?`,
+      requestFn: async () => {
+        await mutateAsync({
+          ...data,
+          cooking_steps: data.cooking_steps.map((step) => ({
+            instruction: step.instruction,
+            picture:
+              typeof step.picture === "string" ? step.picture : step.picture[0],
+          })),
+        });
+      },
+    });
+  };
+
   return (
     <FramerFadeLayout>
-      <Form className="flex-column" control={control} onSubmit={onSubmit}>
+      <form className="flex-column" onSubmit={handleSubmit(onSubmit)}>
         <SubjectBox title="레시피 생성" className={styles.formContent}>
           <div className={styles.pictureSection}>
             <label className={styles.pictureLabel}>
@@ -140,6 +153,7 @@ export const RecipeForm = ({ onSubmit, defalutValues }: Props) => {
             activeItem={activeSection}
             onclick={changeSectionHandler}
           />
+
           {activeSection === "재료" ? (
             <FramerFadeLayout key="재료">
               <ul className="w-full flex-column">
@@ -230,13 +244,9 @@ export const RecipeForm = ({ onSubmit, defalutValues }: Props) => {
           )}
         </SubjectBox>
         <SubjectBox>
-          <InputBox
-            type="submit"
-            value={"확 인"}
-            className="main-button"
-          />
+          <InputBox type="submit" value="레시피 업데이트" className="main-button" />
         </SubjectBox>
-      </Form>
+      </form>
     </FramerFadeLayout>
   );
 };

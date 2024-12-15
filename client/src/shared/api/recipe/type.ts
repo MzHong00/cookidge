@@ -56,8 +56,14 @@ export type IRecipeInputDTO = Pick<
 > & {
   pictures: FileList | string[];
   cooking_steps: {
-    picture?: File[];
+    picture: File | string;
     instruction: string;
   }[];
-  cooking_step_pictures: (File | undefined)[];
+};
+
+export type IRecipeForm = Omit<IRecipeInputDTO, "cooking_steps"> & {
+  cooking_steps: {
+    picture: FileList | string;
+    instruction: string;
+  }[];
 };

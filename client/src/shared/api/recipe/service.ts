@@ -52,10 +52,13 @@ export class RecipeService {
 
   static async updateRecipe(
     recipeId: IRecipe["_id"],
-    recipe: FormData
+    recipe: IRecipeInputDTO
   ): Promise<{ message: string }> {
     return (
       await axios.put(`${this.root}/update`, recipe, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
         params: { _id: recipeId },
       })
     ).data;

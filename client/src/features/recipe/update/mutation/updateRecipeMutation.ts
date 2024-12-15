@@ -2,7 +2,7 @@ import { AxiosError } from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { IUser } from "shared/api/user";
-import { IRecipe, RecipeService } from "shared/api/recipe";
+import { IRecipe, IRecipeInputDTO, RecipeService } from "shared/api/recipe";
 import { UserQueries } from "entities/user";
 import { RecipeQueries } from "entities/recipe";
 import { useAlertActions } from "shared/ui/alert";
@@ -12,7 +12,7 @@ export const useUpdateRecipeMutation = (recipeId: IRecipe["_id"]) => {
   const { alertEnqueue } = useAlertActions();
 
   return useMutation({
-    mutationFn: (recipeInputDto: FormData) =>
+    mutationFn: (recipeInputDto: IRecipeInputDTO) =>
       RecipeService.updateRecipe(recipeId, recipeInputDto),
     onSuccess: async (data) => {
       const { root, list, user } = RecipeQueries.keys;
