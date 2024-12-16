@@ -3,7 +3,6 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import { OAuthService } from "shared/api/oauth";
 import { CreateFridgeForm } from "features/fridge/create";
-import { RecipeSearchWidget } from "widgets/recipeSearch";
 import { Root } from "pages/root";
 import { LoginPage } from "pages/login";
 import { SearchPage } from "pages/search";
@@ -16,6 +15,7 @@ import { UserSettingPage } from "pages/user/userSettingPage";
 import { FridgeDetailPage } from "pages/fridge/detailPage";
 import { FridgeSettingPage } from "pages/fridge/settingPage";
 import { UserSearchBox } from "entities/user";
+import { RecipeSearchList } from "entities/recipe";
 import { RankPage } from "pages/rank";
 
 const UserPage = lazy(() =>
@@ -61,7 +61,7 @@ const appRouter = createBrowserRouter([
           },
           {
             path: "recipe",
-            element: <RecipeSearchWidget />,
+            element: <RecipeSearchList />,
           },
           {
             path: "user",

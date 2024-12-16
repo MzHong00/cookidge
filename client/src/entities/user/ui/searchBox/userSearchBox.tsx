@@ -1,4 +1,3 @@
-import { useSearchParams } from "react-router-dom";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { RiUserReceived2Line } from "@react-icons/all-files/ri/RiUserReceived2Line";
 
@@ -22,15 +21,14 @@ export const UserSearchBox = ({
   children,
   ...props
 }: Props) => {
-  const [searchParams] = useSearchParams();
-  const { value, onChangeRecipeSearch } = useParamsDebounce();
+  const { query, value, onChangeRecipeSearch } = useParamsDebounce("q");
 
   const {
     data: userPages,
     hasNextPage,
     fetchNextPage,
   } = useInfiniteQuery(
-    UserQueries.InfiniteSearchQuery({ user_name: searchParams.get("q") || "" })
+    UserQueries.InfiniteSearchQuery({ user_name: query })
   );
   const { setTarget } = useIntersectionObserver({ hasNextPage, fetchNextPage });
 
