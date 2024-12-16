@@ -4,9 +4,15 @@
     max-width: 500px;
     height: 500px;
     padding-inline: 5%;
+    background-color: white;
+    border-radius: 30px;
+}
+
+.loginForm {
+    width: 100%;
+    height: 100%;
     @include app.flex-layout(column, center, center, 2rem);
     border: none;
-    border-radius: 30px;
 }
 
 .logo {
