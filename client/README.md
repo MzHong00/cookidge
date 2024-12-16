@@ -305,3 +305,6 @@ Todo List.
 
 12.12
 - skeleton ui 생성 및 적용
+
+12.13 ~
+commit 으로 기록

@@ -11,7 +11,7 @@ interface Props {
 export const Logo = ({ className }: Props) => {
   return (
     <IconBox Icon={ImSpoonKnife} className={`${className} ${styles.logo}`}>
-      <span>Cookidge</span>
+      <h4>Cookidge</h4>
     </IconBox>
   );
 };

@@ -33,43 +33,35 @@ export const RecipeDetailWidget = ({ recipe, ...props }: Props) => {
 
       <div className={styles.infoBox}>
         <div className={styles.recipeInfoBar}>
-          <div className={styles.infoHeader}>{name && <b>{name}</b>}</div>
+          <div className={styles.infoHeader}>
+            <h4>{name}</h4>
+          </div>
 
-          {like_members && (
-            <div className="flex-row">
-              {like_members && _id && (
-                <LikeButton recipe_id={_id} likeMembers={like_members} />
-              )}
-            </div>
-          )}
+          <div className="flex-row">
+            <LikeButton recipe_id={_id} likeMembers={like_members} />
+          </div>
 
           <div className={styles.subInfo}>
-            {!!cooking_time && (
-              <IconBox Icon={RiTimer2Line}>조리시간 {cooking_time}분</IconBox>
-            )}
-            {!!servings && <IconBox Icon={RiGroupLine}>{servings}인분</IconBox>}
-            {created_at && (
-              <IconBox Icon={RiCalendarLine}>
-                {`${created_at.toString().substring(0, 10)}`}
-              </IconBox>
-            )}
+            <IconBox Icon={RiTimer2Line}>조리시간 {cooking_time}분</IconBox>
+            <IconBox Icon={RiGroupLine}>{servings}인분</IconBox>
+            <IconBox Icon={RiCalendarLine}>
+              {`${created_at.toString().substring(0, 10)}`}
+            </IconBox>
           </div>
-          {introduction && <p>{introduction}</p>}
+          <p>{introduction}</p>
         </div>
-        {ingredients && (
-          <ul className={styles.ingredientList}>
-            {ingredients.map((ingredient) => (
-              <li key={ingredient.name} className={styles.ingredient}>
-                {
-                  INGREDIENTS_CATEGORIES.find(
-                    (cate) => cate.text === ingredient.category
-                  )?.emoji
-                }
-                {ingredient.name} {ingredient.quantity}
-              </li>
-            ))}
-          </ul>
-        )}
+        <ul className={styles.ingredientList}>
+          {ingredients.map((ingredient) => (
+            <li key={ingredient.name} className={styles.ingredient}>
+              {
+                INGREDIENTS_CATEGORIES.find(
+                  (cate) => cate.text === ingredient.category
+                )?.emoji
+              }
+              {ingredient.name} {ingredient.quantity}
+            </li>
+          ))}
+        </ul>
       </div>
     </article>
   );
