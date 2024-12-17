@@ -7,7 +7,7 @@ import {
   IUserSearchQueryOptions,
   IUserUpdateInputDTO,
 } from "../../../interface/IUser";
-import { upload } from "../../middleware/multer";
+import { upload } from "../../../loaders/multer";
 import { CloudinaryService } from "../../../services/cloudinary";
 
 const route = Router();

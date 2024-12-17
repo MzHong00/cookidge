@@ -3,8 +3,8 @@ import { Router } from "express";
 import { UploadApiResponse } from "cloudinary";
 import { celebrate, Joi, Segments } from "celebrate";
 
-import { upload } from "../../middleware/multer";
 import isAuth from "../../middleware/isAuth";
+import { upload } from "../../../loaders/multer";
 import isMyRecipe from "../../middleware/isMyRecipe";
 import attachCurrentUser from "../../middleware/attachCurrentUser";
 import {
@@ -200,8 +200,6 @@ export default (app: Router) => {
         req.files as {
           [fieldname: string]: Express.Multer.File[];
         };
-
-      console.log(recipeInputDto);
 
       const uploadedPictureUrls = (
         (await CloudinaryService.uploadFiles(
