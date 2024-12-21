@@ -117,9 +117,10 @@ export class RecipeService {
     // 제거된 recipe의 모든 사진들을 cloudinary에서 제거
     const deletedRecipe = deletedResults[0] as IRecipe;
     const deletePictureUrls = [
-      ...deletedRecipe.pictures,
-      ...deletedRecipe.cooking_steps.map((step) => step.picture),
-    ];
+      ...(deletedRecipe.pictures || []),
+      ...deletedRecipe.cooking_steps.map((step) => step.picture || ""),
+    ].filter(url => !!url);
+
     const picturePublicIds = deletePictureUrls.map((url) => url.split("/").slice(7).join("/").split(".")[0])
 
     await CloudinaryService.deleteFiles(picturePublicIds);

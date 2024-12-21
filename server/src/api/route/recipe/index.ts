@@ -139,24 +139,23 @@ export default (app: Router) => {
     async (req, res) => {
       const userId = req.userId;
       const recipeInputDto = req.body as IRecipeInput;
-      const { "pictures[]": pictures = [], ...stepBinaryPictures } =
-        req.files as {
-          [fieldname: string]: Express.Multer.File[];
-        };
+      const { "pictures[]": pictures, ...stepPictures } = req.files as {
+        "pictures[]"?: Express.Multer.File[];
+        [stepPictures: string]: Express.Multer.File[] | undefined;
+      };
 
       const uploadedPictures = (await CloudinaryService.uploadFiles(
-        pictures
+        pictures || []
       )) as UploadApiResponse[];
-
       const uploadedStepPictures = (await CloudinaryService.uploadFiles(
-        Object.values(stepBinaryPictures).flat()
+        Object.values(stepPictures).flatMap((pic) => pic ?? [])
       )) as UploadApiResponse[];
 
       try {
         const recipeInput: IRecipeInput = {
           ...recipeInputDto,
-          pictures: uploadedPictures.map((picture) => picture.secure_url),
-          cooking_steps: recipeInputDto.cooking_steps.map((step, index) => ({
+          pictures: uploadedPictures?.map((picture) => picture.secure_url),
+          cooking_steps: recipeInputDto.cooking_steps?.map((step, index) => ({
             ...step,
             picture: uploadedStepPictures[index].secure_url,
           })),
@@ -196,20 +195,20 @@ export default (app: Router) => {
     async (req, res) => {
       const recipeId = req.query._id as string;
       const recipeInputDto = req.body as IRecipeInput;
-      const { "pictures[]": binaryPictures = [], ...stepBinaryPictures } =
-        req.files as {
-          [fieldname: string]: Express.Multer.File[];
-        };
+      const { "pictures[]": pictures, ...stepPictures } = req.files as {
+        "pictures[]"?: Express.Multer.File[];
+        [stepPictures: string]: Express.Multer.File[] | undefined;
+      };
 
       const uploadedPictureUrls = (
         (await CloudinaryService.uploadFiles(
-          binaryPictures
+          pictures || []
         )) as UploadApiResponse[]
       ).map((res) => res.secure_url);
 
       const uploadedStepPictureUrls = (
         (await CloudinaryService.uploadFiles(
-          Object.values(stepBinaryPictures).flat()
+          Object.values(stepPictures).flatMap((pic) => pic ?? [])
         )) as UploadApiResponse[]
       ).map((res) => res.secure_url);
 
@@ -218,7 +217,7 @@ export default (app: Router) => {
         ...(uploadedPictureUrls.length !== 0 && {
           pictures: uploadedPictureUrls,
         }),
-        cooking_steps: recipeInputDto.cooking_steps.map((step) => ({
+        cooking_steps: recipeInputDto.cooking_steps?.map((step) => ({
           instruction: step.instruction,
           picture: step.picture
             ? step.picture
