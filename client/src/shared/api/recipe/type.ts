@@ -28,7 +28,7 @@ export type IRecipeCard = Pick<
 > &
   Partial<Pick<IRecipe, "like_members">>;
 export type IRecipeJoinUser = IRecipe & { user: IUser };
-export type IRecipePictureDTO = Pick<IRecipe, "_id" | "pictures">;
+export type IRecipePictures = Pick<IRecipe, "_id" | "pictures">;
 
 export type ICookingStep = {
   picture?: string;
@@ -36,7 +36,7 @@ export type ICookingStep = {
 };
 
 export type ICookingStepInput = {
-  picture: FileList | string;
+  picture?: FileList | string;
   instruction: string;
 };
 
@@ -59,9 +59,9 @@ export type IRecipeInputDTO = Pick<
   | "category"
   | "cooking_time"
 > & {
-  pictures: FileList | string[];
+  pictures?: FileList | string[];
   cooking_steps: {
-    picture: File | string;
+    picture?: File | string;
     instruction: string;
   }[];
 };

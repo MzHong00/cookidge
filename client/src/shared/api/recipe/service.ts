@@ -7,7 +7,7 @@ import {
   IRecipeJoinUser,
   IRecipeInputDTO,
   RecipeFilterQuery,
-  IRecipePictureDTO,
+  IRecipePictures,
   IRecipeQueryOption,
 } from "./type";
 import { IIngredient } from "../ingredient";
@@ -28,13 +28,13 @@ export class RecipeService {
 
   static async readMyRecipe(config: {
     signal: AbortSignal;
-  }): Promise<IRecipePictureDTO[]> {
+  }): Promise<IRecipePictures[]> {
     return (await axios.get(`${this.root}/read-list/me`, config)).data;
   }
 
   static async readRecipeListByUser(
     userName: IUser["name"]
-  ): Promise<IRecipePictureDTO[]> {
+  ): Promise<IRecipePictures[]> {
     return (await axios.get(`${this.root}/read/user/${userName}`)).data;
   }
 
@@ -103,7 +103,7 @@ export class RecipeService {
 
   static async readMyLikeRecieps(config: {
     signal: AbortSignal;
-  }): Promise<{ _id: string; liked_recipes: IRecipePictureDTO }[]> {
+  }): Promise<{ _id: string; liked_recipes: IRecipePictures }[]> {
     return (await axios.get(`${this.root}/read-list/like`, config)).data;
   }
 

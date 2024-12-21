@@ -17,7 +17,7 @@ export const CreateRecipeForm = () => {
           cooking_steps: data.cooking_steps.map((step) => ({
             instruction: step.instruction,
             picture:
-              typeof step.picture === "string" ? step.picture : step.picture[0],
+              typeof step.picture === "string" ? step.picture : step.picture?.[0],
           })),
         });
       },
