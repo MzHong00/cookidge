@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 
 import { Logo } from "shared/ui/logo";
+import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 import { useHandleShowingDialog, useConfirmDialogStore } from "..";
 
 import styles from "./confirmDialog.module.scss";
-import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 
 export const ConfirmDialog = () => {
   const navigate = useNavigate();
