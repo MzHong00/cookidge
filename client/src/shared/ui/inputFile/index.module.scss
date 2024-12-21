@@ -32,7 +32,3 @@
 .uploadPlaceholder {
     @include app.flex-layout(column, center, center, 0.5rem);
 }
-
-.uploadPlaceholder > p {
-    color: rgb(var(--base-rgb-grey-medium));
-}

@@ -2,9 +2,11 @@ import { create } from "zustand";
 
 interface DialogPayload {
   message: string;
+  descriptions: string[];
   requestFn: () => Promise<void>;
   option: {
-    backspace: boolean;
+    mode?: "submit" | "check";
+    backspace?: boolean;
   };
 }
 
@@ -24,8 +26,10 @@ const initialState = {
   isLoading: false,
   payload: {
     message: "",
+    descriptions: [],
     requestFn: async () => {},
     option: {
+      mode: "submit" as const,
       backspace: true,
     },
   },
