@@ -35,6 +35,11 @@ export type ICookingStep = {
   instruction: string;
 };
 
+export type ICookingStepInput = {
+  picture: FileList | string;
+  instruction: string;
+};
+
 export type IRecipeQueryOption = PagenationParams & {
   query?: string;
 };
@@ -62,8 +67,5 @@ export type IRecipeInputDTO = Pick<
 };
 
 export type IRecipeForm = Omit<IRecipeInputDTO, "cooking_steps"> & {
-  cooking_steps: {
-    picture: FileList | string;
-    instruction: string;
-  }[];
+  cooking_steps: ICookingStepInput[];
 };
