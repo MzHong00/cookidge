@@ -1,21 +1,16 @@
 import { SubmitHandler } from "react-hook-form";
 
-import { type IRecipeForm } from "shared/api/recipe/type";
+import { IRecipeForm } from "shared/api/recipe";
 import { useConfirmDialogActions } from "shared/ui/confirmDialog";
-import { RecipeForm } from "features/recipe/create";
-import { useUpdateRecipeMutation } from "..";
+import { RecipeForm, useCreateRecipeMutation } from "../..";
 
-interface Props {
-  defalutValues: IRecipeForm;
-}
-
-export const UpdateRecipeForm = ({ defalutValues }: Props) => {
+export const CreateRecipeForm = () => {
   const { openDialogMessage } = useConfirmDialogActions();
-  const { mutateAsync } = useUpdateRecipeMutation(defalutValues._id);
+  const { mutateAsync } = useCreateRecipeMutation();
 
   const onSubmit: SubmitHandler<IRecipeForm> = async (data) => {
     openDialogMessage({
-      message: `레시피를 업데이트하시겠습니까?`,
+      message: `${data.name} 레시피를 생성하시겠습니까?`,
       requestFn: async () => {
         await mutateAsync({
           ...data,
@@ -29,11 +24,5 @@ export const UpdateRecipeForm = ({ defalutValues }: Props) => {
     });
   };
 
-  return (
-    <RecipeForm
-      submitTitle="레시피 업데이트"
-      defalutValues={defalutValues}
-      onSubmit={onSubmit}
-    />
-  );
+  return <RecipeForm onSubmit={onSubmit} submitTitle="레시피 생성" />;
 };
