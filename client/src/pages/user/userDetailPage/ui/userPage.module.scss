@@ -28,9 +28,7 @@
 }
 
 .profileEditButton {
-    color: white;
-    background-color: rgb(var(--main-rgb));
-    border: none
+    @include app.main-button();
 }
 
 .followBox {

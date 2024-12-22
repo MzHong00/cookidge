@@ -3,10 +3,10 @@ import { RiArrowUpDownLine } from "@react-icons/all-files/ri/RiArrowUpDownLine";
 
 import { useModal } from "shared/hooks/useModal";
 import { IconButton } from "shared/ui/iconButton";
+import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 import { useRecipeSortParams } from "../model/useRecipeSortParams";
 
 import styles from "./recipeSort.module.scss";
-import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 
 export const RecipeSort = () => {
   const { isOpen, toggleModal } = useModal();

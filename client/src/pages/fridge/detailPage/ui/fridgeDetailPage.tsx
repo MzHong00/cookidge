@@ -26,12 +26,12 @@ const THRESHOLD = 5;
 export const FridgeDetailPage = () => {
   const { id } = useParams();
 
-  const { data: fridgeDetail, isFetching } = useQuery(
+  const { data: fridgeDetail, isPending } = useQuery(
     FridgeQueries.detailQuery(id)
   );
   const { modalRef, isOpen, toggleModal } = useModal();
 
-  if (isFetching) return <FridgeDetailPageSkeleton threshHold={THRESHOLD} />;
+  if (isPending) return <FridgeDetailPageSkeleton threshHold={THRESHOLD} />;
 
   if (!id || !fridgeDetail) return null;
 

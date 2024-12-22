@@ -12,6 +12,10 @@
     white-space: nowrap;
 }
 
+.iconLink:hover {
+    filter: brightness(0.95);
+}
+
 .icon {
     font-size: var(--icon-size-medium);
 }

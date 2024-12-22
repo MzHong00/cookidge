@@ -1,12 +1,13 @@
 @use 'app/app.scss';
 
 .card {
+  width: 100%;
   border-radius: 10px;
   overflow: hidden;
 }
 
 .image {
-  width: 500px;
+  max-width: 500px;
   aspect-ratio: 1;
   @include app.skeletonShimmer();
 }

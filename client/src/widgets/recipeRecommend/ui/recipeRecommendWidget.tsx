@@ -6,10 +6,11 @@ import { type IFridge } from "shared/api/fridge";
 import { IconButton } from "shared/ui/iconButton";
 import { type IIngredient } from "shared/api/ingredient";
 import { SubjectBox } from "shared/ui/subjectBox";
-import { RecipeCard, RecipeQueries } from "entities/recipe";
+import { RecipeCard, RecipeCardSkeleton, RecipeQueries } from "entities/recipe";
 import { LikeButton } from "features/recipe/like";
 
 import styles from "./recipeRecommendWidget.module.scss";
+import { useAlertActions } from "shared/ui/alert";
 
 interface Props extends React.HTMLAttributes<HTMLElement> {
   fridge_id: IFridge["_id"];
@@ -22,9 +23,10 @@ export const RecipeRecommendWidget = ({
   className,
   ...props
 }: Props) => {
+  const { alertEnqueue } = useAlertActions();
   const {
     data: recipes,
-    isLoading,
+    isFetching,
     refetch,
   } = useQuery(
     RecipeQueries.recommendQuery({
@@ -34,7 +36,12 @@ export const RecipeRecommendWidget = ({
   );
 
   const onClickRecommendRecipe = () => {
-    if (isLoading) return;
+    if (my_ingredients?.length === 0) {
+      alertEnqueue({
+        message: "재료 등록 후 사용해 주세요.",
+        type: "error",
+      });
+    }
     refetch();
   };
 
@@ -44,38 +51,38 @@ export const RecipeRecommendWidget = ({
       subtitle="현재 냉장고 재료를 기반으로 한 추천 레시피"
       {...props}
     >
-      <div className="flex-row">
         <IconButton
           Icon={IoReload}
-          style={{ border: "1px solid whitesmoke" }}
+          className={styles.recommendButton}
           onClick={onClickRecommendRecipe}
+          disabled={isFetching}
         >
           레시피 추천
         </IconButton>
-        <IconButton Icon={FaMagic} className="main-button">
-          AI 추천
-        </IconButton>
-      </div>
       <div className={styles.recipeList}>
-        {recipes?.map(({ matched_ingredients, ...recipe }) => (
-          <RecipeCard
-            key={recipe._id}
-            className={styles.recipeCard}
-            recipe={recipe}
-          >
-            <div>
-              <LikeButton
-                recipe_id={recipe._id}
-                likeMembers={recipe.like_members}
-                disabled
-              />
-              <div>
-                포함된 재료({matched_ingredients.length}):{" "}
-                {matched_ingredients.join(", ")}
-              </div>
-            </div>
-          </RecipeCard>
-        ))}
+        {isFetching
+          ? Array.from({ length: 4 }).map((_, i) => (
+              <RecipeCardSkeleton key={i} />
+            ))
+          : recipes?.map(({ matched_ingredients, ...recipe }) => (
+              <RecipeCard
+                key={recipe._id}
+                className={styles.recipeCard}
+                recipe={recipe}
+              >
+                <div>
+                  <LikeButton
+                    recipe_id={recipe._id}
+                    likeMembers={recipe.like_members}
+                    disabled
+                  />
+                  <div>
+                    포함된 재료({matched_ingredients.length}):{" "}
+                    {matched_ingredients.join(", ")}
+                  </div>
+                </div>
+              </RecipeCard>
+            ))}
       </div>
     </SubjectBox>
   );

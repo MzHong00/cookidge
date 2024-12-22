@@ -5,7 +5,6 @@ interface DialogPayload {
   descriptions: string[];
   requestFn: () => Promise<void>;
   option: {
-    mode?: "submit" | "check";
     backspace?: boolean;
   };
 }
@@ -29,7 +28,6 @@ const initialState = {
     descriptions: [],
     requestFn: async () => {},
     option: {
-      mode: "submit" as const,
       backspace: true,
     },
   },

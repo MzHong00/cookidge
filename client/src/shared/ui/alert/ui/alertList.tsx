@@ -15,7 +15,7 @@ const Alert = ({ message, type }: AlertTypes) => {
   useEffect(() => {
     setTimeout(() => {
       alertDequeue();
-    }, 3000);
+    }, 2000);
   }, [alertDequeue]);
 
   return (
