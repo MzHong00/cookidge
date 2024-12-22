@@ -41,7 +41,7 @@ export const RecipeDetailPage = () => {
 
       <RecipeDetailWidget recipe={recipe} />
 
-      <RecipeStep recipeSteps={recipe.cooking_steps} />
+      {!!recipe.cooking_steps.length && <RecipeStep recipeSteps={recipe.cooking_steps} />}
 
       <CommentWidget recipe_id={recipe._id}/>
     </FramerFadeLayout>
