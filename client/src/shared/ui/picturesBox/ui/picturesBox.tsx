@@ -28,7 +28,11 @@ export const PicturesBox = ({
   } = usePictureSlide();
 
   if (pictures.length < 1)
-    return <div className={styles.emptyPicture}>사진 없음</div>;
+    return (
+      <div className={styles.emptyPictureContainer}>
+        <div className={styles.emptyPicture}>사진 없음</div>
+      </div>
+    );
 
   return (
     <div className={styles.container}>

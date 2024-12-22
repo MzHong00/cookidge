@@ -63,9 +63,15 @@
     opacity: 0.5;
 }
 
-.emptyPicture {
+.emptyPictureContainer {
+    width: 100%;
     max-width: 500px;
     @include app.flex-layout(column, center, center, 0.5rem);
     aspect-ratio: 1;
     background-color: whitesmoke;
+}
+
+.emptyPicture {
+   width: 100%;
+   text-align: center;
 }
