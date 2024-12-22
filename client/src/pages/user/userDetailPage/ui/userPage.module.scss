@@ -45,7 +45,7 @@
 
 .userRecipeList {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, minmax(100px, 1fr))
 }
 
 .userRecipeCard>:last-child {
@@ -63,11 +63,6 @@
     }
 
     .userRecipeList {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .userRecipeCard>:last-child {
-        gap: 0;
-        padding-inline: 0.5rem;
+        grid-template-columns: repeat(2, minmax(100px, 1fr))
     }
 }
