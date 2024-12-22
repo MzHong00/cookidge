@@ -2,10 +2,11 @@
 
 .formContent {
     margin-bottom: 1rem;
-    gap: 1rem;
+    gap: 3rem;
 }
 
 .formContent label {
+    font-size: 1.2em;
     font-weight: bold
 }
 
@@ -68,6 +69,7 @@
 
 .stepTextArea {
     padding: 1rem;
+    resize: none;
 }
 
 .formContent input {
@@ -89,4 +91,20 @@
 .removeButton {
     padding-inline: 0;
     color: red;
+}
+
+.submitContainer {
+    position: sticky;
+    bottom: 1em;
+    letter-spacing: 0.25em;
+}
+
+.submitContainer input {
+    letter-spacing: 0.2em;
+}
+
+@media screen and (max-width: 767px) {
+    .submitContainer {
+        bottom: 4em;
+    }
 }

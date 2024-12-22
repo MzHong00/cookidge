@@ -78,7 +78,8 @@ export const UserPage = () => {
             <Link to={`/recipe/${recipe._id}`} key={recipe._id}>
               <PicturesBox
                 className={styles.userRecipeCard}
-                pictures={[recipe.pictures[0]]}
+                pictures={recipe.pictures}
+                isThumbnaileMode
               />
             </Link>
           ))}

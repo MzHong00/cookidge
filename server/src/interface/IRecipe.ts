@@ -21,7 +21,7 @@ export type IRecipe = {
 };
 
 export type ICookingStep = {
-  picture: string;
+  picture?: string;
   instruction: string;
 };
 
@@ -32,10 +32,8 @@ export type IRecipeInput = Pick<
   | "category"
   | "cooking_time"
   | "servings"
-  | "pictures"
   | "category"
-  | "cooking_steps"
->;
+> & Partial<Pick<IRecipe, 'pictures'|"cooking_steps">>;
 
 export interface IRecipeQueryOption extends PagenationOptions {
   query?: string;
@@ -63,7 +61,7 @@ export const recipeInputJoiSchema = {
   servings: Joi.string().required(),
   category: Joi.string().required(),
   cooking_time: Joi.string().required(),
-  cooking_steps: Joi.any().required(),
+  cooking_steps: Joi.any(),
   __v: Joi.string(),
 };
 

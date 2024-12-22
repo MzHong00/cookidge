@@ -34,7 +34,7 @@ export const RecipeCard = ({
   return (
     <FramerFadeLayout>
       <article className={`${styles.container} ${className}`} {...props}>
-        {pictures.length !== 0 && <PicturesBox pictures={pictures} />}
+        <PicturesBox pictures={pictures} />
         <div style={{paddingInline: '0.5em'}}>
           <Link to={`/recipe/${_id}`} className={styles.infoBox}>
             <div className={styles.infoHeaderBar}>
