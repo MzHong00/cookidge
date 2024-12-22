@@ -37,7 +37,7 @@ export const RecipeStep = ({ recipeSteps }: Props) => {
       <div ref={ref} className={styles.recipeStepSlider}>
         {recipeSteps?.map((step, idx) => (
           <article key={step.instruction} className={styles.recipeStepContent}>
-            <img src={step.picture} alt="" className={styles.recipeStepImage} />
+            <img src={step.picture} alt="사진 없음" className={styles.recipeStepImage} />
             <div className={styles.recipeStepInstruction}>
               <div className={`${styles.recipeStepPointer}`}>{idx + 1}</div>
               <p>{step.instruction}</p>

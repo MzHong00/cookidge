@@ -6,7 +6,7 @@
     padding-top: 2rem;
     padding-bottom: 3rem;
     margin: 5px;
-    @include app.flex-layout(column, center, stretch, 3rem);
+    @include app.flex-layout(column, center, stretch);
     background-color: white;
 }
 
@@ -16,6 +16,7 @@
 
 .descriptions {
     margin-block-start: 1em;
+    font-size: 0.85em;
     list-style: circle;
 }
 

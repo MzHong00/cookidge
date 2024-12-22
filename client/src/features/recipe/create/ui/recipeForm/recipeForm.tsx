@@ -97,7 +97,6 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
       ]
         .flat(2)
         .filter((value) => value),
-      option: { mode: "check" },
     });
   };
 

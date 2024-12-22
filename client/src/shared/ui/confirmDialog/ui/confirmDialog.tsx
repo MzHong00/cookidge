@@ -5,6 +5,7 @@ import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 import { useHandleShowingDialog, useConfirmDialogStore } from "..";
 
 import styles from "./confirmDialog.module.scss";
+import { IconButton } from "shared/ui/iconButton";
 
 export const ConfirmDialog = () => {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ export const ConfirmDialog = () => {
       <FramerFadeLayout className={styles.dialog}>
         <header className={styles.header}>
           <Logo />
-          <h3>{message}</h3>
+          <h4>{message}</h4>
           <ol className={styles.descriptions}>
             {descriptions.map((description, i) => (
               <li key={i}>{description}</li>
@@ -42,22 +43,14 @@ export const ConfirmDialog = () => {
           </ol>
         </header>
         <main className={styles.actionBar}>
-          {option.mode === "submit" ? (
-            <>
-              <button
-                className="main-button"
-                onClick={onClickConfirm}
-                disabled={isLoading}
-              >
-                확인
-              </button>
-              <button onClick={actions.closeDialog}>취소</button>
-            </>
-          ) : (
-            <button className="main-button" onClick={actions.closeDialog}>
-              확인
-            </button>
-          )}
+          <IconButton
+            className="main-button"
+            onClick={onClickConfirm}
+            disabled={isLoading}
+          >
+            확인
+          </IconButton>
+          <IconButton onClick={actions.closeDialog}>취소</IconButton>
         </main>
       </FramerFadeLayout>
     </dialog>

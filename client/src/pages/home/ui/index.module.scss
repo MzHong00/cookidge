@@ -16,13 +16,12 @@
 }
 
 .recipeList>div {
-    width: 100%;
+    width: 500px;
     @include app.flex-layout(row, stretch, center, 0);
     scroll-snap-align: start;
 }
 
 .homeRecipeCard {
-    width: 500px;
     border-radius: 10px;
     box-shadow: 0px 2px 2px 2px whitesmoke;
 }

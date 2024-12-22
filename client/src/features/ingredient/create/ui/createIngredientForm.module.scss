@@ -4,7 +4,7 @@
     min-height: 24rem;
     max-width: 64vw;
     max-height: 64vh;
-    padding-inline: 0.5rem;
+    padding-inline: 1rem;
     overflow-y: auto;
     border: none;
 }
@@ -89,7 +89,7 @@
 
 @media screen and (max-width: 767px) {
     .container {
-        padding-inline: 0;
+        padding-inline: 0.5em;
         max-width: none;
     }
 }

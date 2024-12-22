@@ -11,9 +11,22 @@
     padding-bottom: 0.5em;
 }
 
+.recommendButton {
+    width: fit-content;
+    @include app.main-button();
+    border: 1px solid whitesmoke;
+}
+
+.recommendButton> svg {
+    transition: transform 0.5s ease-in-out;
+}
+
+.recommendButton:hover svg{
+    transform: rotate(360deg);
+}
+
 @media screen and (max-width: 767px) {
     .recipeList {
         grid-template-columns: 1fr 1fr;
     }
-
 }
