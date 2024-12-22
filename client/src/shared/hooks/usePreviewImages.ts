@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const usePreviewImages = (imageFiles: FileList | string[]) => {
+export const usePreviewImages = (imageFiles?: FileList | string[]) => {
   const [previewImage, setPreviewImage] = useState<string[]>([]);
 
   useEffect(() => {

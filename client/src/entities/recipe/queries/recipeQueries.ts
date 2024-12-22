@@ -5,7 +5,7 @@ import { type IFridge } from "shared/api/fridge";
 import { type IIngredient } from "shared/api/ingredient";
 import { RecipeService } from "shared/api/recipe/service";
 import { type IRecipe, RecipeFilterQuery } from "shared/api/recipe";
-import { IRecipePictureDTO, IRecipeQueryOption } from "shared/api/recipe/type";
+import { IRecipePictures, IRecipeQueryOption } from "shared/api/recipe";
 
 export class RecipeQueries {
   static readonly keys = {
@@ -25,7 +25,7 @@ export class RecipeQueries {
 
   // 유저 레시피 목록 조회
   static listByUserQuery(userName?: IUser["name"]) {
-    return queryOptions<IRecipePictureDTO[]>({
+    return queryOptions<IRecipePictures[]>({
       queryKey: [this.keys.root, this.keys.list, this.keys.user, userName],
       queryFn: () =>
         RecipeService.readRecipeListByUser(userName as IUser["name"]),

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import { Logo } from "shared/ui/logo";
+import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 import { useHandleShowingDialog, useConfirmDialogStore } from "..";
 
 import styles from "./confirmDialog.module.scss";
@@ -10,7 +11,7 @@ export const ConfirmDialog = () => {
 
   const { ref } = useHandleShowingDialog();
   const { isOpen, isLoading, payload, actions } = useConfirmDialogStore();
-  const { message, requestFn, option } = payload;
+  const { message, descriptions, requestFn, option } = payload;
 
   const onClickConfirm = async () => {
     actions.setIsLoading(true);
@@ -30,22 +31,35 @@ export const ConfirmDialog = () => {
   return (
     <dialog ref={ref}>
       {isLoading && <div className={styles.loadingSpinner} />}
-      <div className={styles.dialog}>
+      <FramerFadeLayout className={styles.dialog}>
         <header className={styles.header}>
           <Logo />
-          <p>{message}</p>
+          <h3>{message}</h3>
+          <ol className={styles.descriptions}>
+            {descriptions.map((description, i) => (
+              <li key={i}>{description}</li>
+            ))}
+          </ol>
         </header>
         <main className={styles.actionBar}>
-          <button
-            className="main-button"
-            onClick={onClickConfirm}
-            disabled={isLoading}
-          >
-            확인
-          </button>
-          <button onClick={actions.closeDialog}>취소</button>
+          {option.mode === "submit" ? (
+            <>
+              <button
+                className="main-button"
+                onClick={onClickConfirm}
+                disabled={isLoading}
+              >
+                확인
+              </button>
+              <button onClick={actions.closeDialog}>취소</button>
+            </>
+          ) : (
+            <button className="main-button" onClick={actions.closeDialog}>
+              확인
+            </button>
+          )}
         </main>
-      </div>
+      </FramerFadeLayout>
     </dialog>
   );
 };

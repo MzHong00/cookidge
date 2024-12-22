@@ -11,7 +11,7 @@
     @include app.flex-layout(column, center, stretch, 1.5rem);
     flex-grow: 1;
     overflow: auto;
-    scroll-snap-type: y mandatory;
+    // scroll-snap-type: y proximity;
     scroll-behavior: smooth;
 }
 

@@ -6,6 +6,9 @@ export type {
   IRecipeForm,
   IRecipeInputDTO,
   IRecipeJoinUser,
+  IRecipePictures,
   ICookingStep,
-  RecipeFilterQuery
+  ICookingStepInput,
+  RecipeFilterQuery,
+  IRecipeQueryOption,
 } from "./type";

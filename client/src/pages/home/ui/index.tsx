@@ -55,7 +55,7 @@ export const Home = () => {
             <RecipeCardSkeleton />
           </>
         )}
-        <p id="observer" ref={setTarget} style={{ height: "10%" }}></p>
+        <div id="observer" ref={setTarget} style={{ minHeight: "4em" }}></div>
       </div>
     </FramerFadeLayout>
   );
