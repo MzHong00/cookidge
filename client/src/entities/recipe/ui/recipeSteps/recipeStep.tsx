@@ -1,6 +1,7 @@
 import { type ICookingStep } from "shared/api/recipe/type";
 import { IconButton } from "shared/ui/iconButton";
 import { SubjectBox } from "shared/ui/subjectBox";
+import { CldImg } from "shared/ui/cloudinaryImage/cloudinaryImage";
 import { useHandleStepSlide } from "../..";
 
 import styles from "./recipeStep.module.scss";
@@ -37,7 +38,7 @@ export const RecipeStep = ({ recipeSteps }: Props) => {
       <div ref={ref} className={styles.recipeStepSlider}>
         {recipeSteps?.map((step, idx) => (
           <article key={step.instruction} className={styles.recipeStepContent}>
-            <img src={step.picture} alt="사진 없음" className={styles.recipeStepImage} />
+            {step.picture && <CldImg cldImg={step.picture} className={styles.recipeStepImage} />}
             <div className={styles.recipeStepInstruction}>
               <div className={`${styles.recipeStepPointer}`}>{idx + 1}</div>
               <p>{step.instruction}</p>

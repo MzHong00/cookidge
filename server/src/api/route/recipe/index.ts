@@ -19,6 +19,7 @@ import { User } from "../../../models/user";
 import { RecipeService } from "../../../services/recipe";
 import { CloudinaryService } from "../../../services/cloudinary";
 import { IIngredient } from "../../../interface/IIngredient";
+import cldFolder from "../../../lib/cloudinary/cloudinaryFolder";
 
 const route = Router();
 
@@ -30,7 +31,7 @@ export default (app: Router) => {
     const { id } = req.params;
 
     try {
-      const recipe = await RecipeService.readRecipe(id);
+      const recipe = await RecipeService.readRecipeJoinUser(id);
 
       if (!recipe) {
         return res.status(200).json({ message: "레시피를 찾을 수 없습니다." });
@@ -144,24 +145,38 @@ export default (app: Router) => {
         [stepPictures: string]: Express.Multer.File[] | undefined;
       };
 
-      const uploadedPictures = (await CloudinaryService.uploadFiles(
-        pictures || []
-      )) as UploadApiResponse[];
-      const uploadedStepPictures = (await CloudinaryService.uploadFiles(
-        Object.values(stepPictures).flatMap((pic) => pic ?? [])
-      )) as UploadApiResponse[];
-
       try {
-        const recipeInput: IRecipeInput = {
-          ...recipeInputDto,
-          pictures: uploadedPictures?.map((picture) => picture.secure_url),
-          cooking_steps: recipeInputDto.cooking_steps?.map((step, index) => ({
-            ...step,
-            picture: uploadedStepPictures[index].secure_url,
-          })),
-        };
+        if (pictures) {
+          recipeInputDto.pictures = (
+            await CloudinaryService.uploadFiles(pictures, {
+              folder: cldFolder.recipes,
+            })
+          )
+            .map((picture) => (picture ? picture.public_id : ""))
+            .filter((ids) => !!ids);
+        }
 
-        await RecipeService.createRecipe(userId, recipeInput);
+        if (stepPictures) {
+          const stepIndex = Object.keys(stepPictures).map((key) =>
+            parseInt(key[14])
+          );
+          const stepPublicIds = (
+            await CloudinaryService.uploadFiles(
+              Object.values(stepPictures).flatMap((pic) => pic ?? []),
+              { folder: cldFolder.cooking_steps }
+            )
+          )
+            .map((cldImg) => (cldImg ? cldImg.public_id : ""))
+            .filter((ids) => ids);
+  
+          stepIndex.forEach((stepIndex, publicIdIndex) => {
+            if (recipeInputDto.cooking_steps)
+              recipeInputDto.cooking_steps[stepIndex].picture =
+                stepPublicIds[publicIdIndex];
+          });
+        }
+
+        await RecipeService.createRecipe(userId, recipeInputDto);
 
         res.status(201).json({ message: "레시피 생성에 성공하였습니다." });
       } catch (error) {
@@ -183,13 +198,10 @@ export default (app: Router) => {
         maxCount: 1,
       })),
     ]),
-    celebrate(
-      {
-        [Segments.BODY]: Joi.object(recipeInputJoiSchema),
-        [Segments.QUERY]: Joi.object({ _id: Joi.string() }),
-      },
-      { abortEarly: false }
-    ),
+    celebrate({
+      [Segments.BODY]: Joi.object(recipeInputJoiSchema),
+      [Segments.QUERY]: Joi.object({ _id: Joi.string() }),
+    }),
     isAuth,
     isMyRecipe,
     async (req, res) => {
@@ -200,33 +212,64 @@ export default (app: Router) => {
         [stepPictures: string]: Express.Multer.File[] | undefined;
       };
 
-      const uploadedPictureUrls = (
-        (await CloudinaryService.uploadFiles(
-          pictures || []
-        )) as UploadApiResponse[]
-      ).map((res) => res.secure_url);
-
-      const uploadedStepPictureUrls = (
-        (await CloudinaryService.uploadFiles(
-          Object.values(stepPictures).flatMap((pic) => pic ?? [])
-        )) as UploadApiResponse[]
-      ).map((res) => res.secure_url);
-
-      const recipe: IRecipeInput = {
-        ...recipeInputDto,
-        ...(uploadedPictureUrls.length !== 0 && {
-          pictures: uploadedPictureUrls,
-        }),
-        cooking_steps: recipeInputDto.cooking_steps?.map((step) => ({
-          instruction: step.instruction,
-          picture: step.picture
-            ? step.picture
-            : uploadedStepPictureUrls.splice(0, 1)[0],
-        })),
-      };
+      if(!recipeInputDto.cooking_steps) recipeInputDto.cooking_steps = [];
 
       try {
-        await RecipeService.updateRecipe(recipeId, recipe);
+        const prevRecipe = (await RecipeService.readRecipeById(
+          recipeId
+        )) as IRecipe;
+        // 요리 사진 로직
+        if (pictures) {
+          const picturePromise = await Promise.all([
+            // 이전 이미지 저장소에서 제거
+            prevRecipe?.pictures &&
+              CloudinaryService.deleteFiles(prevRecipe.pictures),
+            // 새로운 이미지 저장소에 업로드
+            CloudinaryService.uploadFiles(pictures, {
+              folder: cldFolder.recipes,
+            }),
+          ]);
+
+          recipeInputDto.pictures = picturePromise[1]
+            .map((picture) => (picture ? picture.public_id : ""))
+            .filter((ids) => !!ids);
+        }
+
+        // 요리 과정 사진 로직
+        if (stepPictures) {
+          const stepIndex = Object.keys(stepPictures).map((key) =>
+            parseInt(key[14])
+          );
+
+          const stepPromise = await CloudinaryService.uploadFiles(
+              Object.values(stepPictures).flatMap((pic) => pic ?? []),
+              { folder: cldFolder.cooking_steps }
+            )
+
+          const stepPublicIds = stepPromise
+            .map((cldImg) => (cldImg ? cldImg.public_id : ""))
+            .filter((ids) => !!ids);
+
+          stepIndex.forEach((stepIndex, publicIdIndex) => {
+            if (recipeInputDto.cooking_steps)
+              recipeInputDto.cooking_steps[stepIndex].picture =
+                stepPublicIds[publicIdIndex];
+          });
+        }
+
+        const deleteTargets: string[] = [];
+          
+        // 이전과 현재의 요리과정 사진 전체 탐색
+        prevRecipe.cooking_steps?.forEach((step) => {
+          if (!step.picture) return;
+          // 사용하지 않은 요리과정 추출 후, 저장소에서 제거
+          const isUsing = recipeInputDto.cooking_steps?.map((step)=>step.picture || "").find((url) => url === step.picture)
+          if(!isUsing) deleteTargets.push(step.picture)
+        })
+        
+        CloudinaryService.deleteFiles(deleteTargets)
+
+        await RecipeService.updateRecipe(recipeId, recipeInputDto);
 
         res.status(200).json({ message: "레시피 업데이트에 성공했습니다." });
       } catch (error) {

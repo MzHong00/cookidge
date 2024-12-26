@@ -6,6 +6,7 @@ import { IconButton } from "shared/ui/iconButton";
 import { usePictureSlide } from "../model/usePictureSlide";
 
 import styles from "./picturesBox.module.scss";
+import { CldImg } from "shared/ui/cloudinaryImage/cloudinaryImage";
 
 interface Props extends React.HTMLAttributes<HTMLUListElement> {
   pictures: IRecipe["pictures"];
@@ -44,7 +45,7 @@ export const PicturesBox = ({
       >
         {pictures.map((picture) => (
           <li key={picture} className={styles.pictureCard}>
-            <img src={picture} alt="" className={styles.picture} />
+            <CldImg cldImg={picture} className={styles.picture} />
           </li>
         ))}
       </ul>

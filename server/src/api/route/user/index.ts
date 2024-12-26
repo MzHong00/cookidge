@@ -68,7 +68,7 @@ export default (app: Router) => {
 
       try {
         const users = await UserService.searchUser(searchQuery);
-        
+
         res.status(200).json(users);
       } catch (error) {
         console.log(error);
@@ -85,7 +85,7 @@ export default (app: Router) => {
     celebrate({
       [Segments.BODY]: Joi.object({
         name: Joi.string(),
-        introduce: Joi.string(),
+        introduce: Joi.any(),
       }),
     }),
     isAuth,
@@ -94,17 +94,20 @@ export default (app: Router) => {
       const { name, introduce } = req.body as IUserUpdateInputDTO;
       const file = req.file;
 
-      const picture = await CloudinaryService.uploadFile(file, { width: 200 });
+      const picture = await CloudinaryService.uploadFile(file, {
+        folder: "profiles",
+        transformation: { width: 200 },
+      });
 
       try {
         await UserService.updateUser(userId, {
           ...(name && { name }),
           ...(introduce && { introduce }),
-          ...(picture && { picture: picture.url }),
+          ...(picture && { picture: picture.public_id }),
         });
 
         res.status(200).json({
-          message: "사용자 정보 수정에 성공하였습니다."
+          message: "사용자 정보 수정에 성공하였습니다.",
         });
       } catch (error) {
         console.log(error);
@@ -120,7 +123,7 @@ export default (app: Router) => {
 
     try {
       await UserService.deleteUser(userId);
-      
+
       res
         .status(200)
         .clearCookie("token")

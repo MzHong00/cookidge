@@ -17,16 +17,14 @@ import { SubjectBox } from "shared/ui/subjectBox";
 import { IconButton } from "shared/ui/iconButton";
 import { InfoTooltip } from "shared/ui/infoToolTip";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
+import { CldImg } from "shared/ui/cloudinaryImage/cloudinaryImage";
 import { useConfirmDialogActions } from "shared/ui/confirmDialog";
-import {
-  ICookingStepInput,
-  IRecipeForm,
-} from "shared/api/recipe/type";
+import { IRecipeForm } from "shared/api/recipe/type";
 import { usePreviewImages } from "shared/hooks/usePreviewImages";
 import { FOOD_CATEGORIES } from "entities/recipe";
 import { INGREDIENTS_CATEGORIES } from "entities/ingredient";
 
-import { usePreviewStepPicture } from "../..";
+import { usePreviewSteps } from "../..";
 
 import styles from "./recipeForm.module.scss";
 
@@ -55,8 +53,8 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
       cooking_steps: [{ picture: "", instruction: "" }],
     },
   });
-  
   const previewFoodImages = usePreviewImages(watch("pictures"));
+  const previewSteps = usePreviewSteps(watch("cooking_steps"));
 
   const onError: SubmitErrorHandler<IRecipeForm> = (errors) => {
     const {
@@ -80,14 +78,12 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
         picture: string | FileList;
         instruction: string;
       }>[]
-    )?.map(({ instruction }) => [
-      instruction?.message || "",
-    ]);
+    )?.map(({ instruction }) => [instruction?.message || ""]);
 
     const remainErrorMessages = Object.values(errorFields).map(
       (field) => field.message || ""
     );
-    
+
     openDialogMessage({
       message: `❗️ 입력 필드를 확인해 주세요!`,
       descriptions: [
@@ -115,11 +111,11 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
               {...register(`pictures`)}
               multiple
             />
-            
+
             <ul className={styles.previewImageConatiner}>
               {previewFoodImages?.map((image) => (
                 <li key={image} className={styles.previewImage}>
-                  <img src={image} alt="" />
+                  <CldImg cldImg={image} />
                 </li>
               ))}
             </ul>
@@ -172,7 +168,7 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
               className="w-full"
               {...register("cooking_time", {
                 required: "조리 시간을 설정해 주세요.",
-                min: {value: 1, message: "올바르지 않은 조리 시간입니다."},
+                min: { value: 1, message: "올바르지 않은 조리 시간입니다." },
                 max: { value: 2400, message: "올바르지 않은 조리 시간입니다." },
               })}
             />
@@ -185,21 +181,18 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
               className="w-full"
               {...register("servings", {
                 required: "몇 인분인지 설정해 주세요.",
-                min: {value: 1, message: "올바르지 않은 인분 설정입니다."},
+                min: { value: 1, message: "올바르지 않은 인분 설정입니다." },
                 max: { value: 300, message: "올바르지 않은 인분 설정입니다." },
               })}
             />
           </div>
 
-          <IngredientField
-            register={register}
-            control={control}
-          />
-          
+          <IngredientField register={register} control={control} />
+
           <CookingStepField
             register={register}
             control={control}
-            defaultSteps={defalutValues?.cooking_steps}
+            previewImages={previewSteps}
           />
         </SubjectBox>
 
@@ -273,14 +266,14 @@ const IngredientField = ({
                   },
                 })}
               />
-                <IconButton
-                  Icon={CgRemoveR}
-                  className={styles.removeButton}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    ingredientRemove(index);
-                  }}
-                />
+              <IconButton
+                Icon={CgRemoveR}
+                className={styles.removeButton}
+                onClick={(e) => {
+                  e.preventDefault();
+                  ingredientRemove(index);
+                }}
+              />
             </li>
           </FramerFadeLayout>
         ))}
@@ -302,18 +295,16 @@ const IngredientField = ({
 const CookingStepField = ({
   register,
   control,
-  defaultSteps,
+  previewImages,
 }: Pick<UseFormReturn<IRecipeForm>, "register" | "control"> & {
-  defaultSteps?: ICookingStepInput[];
+  previewImages: string[];
 }) => {
   const INTRODUCE_LIMIT_LENGTH = 50;
-  const { stepPictures, onChangeStepPreviewPicture } =
-    usePreviewStepPicture(defaultSteps);
 
   const {
     fields: cookingStepFields,
-    append: cookingStepAppend,
-    remove: cookingStepRemove,
+    append: appendCookingStep,
+    remove: removeCookingStep,
   } = useFieldArray({
     name: "cooking_steps",
     control,
@@ -323,19 +314,17 @@ const CookingStepField = ({
     <div key="cookingSteps" className="flex-column">
       <label>요리 과정</label>
       <ul className="w-full flex-column">
-        {cookingStepFields.map((filed, i) => (
-          <FramerFadeLayout key={filed.id}>
+        {cookingStepFields.map((field, i) => (
+          <FramerFadeLayout key={field.id}>
             <li className="w-full flex-row">
               <h2>{i + 1}</h2>
               <div className={styles.stepInputBox}>
                 <InputFile
-                  id={filed.id}
+                  id={field.id}
                   type="file"
                   introduction="이미지 추가"
-                  previewUrl={stepPictures[`cooking_steps.${i}.picture`]}
-                  {...register(`cooking_steps.${i}.picture`, {
-                    onChange: onChangeStepPreviewPicture,
-                  })}
+                  previewUrl={previewImages[i]}
+                  {...register(`cooking_steps.${i}.picture`)}
                 />
                 <textarea
                   id="step1"
@@ -350,15 +339,15 @@ const CookingStepField = ({
                   })}
                 />
               </div>
-                <IconButton
-                  Icon={CgRemoveR}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    cookingStepRemove(i);
-                  }}
-                  className={styles.removeButton}
-                  style={{ alignItems: "stretch" }}
-                />
+              <IconButton
+                Icon={CgRemoveR}
+                onClick={(e) => {
+                  e.preventDefault();
+                  removeCookingStep(i);
+                }}
+                className={styles.removeButton}
+                style={{ alignItems: "stretch" }}
+              />
             </li>
           </FramerFadeLayout>
         ))}
@@ -367,7 +356,7 @@ const CookingStepField = ({
           className={styles.appendButton}
           onClick={(e) => {
             e.preventDefault();
-            cookingStepAppend({ picture: "", instruction: "" });
+            appendCookingStep({ picture: "", instruction: "" });
           }}
         >
           추가

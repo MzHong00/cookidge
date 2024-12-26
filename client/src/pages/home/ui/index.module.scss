@@ -16,7 +16,8 @@
 }
 
 .recipeList>div {
-    width: 500px;
+    width: 100%;
+    max-width: 500px;
     @include app.flex-layout(row, stretch, center, 0);
     scroll-snap-align: start;
 }

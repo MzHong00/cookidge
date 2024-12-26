@@ -1,6 +1,7 @@
 import { forwardRef } from "react";
-
 import { RiUpload2Line } from "@react-icons/all-files/ri/RiUpload2Line";
+
+import { CldImg } from "../cloudinaryImage/cloudinaryImage";
 
 import styles from "./index.module.scss";
 
@@ -19,7 +20,7 @@ export const InputFile = forwardRef<HTMLInputElement, Props>(
       <div className={`${className} ${styles.container}`} style={style}>
         <label htmlFor={id} className={styles.label}>
           {previewUrl ? (
-            <img src={previewUrl} alt="" className={styles.image} />
+            <CldImg cldImg={previewUrl} className={styles.image} />
           ) : (
             <div className={styles.uploadPlaceholder}>
               <RiUpload2Line size={24} color={color} />
