@@ -2,14 +2,18 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 
 import config from "../config";
 import { User } from "../models/user";
-import { IUser, type IUserCreateInputDTO } from "../interface/IUser";
 import { CloudinaryService } from "./cloudinary";
+import { type IUserCreateInputDTO } from "../interface/IUser";
 
-export const signin = async (member: IUser) => {
+export const signin = async (googleUserInfo: IUserCreateInputDTO) => {
   try {
+    const user = await User.findOne({ email: googleUserInfo.email });
+
+    if (!user) return await signup(googleUserInfo);
+
     return {
-      refresh_token: issueToken({ id: member._id.toString() }, "24h"),
-      access_token: issueToken({ id: member._id.toString() }),
+      refresh_token: issueToken({ id: user._id.toString() }, "24h"),
+      access_token: issueToken({ id: user._id.toString() }),
     };
   } catch (error) {
     throw new Error(`로그인 오류: ${error}`);
@@ -22,14 +26,10 @@ export const signup = async (userInputDto: IUserCreateInputDTO) => {
       folder: "profiles",
     });
 
-    if (!picture) {
-      throw new Error("프로필 사진 업로드에 실패했습니다.");
-    }
-
     const user = await User.create({
       name: userInputDto.name,
       email: userInputDto.email,
-      picture: picture.public_id,
+      picture: picture?.public_id,
     });
 
     return {

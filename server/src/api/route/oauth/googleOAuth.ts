@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 
-import { User } from "../../../models/user";
-import { signin, signup } from "../../../services/auth";
+import { signin } from "../../../services/auth";
+import { GoogleUserInfo } from "../../../interface/types";
 import { googleOauth, googleOauthForm } from "../../../services/googleOAuth";
 
 const route = Router();
@@ -19,12 +19,9 @@ export default (app: Router) => {
     try {
       const { code } = req.query;
 
-      const googleData = await googleOauth(code as string);
-      const member = await User.findOne({ email: googleData.email });
+      const  googleUserInfo: GoogleUserInfo = await googleOauth(code as string);
       
-      const { access_token, refresh_token } = member
-        ? await signin(member)
-        : await signup(googleData);
+      const { access_token, refresh_token } = await signin(googleUserInfo);
 
       res
         .status(200)
