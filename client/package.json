@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "dependencies": {
-    "@cloudinary/react": "^1.13.0",
+    "@cloudinary/react": "^1.13.1",
     "@cloudinary/url-gen": "^1.21.0",
     "@react-icons/all-files": "^4.1.0",
     "@tanstack/react-query": "^5.56.2",
