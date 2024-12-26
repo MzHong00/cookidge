@@ -1,10 +1,11 @@
 import axios, { AxiosStatic } from "axios";
 
+import config from "shared/config";
 import { AuthService } from "shared/api/auth/service";
 import { useAuthStore } from "../zustand";
 
 const instance = axios.create({
-  baseURL: process.env.REACT_APP_SERVER_API,
+  baseURL: config.server_api,
   withCredentials: true,
 });
 
