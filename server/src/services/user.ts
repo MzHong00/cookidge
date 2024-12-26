@@ -11,9 +11,10 @@ import { RecipeService } from "./recipe";
 import { Refrigerator } from "../models/refrigerator";
 import { Comment } from "../models/comment";
 import { Like } from "../models/like";
+import { CloudinaryService } from "./cloudinary";
 
 export class UserService {
-  static async readUserById(id: string) {
+  static async readUserById(id: IUser['_id']) {
     return await User.findById(id);
   }
 
@@ -49,6 +50,9 @@ export class UserService {
     userId: IUser["_id"],
     userData: Partial<IUserUpdateInputDTO>
   ) {
+    const user = await this.readUserById(userId);
+    CloudinaryService.deleteFiles([user?.picture || ""])
+
     return await User.findByIdAndUpdate(
       userId,
       { $set: userData },
@@ -58,34 +62,39 @@ export class UserService {
 
   static async deleteUser(userId: IUser["_id"]) {
     const myRecipes = await RecipeService.readUserRecipes(userId);
+    const user = await this.readUserById(userId);
 
-    await Promise.all([
-      //레시피들 삭제
-      myRecipes.map((recipe) => {
-        RecipeService.deleteRecipe(recipe._id);
-      }),
-      //팔로우 삭제
-      User.updateMany(
-        {},
-        {
-          $pull: {
-            follower: userId,
-          },
-        }
-      ),
-      //냉장고 삭제
-      Refrigerator.deleteMany({
-        owner_id: userId,
-      }),
-      //댓글 삭제
-      Comment.deleteMany({
-        user_id: userId,
-      }),
-      //좋아요한 레시피삭제
-      Like.deleteMany({ user_id: userId }),
-      //유저 삭제
-      User.findByIdAndDelete(userId),
-    ]);
+    mongooseTransaction(async () => {
+      await Promise.all([
+        //레시피들 삭제
+        myRecipes.map((recipe) => {
+          RecipeService.deleteRecipe(recipe._id);
+        }),
+        //팔로우 삭제
+        User.updateMany(
+          {},
+          {
+            $pull: {
+              follower: userId,
+            },
+          }
+        ),
+        //냉장고 삭제
+        Refrigerator.deleteMany({
+          owner_id: userId,
+        }),
+        //댓글 삭제
+        Comment.deleteMany({
+          user_id: userId,
+        }),
+        //좋아요한 레시피삭제
+        Like.deleteMany({ user_id: userId }),
+        //유저 프로필 이미지 Cloudinary DB에서 삭제
+        CloudinaryService.deleteFiles([user?.picture || ""]),
+        //유저 삭제
+        User.findByIdAndDelete(userId),
+      ]);
+    });
   }
 
   static async followUser(userId: IUser["_id"], followUserId: string) {

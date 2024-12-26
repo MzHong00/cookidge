@@ -1,4 +1,4 @@
-import { v2 as cloudinary, ImageTransformationOptions } from "cloudinary";
+import { v2 as cloudinary, UploadApiOptions } from "cloudinary";
 
 export class CloudinaryService {
   static toBase64String(file: Express.Multer.File) {
@@ -8,23 +8,28 @@ export class CloudinaryService {
     return dataURI;
   }
 
-  static async uploadFile(file?: Express.Multer.File, config?: ImageTransformationOptions) {
-    if(!file) return;
-    
-    const image = this.toBase64String(file);
+  static async uploadFile(
+    image?: Express.Multer.File | string,
+    config?: UploadApiOptions
+  ) {
+    const { folder, transformation, ...cld_config } = config || {};
+    if (!image) return;
+
+    const file = typeof image === "string" ? image : this.toBase64String(image);
 
     // Upload an image
     const uploadResult = await cloudinary.uploader
-      .upload(image, {
-        folder: "cookidge",
+      .upload(file, {
+        folder: `cookidge/${folder}`,
         transformation: {
           width: 600,
           crop: "fit",
           gravity: "center",
           aspect_ratio: "1",
-          fetch_format: "webp",
-          ...config
+          fetch_format: "auto",
+          ...(transformation as Object),
         },
+        ...cld_config,
       })
       .catch((error) => {
         console.log(error);
@@ -33,17 +38,19 @@ export class CloudinaryService {
     return uploadResult;
   }
 
-  static async uploadFiles(files: Express.Multer.File[]) {
-    const images = files.map((file) => this.uploadFile(file));
+  static async uploadFiles(
+    files: (Express.Multer.File | string)[],
+    config?: UploadApiOptions
+  ) {
+    const images = files.map((file) => this.uploadFile(file, config));
     const uploads = await Promise.all(images);
 
     return uploads;
   }
 
   static async deleteFiles(files: string[]) {
-    const result = cloudinary.api.delete_resources(files);
-    console.log(result);
-
-    return result;
+    if(files.length === 0) return ;
+    
+    return cloudinary.api.delete_resources(files);
   }
 }

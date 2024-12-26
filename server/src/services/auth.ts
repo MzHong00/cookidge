@@ -3,53 +3,51 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import config from "../config";
 import { User } from "../models/user";
 import { IUser, type IUserCreateInputDTO } from "../interface/IUser";
+import { CloudinaryService } from "./cloudinary";
 
-// oauth는 로그인와 회원가입을 같이 처리해야 하기 때문에 oAuthLogin 함수 이름으로 설정
-export const oAuthLogin = async (userInputDTO: IUserCreateInputDTO) => {
+export const signin = async (member: IUser) => {
   try {
-    const member = await User.findOne({ email: userInputDTO.email });
-    
-    // 신규 회원이라면, 회원가입
-    if (!member) {
-      const newMember = await signup(userInputDTO);
-
-      return {
-        refresh_token: issueToken({ id: newMember._id.toString() }, "24h"),
-        access_token: issueToken({ id: newMember._id.toString() }),
-      };
-    }
-
     return {
       refresh_token: issueToken({ id: member._id.toString() }, "24h"),
       access_token: issueToken({ id: member._id.toString() }),
     };
   } catch (error) {
-    throw new Error(`Login Error ${error}`);
+    throw new Error(`로그인 오류: ${error}`);
   }
 };
 
-export const signup = async (userInputDto: IUserCreateInputDTO): Promise<IUser> => {
+export const signup = async (userInputDto: IUserCreateInputDTO) => {
   try {
-    return await User.create({
+    const picture = await CloudinaryService.uploadFile(userInputDto.picture, {
+      folder: "profiles",
+    });
+
+    if (!picture) {
+      throw new Error("프로필 사진 업로드에 실패했습니다.");
+    }
+
+    const user = await User.create({
       name: userInputDto.name,
       email: userInputDto.email,
-      picture: userInputDto.picture,
+      picture: picture.public_id,
     });
+
+    return {
+      refresh_token: issueToken({ id: user._id.toString() }, "24h"),
+      access_token: issueToken({ id: user._id.toString() }),
+    };
   } catch (error) {
-    throw new Error(`Signup error: ${error}`);
+    throw new Error(`회원가입 오류: ${error}`);
   }
 };
 
-export const issueToken = (
-  payload: JwtPayload,
-  expireTime: string = "1h"
-) => {
+export const issueToken = (payload: JwtPayload, expireTime: string = "1h") => {
   try {
     return jwt.sign(payload, config.jwtSecretKey as string, {
       expiresIn: expireTime,
       issuer: "cookidge",
     });
   } catch (error) {
-    throw new Error(`Issue Token Error: ${error}`);
+    throw new Error(`토큰 발급 오류: ${error}`);
   }
 };

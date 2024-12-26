@@ -8,14 +8,14 @@ import { IIngredient } from "./IIngredient";
 export type IRecipe = {
   _id: ObjectId | mongoose.mongo.BSON.ObjectId;
   name: string;
-  pictures: string[];
+  pictures?: string[];
   author_id: IUser["_id"];
   ingredients: Omit<IIngredient, "expired_at">[];
   introduction: string;
   servings: number;
   category: string;
   cooking_time: number;
-  cooking_steps: ICookingStep[];
+  cooking_steps?: ICookingStep[];
   like_members: IUser["_id"][];
   created_at: Date;
 };

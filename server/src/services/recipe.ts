@@ -20,7 +20,11 @@ enum Sort {
 }
 
 export class RecipeService {
-  static async readRecipe(recipeId: string) {
+  static async readRecipeById(recipeId: string) {
+    return await Recipe.findById(recipeId);
+  }
+
+  static async readRecipeJoinUser(recipeId: string) {
     return await Recipe.aggregate([
       {
         $match: { _id: mongoose.Types.ObjectId.createFromHexString(recipeId) },
@@ -118,12 +122,10 @@ export class RecipeService {
     const deletedRecipe = deletedResults[0] as IRecipe;
     const deletePictureUrls = [
       ...(deletedRecipe.pictures || []),
-      ...deletedRecipe.cooking_steps.map((step) => step.picture || ""),
-    ].filter(url => !!url);
+      ...(deletedRecipe.cooking_steps?.map((step) => step.picture || "") || []),
+    ].filter((url) => !!url);
 
-    const picturePublicIds = deletePictureUrls.map((url) => url.split("/").slice(7).join("/").split(".")[0])
-
-    await CloudinaryService.deleteFiles(picturePublicIds);
+    await CloudinaryService.deleteFiles(deletePictureUrls);
   }
 
   static async searchRecipes(option: IRecipeQueryOption) {

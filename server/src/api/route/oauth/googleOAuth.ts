@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 
-import { oAuthLogin } from "../../../services/auth";
+import { User } from "../../../models/user";
+import { signin, signup } from "../../../services/auth";
 import { googleOauth, googleOauthForm } from "../../../services/googleOAuth";
 
 const route = Router();
@@ -19,7 +20,11 @@ export default (app: Router) => {
       const { code } = req.query;
 
       const googleData = await googleOauth(code as string);
-      const { access_token, refresh_token } = await oAuthLogin(googleData);
+      const member = await User.findOne({ email: googleData.email });
+      
+      const { access_token, refresh_token } = member
+        ? await signin(member)
+        : await signup(googleData);
 
       res
         .status(200)
