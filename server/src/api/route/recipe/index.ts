@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import { Router } from "express";
-import { UploadApiResponse } from "cloudinary";
 import { celebrate, Joi, Segments } from "celebrate";
 
 import isAuth from "../../middleware/isAuth";
