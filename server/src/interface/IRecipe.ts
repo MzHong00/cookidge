@@ -33,7 +33,8 @@ export type IRecipeInput = Pick<
   | "cooking_time"
   | "servings"
   | "category"
-> & Partial<Pick<IRecipe, 'pictures'|"cooking_steps">>;
+> &
+  Partial<Pick<IRecipe, "ingredients" | "pictures" | "cooking_steps">>;
 
 export interface IRecipeQueryOption extends PagenationOptions {
   query?: string;
@@ -48,15 +49,13 @@ export const recipeInputJoiSchema = {
   _id: Joi.string(),
   name: Joi.string().min(2).max(15).required(),
   pictures: Joi.any(),
-  ingredients: Joi.array()
-    .items(
-      Joi.object({
-        name: Joi.string().required(),
-        category: Joi.string().required(),
-        quantity: Joi.string().required(),
-      })
-    )
-    .required(),
+  ingredients: Joi.array().items(
+    Joi.object({
+      name: Joi.string().required(),
+      category: Joi.string().required(),
+      quantity: Joi.string().required(),
+    })
+  ),
   introduction: Joi.string().required(),
   servings: Joi.string().required(),
   category: Joi.string().required(),
@@ -64,33 +63,3 @@ export const recipeInputJoiSchema = {
   cooking_steps: Joi.any(),
   __v: Joi.string(),
 };
-
-// export const recipeInputJoiSchema = {
-//   _id: Joi.string().optional(),
-//   name: Joi.string().min(2).max(15).required(),
-//   pictures: Joi.array()
-//     .items(Joi.alternatives().try(Joi.binary(), Joi.string()).required())
-//     .required(),
-//   ingredients: Joi.array()
-//     .items(
-//       Joi.object({
-//         name: Joi.string().required(),
-//         category: Joi.string().required(),
-//         quantity: Joi.string().required(),
-//       })
-//     )
-//     .required(),
-//   introduction: Joi.string().required(),
-//   servings: Joi.string().required(),
-//   category: Joi.string().required(),
-//   cooking_time: Joi.string().required(),
-//   cooking_steps: Joi.array()
-//     .items(
-//       Joi.object({
-//         instruction: Joi.string().required(),
-//         picture: Joi.alternatives().try(Joi.binary(), Joi.string()).optional(), // 바이너리 또는 문자열 처리
-//       })
-//     )
-//     .required(),
-//   __v: Joi.string().optional(),
-// };
