@@ -14,18 +14,18 @@ import { Like } from "../models/like";
 import { CloudinaryService } from "./cloudinary";
 
 export class UserService {
-  static async readUserById(id: IUser['_id']) {
-    return await User.findById(id);
+  static readUserById(id: IUser["_id"]) {
+    return User.findById(id);
   }
 
-  static async readUserByName(name: IUser["name"]) {
-    return await User.findOne({ name: name });
+  static readUserByName(name: IUser["name"]) {
+    return User.findOne({ name: name });
   }
 
-  static async searchUser(searchOptions: IUserSearchQueryOptions) {
+  static searchUser(searchOptions: IUserSearchQueryOptions) {
     const { user_name, limit = 10, offset } = searchOptions;
 
-    return await User.aggregate([
+    return User.aggregate([
       { $match: { name: { $regex: user_name } } },
       {
         $addFields: {
@@ -51,13 +51,9 @@ export class UserService {
     userData: Partial<IUserUpdateInputDTO>
   ) {
     const user = await this.readUserById(userId);
-    CloudinaryService.deleteFiles([user?.picture || ""])
+    CloudinaryService.deleteFiles([user?.picture || ""]);
 
-    return await User.findByIdAndUpdate(
-      userId,
-      { $set: userData },
-      { new: true }
-    );
+    return User.findByIdAndUpdate(userId, { $set: userData }, { new: true });
   }
 
   static async deleteUser(userId: IUser["_id"]) {

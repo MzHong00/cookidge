@@ -1,16 +1,17 @@
+import mongoose from "mongoose";
+
 import { IComment } from "../interface/IComment";
 import { Comment } from "../models/comment";
 import { IRecipe } from "../interface/IRecipe";
 import { IUser } from "../interface/IUser";
-import mongoose from "mongoose";
 
 export class CommentService {
-  static async readComments(
+  static readComments(
     recipeId: IRecipe["_id"] | mongoose.mongo.BSON.ObjectId,
     lastCommentId?: IRecipe["_id"] | mongoose.mongo.BSON.ObjectId
   ) {
     try {
-      return await Comment.aggregate([
+      return Comment.aggregate([
         {
           $match: {
             ...(lastCommentId && {
@@ -52,13 +53,13 @@ export class CommentService {
     }
   }
 
-  static async createComment(
+  static createComment(
     userID: IUser["_id"],
     recipeId: IRecipe["_id"],
     comment: IComment["comment"]
   ) {
     try {
-      return await Comment.create({
+      return Comment.create({
         user_id: userID,
         recipe_id: recipeId,
         comment: comment,
@@ -69,12 +70,12 @@ export class CommentService {
     }
   }
 
-  static async updateComment(
+  static updateComment(
     commentId: IComment["_id"],
     comment: IComment["comment"]
   ) {
     try {
-      return await Comment.findByIdAndUpdate(
+      return Comment.findByIdAndUpdate(
         commentId,
         { comment: comment },
         { new: true }
@@ -85,9 +86,9 @@ export class CommentService {
     }
   }
 
-  static async deleteComment(commentId: IComment["_id"]) {
+  static deleteComment(commentId: IComment["_id"]) {
     try {
-      return await Comment.findByIdAndDelete(commentId);
+      return Comment.findByIdAndDelete(commentId);
     } catch (error) {
       console.error("댓글 삭제 오류:", error);
       throw new Error("댓글 삭제에 실패했습니다.");
