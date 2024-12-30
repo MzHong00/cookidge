@@ -1,0 +1,13 @@
+@use 'app/app.scss';
+
+.container {
+    padding-bottom: 3rem;
+    @include app.flex-layout(column, stretch, stretch);
+
+}
+
+.userRank {
+    & img {
+        border-radius: 100%;
+    }
+}
