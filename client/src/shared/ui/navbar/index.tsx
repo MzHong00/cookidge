@@ -1,47 +1,28 @@
 import { useLocation } from "react-router-dom";
-
-import { RiHome5Line } from "@react-icons/all-files/ri/RiHome5Line";
-import { RiLayout2Line } from "@react-icons/all-files/ri/RiLayout2Line";
-import { RiSearchLine } from "@react-icons/all-files/ri/RiSearchLine";
-import { RiTrophyLine } from "@react-icons/all-files/ri/RiTrophyLine";
+import type { IconType } from "@react-icons/all-files";
 
 import { IconLink } from "shared/ui/iconLink";
 
 import styles from "./index.module.css";
 
-const navItem = [
-  {
-    to: "",
-    Icon: RiHome5Line,
-    title: "홈",
-  },
-  {
-    to: "dashboard/fridge",
-    Icon: RiLayout2Line,
-    title: "대시보드",
-  },
-  {
-    to: "rank",
-    Icon: RiTrophyLine,
-    title: "랭킹"
-  },
-  {
-    to: "search",
-    Icon: RiSearchLine,
-    title: "검색",
-  },
-];
+interface Props extends React.HTMLAttributes<HTMLElement> {
+  items: {
+    to: string;
+    Icon?: IconType;
+    content: string;
+  }[];
+}
 
-export const Navbar = () => {
+export const Navbar = ({ items, className, ...props }: Props) => {
   const location = useLocation();
 
   return (
-    <nav className={styles.navBar}>
-      {navItem.map((item) => (
+    <nav className={`${styles.navBar} ${className}`} {...props}>
+      {items.map((item) => (
         <IconLink
           key={item.to}
           to={`${item.to}`}
-          Icon={item.Icon}
+          Icon={item?.Icon}
           className={styles.navItem}
           style={{
             backgroundColor:
@@ -50,7 +31,7 @@ export const Navbar = () => {
                 : "transparent",
           }}
         >
-          <p>{item.title}</p>
+          <p>{item.content}</p>
         </IconLink>
       ))}
     </nav>
