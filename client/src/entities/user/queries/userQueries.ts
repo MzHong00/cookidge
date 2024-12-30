@@ -3,12 +3,14 @@ import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 import { useAuthStore } from "shared/lib/zustand";
 import { IUser, UserService } from "shared/api/user";
 import { IUserInfiniteQueryParams } from "shared/api/user/type";
+import { PagenationParams } from "shared/types";
 
 export class UserQueries {
   static readonly keys = {
     me: "me",
     user: "user",
     infinite: "inifinite",
+    rank: "rank",
   };
 
   static readonly staleTime = {
@@ -61,6 +63,54 @@ export class UserQueries {
       },
       enabled: !!user_name,
       staleTime: this.staleTime.search,
+      retry: false,
+    });
+  }
+
+  static InfiniteFollowerRankQuery(option?: PagenationParams) {
+    const { limit = 10 } = option || {};
+
+    return infiniteQueryOptions({
+      queryKey: [this.keys.rank, "follower", this.keys.infinite],
+      queryFn: ({ pageParam, signal }) =>
+        UserService.followerRank({
+          signal,
+          params: {
+            limit: limit,
+            offset: pageParam * Number(limit),
+          },
+        }),
+      initialPageParam: 0,
+      getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
+        if (lastPage?.length === 0) return;
+
+        return lastPageParam + 1;
+      },
+      staleTime: this.staleTime.root,
+      retry: false,
+    });
+  }
+
+  static InfiniteRecipeMakerRankQuery(option?: PagenationParams) {
+    const { limit = 10 } = option || {};
+
+    return infiniteQueryOptions({
+      queryKey: [this.keys.rank, "recipe-maker", this.keys.infinite],
+      queryFn: ({ pageParam, signal }) =>
+        UserService.recipeMakerRank({
+          signal,
+          params: {
+            limit: limit,
+            offset: pageParam * Number(limit),
+          },
+        }),
+      initialPageParam: 0,
+      getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
+        if (lastPage?.length === 0) return;
+
+        return lastPageParam + 1;
+      },
+      staleTime: this.staleTime.root,
       retry: false,
     });
   }
