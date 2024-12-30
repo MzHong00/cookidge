@@ -40,11 +40,11 @@ export type ICookingStepInput = {
   instruction: string;
 };
 
-export type IRecipeQueryOption = PagenationParams & {
+export type IRecipeQueryOption = Partial<PagenationParams> & {
   query?: string;
 };
 
-export type RecipeFilterQuery = PagenationParams & {
+export type RecipeFilterQuery = Partial<PagenationParams> & {
   categories?: IRecipe["category"][];
   sort?: "time" | "like";
 };
