@@ -19,7 +19,7 @@ export interface IUserInfiniteQueryParams extends PagenationParams {
 export interface IUserPicture extends Pick<IUser, "_id" | "picture" | "name"> {}
 
 export interface IUserSearchDTO
-  extends Pick<IUser, "_id" | "name" | "picture"> {
+  extends IUserPicture {
   introduce: string;
   follower_count: string | number;
 }
