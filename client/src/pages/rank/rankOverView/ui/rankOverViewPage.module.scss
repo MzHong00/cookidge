@@ -11,3 +11,11 @@
         border-radius: 100%;
     }
 }
+
+@media screen and (max-width: 767px) {
+    .container {
+        h2 {
+            font-size: 1.25em;
+        }
+    }
+}

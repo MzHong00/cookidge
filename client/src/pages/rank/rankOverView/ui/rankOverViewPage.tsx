@@ -8,7 +8,7 @@ import { RecipeQueries } from "entities/recipe";
 import { LikeButton } from "features/recipe/like";
 import { RankOverViewList } from "widgets/rankOverViewList";
 
-import styles from './rankOverViewPage.module.scss'
+import styles from "./rankOverViewPage.module.scss";
 
 export const RankOverViewPage = () => {
   const { data: recipes } = useInfiniteQuery(
@@ -43,7 +43,11 @@ export const RankOverViewPage = () => {
           ))
         )}
       </RankOverViewList>
-      <RankOverViewList to="follower" subject="팔로워가 제일 많은 유저" className={styles.userRank}>
+      <RankOverViewList
+        to="follower"
+        subject="팔로워가 제일 많은 유저"
+        className={styles.userRank}
+      >
         {follwerRank?.pages.map((page, pageIndex) =>
           page.map(({ _id, name, picture, follower_count }, index) => (
             <RankItem
@@ -61,7 +65,11 @@ export const RankOverViewPage = () => {
           ))
         )}
       </RankOverViewList>
-      <RankOverViewList to="recipe-maker" subject="레시피를 가장 많이 만든 유저" className={styles.userRank}>
+      <RankOverViewList
+        to="recipe-maker"
+        subject="레시피를 가장 많이 만든 유저"
+        className={styles.userRank}
+      >
         {recipeMakerRank?.pages.map((page, pageIndex) =>
           page.map(({ _id, recipe_count, author }, index) => (
             <RankItem

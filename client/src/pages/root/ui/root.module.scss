@@ -1,17 +1,18 @@
+@use 'app/app.scss';
+
 .root {
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    @include app.flex-layout(column, stretch, stretch, 0);
 }
 
 .mainContainer {
     min-height: calc(100vh - 4rem);
-}
 
-.mainContainer>* {
-    padding-top: 1rem;
-    padding-inline: 10%;
-    min-height: calc(100vh - 4rem);
+    &>* {
+        padding-top: 1rem;
+        padding-inline: 10%;
+        min-height: calc(100vh - 4rem);
+    }
 }
 
 @media screen and (max-width: 767px) {
