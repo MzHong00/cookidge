@@ -4,6 +4,7 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import { OAuthService } from "shared/api/oauth";
 import { CreateFridgeForm } from "features/fridge/create";
 import { Root } from "pages/root";
+import { RankOverViewPage } from "pages/rank/rankOverView";
 import { LoginPage } from "pages/login";
 import { SearchPage } from "pages/search";
 import { Dashboard } from "pages/dashboard";
@@ -11,12 +12,14 @@ import { Home, searchOptionLoader } from "pages/home";
 import { RecipeDetailPage } from "pages/recipe/detailPage";
 import { RecipeCreatePage } from "pages/recipe/createPage";
 import { RecipeUpdatePage } from "pages/recipe/updatePage";
-import { UserSettingPage } from "pages/user/userSettingPage";
 import { FridgeDetailPage } from "pages/fridge/detailPage";
 import { FridgeSettingPage } from "pages/fridge/settingPage";
+import { UserSettingPage } from "pages/user/userSettingPage";
 import { UserSearchBox } from "entities/user";
 import { RecipeSearchList } from "entities/recipe";
-import { RankPage } from "pages/rank";
+import { LikeRankPage } from "pages/rank/likeRank";
+import { MakerRankPage } from "pages/rank/makerRank";
+import { FollowerRankPage } from "pages/rank/followerRank";
 
 const UserPage = lazy(() =>
   import("pages/user/userDetailPage").then((module) => ({
@@ -139,8 +142,20 @@ const appRouter = createBrowserRouter([
       },
       {
         path: 'rank',
-        element: <RankPage/>
-      }
+        element: <RankOverViewPage/>,
+      },
+      {
+        path: "rank/recipe-like",
+        element: <LikeRankPage />, 
+      },
+      {
+        path: "rank/recipe-maker",
+        element: <MakerRankPage />,
+      },
+      {
+        path: "rank/follower",
+        element: <FollowerRankPage />,
+      },
     ],
   },
   {

@@ -9,6 +9,8 @@ import {
 } from "../../../interface/IUser";
 import { upload } from "../../../loaders/multer";
 import { CloudinaryService } from "../../../services/cloudinary";
+import { RankService } from "../../../services/rank";
+import { PagenationOptions } from "../../../interface/types";
 
 const route = Router();
 
@@ -75,6 +77,57 @@ export default (app: Router) => {
         res
           .status(500)
           .json({ message: "유저를 검색하는 중 오류가 발생했습니다." });
+      }
+    }
+  );
+
+  route.get(
+    "/rank-follower",
+    celebrate({
+      [Segments.QUERY]: Joi.object({
+        limit: Joi.string(),
+        offset: Joi.string(),
+      }),
+    }),
+    async (req, res) => {
+      const { limit, offset } = req.query as PagenationOptions;
+      try {
+        const followRank = await RankService.followRank({ limit, offset });
+
+        res.status(200).json(followRank);
+      } catch (error) {
+        console.log(error);
+        res
+          .status(500)
+          .json({ message: "팔로우 랭킹을 검색하는 중 오류가 발생했습니다." });
+      }
+    }
+  );
+
+  route.get(
+    "/rank-recipe-maker",
+    celebrate({
+      [Segments.QUERY]: Joi.object({
+        limit: Joi.string(),
+        offset: Joi.string(),
+      }),
+    }),
+    async (req, res) => {
+      const { limit, offset } = req.query as PagenationOptions;
+      try {
+        const recipeMakerRank = await RankService.RecipeMakerRank({
+          limit,
+          offset,
+        });
+
+        res.status(200).json(recipeMakerRank);
+      } catch (error) {
+        console.log(error);
+        res
+          .status(500)
+          .json({
+            message: "레시피 메이커 랭킹을 검색하는 중 오류가 발생했습니다.",
+          });
       }
     }
   );

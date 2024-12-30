@@ -5,11 +5,12 @@ import { RiUser3Line } from "@react-icons/all-files/ri/RiUser3Line";
 import { Logo } from "shared/ui/logo";
 import { Navbar } from "shared/ui/navbar";
 import { IconLink } from "shared/ui/iconLink";
-import { useModal } from "shared/hooks/useModal";
-import { ProfileImage, ProfileImageSkeleton } from "shared/ui/profileImage";
 import { IconButton } from "shared/ui/iconButton";
+import { ProfileImage, ProfileImageSkeleton } from "shared/ui/profileImage";
+import { useModal } from "shared/hooks/useModal";
 import { UserQueries } from "entities/user";
 import { LogoutButton } from "features/user/logout";
+import { navItems } from "../consts/navigationItems";
 
 import styles from "./header.module.scss";
 
@@ -23,7 +24,7 @@ export const Header = () => {
         <Logo />
       </Link>
 
-      <Navbar />
+      <Navbar items={navItems}/>
 
       <div className={styles.userBar}>
         {user ? (

@@ -4,8 +4,10 @@ import { type IUser } from ".";
 import {
   IUserInfiniteQueryParams,
   IUserInputDTO,
+  IUserPicture,
   IUserSearchDTO,
 } from "./type";
+import { PagenationParams } from "shared/types";
 
 export class UserService {
   static readonly root = "api/user";
@@ -70,5 +72,21 @@ export class UserService {
         unfollow_user_id: unfollowUserId,
       })
     ).data;
+  }
+
+  // 팔로우 랭킹
+  static async followerRank(option: {
+    params: PagenationParams;
+    signal: AbortSignal;
+  }): Promise<(IUserPicture & { follower_count: number })[]> {
+    return (await axios.get(`${this.root}/rank-follower`, option)).data;
+  }
+
+  // 레시피 메이커 랭킹
+  static async recipeMakerRank(option: {
+    params: PagenationParams;
+    signal: AbortSignal;
+  }): Promise<{ _id: string; recipe_count: number; author: IUserPicture }[]> {
+    return (await axios.get(`${this.root}/rank-recipe-maker`, option)).data;
   }
 }

@@ -7,7 +7,7 @@ import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 import { UserQueries } from "entities/user";
 import { LoginForm } from "features/user/login";
 
-import styles from "./index.module.css";
+import styles from "./index.module.scss";
 
 export const Dashboard = () => {
   const dashboardEndPoint = useLocation().pathname.split("/")[2];

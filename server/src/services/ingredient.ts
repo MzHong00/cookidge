@@ -1,23 +1,23 @@
-import { IIngredient, IIngredientInputDto } from "../interface/IIngredient";
 import { Refrigerator } from "../models/refrigerator";
+import { IIngredient, IIngredientInputDto } from "../interface/IIngredient";
 
 export class IngredientService {
-  static async createIngredient(
+  static createIngredient(
     targetRefrigeratorId: string,
     ingredients: IIngredientInputDto[]
   ) {
-    return await Refrigerator.findByIdAndUpdate(
+    return Refrigerator.findByIdAndUpdate(
       targetRefrigeratorId,
       { $push: { stored_ingredients: { $each: ingredients } } },
       { new: true }
     );
   }
 
-  static async updateIngredients(
+  static updateIngredients(
     refrigeratorId: string,
     ingredients: IIngredient[]
   ) {
-    return await Refrigerator.findByIdAndUpdate(refrigeratorId, {
+    return Refrigerator.findByIdAndUpdate(refrigeratorId, {
       stored_ingredients: ingredients,
       last_updated: new Date()
     })

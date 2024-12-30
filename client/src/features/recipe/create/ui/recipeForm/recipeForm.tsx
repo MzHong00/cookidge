@@ -1,10 +1,9 @@
 import {
-  FieldErrorsImpl,
-  SubmitErrorHandler,
+  useForm,
   SubmitHandler,
   useFieldArray,
-  useForm,
   UseFormReturn,
+  SubmitErrorHandler,
 } from "react-hook-form";
 import { RiAddLine } from "@react-icons/all-files/ri/RiAddLine";
 import { CgRemoveR } from "@react-icons/all-files/cg/CgRemoveR";
@@ -57,28 +56,23 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
   const previewSteps = usePreviewSteps(watch("cooking_steps"));
 
   const onError: SubmitErrorHandler<IRecipeForm> = (errors) => {
-    const {
-      ingredients: ingredientErrorFields,
-      cooking_steps: cookingStepErrorFields,
-      ...errorFields
-    } = errors;
+    const { ingredients, cooking_steps, ...errorFields } = errors;
 
-    const ingredientErrorMessages = (
-      ingredientErrorFields as FieldErrorsImpl<{
-        name: string;
-        quantity: string;
-      }>[]
-    )?.map(({ name, quantity }) => [
-      name?.message || "",
-      quantity?.message || "",
-    ]);
+    const ingredientErrorField: any = ingredients;
+    const cookingStepErrorFields: any = cooking_steps;
 
-    const cookingStepsErrorMessages = (
-      cookingStepErrorFields as FieldErrorsImpl<{
-        picture: string | FileList;
-        instruction: string;
-      }>[]
-    )?.map(({ instruction }) => [instruction?.message || ""]);
+    const ingredientErrorMessages = ingredientErrorField?.["root"]
+      ? ingredientErrorField["root"].message
+      : ingredientErrorField?.map((field: any) => [
+          field?.name?.message || "",
+          field?.quantity?.message || "",
+        ]);
+
+    const cookingStepsErrorMessages = cookingStepErrorFields?.["root"]
+      ? cookingStepErrorFields["root"].message
+      : cookingStepErrorFields?.map((field: any) => [
+          field?.instruction?.message || "",
+        ]);
 
     const remainErrorMessages = Object.values(errorFields).map(
       (field) => field.message || ""
@@ -93,6 +87,7 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
       ]
         .flat(2)
         .filter((value) => value),
+      option: { backspace: false },
     });
   };
 
@@ -108,7 +103,9 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
             <InputFile
               id="pictures"
               className={styles.pictureUpload}
-              {...register(`pictures`)}
+              {...register(`pictures`, {
+                required: "요리 사진을 입력해 주세요.",
+              })}
               multiple
             />
 
@@ -223,6 +220,12 @@ const IngredientField = ({
   } = useFieldArray({
     name: "ingredients",
     control,
+    rules: {
+      required: {
+        value: true,
+        message: "요리 재료를 1개 이상 입력해 주세요.",
+      },
+    },
   });
 
   return (
@@ -308,6 +311,12 @@ const CookingStepField = ({
   } = useFieldArray({
     name: "cooking_steps",
     control,
+    rules: {
+      required: {
+        value: true,
+        message: "요리 과정을 1개 이상 입력해 주세요.",
+      },
+    },
   });
 
   return (
