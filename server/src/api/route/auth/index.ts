@@ -61,6 +61,7 @@ export default (app: Router) => {
         httpOnly: true,
         secure: true,
         sameSite: "none",
+        domain: "cookidge.vercel.app"
       })
       .send({ token: access_token });
   });
