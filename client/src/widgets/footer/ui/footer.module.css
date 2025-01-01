@@ -1,7 +1,8 @@
 .footer {
     width: 100%;
     min-height: 10rem;
-    background-color: rgba(var(--main-rgb), 0.1);
+    padding-bottom: 3rem;
+    background-color: rgba(var(--main-rgb), 0.2);
     font-size: 0.75rem;
 }
 

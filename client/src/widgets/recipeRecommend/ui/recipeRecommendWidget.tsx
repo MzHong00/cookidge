@@ -1,22 +1,22 @@
+import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { IoReload } from "@react-icons/all-files/io5/IoReload";
-import { FaMagic } from "@react-icons/all-files/fa/FaMagic";
 
 import { type IFridge } from "shared/api/fridge";
-import { IconButton } from "shared/ui/iconButton";
 import { type IIngredient } from "shared/api/ingredient";
+import { useAlertActions } from "shared/ui/alert";
+import { IconButton } from "shared/ui/iconButton";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { RecipeCard, RecipeCardSkeleton, RecipeQueries } from "entities/recipe";
 import { LikeButton } from "features/recipe/like";
 
 import styles from "./recipeRecommendWidget.module.scss";
-import { useAlertActions } from "shared/ui/alert";
 
 interface Props extends React.HTMLAttributes<HTMLElement> {
   fridge_id: IFridge["_id"];
   my_ingredients?: IIngredient[];
 }
-
+const SKELETON_COUNT = 4;
 export const RecipeRecommendWidget = ({
   fridge_id,
   my_ingredients,
@@ -51,26 +51,26 @@ export const RecipeRecommendWidget = ({
       subtitle="현재 냉장고 재료를 기반으로 한 추천 레시피"
       {...props}
     >
-        <IconButton
-          Icon={IoReload}
-          className={styles.recommendButton}
-          onClick={onClickRecommendRecipe}
-          disabled={isFetching}
-        >
-          레시피 추천
-        </IconButton>
+      <IconButton
+        Icon={IoReload}
+        className={styles.recommendButton}
+        onClick={onClickRecommendRecipe}
+        disabled={isFetching}
+      >
+        레시피 추천
+      </IconButton>
       <div className={styles.recipeList}>
         {isFetching
-          ? Array.from({ length: 4 }).map((_, i) => (
+          ? Array.from({ length: SKELETON_COUNT }).map((_, i) => (
               <RecipeCardSkeleton key={i} />
             ))
           : recipes?.map(({ matched_ingredients, ...recipe }) => (
               <RecipeCard
                 key={recipe._id}
-                className={styles.recipeCard}
                 recipe={recipe}
+                className={styles.recipeCard}
               >
-                <div>
+                <Link to={`/recipe/${recipe._id}`}>
                   <LikeButton
                     recipe_id={recipe._id}
                     likeMembers={recipe.like_members}
@@ -80,7 +80,7 @@ export const RecipeRecommendWidget = ({
                     포함된 재료({matched_ingredients.length}):{" "}
                     {matched_ingredients.join(", ")}
                   </div>
-                </div>
+                </Link>
               </RecipeCard>
             ))}
       </div>
