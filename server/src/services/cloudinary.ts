@@ -25,6 +25,7 @@ export class CloudinaryService {
           height: 500,
           crop: "fit",
           gravity: "center",
+          aspect_ratio: 1,
           fetch_format: "auto",
           ...(transformation as Object),
         },
