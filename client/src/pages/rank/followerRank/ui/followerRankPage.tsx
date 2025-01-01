@@ -1,16 +1,16 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { RiUserHeartLine } from "@react-icons/all-files/ri/RiUserHeartLine";
 
-import { RankItem } from "shared/ui/rankItem";
 import { SubjectBox } from "shared/ui/subjectBox";
+import { RankItem, RankItemSkeleton } from "shared/ui/rankItem";
 import { useIntersectionObserver } from "shared/hooks/useIntersectionObserver";
 import { UserQueries } from "entities/user";
 
 import styles from "./followerRankPage.module.scss";
 
-interface Props {}
+export const FollowerRankPage = () => {
+  const skeletonCount = 3 + Math.floor(Math.random() * 3);
 
-export const FollowerRankPage = ({}: Props) => {
   const {
     data: follwerRank,
     hasNextPage,
@@ -41,6 +41,10 @@ export const FollowerRankPage = ({}: Props) => {
           </RankItem>
         ))
       )}
+      {isFetching &&
+        Array.from({ length: skeletonCount }).map((_, i) => (
+          <RankItemSkeleton key={i} rank={i} />
+        ))}
       <div id="observer" ref={setTarget} style={{ minHeight: "4em" }}></div>
     </SubjectBox>
   );

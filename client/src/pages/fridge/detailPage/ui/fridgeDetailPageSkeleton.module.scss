@@ -3,7 +3,7 @@
 .count {
     width: 2em;
     height: 2em;
-    @include app.skeletonShimmer();
+    @include app.skeleton-shimmer();
 }
 
 .header {
@@ -15,7 +15,7 @@
     margin-left: auto;
     width: 20em;
     height: 1.25em;
-    @include app.skeletonShimmer();
+    @include app.skeleton-shimmer();
 }
 
 .ingredientBox {
@@ -28,11 +28,11 @@
     height: 2.25em;
     margin-inline: auto;
     margin-bottom: 4rem;
-    @include app.skeletonShimmer();
+    @include app.skeleton-shimmer();
 }
 
 .ingredientList {
     width: 100%;
     height: 36rem;
-    @include app.skeletonShimmer();
+    @include app.skeleton-shimmer();
 }

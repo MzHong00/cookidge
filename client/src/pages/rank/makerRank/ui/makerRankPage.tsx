@@ -1,14 +1,15 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { ImSpoonKnife } from "@react-icons/all-files/im/ImSpoonKnife";
 
-import { RankItem } from "shared/ui/rankItem";
 import { SubjectBox } from "shared/ui/subjectBox";
+import { RankItem, RankItemSkeleton } from "shared/ui/rankItem";
 import { useIntersectionObserver } from "shared/hooks/useIntersectionObserver";
 import { UserQueries } from "entities/user";
 
 import styles from "./makerRankPage.module.scss";
 
 export const MakerRankPage = () => {
+  const skeletonCount = 3 + Math.floor(Math.random() * 3);
   const {
     data: recipeMakerRank,
     hasNextPage,
@@ -43,6 +44,10 @@ export const MakerRankPage = () => {
           </RankItem>
         ))
       )}
+      {isFetching &&
+        Array.from({ length: skeletonCount }).map((_, i) => (
+          <RankItemSkeleton key={i} rank={i} />
+        ))}
       <div id="observer" ref={setTarget} style={{ minHeight: "4em" }}></div>
     </SubjectBox>
   );

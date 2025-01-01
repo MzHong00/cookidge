@@ -2,7 +2,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { ImSpoonKnife } from "@react-icons/all-files/im/ImSpoonKnife";
 import { RiUserHeartLine } from "@react-icons/all-files/ri/RiUserHeartLine";
 
-import { RankItem } from "shared/ui/rankItem";
+import { RankItem, RankItemSkeleton } from "shared/ui/rankItem";
 import { UserQueries } from "entities/user";
 import { RecipeQueries } from "entities/recipe";
 import { LikeButton } from "features/recipe/like";
@@ -11,21 +11,24 @@ import { RankOverViewList } from "widgets/rankOverViewList";
 import styles from "./rankOverViewPage.module.scss";
 
 export const RankOverViewPage = () => {
-  const { data: recipes } = useInfiniteQuery(
-    RecipeQueries.infinityQuery({ limit: 10, sort: "like" })
-  );
-  const { data: follwerRank } = useInfiniteQuery(
-    UserQueries.InfiniteFollowerRankQuery()
-  );
-  const { data: recipeMakerRank } = useInfiniteQuery(
-    UserQueries.InfiniteRecipeMakerRankQuery()
-  );
+  const skeletonCount = 3 + Math.floor(Math.random() * 3);
+
+  const { data: recipelikeRank, isPending: isRecipeListRankPending } =
+    useInfiniteQuery(RecipeQueries.infinityQuery({ limit: 10, sort: "like" }));
+  const { data: follwerRank, isPending: isFollowerRankPending } =
+    useInfiniteQuery(UserQueries.InfiniteFollowerRankQuery());
+  const { data: recipeMakerRank, isPending: isRecipeMakerRankPending } =
+    useInfiniteQuery(UserQueries.InfiniteRecipeMakerRankQuery());
 
   return (
     <div className={styles.container}>
       <h2>랭킹</h2>
       <RankOverViewList to="recipe-like" subject="좋아요가 많은 레시피">
-        {recipes?.pages.map((page, pageIndex) =>
+        {isRecipeListRankPending &&
+          Array.from({ length: skeletonCount }).map((_, i) => (
+            <RankItemSkeleton key={i} rank={i} />
+          ))}
+        {recipelikeRank?.pages.map((page, pageIndex) =>
           page.map((recipe, index) => (
             <RankItem
               key={recipe._id}
@@ -48,6 +51,10 @@ export const RankOverViewPage = () => {
         subject="팔로워가 제일 많은 유저"
         className={styles.userRank}
       >
+        {isFollowerRankPending &&
+          Array.from({ length: skeletonCount }).map((_, i) => (
+            <RankItemSkeleton key={i} rank={i} />
+          ))}
         {follwerRank?.pages.map((page, pageIndex) =>
           page.map(({ _id, name, picture, follower_count }, index) => (
             <RankItem
@@ -70,6 +77,10 @@ export const RankOverViewPage = () => {
         subject="레시피를 가장 많이 만든 유저"
         className={styles.userRank}
       >
+        {isRecipeMakerRankPending &&
+          Array.from({ length: skeletonCount }).map((_, i) => (
+            <RankItemSkeleton key={i} rank={i} />
+          ))}
         {recipeMakerRank?.pages.map((page, pageIndex) =>
           page.map(({ _id, recipe_count, author }, index) => (
             <RankItem

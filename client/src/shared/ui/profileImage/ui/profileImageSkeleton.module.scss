@@ -7,5 +7,5 @@
     max-height: 200px;
     border-radius: 100%;
     aspect-ratio: 1;
-    @include app.skeletonShimmer();
+    @include app.skeleton-shimmer();
 }

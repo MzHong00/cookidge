@@ -1,0 +1,25 @@
+@use 'app/app.scss';
+
+.skeleton {
+    @include app.flex-layout(row, center);
+
+    &>:first-child {
+        width: 2em;
+        flex-shrink: 0;
+        text-align: center;
+        font-size: 1.75em;
+        font-weight: bold;
+    }
+
+    &>:nth-child(2) {
+        height: 100%;
+        aspect-ratio: 1;
+        @include app.skeleton-shimmer();
+    }
+
+    &>:last-child {
+        width: 20rem;
+        height: 1.5em;
+        @include app.skeleton-shimmer();
+    }
+}
