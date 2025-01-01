@@ -104,11 +104,12 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
               id="pictures"
               className={styles.pictureUpload}
               {...register(`pictures`, {
-                required: "요리 사진을 입력해 주세요.",
+                validate: () =>
+                  !!previewFoodImages.length ||
+                  "대표 요리사진을 선택해 주세요.",
               })}
               multiple
             />
-
             <ul className={styles.previewImageConatiner}>
               {previewFoodImages?.map((image) => (
                 <li key={image} className={styles.previewImage}>
