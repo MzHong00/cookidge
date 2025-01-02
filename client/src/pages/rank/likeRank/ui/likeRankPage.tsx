@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 import { SubjectBox } from "shared/ui/subjectBox";
-import { RankItem, RankItemSkeleton } from "shared/ui/rankItem";
+import { RankItem, RankListSkeleton } from "shared/ui/rankItem";
 import { useIntersectionObserver } from "shared/hooks/useIntersectionObserver";
 import { RecipeQueries } from "entities/recipe";
 import { LikeButton } from "features/recipe/like";
@@ -9,8 +9,6 @@ import { LikeButton } from "features/recipe/like";
 import styles from "./likeRankPage.module.scss";
 
 export const LikeRankPage = () => {
-  const skeletonCount = 3 + Math.floor(Math.random() * 3);
-
   const {
     data: recipes,
     hasNextPage,
@@ -34,7 +32,7 @@ export const LikeRankPage = () => {
             to={`/recipe/${recipe._id}`}
             picture={recipe.pictures[0]}
             title={recipe.name}
-            rank={index + pageIndex}
+            rank={10 * pageIndex + index}
           >
             <LikeButton
               recipe_id={recipe._id}
@@ -44,10 +42,7 @@ export const LikeRankPage = () => {
           </RankItem>
         ))
       )}
-      {isFetching &&
-        Array.from({ length: skeletonCount }).map((_, i) => (
-          <RankItemSkeleton key={i} rank={i} />
-        ))}
+      {isFetching &&<RankListSkeleton />}
       <div id="observer" ref={setTarget} style={{ minHeight: "4em" }}></div>
     </SubjectBox>
   );
