@@ -4,11 +4,10 @@
     @include app.flex-layout(row, center);
 
     &>:first-child {
+        margin-inline: 0.875em;
         width: 2em;
-        flex-shrink: 0;
-        text-align: center;
-        font-size: 1.75em;
-        font-weight: bold;
+        height: 2em;
+        @include app.skeleton-shimmer();
     }
 
     &>:nth-child(2) {

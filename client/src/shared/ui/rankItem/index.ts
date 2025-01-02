@@ -1,2 +1,2 @@
 export { RankItem } from "./ui/rankItem";
-export { RankItemSkeleton } from "./ui/rankItemSkeleton";
+export { RankListSkeleton } from "./ui/rankItemSkeleton";

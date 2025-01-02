@@ -1,22 +1,20 @@
 import rankItemStyles from "./rankItem.module.scss";
 import skeletonStyles from "./rankItemSkeleton.module.scss";
 
-interface Props {
-  rank: number;
-}
-
-export const RankItemSkeleton = ({ rank }: Props) => {
-  const ranking =
-    (rank === 0 && "🥇") ||
-    (rank === 1 && "🥈") ||
-    (rank === 2 && "🥉") ||
-    rank + 1;
+export const RankListSkeleton = () => {
+  const skeletonCount = 3 + Math.floor(Math.random() * 3);
 
   return (
-    <div className={`${rankItemStyles.container} ${skeletonStyles.skeleton}`}>
-      <span>{ranking}</span>
-      <div></div>
-      <p></p>
-    </div>
+    <>
+      {Array.from({ length: skeletonCount }).map(() => (
+        <div
+          className={`${rankItemStyles.container} ${skeletonStyles.skeleton}`}
+        >
+          <span></span>
+          <div></div>
+          <p></p>
+        </div>
+      ))}
+    </>
   );
 };
