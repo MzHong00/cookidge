@@ -98,7 +98,7 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
           <div className={styles.pictureSection}>
             <label className={styles.pictureLabel}>
               사진
-              <InfoTooltip message="사진을 드래그하여 여러 개 선택하세요." />
+              <InfoTooltip message="Cookidge는 500x500px 이미지를 제일 좋아합니다! 사진을 드래그하여 여러 개 선택하세요." style={{fontSize: "0.9em"}} />
             </label>
             <InputFile
               id="pictures"
