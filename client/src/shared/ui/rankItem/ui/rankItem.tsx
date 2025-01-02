@@ -2,7 +2,7 @@ import { Link, LinkProps } from "react-router-dom";
 
 import { CldImg } from "shared/ui/cloudinaryImage/cloudinaryImage";
 
-import styles from "./index.module.scss";
+import styles from "./rankItem.module.scss";
 
 interface Props extends LinkProps {
   to: string;

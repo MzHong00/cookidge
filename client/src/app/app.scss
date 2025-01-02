@@ -5,7 +5,7 @@
 }
 
 :root {
-  --main-rgb: 167, 202, 255;
+  --main-rgb: 96, 159, 255;
   --base-rgb-grey-light: 227, 227, 227;
   --base-rgb-grey-medium: 121, 121, 121;
   --icon-size-medium: 1.25em;
@@ -80,7 +80,7 @@
   @include main-button();
 }
 
-@mixin skeletonShimmer {
+@mixin skeleton-shimmer {
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 200% 100%;
   animation: shimmer 3s infinite;

@@ -1,8 +1,8 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { ImSpoonKnife } from "@react-icons/all-files/im/ImSpoonKnife";
 
-import { RankItem } from "shared/ui/rankItem";
 import { SubjectBox } from "shared/ui/subjectBox";
+import { RankItem, RankListSkeleton } from "shared/ui/rankItem";
 import { useIntersectionObserver } from "shared/hooks/useIntersectionObserver";
 import { UserQueries } from "entities/user";
 
@@ -34,7 +34,7 @@ export const MakerRankPage = () => {
             to={`/user/${author.name}`}
             picture={author.picture}
             title={author.name}
-            rank={index + pageIndex}
+            rank={10 * pageIndex + index}
           >
             <div className={styles.aggregate}>
               <ImSpoonKnife />
@@ -43,6 +43,7 @@ export const MakerRankPage = () => {
           </RankItem>
         ))
       )}
+      {isFetching && <RankListSkeleton />}
       <div id="observer" ref={setTarget} style={{ minHeight: "4em" }}></div>
     </SubjectBox>
   );

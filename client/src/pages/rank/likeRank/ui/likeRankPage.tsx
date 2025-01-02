@@ -1,12 +1,12 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-import { RankItem } from "shared/ui/rankItem";
 import { SubjectBox } from "shared/ui/subjectBox";
+import { RankItem, RankListSkeleton } from "shared/ui/rankItem";
 import { useIntersectionObserver } from "shared/hooks/useIntersectionObserver";
 import { RecipeQueries } from "entities/recipe";
 import { LikeButton } from "features/recipe/like";
 
-import styles from './likeRankPage.module.scss'
+import styles from "./likeRankPage.module.scss";
 
 export const LikeRankPage = () => {
   const {
@@ -32,7 +32,7 @@ export const LikeRankPage = () => {
             to={`/recipe/${recipe._id}`}
             picture={recipe.pictures[0]}
             title={recipe.name}
-            rank={index + pageIndex}
+            rank={10 * pageIndex + index}
           >
             <LikeButton
               recipe_id={recipe._id}
@@ -42,6 +42,7 @@ export const LikeRankPage = () => {
           </RankItem>
         ))
       )}
+      {isFetching &&<RankListSkeleton />}
       <div id="observer" ref={setTarget} style={{ minHeight: "4em" }}></div>
     </SubjectBox>
   );

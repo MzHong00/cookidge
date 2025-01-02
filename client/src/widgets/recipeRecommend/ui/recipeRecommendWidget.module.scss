@@ -9,20 +9,25 @@
 .recipeCard {
     font-size: 0.85rem;
     padding-bottom: 0.5em;
+
+    // 수정 가능성 있음
+    &>:nth-child(2)>:first-child>:nth-child(2) {
+        display: none;
+    }
 }
 
 .recommendButton {
     width: fit-content;
     @include app.main-button();
     border: 1px solid whitesmoke;
-}
 
-.recommendButton> svg {
-    transition: transform 0.5s ease-in-out;
-}
+    &>svg {
+        transition: transform 0.5s ease-in-out;
+    }
 
-.recommendButton:hover svg{
-    transform: rotate(360deg);
+    &:hover svg {
+        transform: rotate(360deg);
+    }
 }
 
 @media screen and (max-width: 767px) {

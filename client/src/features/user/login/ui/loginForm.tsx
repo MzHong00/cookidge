@@ -8,6 +8,7 @@ import { SubjectBox } from "shared/ui/subjectBox";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 
 import styles from "./loginForm.module.scss";
+import { InfoTooltip } from "shared/ui/infoToolTip";
 
 interface Props {
   className: string;
@@ -21,6 +22,8 @@ export const LoginForm = ({ className }: Props) => {
   return (
     <FramerFadeLayout className={`${styles.container} ${className}`}>
       <SubjectBox className={styles.loginForm}>
+    <InfoTooltip message="로그인이 정상적이지 않을 경우, 브라우저 설정에서 쿠키 허용으로 설정해 주세요."/>
+
         <Link to="/">
           <Logo className={styles.logo} />
         </Link>

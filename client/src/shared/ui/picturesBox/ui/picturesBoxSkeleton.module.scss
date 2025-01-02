@@ -4,5 +4,5 @@
     max-width: 500px;
     width: 100%;
     aspect-ratio: 1;
-    @include app.skeletonShimmer();
+    @include app.skeleton-shimmer();
 }

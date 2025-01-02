@@ -1,16 +1,14 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { RiUserHeartLine } from "@react-icons/all-files/ri/RiUserHeartLine";
 
-import { RankItem } from "shared/ui/rankItem";
 import { SubjectBox } from "shared/ui/subjectBox";
+import { RankItem, RankListSkeleton } from "shared/ui/rankItem";
 import { useIntersectionObserver } from "shared/hooks/useIntersectionObserver";
 import { UserQueries } from "entities/user";
 
 import styles from "./followerRankPage.module.scss";
 
-interface Props {}
-
-export const FollowerRankPage = ({}: Props) => {
+export const FollowerRankPage = () => {
   const {
     data: follwerRank,
     hasNextPage,
@@ -32,7 +30,7 @@ export const FollowerRankPage = ({}: Props) => {
             to={`/user/${name}`}
             picture={picture}
             title={name}
-            rank={index + pageIndex}
+            rank={10 * pageIndex + index}
           >
             <div className={styles.aggregate}>
               <RiUserHeartLine />
@@ -41,6 +39,7 @@ export const FollowerRankPage = ({}: Props) => {
           </RankItem>
         ))
       )}
+      {isFetching &&<RankListSkeleton />}
       <div id="observer" ref={setTarget} style={{ minHeight: "4em" }}></div>
     </SubjectBox>
   );

@@ -1,6 +1,14 @@
+@use 'app/app.scss';
+
 .tooltipWrapper {
+    margin-right: auto;
     position: relative;
-    display: flex;
+    @include app.flex-layout(row,stretch, stretch, 0);
+
+    &:hover .tooltipText {
+        visibility: visible;
+        opacity: 1;
+    }
 }
 
 .icon {
@@ -10,9 +18,9 @@
 }
 
 .tooltipText {
+    width: 350px;
     padding: 5px;
     padding-block: 10px;
-    max-width: 300px;
     position: absolute;
     top: 125%;
     left: 50%;
@@ -21,16 +29,14 @@
     box-shadow: 0px 0px 4px 0px rgb(var(--base-rgb-grey-light));
     background-color: white;
     visibility: hidden;
-    white-space: nowrap;
-    font-size: 0.9em;
     font-weight: normal;
-    text-align: center;
     z-index: 1;
     opacity: 0;
     transition: opacity 0.3s;
 }
 
-.tooltipWrapper:hover .tooltipText {
-    visibility: visible;
-    opacity: 1;
+@media screen and (max-width: 767px) {
+    .tooltipText {
+        width: 300px;
+    }
 }
