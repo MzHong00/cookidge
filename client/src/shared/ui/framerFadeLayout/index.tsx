@@ -1,29 +1,11 @@
-import {
-  motion,
-  AnimatePresence,
-  type HTMLMotionProps,
-  type Variants,
-} from "framer-motion";
+import styels from "./index.module.scss";
 
-interface Props extends HTMLMotionProps<"div"> {}
+interface Props extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const FramerFadeLayout = ({ children, ...props }: Props) => {
-  const variant: Variants = {
-    fadeIn: { opacity: 1 },
-    fadeOut: { opacity: 0 },
-  };
-
+export const FramerFadeLayout = ({ children, className, ...props }: Props) => {
   return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        variants={variant}
-        initial="fadeOut"
-        animate="fadeIn"
-        exit="fadeOut"
-        {...props}
-      >
-        {children}
-      </motion.div>
-    </AnimatePresence>
+    <div className={`${styels.container} ${className}`} {...props}>
+      {children}
+    </div>
   );
 };
