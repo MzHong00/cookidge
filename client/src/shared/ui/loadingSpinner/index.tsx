@@ -2,10 +2,15 @@ import { RiLoader3Line } from "@react-icons/all-files/ri/RiLoader3Line";
 
 import styles from "./index.module.scss";
 
-export const LoadingSpinner = () => {
+interface Props {
+  msg?: string;
+}
+
+export const LoadingSpinner = ({ msg }: Props) => {
   return (
-    <div className={styles.container}>
-      <RiLoader3Line className={styles.spinner} />
+    <div className={styles.spinner}>
+      <RiLoader3Line />
+      {msg && <p>{msg}</p>}
     </div>
   );
 };

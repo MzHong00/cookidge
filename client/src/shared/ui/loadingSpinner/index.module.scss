@@ -1,7 +1,12 @@
 .spinner {
     margin-inline: auto;
-    font-size: 2em;
-    animation: rotate 1.25s linear infinite;
+    text-align: center;
+    
+    &>svg {
+        color: rgb(var(--main-rgb));
+        font-size: 2em;
+        animation: rotate 1.25s linear infinite;
+    }
 }
 
 @keyframes rotate {
@@ -9,4 +14,3 @@
         transform: rotate(365deg);
     }
 }
-
