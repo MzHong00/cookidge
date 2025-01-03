@@ -52,6 +52,7 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
       cooking_steps: [{ picture: "", instruction: "" }],
     },
   });
+  console.log(watch("cooking_steps"));
   const previewFoodImages = usePreviewImages(watch("pictures"));
   const previewSteps = usePreviewSteps(watch("cooking_steps"));
 
@@ -98,7 +99,10 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
           <div className={styles.pictureSection}>
             <label className={styles.pictureLabel}>
               사진
-              <InfoTooltip message="Cookidge는 500x500px 이미지를 제일 좋아합니다! 사진을 드래그하여 여러 개 선택하세요." style={{fontSize: "0.9em"}} />
+              <InfoTooltip
+                message="Cookidge는 500x500px 이미지를 제일 좋아합니다! 사진을 드래그하여 여러 개 선택하세요."
+                style={{ fontSize: "0.9em" }}
+              />
             </label>
             <InputFile
               id="pictures"
@@ -325,7 +329,7 @@ const CookingStepField = ({
       <label>요리 과정</label>
       <ul className="w-full flex-column">
         {cookingStepFields.map((field, i) => (
-          <FramerFadeLayout key={field.id}>
+          <FramerFadeLayout key={`${field.id}${i}`}>
             <li className="w-full flex-row">
               <h2>{i + 1}</h2>
               <div className={styles.stepInputBox}>
