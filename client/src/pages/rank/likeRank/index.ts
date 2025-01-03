@@ -1,1 +1,3 @@
-export { LikeRankPage } from "./ui/likeRankPage";
+import { LikeRankPage } from "./ui/likeRankPage";
+
+export default LikeRankPage;

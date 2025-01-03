@@ -6,7 +6,7 @@ import { IconLink } from "shared/ui/iconLink";
 import { useModal } from "shared/hooks/useModal";
 import { IconButton } from "shared/ui/iconButton";
 import { SubjectBox } from "shared/ui/subjectBox";
-import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
+import { FadeLayout } from "shared/ui/fadeLayout";
 import {
   FridgeQueries,
   IngredientNearExpiry,
@@ -32,20 +32,14 @@ export const FridgeDetailPage = () => {
   const { modalRef, isOpen, toggleModal } = useModal();
 
   if (isPending) return <FridgeDetailPageSkeleton threshHold={THRESHOLD} />;
-
   if (!id || !fridgeDetail) return null;
 
   return (
-    <FramerFadeLayout className="flex-column">
-      <div className={styles.fridgeConfigContainer}>
-        <IconButton
-          ref={modalRef}
-          Icon={BsGear}
-          onClick={toggleModal}
-          className={styles.fridgeConfigButton}
-        />
+    <FadeLayout className="flex-column">
+      <div className={styles.config}>
+        <IconButton ref={modalRef} Icon={BsGear} onClick={toggleModal} />
         {isOpen && (
-          <div className={styles.fridgeActionBar}>
+          <div className={styles.configDropdown}>
             <IconLink to={`/dashboard/fridge/setting/${fridgeDetail._id}`}>
               수정
             </IconLink>
@@ -76,6 +70,6 @@ export const FridgeDetailPage = () => {
       </p>
 
       <MyIngredientWidget fridge={fridgeDetail} />
-    </FramerFadeLayout>
+    </FadeLayout>
   );
 };

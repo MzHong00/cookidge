@@ -14,10 +14,10 @@ import { InputBox } from "shared/ui/inputBox";
 import { InputFile } from "shared/ui/inputFile";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { IconButton } from "shared/ui/iconButton";
+import { FadeLayout } from "shared/ui/fadeLayout";
 import { InfoTooltip } from "shared/ui/infoToolTip";
-import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
-import { CldImg } from "shared/ui/cloudinaryImage/cloudinaryImage";
 import { useConfirmDialogActions } from "shared/ui/confirmDialog";
+import { CldImg } from "shared/ui/cloudinaryImage/cloudinaryImage";
 import { IRecipeForm } from "shared/api/recipe/type";
 import { usePreviewImages } from "shared/hooks/usePreviewImages";
 import { FOOD_CATEGORIES } from "entities/recipe";
@@ -92,13 +92,16 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
   };
 
   return (
-    <FramerFadeLayout>
+    <FadeLayout>
       <form className="flex-column" onSubmit={handleSubmit(onSubmit, onError)}>
         <SubjectBox title={submitTitle} className={styles.formContent}>
           <div className={styles.pictureSection}>
             <label className={styles.pictureLabel}>
               사진
-              <InfoTooltip message="Cookidge는 500x500px 이미지를 제일 좋아합니다! 사진을 드래그하여 여러 개 선택하세요." style={{fontSize: "0.9em"}} />
+              <InfoTooltip
+                message="Cookidge는 500x500px 이미지를 제일 좋아합니다! 사진을 드래그하여 여러 개 선택하세요."
+                style={{ fontSize: "0.9em" }}
+              />
             </label>
             <InputFile
               id="pictures"
@@ -203,7 +206,7 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
           />
         </SubjectBox>
       </form>
-    </FramerFadeLayout>
+    </FadeLayout>
   );
 };
 
@@ -230,11 +233,11 @@ const IngredientField = ({
   });
 
   return (
-    <FramerFadeLayout key="ingredients">
+    <FadeLayout key="ingredients">
       <label>재료</label>
       <ul className="w-full flex-column">
         {ingredientFields.map((filed, index) => (
-          <FramerFadeLayout key={filed.id}>
+          <FadeLayout key={filed.id}>
             <li className="w-full flex-row">
               <select
                 id="category"
@@ -279,7 +282,7 @@ const IngredientField = ({
                 }}
               />
             </li>
-          </FramerFadeLayout>
+          </FadeLayout>
         ))}
         <IconButton
           Icon={RiAddLine}
@@ -292,7 +295,7 @@ const IngredientField = ({
           추가
         </IconButton>
       </ul>
-    </FramerFadeLayout>
+    </FadeLayout>
   );
 };
 
@@ -325,7 +328,7 @@ const CookingStepField = ({
       <label>요리 과정</label>
       <ul className="w-full flex-column">
         {cookingStepFields.map((field, i) => (
-          <FramerFadeLayout key={field.id}>
+          <FadeLayout key={`${field.id}${i}`}>
             <li className="w-full flex-row">
               <h2>{i + 1}</h2>
               <div className={styles.stepInputBox}>
@@ -359,7 +362,7 @@ const CookingStepField = ({
                 style={{ alignItems: "stretch" }}
               />
             </li>
-          </FramerFadeLayout>
+          </FadeLayout>
         ))}
         <IconButton
           Icon={RiAddLine}

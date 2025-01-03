@@ -6,7 +6,7 @@ import { IconBox } from "shared/ui/iconBox";
 import { IconLink } from "shared/ui/iconLink";
 import { PicturesBox, PicturesBoxSkeleton } from "shared/ui/picturesBox";
 import { ProfileImage } from "shared/ui/profileImage";
-import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
+import { FadeLayout } from "shared/ui/fadeLayout";
 import { UserQueries } from "entities/user";
 import { RecipeQueries } from "entities/recipe/queries/recipeQueries";
 import { FollowButton } from "features/user/follow";
@@ -28,7 +28,7 @@ export const UserPage = () => {
   if (!user) return <div>존재하지 않는 사용자입니다.</div>;
 
   return (
-    <FramerFadeLayout className={styles.container}>
+    <FadeLayout className={styles.container}>
       <div className={styles.userInfoContainer}>
         <ProfileImage src={user?.picture} className={styles.profilesPicture} />
         <div className={styles.userInfo}>
@@ -85,6 +85,6 @@ export const UserPage = () => {
           ))}
         </div>
       </div>
-    </FramerFadeLayout>
+    </FadeLayout>
   );
 };

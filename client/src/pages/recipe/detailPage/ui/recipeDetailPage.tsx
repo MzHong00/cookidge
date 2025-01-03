@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
 import { RiUserReceived2Line } from "@react-icons/all-files/ri/RiUserReceived2Line";
 
-import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
+import { FadeLayout } from "shared/ui/fadeLayout";
 import { UserCard, UserQueries } from "entities/user";
 import { RecipeStep, RecipeQueries } from "entities/recipe";
 import { DeleteRecipeButton } from "features/recipe/delete";
@@ -22,7 +22,7 @@ export const RecipeDetailPage = () => {
   const { user, ...recipe } = recipeWithUser;
 
   return (
-    <FramerFadeLayout className="flex-column">
+    <FadeLayout className="flex-column">
       <UserCard name={user.name} picture={user.picture}>
         {me?._id === user._id ? (
           <section className="flex-row-center">
@@ -44,6 +44,6 @@ export const RecipeDetailPage = () => {
       {!!recipe.cooking_steps.length && <RecipeStep recipeSteps={recipe.cooking_steps} />}
 
       <CommentWidget recipe_id={recipe._id}/>
-    </FramerFadeLayout>
+    </FadeLayout>
   );
 };

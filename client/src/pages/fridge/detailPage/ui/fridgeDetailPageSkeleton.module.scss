@@ -1,14 +1,22 @@
 @use 'app/app.scss';
 
-.count {
-    width: 2em;
-    height: 2em;
-    @include app.skeleton-shimmer();
+.config {
+    margin-left: auto;
+    width: fit-content;
+    background-color: white;
+    border: 1px solid rgb(var(--base-rgb-grey-light));
+    padding: 1rem;
 }
 
 .header {
     font-size: clamp(0.75rem, 2.5vw, 1rem);
     flex-direction: row-reverse;
+}
+
+.count {
+    width: 2em;
+    height: 2em;
+    @include app.skeleton-shimmer();
 }
 
 .expiredAt {
@@ -18,21 +26,21 @@
     @include app.skeleton-shimmer();
 }
 
-.ingredientBox {
+.ingredient {
     padding-block: 1rem;
     padding-inline: 10%;
-}
 
-.fridgeTitle {
-    width: 10rem;
-    height: 2.25em;
-    margin-inline: auto;
-    margin-bottom: 4rem;
-    @include app.skeleton-shimmer();
-}
+    &>:first-child {
+        width: 10rem;
+        height: 2.25em;
+        margin-inline: auto;
+        margin-bottom: 4rem;
+        @include app.skeleton-shimmer();
+    }
 
-.ingredientList {
-    width: 100%;
-    height: 36rem;
-    @include app.skeleton-shimmer();
+    &>:last-child {
+        width: 100%;
+        height: 36rem;
+        @include app.skeleton-shimmer();
+    }
 }

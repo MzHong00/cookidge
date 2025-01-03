@@ -2,42 +2,28 @@ import { lazy, Suspense } from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import { OAuthService } from "shared/api/oauth";
+import { LoadingSpinner } from "shared/ui/loadingSpinner";
 import { CreateFridgeForm } from "features/fridge/create";
+import { UserSearchBox } from "entities/user";
+import { RecipeSearchList } from "entities/recipe";
 import { Root } from "pages/root";
-import { RankOverViewPage } from "pages/rank/rankOverView";
 import { LoginPage } from "pages/login";
-import { SearchPage } from "pages/search";
 import { Dashboard } from "pages/dashboard";
 import { Home, searchOptionLoader } from "pages/home";
 import { RecipeDetailPage } from "pages/recipe/detailPage";
-import { RecipeCreatePage } from "pages/recipe/createPage";
-import { RecipeUpdatePage } from "pages/recipe/updatePage";
 import { FridgeDetailPage } from "pages/fridge/detailPage";
-import { FridgeSettingPage } from "pages/fridge/settingPage";
-import { UserSettingPage } from "pages/user/userSettingPage";
-import { UserSearchBox } from "entities/user";
-import { RecipeSearchList } from "entities/recipe";
-import { LikeRankPage } from "pages/rank/likeRank";
-import { MakerRankPage } from "pages/rank/makerRank";
-import { FollowerRankPage } from "pages/rank/followerRank";
-
-const UserPage = lazy(() =>
-  import("pages/user/userDetailPage").then((module) => ({
-    default: module.UserPage,
-  }))
-);
-
-const FridgeMyListPage = lazy(() =>
-  import("pages/fridge/myListPage").then((module) => ({
-    default: module.FridgeMyListPage,
-  }))
-);
-
-const RecipeMyPage = lazy(() =>
-  import("pages/recipe/myPage").then((module) => ({
-    default: module.RecipeMyPage,
-  }))
-);
+import { RankOverViewPage } from "pages/rank/rankOverView";
+const SearchPage = lazy(() => import("pages/search"));
+const UserPage = lazy(() => import("pages/user/userDetailPage"));
+const UserSettingPage = lazy(() => import("pages/user/userSettingPage"));
+const FridgeMyListPage = lazy(() => import("pages/fridge/myListPage"));
+const FridgeSettingPage = lazy(() => import("pages/fridge/settingPage"));
+const RecipeMyPage = lazy(() => import("pages/recipe/myPage"));
+const RecipeCreatePage = lazy(() => import("pages/recipe/createPage"));
+const RecipeUpdatePage = lazy(() => import("pages/recipe/updatePage"));
+const LikeRankPage = lazy(() => import("pages/rank/likeRank"));
+const MakerRankPage = lazy(() => import("pages/rank/makerRank"));
+const FollowerRankPage = lazy(() => import("pages/rank/followerRank"));
 
 const appRouter = createBrowserRouter([
   {
@@ -56,7 +42,11 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "search",
-        element: <SearchPage />,
+        element: (
+          <Suspense fallback={<LoadingSpinner msg="검색 페이지 로딩중..." />}>
+            <SearchPage />
+          </Suspense>
+        ),
         children: [
           {
             index: true, // 기본 경로 설정
@@ -75,7 +65,7 @@ const appRouter = createBrowserRouter([
       {
         path: "user/:name",
         element: (
-          <Suspense fallback={"...사용자 페이지 로딩 중"}>
+          <Suspense fallback={<LoadingSpinner msg="사용자 페이지 로딩중..." />}>
             <UserPage />
           </Suspense>
         ),
@@ -83,18 +73,16 @@ const appRouter = createBrowserRouter([
       {
         path: "setting",
         element: (
-          <Suspense fallback={"...사용자 편집 폼 로딩 중"}>
+          <Suspense
+            fallback={<LoadingSpinner msg="사용자 설정 페이지 로딩중..." />}
+          >
             <UserSettingPage />
           </Suspense>
         ),
       },
       {
         path: "dashboard",
-        element: (
-          <Suspense fallback={"...dashboard 페이지 로딩중"}>
-            <Dashboard />
-          </Suspense>
-        ),
+        element: <Dashboard />,
         children: [
           {
             index: true,
@@ -103,7 +91,9 @@ const appRouter = createBrowserRouter([
           {
             path: "fridge",
             element: (
-              <Suspense fallback={"...fridge 페이지 로딩중"}>
+              <Suspense
+                fallback={<LoadingSpinner msg="냉장고 리스트 로딩중..." />}
+              >
                 <FridgeMyListPage />
               </Suspense>
             ),
@@ -113,9 +103,17 @@ const appRouter = createBrowserRouter([
                 element: <FridgeDetailPage />,
               },
               {
-                path: 'setting/:id',
-                element: <FridgeSettingPage />
-              }
+                path: "setting/:id",
+                element: (
+                  <Suspense
+                    fallback={
+                      <LoadingSpinner msg="냉장고 설정 페이지 로딩중..." />
+                    }
+                  >
+                    <FridgeSettingPage />
+                  </Suspense>
+                ),
+              },
             ],
           },
           {
@@ -125,36 +123,72 @@ const appRouter = createBrowserRouter([
           {
             path: "recipe",
             element: (
-              <Suspense fallback={"...myRecipe 페이지 로딩중"}>
+              <Suspense
+                fallback={<LoadingSpinner msg="나의 레시피 페이지 로딩중..." />}
+              >
                 <RecipeMyPage />
               </Suspense>
             ),
           },
           {
             path: "recipe/create",
-            element: <RecipeCreatePage />,
+            element: (
+              <Suspense
+                fallback={<LoadingSpinner msg="레시피 생성 페이지 로딩중..." />}
+              >
+                <RecipeCreatePage />
+              </Suspense>
+            ),
           },
           {
             path: "recipe/update",
-            element: <RecipeUpdatePage />,
+            element: (
+              <Suspense
+                fallback={<LoadingSpinner msg="레시피 수정 페이지 로딩중..." />}
+              >
+                <RecipeUpdatePage />
+              </Suspense>
+            ),
           },
         ],
       },
       {
-        path: 'rank',
-        element: <RankOverViewPage/>,
+        path: "rank",
+        element: <RankOverViewPage />,
       },
       {
         path: "rank/recipe-like",
-        element: <LikeRankPage />, 
+        element: (
+          <Suspense
+            fallback={
+              <LoadingSpinner msg="레시피 좋아요 랭킹 페이지 로딩중..." />
+            }
+          >
+            <LikeRankPage />
+          </Suspense>
+        ),
       },
       {
         path: "rank/recipe-maker",
-        element: <MakerRankPage />,
+        element: (
+          <Suspense
+            fallback={
+              <LoadingSpinner msg="레시피 메이커 랭킹 페이지 로딩중..." />
+            }
+          >
+            <MakerRankPage />
+          </Suspense>
+        ),
       },
       {
         path: "rank/follower",
-        element: <FollowerRankPage />,
+        element: (
+          <Suspense
+            fallback={<LoadingSpinner msg="팔로우 랭킹 페이지 로딩중..." />}
+          >
+            <FollowerRankPage />
+          </Suspense>
+        ),
       },
     ],
   },

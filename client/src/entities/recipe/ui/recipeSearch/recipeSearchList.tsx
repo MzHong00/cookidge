@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 import { SearchBox } from "shared/ui/searchBox";
-import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
+import { FadeLayout } from "shared/ui/fadeLayout";
 import { useParamsDebounce } from "shared/hooks/useParamsDebounce";
 import { useIntersectionObserver } from "shared/hooks/useIntersectionObserver";
 import { RecipeCard, RecipeQueries } from "../..";
@@ -26,7 +26,7 @@ export const RecipeSearchList = () => {
         style={{ padding: "1em" }}
         onChange={onChangeRecipeSearch}
       />
-      <FramerFadeLayout>
+      <FadeLayout>
         <ul className={styles.searchRecipeList}>
           {recipePages?.pages.map((recipes) =>
             recipes?.map((recipe) => (
@@ -36,7 +36,7 @@ export const RecipeSearchList = () => {
             ))
           )}
         </ul>
-      </FramerFadeLayout>
+      </FadeLayout>
       <div id="observer" ref={setTarget} />
     </div>
   );

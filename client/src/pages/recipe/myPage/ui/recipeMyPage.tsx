@@ -8,7 +8,7 @@ import { IUser } from "shared/api/user";
 import { IconLink } from "shared/ui/iconLink";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { PicturesBox, PicturesBoxSkeleton } from "shared/ui/picturesBox";
-import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
+import { FadeLayout } from "shared/ui/fadeLayout";
 import { UserQueries } from "entities/user";
 import { RecipeQueries } from "entities/recipe";
 import { LoginForm } from "features/user/login";
@@ -29,7 +29,7 @@ export const RecipeMyPage = () => {
   if (!me) return <LoginForm className={styles.loginForm} />;
 
   return (
-    <FramerFadeLayout className="flex-column">
+    <FadeLayout className="flex-column">
       <IconLink to={"create"} Icon={RiAddLine} className="main-button">
         레시피 만들기
       </IconLink>
@@ -75,6 +75,6 @@ export const RecipeMyPage = () => {
           </div>
         </SubjectBox>
       </div>
-    </FramerFadeLayout>
+    </FadeLayout>
   );
 };

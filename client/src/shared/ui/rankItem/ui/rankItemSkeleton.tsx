@@ -6,8 +6,9 @@ export const RankListSkeleton = () => {
 
   return (
     <>
-      {Array.from({ length: skeletonCount }).map(() => (
+      {Array.from({ length: skeletonCount }).map((_, i) => (
         <div
+          key={i}
           className={`${rankItemStyles.container} ${skeletonStyles.skeleton}`}
         >
           <span></span>

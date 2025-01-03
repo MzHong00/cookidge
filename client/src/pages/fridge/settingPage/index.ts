@@ -1,1 +1,3 @@
-export { FridgeSettingPage } from "./ui/fridgeSettingPage";
+import { FridgeSettingPage } from "./ui/fridgeSettingPage";
+
+export default FridgeSettingPage;

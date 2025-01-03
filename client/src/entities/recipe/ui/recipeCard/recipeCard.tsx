@@ -3,10 +3,10 @@ import { RiTimer2Line } from "@react-icons/all-files/ri/RiTimer2Line";
 import { RiGroupLine } from "@react-icons/all-files/ri/RiGroupLine";
 
 import { IconBox } from "shared/ui/iconBox";
-import { dateGap } from "shared/helper/dateGap";
 import { IRecipeCard } from "shared/api/recipe";
+import { dateGap } from "shared/helper/dateGap";
+import { FadeLayout } from "shared/ui/fadeLayout";
 import { PicturesBox } from "shared/ui/picturesBox";
-import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 
 import styles from "./recipeCard.module.scss";
 
@@ -32,7 +32,7 @@ export const RecipeCard = ({
   } = recipe;
 
   return (
-    <FramerFadeLayout>
+    <FadeLayout>
       <article className={`${styles.container} ${className}`} {...props}>
         <PicturesBox pictures={pictures} />
         <div style={{paddingInline: '0.5em'}}>
@@ -50,6 +50,6 @@ export const RecipeCard = ({
           {children}
         </div>
       </article>
-    </FramerFadeLayout>
+    </FadeLayout>
   );
 };

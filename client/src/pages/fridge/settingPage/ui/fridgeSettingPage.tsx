@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
 import { SubjectBox } from "shared/ui/subjectBox";
+import { FadeLayout } from "shared/ui/fadeLayout";
 import { FridgeQueries } from "entities/fridge";
 import { UnshareMemberBox } from "features/fridge/unshare/ui/unshareMemberBox";
 import { UpdateFridgeForm } from "features/fridge/update";
@@ -15,7 +16,7 @@ export const FridgeSettingPage = () => {
   if (!fridge_id) return null;
 
   return (
-    <div className="flex-column">
+    <FadeLayout className="flex-column">
       <UpdateFridgeForm fridge_id={fridge_id} defaultName={fridge?.name} />
       <SubjectBox title="공유 멤버 관리">
         <ShareMemberBox
@@ -27,6 +28,6 @@ export const FridgeSettingPage = () => {
           allowed_users={fridge?.allowed_users}
         />
       </SubjectBox>
-    </div>
+    </FadeLayout>
   );
 };

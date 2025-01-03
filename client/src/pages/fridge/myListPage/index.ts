@@ -1,1 +1,3 @@
-export { FridgeMyListPage } from "./ui/fridgeMyListPage";
+import { FridgeMyListPage } from "./ui/fridgeMyListPage";
+
+export default FridgeMyListPage;

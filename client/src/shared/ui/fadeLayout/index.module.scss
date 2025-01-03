@@ -1,0 +1,10 @@
+.container {
+    opacity: 0;
+    animation: fadeAnimation 0.4s linear forwards;
+}
+
+@keyframes fadeAnimation {
+    to {
+        opacity: 1;
+    }
+}

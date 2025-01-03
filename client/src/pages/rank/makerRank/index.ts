@@ -1,1 +1,3 @@
-export { MakerRankPage } from "./ui/makerRankPage";
+import { MakerRankPage } from "./ui/makerRankPage";
+
+export default MakerRankPage;

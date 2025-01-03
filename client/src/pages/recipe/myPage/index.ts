@@ -1,1 +1,3 @@
-export { RecipeMyPage } from "./ui/recipeMyPage";
+import { RecipeMyPage } from "./ui/recipeMyPage";
+
+export default RecipeMyPage;
