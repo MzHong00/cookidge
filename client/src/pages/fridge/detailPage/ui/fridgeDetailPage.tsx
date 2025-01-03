@@ -32,20 +32,14 @@ export const FridgeDetailPage = () => {
   const { modalRef, isOpen, toggleModal } = useModal();
 
   if (isPending) return <FridgeDetailPageSkeleton threshHold={THRESHOLD} />;
-
   if (!id || !fridgeDetail) return null;
 
   return (
     <FadeLayout className="flex-column">
-      <div className={styles.fridgeConfigContainer}>
-        <IconButton
-          ref={modalRef}
-          Icon={BsGear}
-          onClick={toggleModal}
-          className={styles.fridgeConfigButton}
-        />
+      <div className={styles.config}>
+        <IconButton ref={modalRef} Icon={BsGear} onClick={toggleModal} />
         {isOpen && (
-          <div className={styles.fridgeActionBar}>
+          <div className={styles.configDropdown}>
             <IconLink to={`/dashboard/fridge/setting/${fridgeDetail._id}`}>
               수정
             </IconLink>

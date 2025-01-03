@@ -1,3 +1,4 @@
+import { BsGear } from "@react-icons/all-files/bs/BsGear";
 import { IoReload } from "@react-icons/all-files/io5/IoReload";
 import { RiTimer2Line } from "@react-icons/all-files/ri/RiTimer2Line";
 import { RiSeedlingLine } from "@react-icons/all-files/ri/RiSeedlingLine";
@@ -15,6 +16,8 @@ interface Props {
 export const FridgeDetailPageSkeleton = ({ threshHold }: Props) => {
   return (
     <div className="flex-column">
+      <IconButton Icon={BsGear} className={styles.config} />
+
       <SubjectBox title="공유자">
         <div className="flex-row">
           {Array.from({ length: Math.floor(Math.random() * 10) }).map(
@@ -31,7 +34,7 @@ export const FridgeDetailPageSkeleton = ({ threshHold }: Props) => {
           Icon={RiSeedlingLine}
           headerClassName={styles.header}
         >
-          <div className={styles.count} />
+          <div className={styles.count}/>
           <p>총 재료 수</p>
         </SubjectBox>
 
@@ -40,7 +43,7 @@ export const FridgeDetailPageSkeleton = ({ threshHold }: Props) => {
           Icon={RiTimer2Line}
           headerClassName={styles.header}
         >
-          <div className={styles.count} />
+          <div className={styles.count}/>
           <p>{threshHold}일 이내 유통기한 만료 재료 수</p>
         </SubjectBox>
       </div>
@@ -60,7 +63,7 @@ export const FridgeDetailPageSkeleton = ({ threshHold }: Props) => {
 
       <div className={styles.expiredAt} />
 
-      <SubjectBox className={styles.ingredientBox}>
+      <SubjectBox className={styles.ingredient}>
         <div className={styles.fridgeTitle} />
         <h2>재료 목록</h2>
         <div className={styles.ingredientList} />
