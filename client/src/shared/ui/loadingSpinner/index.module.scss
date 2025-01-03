@@ -1,0 +1,12 @@
+.spinner {
+    margin-inline: auto;
+    font-size: 2em;
+    animation: rotate 1.25s linear infinite;
+}
+
+@keyframes rotate {
+    to {
+        transform: rotate(365deg);
+    }
+}
+
