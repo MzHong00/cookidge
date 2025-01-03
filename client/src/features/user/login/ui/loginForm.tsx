@@ -5,10 +5,10 @@ import { Logo } from "shared/ui/logo";
 import { IconBox } from "shared/ui/iconBox";
 import { OAuthService } from "shared/api/oauth";
 import { SubjectBox } from "shared/ui/subjectBox";
+import { InfoTooltip } from "shared/ui/infoToolTip";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
 
 import styles from "./loginForm.module.scss";
-import { InfoTooltip } from "shared/ui/infoToolTip";
 
 interface Props {
   className: string;
