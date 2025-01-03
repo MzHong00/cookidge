@@ -1,1 +1,3 @@
-export { FollowerRankPage } from "./ui/followerRankPage";
+import { FollowerRankPage } from "./ui/followerRankPage";
+
+export default FollowerRankPage;

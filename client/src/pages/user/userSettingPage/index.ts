@@ -1,1 +1,3 @@
-export { UserSettingPage } from "./ui/userSettingPage";
+import { UserSettingPage } from "./ui/userSettingPage";
+
+export default UserSettingPage;

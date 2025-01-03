@@ -1,1 +1,3 @@
-export { SearchPage } from "./ui/searchPage";
+import { SearchPage } from "./ui/searchPage";
+
+export default SearchPage;
