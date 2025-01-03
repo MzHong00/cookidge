@@ -22,7 +22,7 @@ export const LoginForm = ({ className }: Props) => {
   return (
     <FramerFadeLayout className={`${styles.container} ${className}`}>
       <SubjectBox className={styles.loginForm}>
-    <InfoTooltip message="로그인이 정상적이지 않을 경우, 브라우저 설정에서 쿠키 허용으로 설정해 주세요."/>
+        <InfoTooltip message="로그인이 정상적이지 않을 경우, 브라우저 설정에서 트래커 추적 방지를 허용해 주세요." />
 
         <Link to="/">
           <Logo className={styles.logo} />
