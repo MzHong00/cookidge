@@ -3,7 +3,7 @@ import { AdvancedImage } from "@cloudinary/react";
 
 import cloudinary from "shared/lib/cloudinary";
 
-interface Props extends React.HTMLAttributes<HTMLImageElement> {
+interface Props extends React.ImgHTMLAttributes<HTMLImageElement> {
   cldImg: string;
   plugins?: Plugins;
 }
