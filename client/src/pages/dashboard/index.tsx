@@ -3,6 +3,7 @@ import { Outlet, useLocation } from "react-router-dom";
 
 import { IconLink } from "shared/ui/iconLink";
 import { FadeLayout } from "shared/ui/fadeLayout";
+import { LoadingSpinner } from "shared/ui/loadingSpinner";
 import { ItemSelectionBox } from "shared/ui/itemSelection";
 import { UserQueries } from "entities/user";
 import { LoginForm } from "features/user/login";
@@ -18,7 +19,7 @@ export const Dashboard = () => {
     recipe: "레시피",
   };
 
-  if(isLoading) return <div>사용자 가져오는 중...</div>
+  if(isLoading) return <LoadingSpinner msg="사용자 가져오는 중..."/>
   if (!user) return <LoginForm className={styles.loginForm} />;
 
   return (
