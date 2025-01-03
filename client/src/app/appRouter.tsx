@@ -2,23 +2,23 @@ import { lazy, Suspense } from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import { OAuthService } from "shared/api/oauth";
+import { LoadingSpinner } from "shared/ui/loadingSpinner";
 import { CreateFridgeForm } from "features/fridge/create";
+import { UserSearchBox } from "entities/user";
+import { RecipeSearchList } from "entities/recipe";
 import { Root } from "pages/root";
-import { RankOverViewPage } from "pages/rank/rankOverView";
 import { LoginPage } from "pages/login";
 import { Dashboard } from "pages/dashboard";
 import { Home, searchOptionLoader } from "pages/home";
 import { RecipeDetailPage } from "pages/recipe/detailPage";
 import { FridgeDetailPage } from "pages/fridge/detailPage";
-import { UserSearchBox } from "entities/user";
-import { LoadingSpinner } from "shared/ui/loadingSpinner";
-import { RecipeSearchList } from "entities/recipe";
+import { RankOverViewPage } from "pages/rank/rankOverView";
 const SearchPage = lazy(() => import("pages/search"));
-const RecipeMyPage = lazy(() => import("pages/recipe/myPage"));
 const UserPage = lazy(() => import("pages/user/userDetailPage"));
-const FridgeMyListPage = lazy(() => import("pages/fridge/myListPage"));
 const UserSettingPage = lazy(() => import("pages/user/userSettingPage"));
+const FridgeMyListPage = lazy(() => import("pages/fridge/myListPage"));
 const FridgeSettingPage = lazy(() => import("pages/fridge/settingPage"));
+const RecipeMyPage = lazy(() => import("pages/recipe/myPage"));
 const RecipeCreatePage = lazy(() => import("pages/recipe/createPage"));
 const RecipeUpdatePage = lazy(() => import("pages/recipe/updatePage"));
 const LikeRankPage = lazy(() => import("pages/rank/likeRank"));
@@ -43,7 +43,7 @@ const appRouter = createBrowserRouter([
       {
         path: "search",
         element: (
-          <Suspense fallback={<LoadingSpinner />}>
+          <Suspense fallback={<LoadingSpinner msg="검색 페이지 로딩중..." />}>
             <SearchPage />
           </Suspense>
         ),
@@ -65,7 +65,7 @@ const appRouter = createBrowserRouter([
       {
         path: "user/:name",
         element: (
-          <Suspense fallback={<LoadingSpinner />}>
+          <Suspense fallback={<LoadingSpinner msg="사용자 페이지 로딩중..." />}>
             <UserPage />
           </Suspense>
         ),
@@ -73,7 +73,9 @@ const appRouter = createBrowserRouter([
       {
         path: "setting",
         element: (
-          <Suspense fallback={<LoadingSpinner />}>
+          <Suspense
+            fallback={<LoadingSpinner msg="사용자 설정 페이지 로딩중..." />}
+          >
             <UserSettingPage />
           </Suspense>
         ),
@@ -89,7 +91,9 @@ const appRouter = createBrowserRouter([
           {
             path: "fridge",
             element: (
-              <Suspense fallback={<LoadingSpinner />}>
+              <Suspense
+                fallback={<LoadingSpinner msg="냉장고 리스트 로딩중..." />}
+              >
                 <FridgeMyListPage />
               </Suspense>
             ),
@@ -101,7 +105,11 @@ const appRouter = createBrowserRouter([
               {
                 path: "setting/:id",
                 element: (
-                  <Suspense fallback={"...냉장고 설정 페이지 로딩중"}>
+                  <Suspense
+                    fallback={
+                      <LoadingSpinner msg="냉장고 설정 페이지 로딩중..." />
+                    }
+                  >
                     <FridgeSettingPage />
                   </Suspense>
                 ),
@@ -115,7 +123,9 @@ const appRouter = createBrowserRouter([
           {
             path: "recipe",
             element: (
-              <Suspense fallback={"...myRecipe 페이지 로딩중"}>
+              <Suspense
+                fallback={<LoadingSpinner msg="나의 레시피 페이지 로딩중..." />}
+              >
                 <RecipeMyPage />
               </Suspense>
             ),
@@ -123,7 +133,9 @@ const appRouter = createBrowserRouter([
           {
             path: "recipe/create",
             element: (
-              <Suspense fallback={"...레시피 생성 페이지 로딩중"}>
+              <Suspense
+                fallback={<LoadingSpinner msg="레시피 생성 페이지 로딩중..." />}
+              >
                 <RecipeCreatePage />
               </Suspense>
             ),
@@ -131,7 +143,9 @@ const appRouter = createBrowserRouter([
           {
             path: "recipe/update",
             element: (
-              <Suspense fallback={"...레시피 수정 페이지 로딩중"}>
+              <Suspense
+                fallback={<LoadingSpinner msg="레시피 수정 페이지 로딩중..." />}
+              >
                 <RecipeUpdatePage />
               </Suspense>
             ),
@@ -145,7 +159,11 @@ const appRouter = createBrowserRouter([
       {
         path: "rank/recipe-like",
         element: (
-          <Suspense fallback={"...레시피 수정 페이지 로딩중"}>
+          <Suspense
+            fallback={
+              <LoadingSpinner msg="레시피 좋아요 랭킹 페이지 로딩중..." />
+            }
+          >
             <LikeRankPage />
           </Suspense>
         ),
@@ -153,7 +171,11 @@ const appRouter = createBrowserRouter([
       {
         path: "rank/recipe-maker",
         element: (
-          <Suspense fallback={"...레시피 수정 페이지 로딩중"}>
+          <Suspense
+            fallback={
+              <LoadingSpinner msg="레시피 메이커 랭킹 페이지 로딩중..." />
+            }
+          >
             <MakerRankPage />
           </Suspense>
         ),
@@ -161,7 +183,9 @@ const appRouter = createBrowserRouter([
       {
         path: "rank/follower",
         element: (
-          <Suspense fallback={"...레시피 수정 페이지 로딩중"}>
+          <Suspense
+            fallback={<LoadingSpinner msg="팔로우 랭킹 페이지 로딩중..." />}
+          >
             <FollowerRankPage />
           </Suspense>
         ),
