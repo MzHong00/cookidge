@@ -16,8 +16,8 @@ import { SubjectBox } from "shared/ui/subjectBox";
 import { IconButton } from "shared/ui/iconButton";
 import { InfoTooltip } from "shared/ui/infoToolTip";
 import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
-import { CldImg } from "shared/ui/cloudinaryImage/cloudinaryImage";
 import { useConfirmDialogActions } from "shared/ui/confirmDialog";
+import { CldImg } from "shared/ui/cloudinaryImage/cloudinaryImage";
 import { IRecipeForm } from "shared/api/recipe/type";
 import { usePreviewImages } from "shared/hooks/usePreviewImages";
 import { FOOD_CATEGORIES } from "entities/recipe";
@@ -52,7 +52,6 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
       cooking_steps: [{ picture: "", instruction: "" }],
     },
   });
-  console.log(watch("cooking_steps"));
   const previewFoodImages = usePreviewImages(watch("pictures"));
   const previewSteps = usePreviewSteps(watch("cooking_steps"));
 
