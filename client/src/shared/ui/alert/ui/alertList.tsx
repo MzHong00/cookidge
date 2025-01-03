@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { RiCheckLine } from "@react-icons/all-files/ri/RiCheckLine";
 import { RiErrorWarningLine } from "@react-icons/all-files/ri/RiErrorWarningLine";
 
-import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
+import { FadeLayout } from "shared/ui/fadeLayout";
 import { type AlertTypes, useAlertActions, useAlertQueue } from "..";
 
 import styles from "./alertList.module.scss";
@@ -19,13 +19,13 @@ const Alert = ({ message, type }: AlertTypes) => {
   }, [alertDequeue]);
 
   return (
-    <FramerFadeLayout
+    <FadeLayout
       className={styles.alert}
       style={{ backgroundColor: isSuccess ? "green" : "red" }}
     >
       {isSuccess ? <RiCheckLine /> : <RiErrorWarningLine />}
       {message}
-    </FramerFadeLayout>
+    </FadeLayout>
   );
 };
 

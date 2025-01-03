@@ -5,7 +5,7 @@ import { InputBox } from "shared/ui/inputBox";
 import { IconLink } from "shared/ui/iconLink";
 import { IconButton } from "shared/ui/iconButton";
 import { SubjectBox } from "shared/ui/subjectBox";
-import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
+import { FadeLayout } from "shared/ui/fadeLayout";
 import { useConfirmDialogActions } from "shared/ui/confirmDialog";
 import { useCreateFridgeMutation } from "../mutation/createFridgeMutation";
 
@@ -35,7 +35,7 @@ export const CreateFridgeForm = () => {
   };
 
   return (
-    <FramerFadeLayout>
+    <FadeLayout>
       <form onSubmit={handleSubmit(onSubmit)}>
         <SubjectBox title="냉장고 생성" className={styles.subjectBox}>
           <div>
@@ -61,6 +61,6 @@ export const CreateFridgeForm = () => {
           </div>
         </SubjectBox>
       </form>
-    </FramerFadeLayout>
+    </FadeLayout>
   );
 };

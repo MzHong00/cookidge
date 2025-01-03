@@ -6,7 +6,7 @@ import { IconLink } from "shared/ui/iconLink";
 import { useModal } from "shared/hooks/useModal";
 import { IconButton } from "shared/ui/iconButton";
 import { SubjectBox } from "shared/ui/subjectBox";
-import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
+import { FadeLayout } from "shared/ui/fadeLayout";
 import {
   FridgeQueries,
   IngredientNearExpiry,
@@ -36,7 +36,7 @@ export const FridgeDetailPage = () => {
   if (!id || !fridgeDetail) return null;
 
   return (
-    <FramerFadeLayout className="flex-column">
+    <FadeLayout className="flex-column">
       <div className={styles.fridgeConfigContainer}>
         <IconButton
           ref={modalRef}
@@ -76,6 +76,6 @@ export const FridgeDetailPage = () => {
       </p>
 
       <MyIngredientWidget fridge={fridgeDetail} />
-    </FramerFadeLayout>
+    </FadeLayout>
   );
 };

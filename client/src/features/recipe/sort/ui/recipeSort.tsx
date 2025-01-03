@@ -3,7 +3,7 @@ import { RiArrowUpDownLine } from "@react-icons/all-files/ri/RiArrowUpDownLine";
 
 import { useModal } from "shared/hooks/useModal";
 import { IconButton } from "shared/ui/iconButton";
-import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
+import { FadeLayout } from "shared/ui/fadeLayout";
 import { useRecipeSortParams } from "../model/useRecipeSortParams";
 
 import styles from "./recipeSort.module.scss";
@@ -18,7 +18,7 @@ export const RecipeSort = () => {
         정렬
       </IconButton>
       {isOpen && (
-        <FramerFadeLayout>
+        <FadeLayout>
           <nav className={styles.sortContent}>
             {["최신순", "좋아요순"].map((value) => (
               <IconButton
@@ -30,7 +30,7 @@ export const RecipeSort = () => {
               </IconButton>
             ))}
           </nav>
-        </FramerFadeLayout>
+        </FadeLayout>
       )}
     </div>
   );

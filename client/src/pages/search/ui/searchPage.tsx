@@ -2,7 +2,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 import { IconButton } from "shared/ui/iconButton";
 import { BackspaceButton } from "shared/ui/backspaceButton";
-import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
+import { FadeLayout } from "shared/ui/fadeLayout";
 
 import styles from "./searchPage.module.scss";
 
@@ -16,7 +16,7 @@ export const SearchPage = () => {
   const navigate = useNavigate();
 
   return (
-    <FramerFadeLayout className="flex-column">
+    <FadeLayout className="flex-column">
       <BackspaceButton />
       <div>
         <div className={styles.searchTagetBox}>
@@ -34,6 +34,6 @@ export const SearchPage = () => {
         </div>
       </div>
       <Outlet />
-    </FramerFadeLayout>
+    </FadeLayout>
   );
 };

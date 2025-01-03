@@ -2,7 +2,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { ImSpoonKnife } from "@react-icons/all-files/im/ImSpoonKnife";
 import { RiUserHeartLine } from "@react-icons/all-files/ri/RiUserHeartLine";
 
-import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
+import { FadeLayout } from "shared/ui/fadeLayout";
 import { RankItem, RankListSkeleton } from "shared/ui/rankItem";
 import { UserQueries } from "entities/user";
 import { RecipeQueries } from "entities/recipe";
@@ -20,7 +20,7 @@ export const RankOverViewPage = () => {
     useInfiniteQuery(UserQueries.InfiniteRecipeMakerRankQuery());
 
   return (
-    <FramerFadeLayout className={styles.container}>
+    <FadeLayout className={styles.container}>
       <h2>랭킹</h2>
       <RankOverViewList to="recipe-like" subject="좋아요가 많은 레시피">
         {isRecipeListRankPending && <RankListSkeleton />}
@@ -86,6 +86,6 @@ export const RankOverViewPage = () => {
           )
         )}
       </RankOverViewList>
-    </FramerFadeLayout>
+    </FadeLayout>
   );
 };

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import { Logo } from "shared/ui/logo";
-import { FramerFadeLayout } from "shared/ui/framerFadeLayout";
+import { FadeLayout } from "shared/ui/fadeLayout";
 import { useHandleShowingDialog, useConfirmDialogStore } from "..";
 
 import styles from "./confirmDialog.module.scss";
@@ -32,7 +32,7 @@ export const ConfirmDialog = () => {
   return (
     <dialog ref={ref}>
       {isLoading && <div className={styles.loadingSpinner} />}
-      <FramerFadeLayout className={styles.dialog}>
+      <FadeLayout className={styles.dialog}>
         <header className={styles.header}>
           <Logo />
           <h4>{message}</h4>
@@ -52,7 +52,7 @@ export const ConfirmDialog = () => {
           </IconButton>
           <IconButton onClick={actions.closeDialog}>취소</IconButton>
         </main>
-      </FramerFadeLayout>
+      </FadeLayout>
     </dialog>
   );
 };
