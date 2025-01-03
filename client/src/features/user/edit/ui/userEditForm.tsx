@@ -6,11 +6,10 @@ import { TextArea } from "shared/ui/textArea";
 import { InputFile } from "shared/ui/inputFile";
 import { IconButton } from "shared/ui/iconButton";
 import { IUserInputDTO } from "shared/api/user/type";
-import { BackspaceButton } from "shared/ui/backspaceButton";
 import { useConfirmDialogActions } from "shared/ui/confirmDialog";
 import { usePreviewImages } from "shared/hooks/usePreviewImages";
-import { useUpdateUserMutation } from "../mutation/updateUserMutation";
 import { UserQueries } from "entities/user";
+import { useUpdateUserMutation } from "../mutation/updateUserMutation";
 
 import styles from "./userEditForm.module.scss";
 
@@ -41,7 +40,6 @@ export const UserEditForm = () => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      <BackspaceButton />
       <InputFile
         id="pictures"
         className={styles.uploadPictureButton}
