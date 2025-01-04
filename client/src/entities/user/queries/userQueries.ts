@@ -56,8 +56,8 @@ export class UserQueries {
           },
         }),
       initialPageParam: 0,
-      getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
-        if (lastPage?.length === 0) return;
+      getNextPageParam: (lastPage, allPages, lastPageParam) => {
+        if (lastPage.length === 0 || lastPage.length < Number(limit)) return;
 
         return lastPageParam + 1;
       },
@@ -77,12 +77,12 @@ export class UserQueries {
           signal,
           params: {
             limit: limit,
-            offset: pageParam * Number(limit),
+            offset: pageParam * limit,
           },
         }),
       initialPageParam: 0,
-      getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
-        if (lastPage?.length === 0) return;
+      getNextPageParam: (lastPage, allPages, lastPageParam) => {
+        if (lastPage.length === 0 || lastPage.length < limit) return;
 
         return lastPageParam + 1;
       },
@@ -101,12 +101,12 @@ export class UserQueries {
           signal,
           params: {
             limit: limit,
-            offset: pageParam * Number(limit),
+            offset: pageParam * limit,
           },
         }),
       initialPageParam: 0,
-      getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
-        if (lastPage?.length === 0) return;
+      getNextPageParam: (lastPage, allPages, lastPageParam) => {
+        if (lastPage.length === 0 || lastPage.length < limit) return;
 
         return lastPageParam + 1;
       },

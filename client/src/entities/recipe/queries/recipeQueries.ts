@@ -107,13 +107,13 @@ export class RecipeQueries {
           signal,
           params: {
             query: query,
-            offset: pageParam * Number(limit),
+            offset: pageParam * limit,
             limit: limit,
           },
         }),
       initialPageParam: 0,
       getNextPageParam: (lastPage, allPages, lastPageParam) => {
-        if (lastPage?.length === 0 || lastPage?.length < Number(limit)) return;
+        if (lastPage?.length === 0 || lastPage?.length < limit) return;
 
         return lastPageParam + 1;
       },
@@ -139,7 +139,7 @@ export class RecipeQueries {
         RecipeService.readRecipeList({
           params: {
             limit,
-            offset: pageParam * Number(limit),
+            offset: pageParam * limit,
             categories,
             sort,
           },
@@ -147,7 +147,7 @@ export class RecipeQueries {
         }),
       initialPageParam: 0,
       getNextPageParam: (lastPage, allPages, lastPageParam) => {
-        if (lastPage?.length === 0 || lastPage?.length < Number(limit)) return;
+        if (lastPage?.length === 0 || lastPage?.length < limit) return;
 
         return lastPageParam + 1;
       },
