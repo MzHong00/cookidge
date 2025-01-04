@@ -1,42 +1,44 @@
-import mongoose from "mongoose";
 import { Router } from "express";
 import { celebrate, Joi, Segments } from "celebrate";
 
 import isAuth from "../../middleware/isAuth";
 import { CommentService } from "../../../services/comment";
-import { deleteCommentAuthorization, isMyComment } from "../../middleware/commentAuthorization";
+import {
+  deleteCommentAuthorization,
+  isMyComment,
+} from "../../middleware/commentAuthorization";
 
 const route = Router();
 
 export default (app: Router) => {
   app.use("/comment", route);
 
-  route.get("/read-list", async (req, res) => {
-    const { recipe_id, last_comment_id } = req.query;
+  route.get(
+    "/read-list",
+    celebrate({
+      [Segments.QUERY]: Joi.object({
+        recipe_id: Joi.string().required(),
+        last_comment_id: Joi.string().allow(''),
+        limit: Joi.string(),
+      }),
+    }),
+    async (req, res) => {
+      const commentQuery = req.query as {
+        recipe_id: string;
+        last_comment_id?: string;
+        limit: string;
+      };
+      
+      try {
+        const comment = await CommentService.readComments(commentQuery);
 
-    const recipeObjectId = mongoose.Types.ObjectId.createFromHexString(
-      recipe_id as string
-    );
-    const lastCommentObjectId = last_comment_id
-      ? mongoose.Types.ObjectId.createFromHexString(last_comment_id as string)
-      : undefined;
-
-    try {
-      const comment = await CommentService.readComments(
-        recipeObjectId,
-        lastCommentObjectId
-      );
-
-      if (!comment) {
-        return res.status(404).json({ message: "댓글을 찾을 수 없습니다." });
+        res.status(200).json(comment);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "댓글 조회에 실패했습니다." });
       }
-
-      res.status(200).json(comment);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "댓글 조회에 실패했습니다." });
     }
-  });
+  );
 
   route.post(
     "/create",
@@ -52,11 +54,7 @@ export default (app: Router) => {
       const { recipe_id, comment } = req.body;
 
       try {
-        await CommentService.createComment(
-          userId,
-          recipe_id,
-          comment
-        );
+        await CommentService.createComment(userId, recipe_id, comment);
 
         res.status(201).json({ message: "댓글 생성에 성공했습니다." });
       } catch (error) {

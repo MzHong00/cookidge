@@ -1,29 +1,31 @@
 import mongoose from "mongoose";
 
-import { IComment } from "../interface/IComment";
+import type { IUser } from "../interface/IUser";
+import type { IRecipe } from "../interface/IRecipe";
+import type { IComment, ICommentQuery } from "../interface/IComment";
+
 import { Comment } from "../models/comment";
-import { IRecipe } from "../interface/IRecipe";
-import { IUser } from "../interface/IUser";
 
 export class CommentService {
-  static readComments(
-    recipeId: IRecipe["_id"] | mongoose.mongo.BSON.ObjectId,
-    lastCommentId?: IRecipe["_id"] | mongoose.mongo.BSON.ObjectId
-  ) {
+  static readComments(query: ICommentQuery) {
+    const { recipe_id, last_comment_id, limit = 10 } = query;
+
     try {
       return Comment.aggregate([
         {
           $match: {
-            ...(lastCommentId && {
+            ...(last_comment_id && {
               _id: {
-                $lt: lastCommentId,
+                $lt: mongoose.Types.ObjectId.createFromHexString(
+                  last_comment_id
+                ),
               },
             }),
-            recipe_id: recipeId,
+            recipe_id: mongoose.Types.ObjectId.createFromHexString(recipe_id),
           },
         },
         { $sort: { _id: -1 } },
-        { $limit: 10 },
+        { $limit: Number(limit) },
         {
           $lookup: {
             from: "users",
