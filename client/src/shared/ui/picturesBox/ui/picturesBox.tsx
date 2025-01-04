@@ -3,8 +3,8 @@ import { RiArrowDropRightLine } from "@react-icons/all-files/ri/RiArrowDropRight
 
 import type { IRecipe } from "shared/api/recipe";
 import { IconButton } from "shared/ui/iconButton";
+import { useSlide } from "shared/hooks/useSlide";
 import { CldImg } from "shared/ui/cloudinaryImage/cloudinaryImage";
-import { usePictureSlide } from "../model/usePictureSlide";
 
 import styles from "./picturesBox.module.scss";
 
@@ -26,7 +26,7 @@ export const PicturesBox = ({
     onClickNext,
     onClickSlideByIndicator,
     onScrollDetectIndex,
-  } = usePictureSlide();
+  } = useSlide();
 
   if (pictures.length < 1)
     return (

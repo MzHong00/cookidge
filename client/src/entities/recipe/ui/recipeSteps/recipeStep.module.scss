@@ -9,69 +9,72 @@
 .indicatorContainer {
     @include app.flex-layout(row, center, end);
     gap: 0.75rem;
+
+    & button {
+        width: 1rem;
+        height: 1rem;
+        border-radius: 100%;
+        border: none;
+        background-color: silver;
+        transition-duration: 0.2s;
+    }
+
+    & button:hover {
+        @include app.main-button;
+    }
 }
 
-.dotIndicator {
-    width: 1rem;
-    height: 1rem;
-    border-radius: 100%;
-    border: none;
-    background-color: silver;
-    transition-duration: 0.2s;
-}
-
-.dotIndicator:hover {
-    @include app.main-button;
-}
-
-.activeDotIndicator {
+.activeIndicator {
     transform: scale(1.4);
     @include app.main-button;
-
 }
 
-.recipeStepSlider {
+.stepSlider {
     width: 100%;
     display: flex;
     overflow-x: auto;
     scroll-behavior: smooth;
     -ms-overflow-style: none;
+    scroll-snap-type: x mandatory;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    &>* {
+        scroll-snap-align: center;
+    }
 }
 
-.recipeStepSlider::-webkit-scrollbar {
-    display: none;
-}
-
-.recipeStepContent {
+.stepContent {
     min-width: 100%;
     height: 25rem;
     @include app.flex-layout(row);
+
+    &>* {
+        width: 50%;
+    }
 }
 
-.recipeStepContent>* {
-    width: 50%;
-}
-
-.recipeStepImage {
+.stepImage {
     color: white;
     object-fit: contain;
     background-color: black;
 }
 
-.recipeStepInstruction {
+.stepInstruction {
     height: 100%;
     @include app.flex-layout(column);
     gap: 0.5rem;
     overflow-y: auto;
-}
 
-.recipeStepPointer {
-    width: 1.5rem;
-    height: 1.5rem;
-    @include app.flex-layout(row, center, center);
-    @include app.main-button;
-    border-radius: 100%;
-    font-weight: bold;
+    &>b {
+        width: 1.5rem;
+        height: 1.5rem;
+        @include app.flex-layout(row, center, center);
+        @include app.main-button;
+        border-radius: 100%;
+    }
 }
 
 .stepNavigation {
@@ -83,12 +86,12 @@
 }
 
 @media screen and (max-width: 767px) {
-    .recipeStepContent {
+    .stepContent {
         flex-direction: column;
-    }
 
-    .recipeStepContent>* {
-        width: 100%;
-        height: 50%;
+        &>* {
+            width: 100%;
+            height: 50%;
+        }
     }
 }

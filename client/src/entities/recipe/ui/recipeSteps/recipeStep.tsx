@@ -1,8 +1,8 @@
 import type { ICookingStep } from "shared/api/recipe/type";
 import { IconButton } from "shared/ui/iconButton";
 import { SubjectBox } from "shared/ui/subjectBox";
+import { useSlide } from "shared/hooks/useSlide";
 import { CldImg } from "shared/ui/cloudinaryImage/cloudinaryImage";
-import { useHandleStepSlide } from "../..";
 
 import styles from "./recipeStep.module.scss";
 
@@ -11,13 +11,14 @@ interface Props {
 }
 
 export const RecipeStep = ({ recipeSteps }: Props) => {
-  const {
-    ref,
-    curStep,
-    changeStepByIndicator,
-    changeStpeByNextButton,
-    changeStpeByPrevButton,
-  } = useHandleStepSlide(recipeSteps.length);
+ const {
+     ref,
+     index,
+     onClickPrev,
+     onClickNext,
+     onClickSlideByIndicator,
+     onScrollDetectIndex,
+   } = useSlide();
 
   return (
     <SubjectBox title="레시피" className={styles.container}>
@@ -25,36 +26,39 @@ export const RecipeStep = ({ recipeSteps }: Props) => {
         {Array.from({ length: recipeSteps.length }).map((_, i) => (
           <li key={i}>
             <button
-              className={`${styles.dotIndicator} ${
-                curStep === i && styles.activeDotIndicator
-              }`}
+              className={`${index === i && styles.activeIndicator}`}
               data-index={i}
-              onClick={changeStepByIndicator}
+              onClick={onClickSlideByIndicator}
             />
           </li>
         ))}
       </ul>
 
-      <div ref={ref} className={styles.recipeStepSlider}>
+      <ul ref={ref} onScroll={onScrollDetectIndex} className={styles.stepSlider}>
         {recipeSteps?.map((step, idx) => (
-          <article key={step.instruction} className={styles.recipeStepContent}>
-            {step.picture && <CldImg cldImg={step.picture} className={styles.recipeStepImage} />}
-            <div className={styles.recipeStepInstruction}>
-              <div className={`${styles.recipeStepPointer}`}>{idx + 1}</div>
+          <li key={step.instruction} className={styles.stepContent}>
+            {step.picture && (
+              <CldImg
+                cldImg={step.picture}
+                className={styles.stepImage}
+              />
+            )}
+            <div className={styles.stepInstruction}>
+              <b>{idx + 1}</b>
               <p>{step.instruction}</p>
             </div>
-          </article>
+          </li>
         ))}
-      </div>
+      </ul>
 
       <div className={styles.stepNavigation}>
         <IconButton
           className={styles.stepPrevButton}
-          onClick={changeStpeByPrevButton}
+          onClick={onClickPrev}
         >
           이전
         </IconButton>
-        <IconButton className="main-button" onClick={changeStpeByNextButton}>
+        <IconButton className="main-button" onClick={onClickNext}>
           다음
         </IconButton>
       </div>
