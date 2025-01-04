@@ -15,6 +15,6 @@ export interface PreviewStep extends Omit<ICookingStep, "picture"> {
 }
 
 export interface PagenationParams {
-  limit: string | number;
-  offset: string | number;
+  limit: number;
+  offset: number;
 }

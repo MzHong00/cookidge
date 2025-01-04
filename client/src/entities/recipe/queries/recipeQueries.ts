@@ -98,7 +98,7 @@ export class RecipeQueries {
 
   // 레시피 검색 무한 스크롤
   static infinitySearchQuery(option: Partial<IRecipeQueryOption>) {
-    const { query, limit = "3" } = option || {};
+    const { query, limit = 3 } = option || {};
 
     return infiniteQueryOptions({
       queryKey: [this.keys.root, this.keys.search, query],
@@ -112,8 +112,8 @@ export class RecipeQueries {
           },
         }),
       initialPageParam: 0,
-      getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
-        if (lastPage?.length === 0) return;
+      getNextPageParam: (lastPage, allPages, lastPageParam) => {
+        if (lastPage?.length === 0 || lastPage?.length < Number(limit)) return;
 
         return lastPageParam + 1;
       },
@@ -146,8 +146,8 @@ export class RecipeQueries {
           signal,
         }),
       initialPageParam: 0,
-      getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
-        if (lastPage.length === 0) return;
+      getNextPageParam: (lastPage, allPages, lastPageParam) => {
+        if (lastPage?.length === 0 || lastPage?.length < Number(limit)) return;
 
         return lastPageParam + 1;
       },
