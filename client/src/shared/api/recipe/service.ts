@@ -1,6 +1,7 @@
 import axios from "shared/lib/axios";
 
 import { IUser } from "../user";
+import { IIngredient } from "../ingredient";
 import {
   IRecipe,
   IRecipeCard,
@@ -9,8 +10,7 @@ import {
   RecipeFilterQuery,
   IRecipePictures,
   IRecipeQueryOption,
-} from "./type";
-import { IIngredient } from "../ingredient";
+} from "./";
 
 export class RecipeService {
   static readonly root = "api/recipe";

@@ -1,7 +1,7 @@
-import { IComment } from "shared/api/comment";
-import { useDeleteCommentMutation } from "../mutation/deleteCommentMutation";
-import { IRecipe } from "shared/api/recipe";
+import type { IComment } from "shared/api/comment";
+import type { IRecipe } from "shared/api/recipe";
 import { useConfirmDialogActions } from "shared/ui/confirmDialog";
+import { useDeleteCommentMutation } from "../mutation/deleteCommentMutation";
 
 interface Props {
   recipe_id: IRecipe["_id"];

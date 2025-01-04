@@ -1,8 +1,8 @@
 import axios from "shared/lib/axios";
 
 import type { IRecipe } from "../recipe";
-import type { IComment, ICommentJoinUser } from "./type";
 import type { PagenationParams } from "shared/types";
+import type { IComment, ICommentJoinUser } from "./";
 
 export class CommentService {
   static root = "api/comment";

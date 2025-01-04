@@ -1,1 +1,3 @@
-export type { IComment } from "./type";
+export { CommentService } from "./service";
+
+export type { IComment, ICommentJoinUser } from "./type";

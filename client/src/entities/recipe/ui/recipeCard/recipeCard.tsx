@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { RiTimer2Line } from "@react-icons/all-files/ri/RiTimer2Line";
 import { RiGroupLine } from "@react-icons/all-files/ri/RiGroupLine";
+import { RiTimer2Line } from "@react-icons/all-files/ri/RiTimer2Line";
 
 import { IconBox } from "shared/ui/iconBox";
 import { IRecipeCard } from "shared/api/recipe";

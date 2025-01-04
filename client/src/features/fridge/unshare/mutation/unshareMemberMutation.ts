@@ -1,7 +1,7 @@
 import { AxiosError } from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { type IUser } from "shared/api/user";
+import type { IUser } from "shared/api/user";
 import { useAlertActions } from "shared/ui/alert";
 import { FridgeService, type IFridge } from "shared/api/fridge";
 import { FridgeQueries } from "entities/fridge";

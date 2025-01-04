@@ -4,7 +4,7 @@ import { RiArrowUpDownLine } from "@react-icons/all-files/ri/RiArrowUpDownLine";
 import { useModal } from "shared/hooks/useModal";
 import { IconButton } from "shared/ui/iconButton";
 import { FadeLayout } from "shared/ui/fadeLayout";
-import { useRecipeSortParams } from "../model/useRecipeSortParams";
+import { useRecipeSortParams } from "..";
 
 import styles from "./recipeSort.module.scss";
 

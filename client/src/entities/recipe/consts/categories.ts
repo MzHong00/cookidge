@@ -1,9 +1,9 @@
-import { EmojiCatgories} from "shared/types";
+import type { EmojiCatgories } from "shared/types";
 
 export const FOOD_CATEGORIES: EmojiCatgories[] = [
   {
     emoji: "🍚",
-    text: "한식"
+    text: "한식",
   },
   {
     emoji: "🍣",
@@ -20,5 +20,5 @@ export const FOOD_CATEGORIES: EmojiCatgories[] = [
   {
     emoji: "🍰",
     text: "디저트",
-  }
+  },
 ];

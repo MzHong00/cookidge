@@ -1,1 +1,0 @@
-export const RECIPE_INPUT_SECTION = ["재료", "조리 과정"] as const;

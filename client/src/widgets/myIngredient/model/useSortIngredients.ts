@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 
-import { IIngredient } from "shared/api/ingredient";
+import type { IIngredient } from "shared/api/ingredient";
 import { INGREDIENT_SORT_TYPES } from "entities/ingredient";
 
 export const useSortIngredients = (ingredients: IIngredient[]) => {

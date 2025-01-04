@@ -1,6 +1,6 @@
 import { SubmitHandler } from "react-hook-form";
 
-import { type IRecipeForm } from "shared/api/recipe/type";
+import type { IRecipeForm } from "shared/api/recipe/type";
 import { useConfirmDialogActions } from "shared/ui/confirmDialog";
 import { RecipeForm } from "features/recipe/create";
 import { useUpdateRecipeMutation } from "..";

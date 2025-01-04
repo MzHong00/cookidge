@@ -1,9 +1,12 @@
 import { AxiosError } from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { IFridge } from "shared/api/fridge";
+import type { IFridge } from "shared/api/fridge";
 import { useAlertActions } from "shared/ui/alert";
-import { IIngredientInputDto, IngredientService } from "shared/api/ingredient";
+import {
+  type IIngredientInputDto,
+  IngredientService,
+} from "shared/api/ingredient";
 import { FridgeQueries } from "entities/fridge";
 
 export const useUpdateIngredientMutation = (fridgeId?: IFridge["_id"]) => {

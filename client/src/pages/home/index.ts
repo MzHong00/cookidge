@@ -1,3 +1,3 @@
-export { searchOptionLoader } from "./loader/searchOptionLoader";
-
 export { Home } from "./ui";
+
+export { searchOptionLoader } from "./loader/searchOptionLoader";

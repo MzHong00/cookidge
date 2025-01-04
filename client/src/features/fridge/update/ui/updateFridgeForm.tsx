@@ -1,12 +1,12 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { InputBox } from "shared/ui/inputBox";
-import { IFridge, IFridgeFormInput } from "shared/api/fridge";
+import { SubjectBox } from "shared/ui/subjectBox";
+import { useConfirmDialogActions } from "shared/ui/confirmDialog";
+import { type IFridge, IFridgeFormInput } from "shared/api/fridge";
 import { useUpdateFridgeMutation } from "../mutation/updateFridgeMutation";
 
 import styles from "./updateFridgeForm.module.scss";
-import { SubjectBox } from "shared/ui/subjectBox";
-import { useConfirmDialogActions } from "shared/ui/confirmDialog";
 
 interface Props {
   fridge_id: IFridge["_id"];

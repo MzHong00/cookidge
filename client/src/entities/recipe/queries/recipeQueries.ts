@@ -1,11 +1,14 @@
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
-import { type IUser } from "shared/api/user";
-import { type IFridge } from "shared/api/fridge";
-import { type IIngredient } from "shared/api/ingredient";
-import { RecipeService } from "shared/api/recipe/service";
-import { type IRecipe, RecipeFilterQuery } from "shared/api/recipe";
-import { IRecipePictures, IRecipeQueryOption } from "shared/api/recipe";
+import type { IUser } from "shared/api/user";
+import type { IFridge } from "shared/api/fridge";
+import type { IIngredient } from "shared/api/ingredient";
+import type { IRecipePictures, IRecipeQueryOption } from "shared/api/recipe";
+import {
+  type IRecipe,
+  type RecipeFilterQuery,
+  RecipeService,
+} from "shared/api/recipe";
 
 export class RecipeQueries {
   static readonly keys = {

@@ -1,5 +1,5 @@
-import { IUser } from "../user";
-import { IRecipe } from "../recipe";
+import type { IUser } from "../user";
+import type { IRecipe } from "../recipe";
 
 export interface IComment {
   _id?: string;

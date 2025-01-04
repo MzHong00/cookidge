@@ -2,7 +2,7 @@ import { Outlet, useLocation } from "react-router-dom";
 
 import { AlertList } from "shared/ui/alert";
 import { ConfirmDialog } from "shared/ui/confirmDialog";
-import ScrollToTop from "shared/lib/react-router/scrollToTop";
+import { ScrollToTop } from "shared/lib/react-router/scrollToTop";
 import { Header } from "widgets/header";
 import { Footer } from "widgets/footer";
 
@@ -16,7 +16,7 @@ export const Root = () => {
       <ScrollToTop />
       <ConfirmDialog />
       <AlertList />
-      <Header/>
+      <Header />
       <main className={styles.mainContainer}>
         <Outlet />
       </main>

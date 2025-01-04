@@ -1,5 +1,5 @@
+import type { IFridge } from "shared/api/fridge";
 import { IconButton } from "shared/ui/iconButton";
-import { IFridge } from "shared/api/fridge";
 import { useConfirmDialogActions } from "shared/ui/confirmDialog";
 import { useDeleteFridgeMutation } from "..";
 

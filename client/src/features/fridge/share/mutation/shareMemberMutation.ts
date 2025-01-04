@@ -1,9 +1,9 @@
 import { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 
-import { IUser } from "shared/api/user";
+import type { IUser } from "shared/api/user";
 import { useAlertActions } from "shared/ui/alert";
-import { FridgeService, IFridge } from "shared/api/fridge";
+import { FridgeService, type IFridge } from "shared/api/fridge";
 
 export const useShareMemberMutation = (fridgeId?: IFridge["_id"]) => {
   const { alertEnqueue } = useAlertActions();

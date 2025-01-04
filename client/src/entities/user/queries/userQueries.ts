@@ -1,9 +1,9 @@
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
+import type { PagenationParams } from "shared/types";
+import type { IUserInfiniteQueryParams } from "shared/api/user";
 import { useAuthStore } from "shared/lib/zustand";
-import { IUser, UserService } from "shared/api/user";
-import { IUserInfiniteQueryParams } from "shared/api/user/type";
-import { PagenationParams } from "shared/types";
+import { type IUser, UserService } from "shared/api/user";
 
 export class UserQueries {
   static readonly keys = {

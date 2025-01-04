@@ -1,6 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 
-import { FridgeService, IFridgeList } from "shared/api/fridge";
+import { FridgeService, type IFridgeList } from "shared/api/fridge";
 
 export class FridgeQueries {
   static readonly keys = {

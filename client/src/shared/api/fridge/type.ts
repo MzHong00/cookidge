@@ -1,6 +1,5 @@
-import { IUser } from "../user";
-import { IIngredient } from "../ingredient";
-import { IUserPicture } from "../user/type";
+import type { IUser, IUserPicture } from "../user";
+import type { IIngredient } from "../ingredient";
 
 export interface IFridge {
   _id: string;

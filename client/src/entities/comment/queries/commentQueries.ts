@@ -2,7 +2,7 @@ import { infiniteQueryOptions } from "@tanstack/react-query";
 
 import type { IRecipe } from "shared/api/recipe";
 import type { PagenationParams } from "shared/types";
-import { CommentService } from "shared/api/comment/service";
+import { CommentService } from "shared/api/comment";
 
 export class CommentQueries {
   static keys = {

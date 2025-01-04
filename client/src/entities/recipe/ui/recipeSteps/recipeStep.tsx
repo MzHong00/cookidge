@@ -1,4 +1,4 @@
-import { type ICookingStep } from "shared/api/recipe/type";
+import type { ICookingStep } from "shared/api/recipe/type";
 import { IconButton } from "shared/ui/iconButton";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { CldImg } from "shared/ui/cloudinaryImage/cloudinaryImage";

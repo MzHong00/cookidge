@@ -2,10 +2,10 @@ import { useNavigate } from "react-router-dom";
 
 import { Logo } from "shared/ui/logo";
 import { FadeLayout } from "shared/ui/fadeLayout";
+import { IconButton } from "shared/ui/iconButton";
 import { useHandleShowingDialog, useConfirmDialogStore } from "..";
 
 import styles from "./confirmDialog.module.scss";
-import { IconButton } from "shared/ui/iconButton";
 
 export const ConfirmDialog = () => {
   const navigate = useNavigate();

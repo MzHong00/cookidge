@@ -2,7 +2,7 @@ import { AxiosError } from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { useAlertActions } from "shared/ui/alert";
-import { FridgeService, IFridge } from "shared/api/fridge";
+import { FridgeService, type IFridge } from "shared/api/fridge";
 import { FridgeQueries } from "entities/fridge";
 
 export const useUpdateFridgeMutation = (id?: IFridge["_id"]) => {

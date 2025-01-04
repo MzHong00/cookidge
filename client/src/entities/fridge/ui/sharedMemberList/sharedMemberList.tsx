@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import { IFridge } from "shared/api/fridge";
+import type { IFridge } from "shared/api/fridge";
 import { ProfileImage } from "shared/ui/profileImage";
 
 interface Props {

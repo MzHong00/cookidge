@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { IoReload } from "@react-icons/all-files/io5/IoReload";
 
-import { type IFridge } from "shared/api/fridge";
-import { type IIngredient } from "shared/api/ingredient";
+import type { IFridge } from "shared/api/fridge";
+import type { IIngredient } from "shared/api/ingredient";
 import { useAlertActions } from "shared/ui/alert";
 import { IconButton } from "shared/ui/iconButton";
 import { SubjectBox } from "shared/ui/subjectBox";

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { IIngredient } from "shared/api/ingredient";
+import type { IIngredient } from "shared/api/ingredient";
 
 export const useFilterIngredients = (ingredients: IIngredient[]) => {
   const [filterValue, setFilterValue] = useState<string>("");

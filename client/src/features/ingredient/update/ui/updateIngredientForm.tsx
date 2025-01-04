@@ -2,8 +2,8 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { CgRemoveR } from "@react-icons/all-files/cg/CgRemoveR";
 import { RiAddLine } from "@react-icons/all-files/ri/RiAddLine";
 
-import { IFridge } from "shared/api/fridge";
-import { IIngredient, IIngredientInputDto } from "shared/api/ingredient";
+import type { IFridge } from "shared/api/fridge";
+import type { IIngredient, IIngredientInputDto } from "shared/api/ingredient";
 import { IconButton } from "shared/ui/iconButton";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { generateKey } from "shared/helper/generateKey";

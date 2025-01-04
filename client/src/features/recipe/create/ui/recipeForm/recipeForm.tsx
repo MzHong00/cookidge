@@ -10,6 +10,7 @@ import { CgRemoveR } from "@react-icons/all-files/cg/CgRemoveR";
 import { RiGroupLine } from "@react-icons/all-files/ri/RiGroupLine";
 import { RiTimer2Line } from "@react-icons/all-files/ri/RiTimer2Line";
 
+import type { IRecipeForm } from "shared/api/recipe/type";
 import { InputBox } from "shared/ui/inputBox";
 import { InputFile } from "shared/ui/inputFile";
 import { SubjectBox } from "shared/ui/subjectBox";
@@ -18,7 +19,6 @@ import { FadeLayout } from "shared/ui/fadeLayout";
 import { InfoTooltip } from "shared/ui/infoToolTip";
 import { useConfirmDialogActions } from "shared/ui/confirmDialog";
 import { CldImg } from "shared/ui/cloudinaryImage/cloudinaryImage";
-import { IRecipeForm } from "shared/api/recipe/type";
 import { usePreviewImages } from "shared/hooks/usePreviewImages";
 import { FOOD_CATEGORIES } from "entities/recipe";
 import { INGREDIENTS_CATEGORIES } from "entities/ingredient";

@@ -1,7 +1,7 @@
 import axios from "shared/lib/axios";
 
-import { IIngredientInputDto } from "./type";
 import { IFridge } from "../fridge";
+import { IIngredientInputDto } from "./";
 
 export class IngredientService {
   static readonly root = "api/ingredient";

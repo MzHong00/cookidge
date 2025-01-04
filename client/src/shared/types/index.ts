@@ -1,4 +1,4 @@
-import { ICookingStep } from "shared/api/recipe";
+import type { ICookingStep } from "shared/api/recipe";
 
 export interface IconCategoriesByClodinary {
   iconId: string;

@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 
-const CATEGORIES_KEY = "categories";
+import { CATEGORIES_KEY } from "..";
 
 export const useRecipeCategoriesParams = () => {
   const [categoriesParams, setSortParams] = useSearchParams();

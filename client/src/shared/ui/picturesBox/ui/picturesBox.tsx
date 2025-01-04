@@ -1,12 +1,12 @@
 import { RiArrowDropLeftLine } from "@react-icons/all-files/ri/RiArrowDropLeftLine";
 import { RiArrowDropRightLine } from "@react-icons/all-files/ri/RiArrowDropRightLine";
 
-import { IRecipe } from "shared/api/recipe";
+import type { IRecipe } from "shared/api/recipe";
 import { IconButton } from "shared/ui/iconButton";
+import { CldImg } from "shared/ui/cloudinaryImage/cloudinaryImage";
 import { usePictureSlide } from "../model/usePictureSlide";
 
 import styles from "./picturesBox.module.scss";
-import { CldImg } from "shared/ui/cloudinaryImage/cloudinaryImage";
 
 interface Props extends React.HTMLAttributes<HTMLUListElement> {
   pictures: IRecipe["pictures"];

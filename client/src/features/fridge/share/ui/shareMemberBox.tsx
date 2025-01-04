@@ -1,8 +1,8 @@
-import { IFridge } from "shared/api/fridge";
-import { IUserPicture } from "shared/api/user/type";
+import type { IFridge } from "shared/api/fridge";
+import type { IUserPicture } from "shared/api/user";
+import { useConfirmDialogActions } from "shared/ui/confirmDialog";
 import { UserSearchBox } from "entities/user";
 import { useShareMemberMutation } from "..";
-import { useConfirmDialogActions } from "shared/ui/confirmDialog";
 
 interface Props {
   fridge_id: IFridge["_id"];

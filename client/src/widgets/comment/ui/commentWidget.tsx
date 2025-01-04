@@ -1,4 +1,4 @@
-import { IRecipe } from "shared/api/recipe";
+import type { IRecipe } from "shared/api/recipe";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { CommentList } from "entities/comment";
 import { CreateComment } from "features/comment/create";

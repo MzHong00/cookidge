@@ -1,10 +1,10 @@
 import { AxiosError } from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { IRecipe } from "shared/api/recipe";
-import { IComment } from "shared/api/comment";
+import type { IRecipe } from "shared/api/recipe";
+import type { IComment } from "shared/api/comment";
 import { useAlertActions } from "shared/ui/alert";
-import { CommentService } from "shared/api/comment/service";
+import { CommentService } from "shared/api/comment";
 import { CommentQueries } from "entities/comment";
 
 export const useDeleteCommentMutation = (

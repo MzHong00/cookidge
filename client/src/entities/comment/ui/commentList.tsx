@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import { useQueryClient, useInfiniteQuery } from "@tanstack/react-query";
 
-import { IUser } from "shared/api/user";
-import { IRecipe } from "shared/api/recipe";
+import type { IUser } from "shared/api/user";
+import type { IRecipe } from "shared/api/recipe";
 import { dateGap } from "shared/helper/dateGap";
 import { IconButton } from "shared/ui/iconButton";
 import { ProfileImage } from "shared/ui/profileImage";
-import { ICommentJoinUser } from "shared/api/comment/type";
+import { ICommentJoinUser } from "shared/api/comment";
 import { useIntersectionObserver } from "shared/hooks/useIntersectionObserver";
 import { UserQueries } from "entities/user";
 import { RecipeQueries } from "entities/recipe";

@@ -2,8 +2,8 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { RiFridgeLine } from "@react-icons/all-files/ri/RiFridgeLine";
 
-import { FridgeQueries } from "entities/fridge";
 import { IconLink } from "shared/ui/iconLink";
+import { FridgeQueries } from "entities/fridge";
 
 import styles from "./fridgeList.module.scss";
 

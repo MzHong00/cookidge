@@ -2,8 +2,8 @@ import { RiTimer2Line } from "@react-icons/all-files/ri/RiTimer2Line";
 import { RiGroupLine } from "@react-icons/all-files/ri/RiGroupLine";
 import { RiCalendarLine } from "@react-icons/all-files/ri/RiCalendarLine";
 
+import type { IRecipe } from "shared/api/recipe/type";
 import { IconBox } from "shared/ui/iconBox";
-import { IRecipe } from "shared/api/recipe/type";
 import { PicturesBox } from "shared/ui/picturesBox";
 import { INGREDIENTS_CATEGORIES } from "entities/ingredient";
 import { LikeButton } from "features/recipe/like";

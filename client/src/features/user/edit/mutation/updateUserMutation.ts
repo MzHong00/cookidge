@@ -1,9 +1,9 @@
 import { AxiosError } from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import type { IUserInputDTO } from "shared/api/user";
 import { UserService } from "shared/api/user";
 import { useAlertActions } from "shared/ui/alert";
-import { IUserInputDTO } from "shared/api/user/type";
 import { UserQueries } from "entities/user";
 
 export const useUpdateUserMutation = () => {

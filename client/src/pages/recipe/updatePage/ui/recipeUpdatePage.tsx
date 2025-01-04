@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 
-import { IRecipeForm, IRecipeJoinUser } from "shared/api/recipe";
+import type { IRecipeForm, IRecipeJoinUser } from "shared/api/recipe";
 import { UpdateRecipeForm } from "features/recipe/update";
 
 export const RecipeUpdatePage = () => {

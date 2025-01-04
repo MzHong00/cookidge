@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useLoaderData } from "react-router-dom";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-import { RecipeFilterQuery } from "shared/api/recipe";
+import type { RecipeFilterQuery } from "shared/api/recipe";
 import { FadeLayout } from "shared/ui/fadeLayout";
 import { useIntersectionObserver } from "shared/hooks/useIntersectionObserver";
 import { RecipeCard, RecipeCardSkeleton } from "entities/recipe";

@@ -1,9 +1,9 @@
 import { AxiosError } from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { IUser, UserService } from "shared/api/user";
-import { UserQueries } from "entities/user";
+import { type IUser, UserService } from "shared/api/user";
 import { useAlertActions } from "shared/ui/alert";
+import { UserQueries } from "entities/user";
 
 export const useDeleteUserMutation = () => {
   const queryClient = useQueryClient();
