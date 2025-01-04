@@ -21,7 +21,7 @@ interface Props {
 
 export const CommentList = ({ recipe_id }: Props) => {
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
-    CommentQueries.infiniteQuery(recipe_id)
+    CommentQueries.infiniteQuery({ recipeId: recipe_id, limit: 10 })
   );
   const { setTarget } = useIntersectionObserver({ hasNextPage, fetchNextPage });
 
@@ -37,7 +37,7 @@ export const CommentList = ({ recipe_id }: Props) => {
   );
 };
 
-export const Comment = ({ commentData }: { commentData: ICommentJoinUser }) => {
+const Comment = ({ commentData }: { commentData: ICommentJoinUser }) => {
   const { _id, user_id, recipe_id, comment, created_at, user } = commentData;
 
   const queryClient = useQueryClient();
