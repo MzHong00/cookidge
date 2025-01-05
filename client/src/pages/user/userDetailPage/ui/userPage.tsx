@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { RiUserSettingsLine } from "@react-icons/all-files/ri/RiUserSettingsLine";
 
 import { IconBox } from "shared/ui/iconBox";
 import { IconLink } from "shared/ui/iconLink";
-import { PicturesBox, PicturesBoxSkeleton } from "shared/ui/picturesBox";
 import { ProfileImage } from "shared/ui/profileImage";
 import { FadeLayout } from "shared/ui/fadeLayout";
 import { UserQueries } from "entities/user";
 import { RecipeQueries } from "entities/recipe/queries/recipeQueries";
 import { FollowButton } from "features/user/follow";
+import { RecipeGridPictures } from "widgets/recipeGridPictures";
 
 import styles from "./userPage.module.scss";
 
@@ -20,7 +20,7 @@ export const UserPage = () => {
     UserQueries.userQuery(name)
   );
   const { data: me } = useQuery(UserQueries.meQuery());
-  const { data: userRecipes, isLoading: isRecipeLoading } = useQuery(
+  const { data: userRecipes = [], isLoading: isRecipeLoading } = useQuery(
     RecipeQueries.listByUserQuery(name)
   );
 
@@ -69,21 +69,7 @@ export const UserPage = () => {
           <h2>레시피</h2>
         </header>
         <hr />
-        <div className={styles.userRecipeList}>
-          {isRecipeLoading &&
-            Array.from({ length: 3 }).map((_, i) => (
-              <PicturesBoxSkeleton key={i} />
-            ))}
-          {userRecipes?.map((recipe) => (
-            <Link to={`/recipe/${recipe._id}`} key={recipe._id}>
-              <PicturesBox
-                className={styles.userRecipeCard}
-                pictures={recipe.pictures}
-                isThumbnaileMode
-              />
-            </Link>
-          ))}
-        </div>
+        <RecipeGridPictures isLoading={isRecipeLoading} recipes={userRecipes} />
       </div>
     </FadeLayout>
   );
