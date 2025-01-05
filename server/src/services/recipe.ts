@@ -203,10 +203,8 @@ export class RecipeService {
       { $unwind: "$liked_recipes" },
       {
         $project: {
-          liked_recipes: {
-            _id: 1,
-            pictures: 1,
-          },
+          _id: "$liked_recipes._id",
+          pictures: "$liked_recipes.pictures",
         },
       },
     ]);

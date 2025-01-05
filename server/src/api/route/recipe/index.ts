@@ -357,7 +357,7 @@ export default (app: Router) => {
 
     try {
       const likeRecipes = await RecipeService.readMyLikeRecipes(userId);
-
+      
       res.status(200).json(likeRecipes);
     } catch (error) {
       console.error("나의 좋아요 레시피 읽기 중 오류가 발생:", error);
