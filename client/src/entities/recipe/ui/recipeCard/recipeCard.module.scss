@@ -6,47 +6,51 @@
     @include app.flex-layout(column, stretch, stretch, 0);
     border-bottom: 1px solid rgb(var(--base-rgb-grey-light));
     overflow: hidden;
+
+    &>:last-child {
+        padding-inline: 0.5em;
+    }
 }
 
-.infoBox {
+.content {
     padding-block: 0.25rem;
     @include app.flex-layout(column, start, space-between, 0.5em);
     flex: 1;
-}
 
-.infoHeaderBar {
-    width: 100%;
-    @include app.flex-layout(row, flex-end, stretch, 0.5rem);
-}
+    &>:first-child {
+        width: 100%;
+        @include app.flex-layout(row, flex-end, stretch, 0.5rem);
 
-.title {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    flex-shrink: 2;
-}
+        &>h3 {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            flex-shrink: 2;
+        }
 
-.created_at {
-    white-space: nowrap
-}
+        &>span {
+            white-space: nowrap
+        }
+    }
 
-.subInfo {
-    @include app.flex-layout(row);
-    flex-wrap: wrap;
-    color: rgb(var(--base-rgb-grey-medium));
-}
+    &>:nth-child(2) {
+        @include app.flex-layout(row);
+        flex-wrap: wrap;
+        color: rgb(var(--base-rgb-grey-medium));
 
-.subInfo>* {
-    padding: 0rem;
-}
+        &>* {
+            padding: 0rem;
+        }
 
-.subInfo svg {
-    font-size: 1em;
-}
+        svg {
+            font-size: 1em;
+        }
+    }
 
-.introduction {
-    height: 4rem;
-    overflow-y: auto;
+    &>:last-child {
+        height: 4rem;
+        overflow-y: auto;
+    }
 }
 
 @media screen and (max-width:767px) {

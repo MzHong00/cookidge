@@ -4,13 +4,13 @@
     height: 2rem;
     margin-block: 1rem;
     @include app.flex-layout(row);
-}
 
-.textArea {
-    width: 100%;
-    padding: 0.5rem;
-    resize: none;
-    border: none;
-    border-bottom: 1px solid black;
-    outline: none;
+    textarea {
+        width: 100%;
+        padding: 0.5rem;
+        resize: none;
+        border: none;
+        border-bottom: 1px solid black;
+        outline: none;
+    }
 }

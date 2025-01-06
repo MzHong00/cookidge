@@ -7,7 +7,7 @@ import { ProfileImage } from "shared/ui/profileImage";
 import { useConfirmDialogActions } from "shared/ui/confirmDialog";
 import { useUnshareMemberMutation } from "..";
 
-import styles from "./unshareMemberBox.module.css";
+import styles from "./unshareMemberBox.module.scss";
 
 interface Props {
   fridge_id: IFridge["_id"];

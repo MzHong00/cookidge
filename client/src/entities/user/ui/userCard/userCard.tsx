@@ -22,7 +22,7 @@ export const UserCard = ({
         <Link to={`/user/${name}`}>
           <ProfileImage src={picture} className={styles.img} />
         </Link>
-        <b className={styles.name}>{name}</b>
+        <b>{name}</b>
       </section>
       {children}
     </div>

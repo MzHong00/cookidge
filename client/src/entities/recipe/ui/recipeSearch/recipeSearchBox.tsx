@@ -8,7 +8,7 @@ import { RecipeCard, RecipeQueries } from "../..";
 
 import styles from "./recipeSearchBox.module.scss";
 
-export const RecipeSearchList = () => {
+export const RecipeSearchBox = () => {
   const { query, value, onChangeRecipeSearch } = useParamsDebounce("q");
 
   const {
@@ -19,25 +19,23 @@ export const RecipeSearchList = () => {
   const { setTarget } = useIntersectionObserver({ hasNextPage, fetchNextPage });
 
   return (
-    <div className="flex-column">
+    <FadeLayout className="flex-column">
       <SearchBox
         value={value}
         placeholder="요리 제목을 입력하세요"
-        style={{ padding: "1em" }}
+        style={{ padding: "1rem" }}
         onChange={onChangeRecipeSearch}
       />
-      <FadeLayout>
-        <ul className={styles.searchRecipeList}>
-          {recipePages?.pages.map((recipes) =>
-            recipes?.map((recipe) => (
-              <li key={recipe._id}>
-                <RecipeCard recipe={recipe} className={styles.recipeCard} />
-              </li>
-            ))
-          )}
-        </ul>
-      </FadeLayout>
+      <ul className={styles.searchRecipeList}>
+        {recipePages?.pages.map((recipes) =>
+          recipes?.map((recipe) => (
+            <li key={recipe._id}>
+              <RecipeCard recipe={recipe} className={styles.recipeCard} />
+            </li>
+          ))
+        )}
+      </ul>
       <div id="observer" ref={setTarget} />
-    </div>
+    </FadeLayout>
   );
 };
