@@ -15,9 +15,7 @@ import { RecipeGridPictures } from "widgets/recipeGridPictures";
 import styles from "./recipeMyPage.module.scss";
 
 export const RecipeMyPage = () => {
-  const queryClient = useQueryClient();
-
-  const me = queryClient.getQueryData<IUser | undefined>([UserQueries.keys.me]);
+  const { data: me } = useQuery(UserQueries.meQuery());
   const { data: myRecipes = [], isLoading: isMyRecipeLoading } = useQuery(
     RecipeQueries.myListQuery(me?.name)
   );
