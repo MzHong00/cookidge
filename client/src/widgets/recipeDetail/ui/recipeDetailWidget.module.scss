@@ -7,7 +7,12 @@
     align-items: center;
 }
 
-.infoBox {
+.pictures {
+    border-radius: 10px;
+    box-shadow: 0px 2px 4px 1px silver;
+}
+
+.contents {
     width: 100%;
     height: 100%;
     padding-block: 1rem;
@@ -15,16 +20,13 @@
     flex: 1;
 }
 
-.recipeInfoBar {
+.info {
     @include app.flex-layout(column, center);
     gap: 0.5rem;
 }
 
-.infoHeader>* {
+.title {
     display: inline;
-}
-
-.infoHeader>:first-child {
     font-size: 1.5rem;
     margin-right: 0.5rem;
 }
@@ -32,17 +34,17 @@
 .subInfo {
     @include app.flex-layout(row);
     color: rgb(var(--base-rgb-grey-medium));
+
+    &>* {
+        padding: 0rem;
+    }
+
+    svg {
+        font-size: 1rem;
+    }
 }
 
-.subInfo>* {
-    padding: 0rem;
-}
-
-.subInfo svg {
-    font-size: 1rem;
-}
-
-.ingredientList {
+.ingredients {
     @include app.flex-layout(row);
     flex-wrap: wrap;
 }
