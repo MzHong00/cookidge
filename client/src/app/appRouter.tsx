@@ -5,7 +5,7 @@ import { OAuthService } from "shared/api/oauth";
 import { LoadingSpinner } from "shared/ui/loadingSpinner";
 import { CreateFridgeForm } from "features/fridge/create";
 import { UserSearchBox } from "entities/user";
-import { RecipeSearchList } from "entities/recipe";
+import { RecipeSearchBox } from "entities/recipe";
 import { Root } from "pages/root";
 import { LoginPage } from "pages/login";
 import { Dashboard } from "pages/dashboard";
@@ -54,7 +54,7 @@ const appRouter = createBrowserRouter([
           },
           {
             path: "recipe",
-            element: <RecipeSearchList />,
+            element: <RecipeSearchBox />,
           },
           {
             path: "user",

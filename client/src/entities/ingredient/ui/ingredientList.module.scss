@@ -10,27 +10,27 @@
 .table {
     width: 100%;
     table-layout: fixed;
+
+    &>thead {
+        position: sticky;
+        top: 0;
+        background-color: white;
+        z-index: 10;
+        text-align: left;
+        white-space: nowrap;
+    }
 }
 
-.tableHeader {
-    position: sticky;
-    top: 0;
-    background-color: white;
-    z-index: 10;
-    text-align: left;
-    white-space: nowrap;
-}
-
-.ingredientTableItem {
+.ingredientItem {
     height: 2rem;
-}
 
-.ingredientTableItem > td {
-    padding: 0.25rem;
-}
+    &>td {
+        padding: 0.25rem;
+    }
 
-.ingredientTableItem > td:first-child {
-    white-space: nowrap;
+    &>td:first-child {
+        white-space: nowrap;
+    }
 }
 
 @media screen and (max-width: 767px) {

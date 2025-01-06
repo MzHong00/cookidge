@@ -1,7 +1,7 @@
+@use 'app/app.scss';
+
 .container {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    @include app.flex-layout(row, center, stretch, 0.5rem);
 }
 
 .profileButton {
@@ -13,17 +13,13 @@
     display: flex;
     gap: 0.5rem;
     font-size: 0.75rem;
-}
 
-.nameBar>:first-child {
-    font-size: 1rem;
+    &>:first-child {
+        font-size: 1rem;
+    }
 }
 
 .actionBar {
     padding-left: 0.5rem;
     color: grey
-}
-
-.comment {
-    font-size: small;
 }

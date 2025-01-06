@@ -3,6 +3,7 @@ import { RiUserReceived2Line } from "@react-icons/all-files/ri/RiUserReceived2Li
 
 import { SearchBox } from "shared/ui/searchBox";
 import { IconButton } from "shared/ui/iconButton";
+import { FadeLayout } from "shared/ui/fadeLayout";
 import { useParamsDebounce } from "shared/hooks/useParamsDebounce";
 import { useIntersectionObserver } from "shared/hooks/useIntersectionObserver";
 import { UserCard, UserQueries } from "../..";
@@ -27,41 +28,42 @@ export const UserSearchBox = ({
     data: userPages,
     hasNextPage,
     fetchNextPage,
-  } = useInfiniteQuery(
-    UserQueries.InfiniteSearchQuery({ user_name: query })
-  );
+  } = useInfiniteQuery(UserQueries.InfiniteSearchQuery({ user_name: query }));
   const { setTarget } = useIntersectionObserver({ hasNextPage, fetchNextPage });
 
   return (
-    <div className={`${styles.container} ${className}`} {...props}>
+    <>
       <SearchBox
         value={value}
         placeholder="사용자 이름을 입력하세요"
+        style={{ padding: "1rem" }}
         onChange={onChangeRecipeSearch}
-        className={styles.searchInput}
       />
       {userPages?.pages.map((page) =>
         page.map((user) => (
-          <UserCard key={user._id} name={user.name} picture={user.picture}>
-            <section className={styles.userInfoSection}>
-              <div className={styles.userIntroduce}>{user.introduce}</div>
-              <div className={styles.userFollow}>
-                <RiUserReceived2Line />
-                <span>{user.follower_count}</span>
-                {onClickUserAction && (
-                  <IconButton
-                    className="main-button"
-                    onClick={onClickUserAction}
-                    data-user_id={user._id}
-                    data-user_name={user.name}
-                  >{`${actionButtonText || "선택"}`}</IconButton>
-                )}
-              </div>
-            </section>
+          <UserCard
+            key={user._id}
+            name={user.name}
+            picture={user.picture}
+          >
+            <div className={styles.userFollow}>
+              <RiUserReceived2Line />
+              <span>{user.follower_count}</span>
+              {onClickUserAction && (
+                <IconButton
+                  className="main-button"
+                  onClick={onClickUserAction}
+                  data-user_id={user._id}
+                  data-user_name={user.name}
+                >
+                  {actionButtonText || "선택"}
+                </IconButton>
+              )}
+            </div>
           </UserCard>
         ))
       )}
       <div id="observer" ref={setTarget} />
-    </div>
+    </>
   );
 };

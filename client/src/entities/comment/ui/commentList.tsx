@@ -13,7 +13,7 @@ import { RecipeQueries } from "entities/recipe";
 import { CommentQueries } from "entities/comment";
 import { DeleteCommentButton } from "features/comment/delete";
 
-import styles from "./comment.module.css";
+import styles from "./comment.module.scss";
 
 interface Props {
   recipe_id: IRecipe["_id"];
@@ -58,7 +58,7 @@ const Comment = ({ commentData }: { commentData: ICommentJoinUser }) => {
           <ProfileImage src={user[0].picture} />
         </IconButton>
       </Link>
-      <div className={styles.contentBox}>
+      <div>
         <header className={styles.nameBar}>
           <h4>{user[0].name}</h4>
           {created_at && <p>{dateGap(created_at)}전</p>}
@@ -72,7 +72,7 @@ const Comment = ({ commentData }: { commentData: ICommentJoinUser }) => {
             </div>
           )}
         </header>
-        <p className={styles.comment}>{comment}</p>
+        <p>{comment}</p>
       </div>
     </div>
   );
