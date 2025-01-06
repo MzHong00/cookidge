@@ -1,6 +1,8 @@
 import axios from "shared/lib/axios";
-import { IRecipe } from "../recipe";
-import { IComment, ICommentJoinUser } from "./type";
+
+import type { IRecipe } from "../recipe";
+import type { PagenationParams } from "shared/types";
+import type { IComment, ICommentJoinUser } from "./";
 
 export class CommentService {
   static root = "api/comment";
@@ -10,7 +12,7 @@ export class CommentService {
     params: {
       recipe_id: IRecipe["_id"];
       last_comment_id: IComment["_id"];
-    };
+    } & Partial<PagenationParams>;
     signal: AbortSignal;
   }): Promise<ICommentJoinUser[]> {
     return (await axios.get(`${this.root}/read-list`, config)).data;

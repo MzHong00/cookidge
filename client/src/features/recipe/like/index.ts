@@ -1,5 +1,5 @@
-export { useLikeState } from "./model/useLikeState";
+export { LikeButton } from "./ui/likeButtton";
 
 export { useLikeMutation, useUnlikeMutation } from "./mutation/useLikeMutation";
 
-export { LikeButton } from "./ui/likeButtton";
+export { useLikeState } from "./model/useLikeState";

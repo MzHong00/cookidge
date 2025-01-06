@@ -1,4 +1,4 @@
-import { IFridge } from "shared/api/fridge";
+import type { IFridge } from "shared/api/fridge";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { INGREDIENT_TABLE_FIELD } from "..";
 

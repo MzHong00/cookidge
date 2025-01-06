@@ -4,9 +4,9 @@ import { useQuery } from "@tanstack/react-query";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { FadeLayout } from "shared/ui/fadeLayout";
 import { FridgeQueries } from "entities/fridge";
-import { UnshareMemberBox } from "features/fridge/unshare/ui/unshareMemberBox";
-import { UpdateFridgeForm } from "features/fridge/update";
 import { ShareMemberBox } from "features/fridge/share";
+import { UnshareMemberBox } from "features/fridge/unshare";
+import { UpdateFridgeForm } from "features/fridge/update";
 
 export const FridgeSettingPage = () => {
   const { id: fridge_id } = useParams();

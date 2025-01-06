@@ -1,7 +1,8 @@
+import { useNavigate } from "react-router-dom";
+
 import { IconButton } from "shared/ui/iconButton";
 import { useConfirmDialogActions } from "shared/ui/confirmDialog";
 import { useDeleteUserMutation } from "../mutation/deleteUserMutation";
-import { useNavigate } from "react-router-dom";
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 

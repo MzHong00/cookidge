@@ -1,4 +1,4 @@
-import { ICookingStep } from "shared/api/recipe";
+import type { ICookingStep } from "shared/api/recipe";
 
 export interface IconCategoriesByClodinary {
   iconId: string;
@@ -15,6 +15,6 @@ export interface PreviewStep extends Omit<ICookingStep, "picture"> {
 }
 
 export interface PagenationParams {
-  limit: string | number;
-  offset: string | number;
+  limit: number;
+  offset: number;
 }

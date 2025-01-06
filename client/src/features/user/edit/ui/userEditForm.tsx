@@ -1,11 +1,11 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
 
+import type { IUserInputDTO } from "shared/api/user";
 import { InputBox } from "shared/ui/inputBox";
 import { TextArea } from "shared/ui/textArea";
 import { InputFile } from "shared/ui/inputFile";
 import { IconButton } from "shared/ui/iconButton";
-import { IUserInputDTO } from "shared/api/user/type";
 import { useConfirmDialogActions } from "shared/ui/confirmDialog";
 import { usePreviewImages } from "shared/hooks/usePreviewImages";
 import { UserQueries } from "entities/user";

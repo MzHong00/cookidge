@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { RiHeart3Line } from "@react-icons/all-files/ri/RiHeart3Line";
 import { RiHeart3Fill } from "@react-icons/all-files/ri/RiHeart3Fill";
 
-import { IRecipe } from "shared/api/recipe";
+import type { IRecipe } from "shared/api/recipe";
 import { IconButton } from "shared/ui/iconButton";
 import {
   useLikeMutation,

@@ -5,8 +5,8 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 
-import { IUser } from "shared/api/user";
-import { IRecipe, RecipeService } from "shared/api/recipe";
+import type { IUser } from "shared/api/user";
+import { type IRecipe, RecipeService } from "shared/api/recipe";
 import { UserQueries } from "entities/user";
 import { RecipeQueries } from "entities/recipe";
 

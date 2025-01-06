@@ -1,7 +1,7 @@
 import { RiTimer2Line } from "@react-icons/all-files/ri/RiTimer2Line";
 
+import type { IIngredient } from "shared/api/ingredient";
 import { SubjectBox } from "shared/ui/subjectBox";
-import { IIngredient } from "shared/api/ingredient";
 
 import styles from "./ingredientNearExpiry.module.css";
 

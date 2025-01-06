@@ -2,7 +2,7 @@ import { AxiosError } from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { useAlertActions } from "shared/ui/alert";
-import { IRecipe, RecipeService } from "shared/api/recipe";
+import { type IRecipe, RecipeService } from "shared/api/recipe";
 import { RecipeQueries } from "entities/recipe";
 
 export const useDeleteRecipeMutation = (recipeId: IRecipe["_id"]) => {

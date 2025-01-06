@@ -1,6 +1,7 @@
 import axios from "shared/lib/axios";
-import { IFridge } from "./type";
+
 import { IUser } from "../user";
+import { IFridge } from "./";
 
 export class FridgeService {
   static readonly root = "api/refrigerator";

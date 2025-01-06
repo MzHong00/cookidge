@@ -1,11 +1,14 @@
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
-import { type IUser } from "shared/api/user";
-import { type IFridge } from "shared/api/fridge";
-import { type IIngredient } from "shared/api/ingredient";
-import { RecipeService } from "shared/api/recipe/service";
-import { type IRecipe, RecipeFilterQuery } from "shared/api/recipe";
-import { IRecipePictures, IRecipeQueryOption } from "shared/api/recipe";
+import type { IUser } from "shared/api/user";
+import type { IFridge } from "shared/api/fridge";
+import type { IIngredient } from "shared/api/ingredient";
+import type { IRecipePictures, IRecipeQueryOption } from "shared/api/recipe";
+import {
+  type IRecipe,
+  type RecipeFilterQuery,
+  RecipeService,
+} from "shared/api/recipe";
 
 export class RecipeQueries {
   static readonly keys = {
@@ -98,7 +101,7 @@ export class RecipeQueries {
 
   // 레시피 검색 무한 스크롤
   static infinitySearchQuery(option: Partial<IRecipeQueryOption>) {
-    const { query, limit = "3" } = option || {};
+    const { query, limit = 3 } = option || {};
 
     return infiniteQueryOptions({
       queryKey: [this.keys.root, this.keys.search, query],
@@ -107,13 +110,13 @@ export class RecipeQueries {
           signal,
           params: {
             query: query,
-            offset: pageParam * Number(limit),
+            offset: pageParam * limit,
             limit: limit,
           },
         }),
       initialPageParam: 0,
-      getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
-        if (lastPage?.length === 0) return;
+      getNextPageParam: (lastPage, allPages, lastPageParam) => {
+        if (lastPage?.length === 0 || lastPage?.length < limit) return;
 
         return lastPageParam + 1;
       },
@@ -139,15 +142,15 @@ export class RecipeQueries {
         RecipeService.readRecipeList({
           params: {
             limit,
-            offset: pageParam * Number(limit),
+            offset: pageParam * limit,
             categories,
             sort,
           },
           signal,
         }),
       initialPageParam: 0,
-      getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
-        if (lastPage.length === 0) return;
+      getNextPageParam: (lastPage, allPages, lastPageParam) => {
+        if (lastPage?.length === 0 || lastPage?.length < limit) return;
 
         return lastPageParam + 1;
       },

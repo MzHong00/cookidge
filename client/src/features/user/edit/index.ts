@@ -1,3 +1,3 @@
-export { useUpdateUserMutation } from "./mutation/updateUserMutation";
+export { UserEditForm } from "./ui/userEditForm";
 
-export { UserEditForm } from "../edit/ui/userEditForm";
+export { useUpdateUserMutation } from "./mutation/updateUserMutation";

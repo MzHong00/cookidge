@@ -1,7 +1,7 @@
 import { QueryKey, useMutation, useQueryClient } from "@tanstack/react-query";
 
+import { type IUser, UserService } from "shared/api/user";
 import { UserQueries } from "entities/user";
-import { IUser, UserService } from "shared/api/user";
 
 export const useFollowMutation = (
   followUserId: IUser["_id"],

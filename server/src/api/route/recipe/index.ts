@@ -217,6 +217,7 @@ export default (app: Router) => {
         const prevRecipe = (await RecipeService.readRecipeById(
           recipeId
         )) as IRecipe;
+
         // 요리 사진 로직
         if (pictures) {
           const picturePromise = await Promise.all([
@@ -261,13 +262,15 @@ export default (app: Router) => {
         // 이전과 현재의 요리과정 사진 전체 탐색
         prevRecipe.cooking_steps?.forEach((step) => {
           if (!step.picture) return;
-          // 사용하지 않은 요리과정 추출 후, 저장소에서 제거
+          // 사용하지 않은 요리과정 추출
           const isUsing = recipeInputDto.cooking_steps?.map((step)=>step.picture || "").find((url) => url === step.picture)
           if(!isUsing) deleteTargets.push(step.picture)
         })
         
+        // 사용하지 않은 요리과정 사진 삭제
         CloudinaryService.deleteFiles(deleteTargets)
-
+        
+        // 레시피 업데이트
         await RecipeService.updateRecipe(recipeId, recipeInputDto);
 
         res.status(200).json({ message: "레시피 업데이트에 성공했습니다." });
@@ -354,7 +357,7 @@ export default (app: Router) => {
 
     try {
       const likeRecipes = await RecipeService.readMyLikeRecipes(userId);
-
+      
       res.status(200).json(likeRecipes);
     } catch (error) {
       console.error("나의 좋아요 레시피 읽기 중 오류가 발생:", error);

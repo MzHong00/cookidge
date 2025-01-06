@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import { useQueryClient, useInfiniteQuery } from "@tanstack/react-query";
 
-import { IUser } from "shared/api/user";
-import { IRecipe } from "shared/api/recipe";
+import type { IUser } from "shared/api/user";
+import type { IRecipe } from "shared/api/recipe";
 import { dateGap } from "shared/helper/dateGap";
 import { IconButton } from "shared/ui/iconButton";
 import { ProfileImage } from "shared/ui/profileImage";
-import { ICommentJoinUser } from "shared/api/comment/type";
+import { ICommentJoinUser } from "shared/api/comment";
 import { useIntersectionObserver } from "shared/hooks/useIntersectionObserver";
 import { UserQueries } from "entities/user";
 import { RecipeQueries } from "entities/recipe";
@@ -21,7 +21,7 @@ interface Props {
 
 export const CommentList = ({ recipe_id }: Props) => {
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
-    CommentQueries.infiniteQuery(recipe_id)
+    CommentQueries.infiniteQuery({ recipeId: recipe_id, limit: 10 })
   );
   const { setTarget } = useIntersectionObserver({ hasNextPage, fetchNextPage });
 
@@ -37,7 +37,7 @@ export const CommentList = ({ recipe_id }: Props) => {
   );
 };
 
-export const Comment = ({ commentData }: { commentData: ICommentJoinUser }) => {
+const Comment = ({ commentData }: { commentData: ICommentJoinUser }) => {
   const { _id, user_id, recipe_id, comment, created_at, user } = commentData;
 
   const queryClient = useQueryClient();

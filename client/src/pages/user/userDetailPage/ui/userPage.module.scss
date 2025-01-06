@@ -41,11 +41,6 @@
     max-width: 800px;
 }
 
-.userRecipeList {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(100px, 1fr))
-}
-
 .userRecipeCard>:last-child {
     @include app.flex-layout(row, center, space-between);
 }
@@ -58,9 +53,5 @@
 @media screen and (max-width: 767px) {
     .userActionBar {
         flex-direction: column;
-    }
-
-    .userRecipeList {
-        grid-template-columns: repeat(2, minmax(100px, 1fr))
     }
 }

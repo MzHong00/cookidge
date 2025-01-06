@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import { IUser } from "shared/api/user";
-import { IRecipe } from "shared/api/recipe";
+import type { IUser } from "shared/api/user";
+import type { IRecipe } from "shared/api/recipe";
 
 export const useLikeState = (
   likeMembers: IRecipe["like_members"],

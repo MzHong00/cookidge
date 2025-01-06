@@ -4,7 +4,7 @@ import { CgAddR } from "@react-icons/all-files/cg/CgAddR";
 import { RiCloseLine } from "@react-icons/all-files/ri/RiCloseLine";
 import { RiEditBoxLine } from "@react-icons/all-files/ri/RiEditBoxLine";
 
-import { IFridge } from "shared/api/fridge";
+import type { IFridge } from "shared/api/fridge";
 import { IconButton } from "shared/ui/iconButton";
 import { SearchBox } from "shared/ui/searchBox";
 import { SubjectBox } from "shared/ui/subjectBox";

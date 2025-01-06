@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { IRecipe } from "shared/api/recipe";
+import type { IRecipe } from "shared/api/recipe";
 import { IconButton } from "shared/ui/iconButton";
 import { useCreateCommentMutation } from "../mutation/createCommentMutation";
 

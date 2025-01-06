@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { ICookingStepInput } from "shared/api/recipe";
+
+import type { ICookingStepInput } from "shared/api/recipe";
 
 export const usePreviewSteps = (stepState: ICookingStepInput[]) => {
   const [previewImage, setPreviewImage] = useState<string[]>([]);

@@ -2,7 +2,7 @@ import { HTMLAttributes, useMemo } from "react";
 import { RiUserAddLine } from "@react-icons/all-files/ri/RiUserAddLine";
 import { RiUserFollowLine } from "@react-icons/all-files/ri/RiUserFollowLine";
 
-import { IUser } from "shared/api/user";
+import type { IUser } from "shared/api/user";
 import { IconButton } from "shared/ui/iconButton";
 import {
   useFollowMutation,

@@ -2,8 +2,8 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { CgRemoveR } from "@react-icons/all-files/cg/CgRemoveR";
 import { RiAddLine } from "@react-icons/all-files/ri/RiAddLine";
 
-import { IFridge } from "shared/api/fridge";
-import { IIngredient, IIngredientInputDto } from "shared/api/ingredient";
+import type { IFridge } from "shared/api/fridge";
+import type { IIngredient, IIngredientInputDto } from "shared/api/ingredient";
 import { IconButton } from "shared/ui/iconButton";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { generateKey } from "shared/helper/generateKey";
@@ -21,22 +21,17 @@ interface IngredientInputForm {
 }
 
 interface Props {
-  fridge_id: IFridge['_id'];
+  fridge_id: IFridge["_id"];
   onSubmitAttach: () => void;
 }
 
-export const CreateIngredientForm = ({
-  fridge_id,
-  onSubmitAttach,
-}: Props) => {
+export const CreateIngredientForm = ({ fridge_id, onSubmitAttach }: Props) => {
   const { mutate } = useCreateIngredientMutation(fridge_id);
 
   const { control, register, handleSubmit, reset } =
     useForm<IngredientInputForm>({
       defaultValues: {
-        ingredients: [
-          { _id: generateKey(), expired_at: getDateToISO() },
-        ],
+        ingredients: [{ _id: generateKey(), expired_at: getDateToISO() }],
       },
     });
 
@@ -53,7 +48,7 @@ export const CreateIngredientForm = ({
   const onSubmit = (data: IngredientInputForm) => {
     const ingredients = data.ingredients.map((ingredient) => {
       const { _id, ...inputIngredientDto } = ingredient;
-      
+
       return inputIngredientDto as IIngredientInputDto;
     });
 

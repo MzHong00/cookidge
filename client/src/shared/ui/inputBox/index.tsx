@@ -1,7 +1,7 @@
+import { forwardRef } from "react";
 import { IconType } from "@react-icons/all-files";
 
 import styles from "./index.module.css";
-import { forwardRef } from "react";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   Icon?: IconType;

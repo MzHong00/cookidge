@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import { IFridgeFormInput } from "shared/api/fridge";
+import type { IFridgeFormInput } from "shared/api/fridge";
 import { InputBox } from "shared/ui/inputBox";
 import { IconLink } from "shared/ui/iconLink";
 import { IconButton } from "shared/ui/iconButton";

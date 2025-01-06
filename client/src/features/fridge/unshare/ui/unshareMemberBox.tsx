@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import { IUser } from "shared/api/user";
-import { IFridge } from "shared/api/fridge";
+import type { IUser } from "shared/api/user";
+import type { IFridge } from "shared/api/fridge";
 import { IconButton } from "shared/ui/iconButton";
 import { ProfileImage } from "shared/ui/profileImage";
 import { useConfirmDialogActions } from "shared/ui/confirmDialog";
@@ -33,7 +33,7 @@ export const UnshareMemberBox = ({ fridge_id, allowed_users }: Props) => {
       requestFn: async () => {
         await mutateAsync();
       },
-      option: { backspace: false}
+      option: { backspace: false },
     });
   };
 

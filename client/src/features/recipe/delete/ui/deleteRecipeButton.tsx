@@ -1,9 +1,9 @@
-import { IRecipe } from "shared/api/recipe";
+import type { IRecipe } from "shared/api/recipe";
 import { IconButton } from "shared/ui/iconButton";
+import { useConfirmDialogActions } from "shared/ui/confirmDialog";
 import { useDeleteRecipeMutation } from "../mutation/deleteRecipeMutation";
 
 import styles from "./deleteRecipeButton.module.css";
-import { useConfirmDialogActions } from "shared/ui/confirmDialog";
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   recipeId: IRecipe["_id"];

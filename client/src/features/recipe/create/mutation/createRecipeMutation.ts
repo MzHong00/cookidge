@@ -1,10 +1,10 @@
 import { AxiosError } from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { IUser } from "shared/api/user";
+import type { IUser } from "shared/api/user";
+import type { IRecipeInputDTO } from "shared/api/recipe/type";
 import { useAlertActions } from "shared/ui/alert";
-import { RecipeService } from "shared/api/recipe/service";
-import { IRecipeInputDTO } from "shared/api/recipe/type";
+import { RecipeService } from "shared/api/recipe";
 import { UserQueries } from "entities/user";
 import { RecipeQueries } from "entities/recipe";
 

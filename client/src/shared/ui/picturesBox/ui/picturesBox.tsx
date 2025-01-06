@@ -1,12 +1,12 @@
 import { RiArrowDropLeftLine } from "@react-icons/all-files/ri/RiArrowDropLeftLine";
 import { RiArrowDropRightLine } from "@react-icons/all-files/ri/RiArrowDropRightLine";
 
-import { IRecipe } from "shared/api/recipe";
+import type { IRecipe } from "shared/api/recipe";
 import { IconButton } from "shared/ui/iconButton";
-import { usePictureSlide } from "../model/usePictureSlide";
+import { useSlide } from "shared/hooks/useSlide";
+import { CldImg } from "shared/ui/cloudinaryImage/cloudinaryImage";
 
 import styles from "./picturesBox.module.scss";
-import { CldImg } from "shared/ui/cloudinaryImage/cloudinaryImage";
 
 interface Props extends React.HTMLAttributes<HTMLUListElement> {
   pictures: IRecipe["pictures"];
@@ -26,7 +26,7 @@ export const PicturesBox = ({
     onClickNext,
     onClickSlideByIndicator,
     onScrollDetectIndex,
-  } = usePictureSlide();
+  } = useSlide();
 
   if (pictures.length < 1)
     return (

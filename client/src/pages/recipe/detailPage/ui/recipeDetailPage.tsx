@@ -8,6 +8,7 @@ import { RecipeStep, RecipeQueries } from "entities/recipe";
 import { DeleteRecipeButton } from "features/recipe/delete";
 import { CommentWidget } from "widgets/comment";
 import { RecipeDetailWidget } from "widgets/recipeDetail";
+import { LoadingSpinner } from "shared/ui/loadingSpinner";
 
 export const RecipeDetailPage = () => {
   const { id } = useParams();
@@ -16,7 +17,7 @@ export const RecipeDetailPage = () => {
     RecipeQueries.detailQuery(id)
   );
 
-  if (isLoading) return <div>레시피 읽는 중...</div>;
+  if (isLoading) return <LoadingSpinner msg="레시피 읽는 중..." />;
   if (!recipeWithUser) return <div>레시피가 존재하지 않습니다.</div>;
 
   const { user, ...recipe } = recipeWithUser;
