@@ -25,5 +25,5 @@ export interface IUserSearchDTO
 }
 
 export interface IUserInputDTO extends Pick<IUser, "name" | "introduce"> {
-  picture: FileList;
+  picture: File[];
 }
