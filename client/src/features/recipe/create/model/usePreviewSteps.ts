@@ -18,16 +18,14 @@ export const usePreviewSteps = (stepState: ICookingStepInput[]) => {
     });
 
     setPreviewImage(previewUrls);
-  }, [stepState, diffStep]);
-
-  useEffect(() => {
+    
     return () => {
       previewImage.forEach((url) => {
         if (!url.startsWith("blob:")) return;
         return URL.revokeObjectURL(url);
       });
     };
-  }, []);
+  }, [stepState, diffStep]);
 
   return previewImage;
 };
