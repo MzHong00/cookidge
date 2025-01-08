@@ -36,7 +36,7 @@ export const RecipeStep = ({ recipeSteps }: Props) => {
 
       <ul ref={ref} onScroll={onScrollDetectIndex} className={styles.stepSlider}>
         {recipeSteps?.map((step, idx) => (
-          <li key={step.instruction} className={styles.stepContent}>
+          <li key={`${step.instruction}${idx}`} className={styles.stepContent}>
             {step.picture && (
               <CldImg
                 cldImg={step.picture}

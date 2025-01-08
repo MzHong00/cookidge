@@ -3,14 +3,13 @@ import { RiUserReceived2Line } from "@react-icons/all-files/ri/RiUserReceived2Li
 
 import { SearchBox } from "shared/ui/searchBox";
 import { IconButton } from "shared/ui/iconButton";
-import { FadeLayout } from "shared/ui/fadeLayout";
 import { useParamsDebounce } from "shared/hooks/useParamsDebounce";
 import { useIntersectionObserver } from "shared/hooks/useIntersectionObserver";
 import { UserCard, UserQueries } from "../..";
 
 import styles from "./userSearchBox.module.scss";
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
+interface Props {
   actionButtonText?: string;
   onClickUserAction?: React.MouseEventHandler<HTMLButtonElement>;
 }
@@ -18,9 +17,6 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 export const UserSearchBox = ({
   actionButtonText,
   onClickUserAction,
-  className,
-  children,
-  ...props
 }: Props) => {
   const { query, value, onChangeRecipeSearch } = useParamsDebounce("q");
 
@@ -41,11 +37,7 @@ export const UserSearchBox = ({
       />
       {userPages?.pages.map((page) =>
         page.map((user) => (
-          <UserCard
-            key={user._id}
-            name={user.name}
-            picture={user.picture}
-          >
+          <UserCard key={user._id} name={user.name} picture={user.picture}>
             <div className={styles.userFollow}>
               <RiUserReceived2Line />
               <span>{user.follower_count}</span>

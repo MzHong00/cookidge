@@ -22,7 +22,7 @@ export class CloudinaryService {
       .upload(file, {
         folder: `cookidge/${folder}`,
         transformation: {
-          height: 500,
+          height: 1000,
           crop: "fit",
           gravity: "center",
           aspect_ratio: 1,
