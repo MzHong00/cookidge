@@ -10,38 +10,29 @@ export const CreateRecipeForm = () => {
   const { mutateAsync } = useCreateRecipeMutation();
 
   const onSubmit: SubmitHandler<IRecipeForm> = async (data) => {
-    console.log(data.pictures, data.cooking_steps);
-    
     openDialogMessage({
       message: `${data.name} 레시피를 생성하시겠습니까?`,
       requestFn: async () => {
-        try {
-          console.log(data.pictures, data.cooking_steps);
-    const compressedCookImages = (await compressImages(
-            data.pictures
-          )) as IRecipeForm["pictures"];
-          console.log(compressedCookImages);
+        const compressedCookImages = (await compressImages(
+          data.pictures
+        )) as IRecipeForm["pictures"];
 
-          const compressedStepImages = await Promise.all(
-            data.cooking_steps.map(async ({ instruction, picture }) => ({
-              instruction: instruction,
-              picture:
-                typeof picture === "string"
-                  ? picture
-                  : await compressImage(picture?.[0]),
-            }))
-          );
-          console.log(compressedStepImages);
-        } catch (error) {
-          console.log(error);
-          
-        }
+        const stepImages = data.cooking_steps.map(
+          ({ instruction, picture }) => typeof picture === "string"
+          ? picture
+          : picture?.[0] || "",
+        );
 
-          // await mutateAsync({
-          //   ...data,
-          //   pictures: compressedCookImages,
-          //   cooking_steps: compressedStepImages,
-          // });
+        const compressedStepImages = await compressImages(stepImages);
+        console.log("압축됨:",compressedCookImages);
+        console.log("압축됨:",compressedStepImages);
+        
+
+        // await mutateAsync({
+        //   ...data,
+        //   pictures: compressedCookImages,
+        //   cooking_steps: compressedStepImages,
+        // });
       },
     });
   };

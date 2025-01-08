@@ -60,7 +60,7 @@ export const StepField = ({
                   id={field.id}
                   register={register}
                   introduction="이미지 추가"
-                  defaultImage={defaultSteps?.[i].picture || ""}
+                  defaultImage={defaultSteps?.[i]?.picture || ""}
                 />
 
                 <textarea
