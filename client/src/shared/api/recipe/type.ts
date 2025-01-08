@@ -59,7 +59,7 @@ export type IRecipeInputDTO = Pick<
   | "category"
   | "cooking_time"
 > & {
-  pictures?: FileList | string[];
+  pictures: File[] | string[];
   cooking_steps: {
     picture?: File | string;
     instruction: string;

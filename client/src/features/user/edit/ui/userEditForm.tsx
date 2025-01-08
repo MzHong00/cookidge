@@ -29,7 +29,7 @@ export const UserEditForm = () => {
 
   const onSubmit: SubmitHandler<IUserInputDTO> = (newUserData) => {
     if (isPending) return;
-    
+
     openDialogMessage({
       message: `프로필을 수정하시겠습니까?`,
       requestFn: async () => {

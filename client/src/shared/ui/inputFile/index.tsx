@@ -8,22 +8,18 @@ import styles from "./index.module.scss";
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   introduction?: string;
   previewUrl?: string;
-  file?: File;
 }
 
 export const InputFile = forwardRef<HTMLInputElement, Props>(
-  (
-    { introduction, previewUrl, file, id, className, style, color, ...props },
-    ref
-  ) => {
+  ({ introduction, previewUrl, id, className, ...props }, ref) => {
     return (
-      <div className={`${className} ${styles.container}`} style={style}>
-        <label htmlFor={id} className={styles.label}>
+      <div className={`${className} ${styles.container}`} {...props}>
+        <label htmlFor={id}>
           {previewUrl ? (
             <CldImg cldImg={previewUrl} className={styles.image} />
           ) : (
             <div className={styles.uploadPlaceholder}>
-              <RiUpload2Line size={24} color={color} />
+              <RiUpload2Line size={24} />
               {introduction && (
                 <p className={styles.introduction}>
                   {introduction || "이미지 추가"}
@@ -32,13 +28,12 @@ export const InputFile = forwardRef<HTMLInputElement, Props>(
             </div>
           )}
         </label>
-        
+
         <input
           id={id}
           ref={ref}
           type="file"
           accept="image/*"
-          style={{ display: "none" }}
           {...props}
         />
       </div>
