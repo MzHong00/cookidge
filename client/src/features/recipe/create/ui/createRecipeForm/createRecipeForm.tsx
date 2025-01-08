@@ -15,7 +15,8 @@ export const CreateRecipeForm = () => {
     openDialogMessage({
       message: `${data.name} 레시피를 생성하시겠습니까?`,
       requestFn: async () => {
-    console.log(data.pictures, data.cooking_steps);
+        try {
+          console.log(data.pictures, data.cooking_steps);
     const compressedCookImages = (await compressImages(
             data.pictures
           )) as IRecipeForm["pictures"];
@@ -31,12 +32,16 @@ export const CreateRecipeForm = () => {
             }))
           );
           console.log(compressedStepImages);
+        } catch (error) {
+          console.log(error);
+          
+        }
 
-          await mutateAsync({
-            ...data,
-            pictures: compressedCookImages,
-            cooking_steps: compressedStepImages,
-          });
+          // await mutateAsync({
+          //   ...data,
+          //   pictures: compressedCookImages,
+          //   cooking_steps: compressedStepImages,
+          // });
       },
     });
   };

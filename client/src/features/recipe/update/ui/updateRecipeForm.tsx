@@ -22,6 +22,7 @@ export const UpdateRecipeForm = ({ defalutValues }: Props) => {
         const compressedCookImages = (await compressImages(
           data.pictures
         )) as IRecipeForm["pictures"];
+        console.log(compressedCookImages);
 
         const compressedStepImages = await Promise.all(
           data.cooking_steps.map(async ({ instruction, picture }) => ({
@@ -32,6 +33,7 @@ export const UpdateRecipeForm = ({ defalutValues }: Props) => {
                 : await compressImage(picture?.[0]),
           }))
         );
+        console.log(compressedStepImages);
 
         await mutateAsync({
           ...data,
