@@ -10,22 +10,23 @@ export const CreateRecipeForm = () => {
   const { mutateAsync } = useCreateRecipeMutation();
 
   const onSubmit: SubmitHandler<IRecipeForm> = async (data) => {
-    const compressedCookImages = (await compressImages(
-      data.pictures
-    )) as IRecipeForm["pictures"];
-
-    const compressedStepImages = await Promise.all(
-      data.cooking_steps.map(async ({ instruction, picture }) => ({
-        instruction: instruction,
-        picture:
-          typeof picture === "string"
-            ? picture
-            : await compressImage(picture?.[0]),
-      }))
-    );
     openDialogMessage({
       message: `${data.name} 레시피를 생성하시겠습니까?`,
       requestFn: async () => {
+        const compressedCookImages = (await compressImages(
+          data.pictures
+        )) as IRecipeForm["pictures"];
+
+        const compressedStepImages = await Promise.all(
+          data.cooking_steps.map(async ({ instruction, picture }) => ({
+            instruction: instruction,
+            picture:
+              typeof picture === "string"
+                ? picture
+                : await compressImage(picture?.[0]),
+          }))
+        );
+
         await mutateAsync({
           ...data,
           pictures: compressedCookImages,
