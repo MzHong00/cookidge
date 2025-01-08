@@ -10,11 +10,13 @@ export const CreateRecipeForm = () => {
   const { mutateAsync } = useCreateRecipeMutation();
 
   const onSubmit: SubmitHandler<IRecipeForm> = async (data) => {
+    console.log(data.pictures, data.cooking_steps);
+    
     openDialogMessage({
       message: `${data.name} 레시피를 생성하시겠습니까?`,
       requestFn: async () => {
-        try {
-          const compressedCookImages = (await compressImages(
+    console.log(data.pictures, data.cooking_steps);
+    const compressedCookImages = (await compressImages(
             data.pictures
           )) as IRecipeForm["pictures"];
           console.log(compressedCookImages);
@@ -35,9 +37,6 @@ export const CreateRecipeForm = () => {
             pictures: compressedCookImages,
             cooking_steps: compressedStepImages,
           });
-        } catch (error) {
-          console.log(error);
-        }
       },
     });
   };
