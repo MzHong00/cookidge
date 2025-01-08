@@ -1,9 +1,8 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { RiAddLine } from "@react-icons/all-files/ri/RiAddLine";
 import { RiBook2Line } from "@react-icons/all-files/ri/RiBook2Line";
 import { RiHeart2Line } from "@react-icons/all-files/ri/RiHeart2Line";
 
-import type { IUser } from "shared/api/user";
 import { IconLink } from "shared/ui/iconLink";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { FadeLayout } from "shared/ui/fadeLayout";
