@@ -19,7 +19,6 @@ export const StepField = memo(({
 }: Pick<UseFormReturn<IRecipeForm>, "register" | "control"> & {
   defaultSteps?: ICookingStep[];
 }) => {
-  console.log("render")
   const INTRODUCE_LIMIT_LENGTH = 100;
 
   const {
@@ -101,8 +100,6 @@ const PreviewStepImage = memo(({
   introduction: string;
   defaultImage: string;
 }) => {
-  console.log("component", index);
-  
   const { previewImage, previewOnChange } = usePreviewSteps(defaultImage);
 
   return (
