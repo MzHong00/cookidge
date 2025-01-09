@@ -33,7 +33,8 @@ interface Props {
 
 export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
   const { openDialogMessage } = useConfirmDialogActions();
-
+  console.log("form");
+  
   const {
     watch,
     control,

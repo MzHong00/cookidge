@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { useFieldArray, UseFormReturn } from "react-hook-form";
 import { RiAddLine } from "@react-icons/all-files/ri/RiAddLine";
 import { CgRemoveR } from "@react-icons/all-files/cg/CgRemoveR";
@@ -10,7 +11,6 @@ import { CldImg } from "shared/ui/cloudinaryImage/cloudinaryImage";
 import { usePreviewSteps } from "../../model/usePreviewSteps";
 
 import styles from "./recipeForm.module.scss";
-import { memo } from "react";
 
 export const StepField = memo(({
   register,
@@ -29,12 +29,6 @@ export const StepField = memo(({
   } = useFieldArray({
     name: "cooking_steps",
     control,
-    rules: {
-      required: {
-        value: true,
-        message: "요리 과정을 1개 이상 입력해 주세요.",
-      },
-    },
   });
 
   return (
