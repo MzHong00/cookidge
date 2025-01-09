@@ -21,22 +21,23 @@ export const CreateRecipeForm = () => {
     openDialogMessage({
       message: `${data.name} 레시피를 생성하시겠습니까?`,
       requestFn: async () => {
-        const compressedCookImages = (await Promise.all([
+        const compressedCookImages = await Promise.all([
           ...Array.from(data.pictures as (string | File)[]).map((file) =>
             typeof file === "string" ? file : resizeFile(file)
           ),
-        ])) as IRecipeForm["pictures"];
-
-        const compressedStepImages = (await Promise.all(
+        ]) as IRecipeForm["pictures"];
+        console.log(compressedCookImages);
+        
+        const compressedStepImages = await Promise.all(
           data.cooking_steps.map(async ({ instruction, picture }) => ({
             instruction: instruction,
             picture:
               typeof picture === "string"
                 ? picture
-                : await resizeFile(picture?.[0]),
+                : resizeFile(picture?.[0]),
           }))
-        )) as IRecipeInputDTO["cooking_steps"];
-
+        )as IRecipeInputDTO["cooking_steps"];
+        console.log(compressedStepImages);
         await mutateAsync({
           ...data,
           pictures: compressedCookImages,

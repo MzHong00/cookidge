@@ -30,6 +30,7 @@ export const UpdateRecipeForm = ({ defalutValues }: Props) => {
             typeof file === "string" ? file : resizeFile(file)
           ),
         ])) as IRecipeForm["pictures"];
+        console.log(compressedCookImages);
 
         const compressedStepImages = (await Promise.all(
           data.cooking_steps.map(async ({ instruction, picture }) => ({
@@ -37,9 +38,10 @@ export const UpdateRecipeForm = ({ defalutValues }: Props) => {
             picture:
               typeof picture === "string"
                 ? picture
-                : await resizeFile(picture?.[0]),
+                : resizeFile(picture?.[0]),
           }))
         )) as IRecipeInputDTO["cooking_steps"];
+        console.log(compressedStepImages);
 
         await mutateAsync({
           ...data,
