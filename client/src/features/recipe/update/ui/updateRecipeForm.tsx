@@ -32,7 +32,7 @@ export const UpdateRecipeForm = ({ defalutValues }: Props) => {
           console.log(file);
 
           if (typeof file === "string") {
-            a.push(file); 
+            a.push(file);
           } else {
             const resizedFile = await resizeFile(file);
             a.push(resizedFile);
@@ -44,9 +44,13 @@ export const UpdateRecipeForm = ({ defalutValues }: Props) => {
         let b = [];
 
         for (const { picture } of cooking_steps) {
+          console.log(picture);
+
           if (typeof picture === "string") {
             b.push(picture);
           } else if (!picture?.length) {
+            console.log("텅빈");
+            
             b.push("");
           } else {
             const resizedPicture = await resizeFile(picture[0]);
