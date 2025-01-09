@@ -21,14 +21,17 @@ export const CreateRecipeForm = () => {
     openDialogMessage({
       message: `${data.name} 레시피를 생성하시겠습니까?`,
       requestFn: async () => {
-        const compressedCookImages = (await Promise.all([
-          ...Array.from(data.pictures as (string | File)[]).map((file) =>
-            typeof file === "string" ? file : resizeFile(file),
-          ...data.cooking_steps.map(({ picture }) =>
-            typeof picture === "string" ? picture : resizeFile(picture?.[0])
-          )
-          ),
-        ]))
+        const a = Array.from(data.pictures as (string | File)[]).map((file) =>
+          typeof file === "string" ? file : resizeFile(file)
+        );
+        console.log(a);
+
+        const b = data.cooking_steps.map(({ picture }) =>
+          typeof picture === "string" ? picture : resizeFile(picture?.[0])
+        );
+        console.log(b);
+
+        const compressedCookImages = await Promise.all([...a, ...b]);
         console.log(compressedCookImages);
 
         // await mutateAsync({
