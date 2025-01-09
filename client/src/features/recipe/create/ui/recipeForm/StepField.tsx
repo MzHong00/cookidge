@@ -10,14 +10,16 @@ import { CldImg } from "shared/ui/cloudinaryImage/cloudinaryImage";
 import { usePreviewSteps } from "../../model/usePreviewSteps";
 
 import styles from "./recipeForm.module.scss";
+import { memo } from "react";
 
-export const StepField = ({
+export const StepField = memo(({
   register,
   control,
   defaultSteps,
 }: Pick<UseFormReturn<IRecipeForm>, "register" | "control"> & {
   defaultSteps?: ICookingStep[];
 }) => {
+  console.log("render")
   const INTRODUCE_LIMIT_LENGTH = 100;
 
   const {
@@ -91,9 +93,9 @@ export const StepField = ({
       </IconButton>
     </div>
   );
-};
+});
 
-const PreviewStepImage = ({
+const PreviewStepImage = memo(({
   id,
   index,
   introduction,
@@ -105,6 +107,8 @@ const PreviewStepImage = ({
   introduction: string;
   defaultImage: string;
 }) => {
+  console.log("component", index);
+  
   const { previewImage, previewOnChange } = usePreviewSteps(defaultImage);
 
   return (
@@ -134,4 +138,5 @@ const PreviewStepImage = ({
       />
     </div>
   );
-};
+}
+)

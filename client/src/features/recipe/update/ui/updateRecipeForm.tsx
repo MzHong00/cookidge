@@ -22,6 +22,7 @@ export const UpdateRecipeForm = ({ defalutValues }: Props) => {
   const { mutateAsync } = useUpdateRecipeMutation(defalutValues._id);
 
   const onSubmit: SubmitHandler<IRecipeForm> = async (data) => {
+    console.log(data.pictures, data.cooking_steps);
     openDialogMessage({
       message: `레시피를 업데이트하시겠습니까?`,
       requestFn: async () => {
