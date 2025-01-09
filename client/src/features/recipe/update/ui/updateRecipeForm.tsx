@@ -53,7 +53,9 @@ export const UpdateRecipeForm = ({ defalutValues }: Props) => {
             
             b.push("");
           } else {
-            const resizedPicture = await resizeFile(picture[0]);
+            console.log(Array.from(picture)[0]);
+            
+            const resizedPicture = await resizeFile(Array.from(picture)[0]);
             b.push(resizedPicture);
           }
         }
