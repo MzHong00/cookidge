@@ -7,7 +7,7 @@ import routes from "../api/route";
 
 export default (app: Express) => {
   const corsOptions = {
-    origin: config.frontEndOrigin,
+    origin: "*",
     credentials: true,
   };
   app.use(cors(corsOptions));

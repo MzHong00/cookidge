@@ -12,7 +12,7 @@ export const resizeFile = (file: File) => {
       (uri) => {
         resolve(uri);
       },
-      "blob"
+      "base64"
     );
   });
 };
