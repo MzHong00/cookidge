@@ -23,19 +23,13 @@ export const CreateRecipeForm = () => {
       requestFn: async () => {
         const compressedCookImages = (await Promise.all([
           ...Array.from(data.pictures as (string | File)[]).map((file) =>
-            typeof file === "string" ? file : resizeFile(file)
+            typeof file === "string" ? file : resizeFile(file),
+          ...data.cooking_steps.map(({ picture }) =>
+            typeof picture === "string" ? picture : resizeFile(picture?.[0])
+          )
           ),
-        ])) as IRecipeForm["pictures"];
+        ]))
         console.log(compressedCookImages);
-
-        const promiseStepImages = data.cooking_steps.map(({ picture }) =>
-          typeof picture === "string" ? picture : resizeFile(picture?.[0])
-        );
-
-        const compressedStepImages = (await Promise.all([
-          ...promiseStepImages,
-        ])) as IRecipeInputDTO["cooking_steps"];
-        console.log(compressedStepImages);
 
         // await mutateAsync({
         //   ...data,
