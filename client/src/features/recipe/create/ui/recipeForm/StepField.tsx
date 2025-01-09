@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { useFieldArray, UseFormReturn } from "react-hook-form";
 import { RiAddLine } from "@react-icons/all-files/ri/RiAddLine";
 import { CgRemoveR } from "@react-icons/all-files/cg/CgRemoveR";
@@ -11,7 +12,7 @@ import { usePreviewSteps } from "../../model/usePreviewSteps";
 
 import styles from "./recipeForm.module.scss";
 
-export const StepField = ({
+export const StepField = memo(({
   register,
   control,
   defaultSteps,
@@ -27,12 +28,6 @@ export const StepField = ({
   } = useFieldArray({
     name: "cooking_steps",
     control,
-    rules: {
-      required: {
-        value: true,
-        message: "요리 과정을 1개 이상 입력해 주세요.",
-      },
-    },
   });
 
   return (
@@ -60,7 +55,7 @@ export const StepField = ({
                   id={field.id}
                   register={register}
                   introduction="이미지 추가"
-                  defaultImage={defaultSteps?.[i].picture || ""}
+                  defaultImage={defaultSteps?.[i]?.picture || ""}
                 />
 
                 <textarea
@@ -91,9 +86,9 @@ export const StepField = ({
       </IconButton>
     </div>
   );
-};
+});
 
-const PreviewStepImage = ({
+const PreviewStepImage = memo(({
   id,
   index,
   introduction,
@@ -134,4 +129,5 @@ const PreviewStepImage = ({
       />
     </div>
   );
-};
+}
+)
