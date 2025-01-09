@@ -22,17 +22,19 @@ export const UpdateRecipeForm = ({ defalutValues }: Props) => {
   const { mutateAsync } = useUpdateRecipeMutation(defalutValues._id);
 
   const onSubmit: SubmitHandler<IRecipeForm> = async (data) => {
-    console.log(data.pictures, data.cooking_steps);
+    const { pictures, cooking_steps } = data;
     openDialogMessage({
       message: `레시피를 업데이트하시겠습니까?`,
       requestFn: async () => {
         let a = [];
 
-        for (const file of Array.from(data.pictures as (string | File)[])) {
+        for (const file of Array.from(pictures as (string | File)[])) {
+          console.log(file);
+
           if (typeof file === "string") {
-            a.push(file); // 문자열인 경우 그대로 배열에 추가
+            a.push(file); 
           } else {
-            const resizedFile = await resizeFile(file); // 비동기 작업 완료 후 결과 추가
+            const resizedFile = await resizeFile(file);
             a.push(resizedFile);
           }
         }
@@ -41,11 +43,13 @@ export const UpdateRecipeForm = ({ defalutValues }: Props) => {
 
         let b = [];
 
-        for (const { picture } of data.cooking_steps) {
+        for (const { picture } of cooking_steps) {
           if (typeof picture === "string") {
-            b.push(picture); // 문자열인 경우 그대로 배열에 추가
+            b.push(picture);
+          } else if (!picture?.length) {
+            b.push("");
           } else {
-            const resizedPicture = await resizeFile(picture?.[0]); // 비동기 작업 완료 후 결과 추가
+            const resizedPicture = await resizeFile(picture[0]);
             b.push(resizedPicture);
           }
         }

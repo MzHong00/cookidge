@@ -41,8 +41,10 @@ export const CreateRecipeForm = () => {
         for (const { picture } of data.cooking_steps) {
           if (typeof picture === "string") {
             b.push(picture); // 문자열인 경우 그대로 배열에 추가
+          }else if (!picture?.length) {
+            b.push("");
           } else {
-            const resizedPicture = await resizeFile(picture?.[0]); // 비동기 작업 완료 후 결과 추가
+            const resizedPicture = await resizeFile(picture[0]); // 비동기 작업 완료 후 결과 추가
             b.push(resizedPicture);
           }
         }
