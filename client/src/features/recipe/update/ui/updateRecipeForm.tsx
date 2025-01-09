@@ -32,22 +32,20 @@ export const UpdateRecipeForm = ({ defalutValues }: Props) => {
         ])) as IRecipeForm["pictures"];
         console.log(compressedCookImages);
 
-        const compressedStepImages = (await Promise.all(
-          data.cooking_steps.map(async ({ instruction, picture }) => ({
-            instruction: instruction,
-            picture:
-              typeof picture === "string"
-                ? picture
-                : resizeFile(picture?.[0]),
-          }))
-        )) as IRecipeInputDTO["cooking_steps"];
-        console.log(compressedStepImages);
+        const promiseStepImages = data.cooking_steps.map(({ picture }) =>
+          typeof picture === "string" ? picture : resizeFile(picture?.[0])
+        );
 
-        await mutateAsync({
-          ...data,
-          pictures: compressedCookImages,
-          cooking_steps: compressedStepImages,
-        });
+        const compressedStepImages =await Promise.all([...promiseStepImages])
+        console.log(compressedStepImages);
+        
+        // as IRecipeInputDTO["cooking_steps"];
+
+        // await mutateAsync({
+        //   ...data,
+        //   pictures: compressedCookImages,
+        //   cooking_steps: compressedStepImages,
+        // });
       },
     });
   };
