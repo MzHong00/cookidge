@@ -23,18 +23,34 @@ export const CreateRecipeForm = () => {
     openDialogMessage({
       message: `${data.name} 레시피를 생성하시겠습니까?`,
       requestFn: async () => {
-        const a = Array.from(data.pictures as (string | File)[]).map((file) =>
-          typeof file === "string" ? file : resizeFile(file)
-        );
-        console.log(a);
+        let a = [];
 
-        const b = data.cooking_steps.map(({ picture }) =>
-          typeof picture === "string" ? picture : resizeFile(picture?.[0])
-        );
+        for (const file of Array.from(data.pictures as (string | File)[])) {
+          if (typeof file === "string") {
+            a.push(file); // 문자열인 경우 그대로 배열에 추가
+          } else {
+            const resizedFile = await resizeFile(file); // 비동기 작업 완료 후 결과 추가
+            a.push(resizedFile);
+          }
+        }
+
+        console.log(a);
+        
+        let b = [];
+
+        for (const { picture } of data.cooking_steps) {
+          if (typeof picture === "string") {
+            b.push(picture); // 문자열인 경우 그대로 배열에 추가
+          } else {
+            const resizedPicture = await resizeFile(picture?.[0]); // 비동기 작업 완료 후 결과 추가
+            b.push(resizedPicture);
+          }
+        }
+        
         console.log(b);
 
-        const compressedCookImages = await Promise.all([...a, ...b]);
-        console.log(compressedCookImages);
+        // const compressedCookImages = await Promise.all([...a, ...b]);
+        // console.log(compressedCookImages);
 
         // await mutateAsync({
         //   ...data,

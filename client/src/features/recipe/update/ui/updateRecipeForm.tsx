@@ -26,17 +26,40 @@ export const UpdateRecipeForm = ({ defalutValues }: Props) => {
     openDialogMessage({
       message: `레시피를 업데이트하시겠습니까?`,
       requestFn: async () => {
-        const a = Array.from(data.pictures as (string | File)[]).map((file) =>
-          typeof file === "string" ? file : resizeFile(file)
-        );
+        let a = [];
+
+        for (const file of Array.from(data.pictures as (string | File)[])) {
+          if (typeof file === "string") {
+            a.push(file); // 문자열인 경우 그대로 배열에 추가
+          } else {
+            const resizedFile = await resizeFile(file); // 비동기 작업 완료 후 결과 추가
+            a.push(resizedFile);
+          }
+        }
+
         console.log(a);
 
-        const b = data.cooking_steps.map(({ picture }) =>
-          typeof picture === "string" ? picture : resizeFile(picture?.[0])
-        );
+        let b = [];
+
+        for (const { picture } of data.cooking_steps) {
+          if (typeof picture === "string") {
+            b.push(picture); // 문자열인 경우 그대로 배열에 추가
+          } else {
+            const resizedPicture = await resizeFile(picture?.[0]); // 비동기 작업 완료 후 결과 추가
+            b.push(resizedPicture);
+          }
+        }
         console.log(b);
-        const compressedCookImages = await Promise.all([...a, ...b]);
-        console.log(compressedCookImages);
+        // const a = Array.from(data.pictures as (string | File)[]).map((file) =>
+        //   typeof file === "string" ? file : resizeFile(file)
+        // );
+
+        // const b = data.cooking_steps.map(({ picture }) =>
+        //   typeof picture === "string" ? picture : resizeFile(picture?.[0])
+        // );
+        // console.log(b);
+        // const compressedCookImages = await Promise.all([...a, ...b]);
+        // console.log(compressedCookImages);
 
         // as IRecipeInputDTO["cooking_steps"];
 
