@@ -35,7 +35,7 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
   const { openDialogMessage } = useConfirmDialogActions();
   
   const {
-    // watch,
+    watch,
     control,
     register,
     handleSubmit,
@@ -47,7 +47,7 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
       cooking_steps: [{ picture: "", instruction: "" }],
     },
   });
-  // const previewFoodImages = usePreviewImages(watch("pictures"));
+  const previewFoodImages = usePreviewImages(watch("pictures"));
   
   const onError: SubmitErrorHandler<IRecipeForm> = (errors) => {
     const { ingredients, cooking_steps, ...errorFields } = errors;
@@ -99,22 +99,20 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
             <InputFile
               id="pictures"
               className={styles.imageUploader}
-              {...register(`pictures`)}
-
-              // {...register(`pictures`, {
-              //   validate: () =>
-              //     !!previewFoodImages.length ||
-              //     "대표 요리사진을 선택해 주세요.",
-              // })}
+              {...register(`pictures`, {
+                validate: () =>
+                  !!previewFoodImages.length ||
+                  "대표 요리사진을 선택해 주세요.",
+              })}
               multiple
             />
-            {/* <ul>
+            <ul>
               {previewFoodImages?.map((image) => (
                 <li key={image} className={styles.imagePreview}>
                   <CldImg cldImg={image} />
                 </li>
               ))}
-            </ul> */}
+            </ul>
           </div>
 
           <InputBox
