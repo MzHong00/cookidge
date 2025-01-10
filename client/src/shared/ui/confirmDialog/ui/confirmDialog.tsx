@@ -12,8 +12,8 @@ export const ConfirmDialog = () => {
   const navigate = useNavigate();
 
   const { ref } = useHandleShowingDialog();
-  const { isOpen, isLoading,  payload, actions } = useConfirmDialogStore();
-  const { message, processMessage,descriptions, requestFn, option } = payload;
+  const { isOpen, isLoading, payload, actions } = useConfirmDialogStore();
+  const { message, processMessage, descriptions, requestFn, option } = payload;
 
   const onClickConfirm = async () => {
     actions.setIsLoading(true);
@@ -27,7 +27,7 @@ export const ConfirmDialog = () => {
       actions.closeDialog();
     }
   };
-  
+
   if (!isOpen) return null;
 
   return (
@@ -42,19 +42,21 @@ export const ConfirmDialog = () => {
             ))}
           </ol>
         </header>
-        {isLoading && <LoadingSpinner msg={processMessage}/>}
-        <main className={styles.actionBar}>
-          <IconButton
-            className="main-button"
-            onClick={onClickConfirm}
-            disabled={isLoading}
-          >
-            확인
-          </IconButton>
-          <IconButton onClick={actions.closeDialog} disabled={isLoading}>
-            취소
-          </IconButton>
-        </main>
+        {isLoading && <LoadingSpinner msg={processMessage} />}
+        {!isLoading && (
+          <main className={styles.actionBar}>
+            <IconButton
+              className="main-button"
+              onClick={onClickConfirm}
+              disabled={isLoading}
+            >
+              확인
+            </IconButton>
+            <IconButton onClick={actions.closeDialog} disabled={isLoading}>
+              취소
+            </IconButton>
+          </main>
+        )}
       </FadeLayout>
     </dialog>
   );
