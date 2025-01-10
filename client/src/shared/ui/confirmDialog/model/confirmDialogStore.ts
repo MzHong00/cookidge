@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 interface DialogPayload {
   message: string;
+  processMessage: string;
   descriptions: string[];
   requestFn: () => Promise<void>;
   option: {
@@ -16,6 +17,7 @@ interface ConfirmDialog {
   actions: {
     openDialogMessage: (payload: Partial<DialogPayload>) => void;
     closeDialog: () => void;
+    setProcessMessage: (msessage: string) => void;
     setIsLoading: (isLoading: boolean) => void;
   };
 }
@@ -25,6 +27,7 @@ const initialState = {
   isLoading: false,
   payload: {
     message: "",
+    processMessage: "",
     descriptions: [],
     requestFn: async () => {},
     option: {
@@ -41,10 +44,14 @@ export const useConfirmDialogStore = create<ConfirmDialog>()((set) => ({
         isOpen: true,
         payload: {
           ...initialState.payload,
-          ...payload
+          ...payload,
         },
       })),
     closeDialog: () => set(() => ({ ...initialState })),
+    setProcessMessage: (message: string) =>
+      set((prev) => ({
+        payload: { ...prev.payload, processMessage: message },
+      })),
     setIsLoading: (isLoading: boolean) => set(() => ({ isLoading })),
   },
 }));
