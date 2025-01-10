@@ -1,13 +1,15 @@
 import { useEffect, useRef } from "react";
 import {
   useConfirmDialogActions,
+  useConfirmDialogIsLoading,
   useConfirmDialogIsOpen,
-} from "shared/ui/confirmDialog/model/confirmDialogStore";
+} from "..";
 
 export const useHandleShowingDialog = () => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const isOpen = useConfirmDialogIsOpen();
+  const isLoading = useConfirmDialogIsLoading();
   const { closeDialog } = useConfirmDialogActions();
 
   useEffect(() => {
@@ -17,6 +19,7 @@ export const useHandleShowingDialog = () => {
     element.showModal();
 
     const handleClickOutside = (e: MouseEvent) => {
+      if(isLoading) return;
       if (e.target === e.currentTarget) closeDialog();
     };
 
@@ -25,7 +28,7 @@ export const useHandleShowingDialog = () => {
     return () => {
       element.removeEventListener("click", handleClickOutside);
     };
-  }, [isOpen, closeDialog]);
+  }, [isOpen, isLoading, closeDialog]);
 
   return { ref: dialogRef };
 };

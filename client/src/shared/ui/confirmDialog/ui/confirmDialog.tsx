@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Logo } from "shared/ui/logo";
 import { FadeLayout } from "shared/ui/fadeLayout";
 import { IconButton } from "shared/ui/iconButton";
+import { LoadingSpinner } from "shared/ui/loadingSpinner";
 import { useHandleShowingDialog, useConfirmDialogStore } from "..";
 
 import styles from "./confirmDialog.module.scss";
@@ -11,8 +12,8 @@ export const ConfirmDialog = () => {
   const navigate = useNavigate();
 
   const { ref } = useHandleShowingDialog();
-  const { isOpen, isLoading, payload, actions } = useConfirmDialogStore();
-  const { message, descriptions, requestFn, option } = payload;
+  const { isOpen, isLoading,  payload, actions } = useConfirmDialogStore();
+  const { message, processMessage,descriptions, requestFn, option } = payload;
 
   const onClickConfirm = async () => {
     actions.setIsLoading(true);
@@ -26,12 +27,11 @@ export const ConfirmDialog = () => {
       actions.closeDialog();
     }
   };
-
+  
   if (!isOpen) return null;
 
   return (
     <dialog ref={ref}>
-      {isLoading && <div className={styles.loadingSpinner} />}
       <FadeLayout className={styles.dialog}>
         <header className={styles.header}>
           <Logo />
@@ -42,6 +42,7 @@ export const ConfirmDialog = () => {
             ))}
           </ol>
         </header>
+        {isLoading && <LoadingSpinner msg={processMessage}/>}
         <main className={styles.actionBar}>
           <IconButton
             className="main-button"
@@ -50,7 +51,9 @@ export const ConfirmDialog = () => {
           >
             확인
           </IconButton>
-          <IconButton onClick={actions.closeDialog}>취소</IconButton>
+          <IconButton onClick={actions.closeDialog} disabled={isLoading}>
+            취소
+          </IconButton>
         </main>
       </FadeLayout>
     </dialog>
