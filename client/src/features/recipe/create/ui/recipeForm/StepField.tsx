@@ -100,23 +100,25 @@ const PreviewStepImage = memo(({
   introduction: string;
   defaultImage: string;
 }) => {
-  const { previewImage, previewOnChange } = usePreviewSteps(defaultImage);
+  console.log(index);
+  
+  // const { previewImage, previewOnChange } = usePreviewSteps(defaultImage);
 
   return (
     <div className={styles.previewStepImage}>
       <label htmlFor={id}>
-        {previewImage ? (
+        {/* {previewImage ? (
           <CldImg
             cldImg={previewImage}
             className={styles.image}
             style={{ aspectRatio: 1 }}
           />
-        ) : (
+        ) : ( */}
           <div className={styles.uploadPlaceholder}>
             <RiUpload2Line size={24} />
             {introduction && <p>{introduction || "이미지 추가"}</p>}
           </div>
-        )}
+        {/* )} */}
       </label>
 
       <input
@@ -124,7 +126,7 @@ const PreviewStepImage = memo(({
         type="file"
         accept="image/*"
         {...register(`cooking_steps.${index}.picture`, {
-          onChange: previewOnChange,
+          // onChange: previewOnChange,
         })}
       />
     </div>

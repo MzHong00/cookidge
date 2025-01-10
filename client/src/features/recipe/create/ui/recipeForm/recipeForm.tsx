@@ -35,7 +35,7 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
   const { openDialogMessage } = useConfirmDialogActions();
   
   const {
-    watch,
+    // watch,
     control,
     register,
     handleSubmit,
@@ -47,7 +47,7 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
       cooking_steps: [{ picture: "", instruction: "" }],
     },
   });
-  const previewFoodImages = usePreviewImages(watch("pictures"));
+  // const previewFoodImages = usePreviewImages(watch("pictures"));
   
   const onError: SubmitErrorHandler<IRecipeForm> = (errors) => {
     const { ingredients, cooking_steps, ...errorFields } = errors;
@@ -99,20 +99,22 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
             <InputFile
               id="pictures"
               className={styles.imageUploader}
-              {...register(`pictures`, {
-                validate: () =>
-                  !!previewFoodImages.length ||
-                  "대표 요리사진을 선택해 주세요.",
-              })}
+              {...register(`pictures`)}
+
+              // {...register(`pictures`, {
+              //   validate: () =>
+              //     !!previewFoodImages.length ||
+              //     "대표 요리사진을 선택해 주세요.",
+              // })}
               multiple
             />
-            <ul>
+            {/* <ul>
               {previewFoodImages?.map((image) => (
                 <li key={image} className={styles.imagePreview}>
                   <CldImg cldImg={image} />
                 </li>
               ))}
-            </ul>
+            </ul> */}
           </div>
 
           <InputBox
@@ -131,8 +133,6 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
           <TextArea
             id="introduce"
             label="소개"
-            length={watch('introduction')?.length || 0}
-            maxLength={INTRODUCE_LIMIT_LENGTH}
             placeholder="요리의 간단한 소개를 작성해주세요."
             {...register("introduction", {
               required: "요리의 간단한 소개를 작성해 주세요.",
