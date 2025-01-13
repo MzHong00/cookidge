@@ -4,12 +4,13 @@ import { RiArrowUpDownLine } from "@react-icons/all-files/ri/RiArrowUpDownLine";
 import { useModal } from "shared/hooks/useModal";
 import { IconButton } from "shared/ui/iconButton";
 import { FadeLayout } from "shared/ui/fadeLayout";
-import { useRecipeSortParams } from "..";
+import { SORT, useRecipeSortParams } from "..";
 
 import styles from "./recipeSort.module.scss";
 
 export const RecipeSort = () => {
   const { isOpen, toggleModal } = useModal();
+
   const { sortParams, onClickSort } = useRecipeSortParams();
 
   return (
@@ -20,13 +21,14 @@ export const RecipeSort = () => {
       {isOpen && (
         <FadeLayout>
           <nav className={styles.sortContent}>
-            {["최신순", "좋아요순"].map((value) => (
+            {Object.entries(SORT).map(([text, value]) => (
               <IconButton
-                key={value}
-                Icon={sortParams === value ? RiCheckLine : undefined}
+                key={text}
+                value={value}
+                Icon={sortParams === text ? RiCheckLine : undefined}
                 onClick={onClickSort}
               >
-                {value}
+                {text}
               </IconButton>
             ))}
           </nav>
