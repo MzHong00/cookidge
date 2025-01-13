@@ -5,7 +5,7 @@ import { IUser } from "./IUser";
 import { PagenationOptions } from "./types";
 import { IIngredient } from "./IIngredient";
 
-export type IRecipe = {
+export interface IRecipe {
   _id: ObjectId | mongoose.mongo.BSON.ObjectId;
   name: string;
   pictures?: string[];
@@ -18,31 +18,34 @@ export type IRecipe = {
   cooking_steps?: ICookingStep[];
   like_members: IUser["_id"][];
   created_at: Date;
-};
+}
 
-export type ICookingStep = {
+export interface ICookingStep {
   picture?: string;
   instruction: string;
-};
+}
 
-export type IRecipeInput = Pick<
-  IRecipe,
-  | "name"
-  | "introduction"
-  | "category"
-  | "cooking_time"
-  | "servings"
-  | "category"
-> &
-  Partial<Pick<IRecipe, "ingredients" | "pictures" | "cooking_steps">>;
+export interface IRecipeInput
+  extends Pick<
+      IRecipe,
+      | "name"
+      | "introduction"
+      | "category"
+      | "cooking_time"
+      | "servings"
+      | "category"
+    >,
+    Partial<Pick<IRecipe, "ingredients" | "pictures" | "cooking_steps">> {}
 
 export interface IRecipeQueryOption extends PagenationOptions {
   query?: string;
 }
 
+export type IRecipeSort = "latest" | "like";
+
 export interface IRecipeSearchOption extends PagenationOptions {
   categories?: IRecipe["category"][];
-  sort?: "최신순" | "좋아요순";
+  sort?: IRecipeSort;
 }
 
 export const recipeInputJoiSchema = {

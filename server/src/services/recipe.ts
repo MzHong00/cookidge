@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import {
   IRecipe,
+  IRecipeSort,
   IRecipeInput,
   IRecipeQueryOption,
   IRecipeSearchOption,
@@ -13,10 +14,10 @@ import { CloudinaryService } from "./cloudinary";
 import { IIngredient } from "../interface/IIngredient";
 import { mongooseTransaction } from "../lib/mongoose/transaction";
 
-enum Sort {
-  "최신순" = "_id",
-  "좋아요순" = "like_count",
-}
+const SORT= {
+  "latest": "_id",
+  "like": "like_count",
+} as const;
 
 export class RecipeService {
   static readRecipeById(recipeId: string) {
@@ -51,7 +52,7 @@ export class RecipeService {
   }
 
   static readRecipes(option: IRecipeSearchOption) {
-    const { categories, sort = "최신순", limit = 3, offset=0 } = option || {};
+    const { categories, sort = Object.keys(SORT)[0] as IRecipeSort, limit = 3, offset=0 } = option || {};
 
     return Recipe.aggregate([
       {
@@ -70,7 +71,7 @@ export class RecipeService {
           like_count: { $size: "$like_members" },
         },
       },
-      { $sort: { [`${Sort[sort]}`]: -1 } },
+      { $sort: { [`${SORT[sort]}`]: -1 } },
       { $skip: Number(offset) },
       { $limit: Number(limit) },
       {
