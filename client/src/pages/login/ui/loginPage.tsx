@@ -1,6 +1,6 @@
 import { LoginForm } from "features/user/login";
 
-import styles from "./loginPage.module.css";
+import styles from "./loginPage.module.scss";
 
 export const LoginPage = () => {
   return (

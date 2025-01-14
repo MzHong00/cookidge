@@ -167,7 +167,7 @@ export default (app: Router) => {
           )
             .map((cldImg) => (cldImg ? cldImg.public_id : ""))
             .filter((ids) => ids);
-  
+
           stepIndex.forEach((stepIndex, publicIdIndex) => {
             if (recipeInputDto.cooking_steps)
               recipeInputDto.cooking_steps[stepIndex].picture =
@@ -211,7 +211,7 @@ export default (app: Router) => {
         [stepPictures: string]: Express.Multer.File[] | undefined;
       };
 
-      if(!recipeInputDto.cooking_steps) recipeInputDto.cooking_steps = [];
+      if (!recipeInputDto.cooking_steps) recipeInputDto.cooking_steps = [];
 
       try {
         const prevRecipe = (await RecipeService.readRecipeById(
@@ -242,9 +242,9 @@ export default (app: Router) => {
           );
 
           const stepPromise = await CloudinaryService.uploadFiles(
-              Object.values(stepPictures).flatMap((pic) => pic ?? []),
-              { folder: cldFolder.cooking_steps }
-            )
+            Object.values(stepPictures).flatMap((pic) => pic ?? []),
+            { folder: cldFolder.cooking_steps }
+          );
 
           const stepPublicIds = stepPromise
             .map((cldImg) => (cldImg ? cldImg.public_id : ""))
@@ -258,18 +258,20 @@ export default (app: Router) => {
         }
 
         const deleteTargets: string[] = [];
-          
+
         // 이전과 현재의 요리과정 사진 전체 탐색
         prevRecipe.cooking_steps?.forEach((step) => {
           if (!step.picture) return;
           // 사용하지 않은 요리과정 추출
-          const isUsing = recipeInputDto.cooking_steps?.map((step)=>step.picture || "").find((url) => url === step.picture)
-          if(!isUsing) deleteTargets.push(step.picture)
-        })
-        
+          const isUsing = recipeInputDto.cooking_steps
+            ?.map((step) => step.picture || "")
+            .find((url) => url === step.picture);
+          if (!isUsing) deleteTargets.push(step.picture);
+        });
+
         // 사용하지 않은 요리과정 사진 삭제
-        CloudinaryService.deleteFiles(deleteTargets)
-        
+        CloudinaryService.deleteFiles(deleteTargets);
+
         // 레시피 업데이트
         await RecipeService.updateRecipe(recipeId, recipeInputDto);
 
@@ -357,7 +359,7 @@ export default (app: Router) => {
 
     try {
       const likeRecipes = await RecipeService.readMyLikeRecipes(userId);
-      
+
       res.status(200).json(likeRecipes);
     } catch (error) {
       console.error("나의 좋아요 레시피 읽기 중 오류가 발생:", error);

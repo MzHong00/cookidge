@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import axios from "shared/lib/axios";
 
 export class AuthService {
@@ -14,5 +15,19 @@ export class AuthService {
 
   static async logout() {
     return (await axios.post(`${this.api}/logout`)).data;
+  }
+
+  static async testAccountLogin(code: string) {
+    try {
+      await axios.post(`${this.api}/test-account`, {
+        code: code,
+      });
+    } catch (error) {
+      const errData = (error as AxiosError).response?.data as
+        | { message: string }
+        | undefined;
+
+      return errData?.message;
+    }
   }
 }

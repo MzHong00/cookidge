@@ -42,27 +42,30 @@ export default (app: Router) => {
     });
   });
 
-  route.get("/test-account", async (req, res) => {
-    const { code } = req.query;
+  route.post("/test-account", async (req, res) => {
+    const { code } = req.body;
 
-    if (code !== "cookidge#0820")
-      return res.status(403).json({ message: "올바르지 않은 암호입니다." });
+    if (code !== "5789")
+      return res.status(403).json({ message: "올바르지 않은 코드입니다." });
 
-    const { access_token, refresh_token } = await signin({
-      name: "cookidge",
-      email: "cookidge.vercel.app",
-      picture:
-        "https://res.cloudinary.com/db0ls9b6a/image/upload/v1735203469/cookidge/yq0h7aydfwdg1rslshd7.png",
-    });
+    try {
+      const { access_token, refresh_token } = await signin({
+        name: "cookidge",
+        email: "cookidge.vercel.app",
+        picture:
+          "https://res.cloudinary.com/db0ls9b6a/image/upload/v1735203469/cookidge/yq0h7aydfwdg1rslshd7.png",
+      });
 
-    res
-      .status(200)
-      .cookie("token", refresh_token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-        domain: "cookidge.vercel.app"
-      })
-      .send({ token: access_token });
+      res
+        .status(200)
+        .cookie("token", refresh_token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "none",
+        })
+        .send({ token: access_token });
+    } catch (error) {
+      return res.status(403).json({ message: "올바르지 않은 코드입니다." });
+    }
   });
 };
