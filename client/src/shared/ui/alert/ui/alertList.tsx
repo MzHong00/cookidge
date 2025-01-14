@@ -36,8 +36,8 @@ export const AlertList = () => {
 
   return createPortal(
     <div className={styles.alertList}>
-      {queue.map((alert) => (
-        <Alert key={alert.message} {...alert} />
+      {queue.map((alert, i) => (
+        <Alert key={`${alert.message}${i}`} {...alert} />
       ))}
     </div>,
     document.body
