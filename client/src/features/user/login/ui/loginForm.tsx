@@ -2,11 +2,12 @@ import { Link } from "react-router-dom";
 import { FcGoogle } from "@react-icons/all-files/fc/FcGoogle";
 
 import { Logo } from "shared/ui/logo";
-import { IconBox } from "shared/ui/iconBox";
 import { FadeLayout } from "shared/ui/fadeLayout";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { InfoTooltip } from "shared/ui/infoToolTip";
+import { IconButton } from "shared/ui/iconButton";
 import { OAuthService } from "shared/api/oauth";
+import { TestAccountLoginForm } from "..";
 
 import styles from "./loginForm.module.scss";
 
@@ -15,8 +16,8 @@ interface Props {
 }
 
 export const LoginForm = ({ className }: Props) => {
-  const googleOAuthHandler = async () => {
-    await OAuthService.googleOAuth();
+  const googleOAuthHandler = () => {
+    OAuthService.googleOAuth();
   };
 
   return (
@@ -33,14 +34,15 @@ export const LoginForm = ({ className }: Props) => {
             <h3>시작하기</h3>
             <p>계정에 로그인하여 다양한 서비스를 경험하세요.</p>
           </div>
-          <button
-            className={`${styles.oauthButton} ${styles.googleOAuth}`}
+          <IconButton
+            Icon={FcGoogle}
             onClick={googleOAuthHandler}
+            className={`${styles.googleOAuthButton}`}
           >
-            <IconBox Icon={FcGoogle} className={styles.oauthIcon} />
-            <b>구글 계정으로 로그인</b>
-          </button>
+            <span>구글 계정으로 로그인</span>
+          </IconButton>
         </main>
+        <TestAccountLoginForm />
       </SubjectBox>
     </FadeLayout>
   );

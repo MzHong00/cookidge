@@ -199,7 +199,7 @@ const appRouter = createBrowserRouter([
   {
     path: "/oauth-redirect",
     loader: async () => await OAuthService.googleOAuthRedirect(),
-    element: <Navigate to={"/"} />,
+    element: <Navigate to={"/dashboard"} />,
   },
 ]);
 
