@@ -35,7 +35,7 @@ export const Home = () => {
 
       <div ref={recipeContainerRef} className={styles.recipeList}>
         {recipes?.pages.map((page) =>
-          page.map((recipe) => (
+          page?.map((recipe) => (
             <RecipeCard
               key={recipe._id}
               recipe={recipe}
