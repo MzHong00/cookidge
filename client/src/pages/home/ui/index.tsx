@@ -34,8 +34,8 @@ export const Home = () => {
       <RecipeSearchOptionWidget />
 
       <div ref={recipeContainerRef} className={styles.recipeList}>
-        {recipes?.pages.map((page) =>
-          page?.map((recipe) => (
+        {/* {recipes?.pages.map((page) =>
+          page.map((recipe) => (
             <RecipeCard
               key={recipe._id}
               recipe={recipe}
@@ -48,14 +48,14 @@ export const Home = () => {
               />
             </RecipeCard>
           ))
-        )}
-        {isFetching && (
+        )} */}
+        {/* {isFetching && (
           <>
             <RecipeCardSkeleton />
             <RecipeCardSkeleton />
           </>
         )}
-        <div id="observer" ref={setTarget} style={{ minHeight: "4em" }}></div>
+        <div id="observer" ref={setTarget} style={{ minHeight: "4em" }}></div> */}
       </div>
     </FadeLayout>
   );
