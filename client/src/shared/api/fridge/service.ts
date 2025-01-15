@@ -4,7 +4,7 @@ import { IUser } from "../user";
 import { IFridge } from "./";
 
 export class FridgeService {
-  static readonly root = "api/refrigerator";
+  static readonly root = "/api/refrigerator";
 
   static async fetchFridgeList() {
     try {

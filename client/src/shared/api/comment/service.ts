@@ -5,7 +5,7 @@ import type { PagenationParams } from "shared/types";
 import type { IComment, ICommentJoinUser } from "./";
 
 export class CommentService {
-  static root = "api/comment";
+  static root = "/api/comment";
 
   // 댓글 리스트 읽기
   static async readCommentsQuery(config: {

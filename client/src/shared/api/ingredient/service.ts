@@ -4,7 +4,7 @@ import { IFridge } from "../fridge";
 import { IIngredientInputDto } from "./";
 
 export class IngredientService {
-  static readonly root = "api/ingredient";
+  static readonly root = "/api/ingredient";
 
   static async createIngredientMutation(
     ingredients: IIngredientInputDto[],
