@@ -35,8 +35,9 @@ export const Home = () => {
       const t= await axios.get('/api/google-oauth/login');
       console.log(t);
 
-      const b = await fetch('/api/google-oauth/login', {method: "GET"})
-      console.log(b);
+      const b = await fetch('/api/google-oauth/login')
+      const jsonData = await b?.text();
+  console.log(jsonData);
       
     }
 

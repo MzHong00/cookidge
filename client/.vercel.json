@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/api",
-      "destination": "https://cookidge-api.vercel.app/"
+      "source": "/api/:path*",
+      "destination": "https://cookidge-api.vercel.app/api/:path*"
     }
   ]
 }
