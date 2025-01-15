@@ -1,0 +1,29 @@
+@use 'app/app.scss';
+
+.subInfo {
+    @include app.flex-layout(row, stretch, space-between, 0);
+}
+
+/* 재료 탭 */
+.ingredientContainer {
+    @include app.flex-layout(column, center, center);
+    padding-inline: 10%;
+}
+
+.ingredientControls {
+    @include app.flex-layout(row);
+}
+
+.ingredientActions {
+    width: 100%;
+    @include app.flex-layout(row, stretch, space-between, 0);
+}
+
+@media screen and (max-width: 767px) {
+    .ingredientContainer {
+        padding-inline: 0.5rem !important;
+    }
+    .subInfo{
+        flex-direction: column;
+    }
+}
