@@ -2,10 +2,10 @@
 
 .container {
     @include app.flex-layout(row, stretch, stretch, 0rem);
-}
 
-.container>button {
-    padding-inline: 0.25rem
+    &>button {
+        padding-inline: 0.25rem;
+    }
 }
 
 .category {
@@ -15,15 +15,15 @@
     overflow-x: auto;
     scroll-behavior: smooth;
     scrollbar-width: none;
-}
 
-.category::-webkit-scrollbar {
-    display: none;
-}
+    &::-webkit-scrollbar {
+        display: none;
+    }
 
-.category button {
-    border-radius: 10px;
-    transition-duration: 0.3s;
+    & button {
+        border-radius: 10px;
+        transition-duration: 0.3s;
+    }
 }
 
 .inActiveButton {

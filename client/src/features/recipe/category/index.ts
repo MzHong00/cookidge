@@ -1,6 +1,6 @@
-export { RecipeCategory } from "./ui/recipeCategory";
+export { RecipeFilter } from "./ui/recipeFilter";
 
 export { CATEGORIES_KEY } from "./consts/consts";
 
-export { useSlideControl } from "./model/useSlideControl";
-export { useRecipeCategoriesParams } from "./model/useRecipeCategoriesParams";
+export { useSlideAndShowSideButton } from "./model/useSlideAndShowSideButton";
+export { useFilterRecipeParams } from "./model/useFilterRecipeParams";

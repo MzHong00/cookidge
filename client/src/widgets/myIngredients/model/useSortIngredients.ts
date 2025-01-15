@@ -17,7 +17,6 @@ export const useSortIngredients = (ingredients: IIngredient[]) => {
   }, [ingredients, sortTypeValue]);
 
   const onChangesortTypeValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(e.target.value);
     setSortTypeValue(e.target.value as (typeof INGREDIENT_SORT_TYPES)[number]);
   };
 

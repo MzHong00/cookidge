@@ -14,7 +14,7 @@ import {
   SharedMemberList,
 } from "entities/fridge";
 import { DeleteFridgeButton } from "features/fridge/delete";
-import { MyIngredientWidget } from "widgets/myIngredient";
+import { MyIngredientWidget } from "widgets/myIngredients";
 import { RecipeRecommendWidget } from "widgets/recipeRecommend";
 
 import { FridgeDetailPageSkeleton } from "./fridgeDetailPageSkeleton";
@@ -39,12 +39,12 @@ export const FridgeDetailPage = () => {
       <div className={styles.config}>
         <IconButton ref={modalRef} Icon={BsGear} onClick={toggleModal} />
         {isOpen && (
-          <div className={styles.configDropdown}>
+          <FadeLayout className={styles.configDropdown}>
             <IconLink to={`/dashboard/fridge/setting/${fridgeDetail._id}`}>
-              수정
+              설정
             </IconLink>
             <DeleteFridgeButton id={fridgeDetail._id} />
-          </div>
+          </FadeLayout>
         )}
       </div>
 

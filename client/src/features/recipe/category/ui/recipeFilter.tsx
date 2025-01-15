@@ -4,19 +4,20 @@ import { RiArrowRightSLine } from "@react-icons/all-files/ri/RiArrowRightSLine";
 
 import { IconButton } from "shared/ui/iconButton";
 import { FOOD_CATEGORIES } from "entities/recipe";
-import { useSlideControl, useRecipeCategoriesParams } from "..";
+import { useSlideAndShowSideButton, useFilterRecipeParams } from "..";
 
-import styles from "./recipeCategory.module.scss";
+import styles from "./recipeFilter.module.scss";
 
-export const RecipeCategory = memo(() => {
-  const { categoriesParams, onClickCategories } = useRecipeCategoriesParams();
+export const RecipeFilter = memo(() => {
+  const { filterParams, onClickSetFilterParams, onClickRemoveFilterParams } =
+    useFilterRecipeParams();
   const {
     ref,
     isLeftActive,
     isRightActive,
     onClickMoveRight,
     onClickMoveLeft,
-  } = useSlideControl();
+  } = useSlideAndShowSideButton();
 
   return (
     <nav className={styles.container}>
@@ -25,14 +26,24 @@ export const RecipeCategory = memo(() => {
         onClick={onClickMoveLeft}
         className={`${!isLeftActive && styles.inActiveButton}`}
       />
+
       <ul ref={ref} className={styles.category}>
+        <li>
+          <IconButton
+            onClick={onClickRemoveFilterParams}
+            className={`${!filterParams.length && "main-button"}`}
+          >
+            전체
+          </IconButton>
+        </li>
+
         {FOOD_CATEGORIES.map((category) => (
           <li key={category.text}>
             <IconButton
-              onClick={onClickCategories}
+              onClick={onClickSetFilterParams}
               data-category={category.text}
               className={`${
-                categoriesParams.includes(category.text) && "main-button"
+                filterParams.includes(category.text) && "main-button"
               }`}
             >
               {category.emoji} {category.text}
@@ -40,6 +51,7 @@ export const RecipeCategory = memo(() => {
           </li>
         ))}
       </ul>
+
       <IconButton
         Icon={RiArrowRightSLine}
         onClick={onClickMoveRight}
