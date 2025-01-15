@@ -27,7 +27,7 @@ export const useSlide = () => {
     const leftScroll = e.currentTarget.scrollLeft;
     const clientWidth = ref.current?.clientWidth;
 
-    if (!leftScroll || !clientWidth) return;
+    if (leftScroll === undefined || !clientWidth) return;
 
     const curIndex = e.currentTarget.scrollLeft / ref.current.clientWidth;
     setIndex(Math.round(curIndex));
