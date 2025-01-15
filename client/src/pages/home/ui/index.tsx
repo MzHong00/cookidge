@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useLoaderData } from "react-router-dom";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
@@ -11,7 +11,6 @@ import { LikeButton } from "features/recipe/like";
 import { RecipeSearchOptionWidget } from "widgets/recipeSearchOption";
 
 import styles from "./index.module.scss";
-import axios from "axios";
 
 export const Home = () => {
   const params = useLoaderData() as RecipeFilterQuery;
@@ -30,26 +29,12 @@ export const Home = () => {
     options: { root: recipeContainerRef.current, rootMargin: "800px" },
   });
 
-  useEffect(() => {
-    const test = async () => {
-      const t= await axios.get('api/google-oauth/login');
-      console.log(t);
-
-      const b = await fetch('/api/google-oauth/login')
-      const jsonData = await b?.text();
-  console.log(jsonData);
-      
-    }
-
-    test();
-  }, [])
-
   return (
     <FadeLayout className={styles.container}>
       <RecipeSearchOptionWidget />
 
       <div ref={recipeContainerRef} className={styles.recipeList}>
-        {/* {recipes?.pages.map((page) =>
+        {recipes?.pages.map((page) =>
           page.map((recipe) => (
             <RecipeCard
               key={recipe._id}
@@ -70,7 +55,7 @@ export const Home = () => {
             <RecipeCardSkeleton />
           </>
         )}
-        <div id="observer" ref={setTarget} style={{ minHeight: "4em" }}></div> */}
+        <div id="observer" ref={setTarget} style={{ minHeight: "4em" }}></div>
       </div>
     </FadeLayout>
   );

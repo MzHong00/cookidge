@@ -10,7 +10,7 @@ import {
 import { PagenationParams } from "shared/types";
 
 export class UserService {
-  static readonly root = "/api/user";
+  static readonly root = "api/user";
 
   static async fetchMe(): Promise<IUser> {
     const response = await axios.get(`${this.root}/me`, {
