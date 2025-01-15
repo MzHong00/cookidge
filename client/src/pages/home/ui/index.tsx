@@ -32,7 +32,7 @@ export const Home = () => {
 
   useEffect(() => {
     const test = async () => {
-      const t= await axios.get('/api/google-oauth/login');
+      const t= await axios.get('api/google-oauth/login');
       console.log(t);
 
       const b = await fetch('/api/google-oauth/login')
