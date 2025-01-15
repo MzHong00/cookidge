@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-export const useSlideControl = () => {
+export const useSlideAndShowSideButton = () => {
   const ref = useRef<HTMLUListElement>(null);
   const [isLeftActive, setIsLeftActive] = useState(false);
   const [isRightActive, setIsRightActive] = useState(false);
