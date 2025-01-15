@@ -1,9 +1,11 @@
 import axios from "shared/lib/axios";
 
 export class OAuthService {
+  static readonly root = "/api/google-oauth";
+
   static async googleOAuth() {
     try {
-      const response = await axios.get(`api/google-oauth/login`);
+      const response = await axios.get(`${this.root}/login`);
 
       window.location.href = response.data;
     } catch (error) {
@@ -17,7 +19,7 @@ export class OAuthService {
 
     try {
       const response = await axios.get(
-        `api/google-oauth/callback?code=${oauth_code}`,
+        `${this.root}/callback?code=${oauth_code}`,
         { withCredentials: true }
       );
 

@@ -2,7 +2,7 @@ import { AxiosError } from "axios";
 import axios from "shared/lib/axios";
 
 export class AuthService {
-  static readonly api = "api/auth";
+  static readonly api = "/api/auth";
 
   static async issueAccessToken() {
     const { token }: { token: string | undefined } = (
