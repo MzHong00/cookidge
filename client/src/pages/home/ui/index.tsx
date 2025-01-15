@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useLoaderData } from "react-router-dom";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
@@ -11,6 +11,7 @@ import { LikeButton } from "features/recipe/like";
 import { RecipeSearchOptionWidget } from "widgets/recipeSearchOption";
 
 import styles from "./index.module.scss";
+import axios from "axios";
 
 export const Home = () => {
   const params = useLoaderData() as RecipeFilterQuery;
@@ -28,6 +29,19 @@ export const Home = () => {
     fetchNextPage,
     options: { root: recipeContainerRef.current, rootMargin: "800px" },
   });
+
+  useEffect(() => {
+    const test = async () => {
+      const t= await axios.get('/api/google-oauth/login');
+      console.log(t);
+
+      const b = await fetch('/api/google-oauth/login', {method: "GET"})
+      console.log(b);
+      
+    }
+
+    test();
+  }, [])
 
   return (
     <FadeLayout className={styles.container}>
