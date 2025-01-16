@@ -4,7 +4,7 @@
 
 배포: https://cookidge.vercel.app/
 
-회고: [Cookidge 회고](https://velog.io/@mzhong/Side-Project-Cookidge-%EC%A0%95%EB%A6%AC)
+회고: [Cookidge 회고](https://velog.io/@mzhong/Side-Project-Cookidge-%ED%9A%8C%EA%B3%A0)
 
 ### 기능
 간략하고 읽기 쉽게 나타내자면 다음과 같다.
