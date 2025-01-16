@@ -13,7 +13,7 @@ import {
 } from "./";
 
 export class RecipeService {
-  static readonly root = "api/recipe";
+  static readonly root = "/api/recipe";
 
   static async readRecipe(id?: IRecipe["_id"]): Promise<IRecipeJoinUser> {
     return (await axios.get(`${this.root}/read/detail/${id}`)).data[0];
