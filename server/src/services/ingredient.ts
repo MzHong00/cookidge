@@ -8,18 +8,18 @@ export class IngredientService {
   ) {
     return Refrigerator.findByIdAndUpdate(
       targetRefrigeratorId,
-      { $push: { stored_ingredients: { $each: ingredients } } },
+      {
+        $push: { stored_ingredients: { $each: ingredients } },
+        last_updated: new Date(),
+      },
       { new: true }
     );
   }
 
-  static updateIngredients(
-    refrigeratorId: string,
-    ingredients: IIngredient[]
-  ) {
+  static updateIngredients(refrigeratorId: string, ingredients: IIngredient[]) {
     return Refrigerator.findByIdAndUpdate(refrigeratorId, {
       stored_ingredients: ingredients,
-      last_updated: new Date()
-    })
+      last_updated: new Date(),
+    });
   }
 }
