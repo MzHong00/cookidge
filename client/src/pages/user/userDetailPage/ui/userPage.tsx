@@ -1,11 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { RiUserSettingsLine } from "@react-icons/all-files/ri/RiUserSettingsLine";
 
 import { IconBox } from "shared/ui/iconBox";
 import { IconLink } from "shared/ui/iconLink";
-import { ProfileImage } from "shared/ui/profileImage";
 import { FadeLayout } from "shared/ui/fadeLayout";
+import { ProfileImage } from "shared/ui/profileImage";
+import { LoadingSpinner } from "shared/ui/loadingSpinner";
 import { UserQueries } from "entities/user";
 import { RecipeQueries } from "entities/recipe/queries/recipeQueries";
 import { FollowButton } from "features/user/follow";
@@ -24,7 +25,7 @@ export const UserPage = () => {
     RecipeQueries.listByUserQuery(name)
   );
 
-  if (isUserLoading) return <div>사용자 정보 가져오는 중...</div>;
+  if (isUserLoading) return <LoadingSpinner msg="사용자 정보 가져오는 중..."/>;
   if (!user) return <div>존재하지 않는 사용자입니다.</div>;
 
   return (
