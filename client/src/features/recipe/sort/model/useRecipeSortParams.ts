@@ -5,7 +5,7 @@ import { SORT } from "../consts/consts";
 export const useRecipeSortParams = () => {
   const [sortParams, setSortParams] = useSearchParams({ sort: SORT["최신순"] });
 
-  const onClickSort = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onClickSetSortParams = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
     sortParams.set("sort", e.currentTarget.value);
@@ -14,6 +14,6 @@ export const useRecipeSortParams = () => {
 
   return {
     sortParams: sortParams.get("sort"),
-    onClickSort,
+    onClickSetSortParams,
   };
 };

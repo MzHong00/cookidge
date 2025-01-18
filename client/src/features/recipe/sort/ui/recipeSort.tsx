@@ -11,7 +11,7 @@ import styles from "./recipeSort.module.scss";
 export const RecipeSort = () => {
   const { isOpen, toggleModal } = useModal();
 
-  const { sortParams, onClickSort } = useRecipeSortParams();
+  const { sortParams, onClickSetSortParams } = useRecipeSortParams();
 
   return (
     <div className={styles.sortBar}>
@@ -26,7 +26,7 @@ export const RecipeSort = () => {
                 key={text}
                 value={value}
                 Icon={sortParams === text ? RiCheckLine : undefined}
-                onClick={onClickSort}
+                onClick={onClickSetSortParams}
               >
                 {text}
               </IconButton>

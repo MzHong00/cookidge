@@ -1,19 +1,16 @@
 import type { IRecipe } from "shared/api/recipe";
 import { IconButton } from "shared/ui/iconButton";
 import { useConfirmDialogActions } from "shared/ui/confirmDialog";
+
 import { useDeleteRecipeMutation } from "../mutation/deleteRecipeMutation";
 
 import styles from "./deleteRecipeButton.module.css";
 
-interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface Props {
   recipeId: IRecipe["_id"];
 }
 
-export const DeleteRecipeButton = ({
-  recipeId,
-  className,
-  ...props
-}: Props) => {
+export const DeleteRecipeButton = ({ recipeId }: Props) => {
   const { openDialogMessage } = useConfirmDialogActions();
   const { mutateAsync, isPending } = useDeleteRecipeMutation(recipeId);
 
@@ -30,9 +27,8 @@ export const DeleteRecipeButton = ({
 
   return (
     <IconButton
-      className={`${styles.deleteButton} ${className}`}
+      className={`${styles.deleteButton}`}
       onClick={onClicDeleteRecipe}
-      {...props}
     >
       삭제
     </IconButton>
