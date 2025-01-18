@@ -2,4 +2,4 @@ export { LikeButton } from "./ui/likeButtton";
 
 export { useLikeMutation, useUnlikeMutation } from "./mutation/useLikeMutation";
 
-export { useLikeState } from "./model/useLikeState";
+export { useLikeHandler } from "./model/useLikeHandler";
