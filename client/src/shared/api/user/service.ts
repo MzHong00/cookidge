@@ -43,11 +43,7 @@ export class UserService {
     updateData: IUserInputDTO
   ): Promise<{ message: string }> {
     return (
-      await axios.patch(`${this.root}/update`, updateData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
+      await axios.patch(`${this.root}/update`, updateData)
     ).data;
   }
 
