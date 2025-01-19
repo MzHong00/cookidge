@@ -50,9 +50,11 @@ export class UserService {
     userId: IUser["_id"],
     userData: Partial<IUserUpdateInputDTO>
   ) {
-    const user = await this.readUserById(userId);
-    CloudinaryService.deleteFiles([user?.picture || ""]);
-
+    if(userData.picture) {
+      const user = await this.readUserById(userId);
+      CloudinaryService.deleteFiles([user?.picture || ""]);
+    }
+    
     return User.findByIdAndUpdate(userId, { $set: userData }, { new: true });
   }
 

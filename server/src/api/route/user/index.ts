@@ -134,29 +134,28 @@ export default (app: Router) => {
 
   route.patch(
     "/update",
-    upload.single("picture[]"),
     celebrate({
       [Segments.BODY]: Joi.object({
         name: Joi.string(),
         introduce: Joi.any(),
+        picture: Joi.string()
       }),
     }),
     isAuth,
     async (req, res) => {
       const userId = req.userId;
-      const { name, introduce } = req.body as IUserUpdateInputDTO;
-      const file = req.file;
-
-      const picture = await CloudinaryService.uploadFile(file, {
+      const { name, introduce, picture } = req.body as IUserUpdateInputDTO;
+      
+      const image = await CloudinaryService.uploadImageByBase64(picture, {
         folder: "profiles",
         transformation: { width: 200 },
       });
-
+      
       try {
         await UserService.updateUser(userId, {
           ...(name && { name }),
           ...(introduce && { introduce }),
-          ...(picture && { picture: picture.public_id }),
+          ...(image && { picture: image.public_id }),
         });
 
         res.status(200).json({
