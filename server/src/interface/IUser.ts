@@ -15,11 +15,12 @@ export interface IUser {
 }
 
 export interface IUserSearchQueryOptions extends PagenationOptions {
-  user_name?: IUser['name']
+  user_name?: IUser["name"];
 }
 
 export interface IUserCreateInputDTO
   extends Pick<IUser, "name" | "picture" | "email"> {}
 
-export interface IUserUpdateInputDTO
-  extends Pick<IUser, "name" | "introduce" | "picture"> {}
+export interface IUserUpdateInputDTO extends Pick<IUser, "name" | "introduce"> {
+  picture?: string;
+}

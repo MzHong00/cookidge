@@ -38,6 +38,31 @@ export class CloudinaryService {
     return uploadResult;
   }
 
+  static async uploadImageByBase64(image?: string, config?: UploadApiOptions) {
+    if (!image) return;
+
+    const { folder, transformation, ...cld_config } = config || {};
+    // Upload an image
+    const uploadResult = await cloudinary.uploader
+      .upload(image, {
+        folder: `cookidge/${folder}`,
+        transformation: {
+          height: 1000,
+          crop: "fit",
+          gravity: "center",
+          aspect_ratio: 1,
+          fetch_format: "auto",
+          ...(transformation as Object),
+        },
+        ...cld_config,
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    return uploadResult;
+  }
+
   static async uploadFiles(
     files: (Express.Multer.File | string)[],
     config?: UploadApiOptions
@@ -49,8 +74,8 @@ export class CloudinaryService {
   }
 
   static async deleteFiles(files: string[]) {
-    if(files.length === 0) return ;
-    
+    if (files.length === 0) return;
+
     return cloudinary.api.delete_resources(files);
   }
 }

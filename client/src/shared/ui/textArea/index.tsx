@@ -8,7 +8,7 @@ interface Props extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
 }
 
 export const TextArea = forwardRef<HTMLTextAreaElement, Props>(
-  ({ id, label, length ,maxLength, ...props }, ref) => {
+  ({ id, label, maxLength, ...props }, ref) => {
     return (
       <div className={styles.container}>
         {label && <label htmlFor={id}>{label}</label>}
@@ -18,8 +18,8 @@ export const TextArea = forwardRef<HTMLTextAreaElement, Props>(
           ref={ref}
           {...props}
         />
-        <div className={styles.counter}>
-          {length}/{maxLength}
+        <div className={styles.limit}>
+          ※ {maxLength}자 이내 작성해주세요.
         </div>
       </div>
     );

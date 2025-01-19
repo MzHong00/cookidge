@@ -4,8 +4,14 @@
     @include app.flex-layout(column, center, center)
 }
 
-.uploadPictureButton {
+.imageInput {
     width: 200px;
     border-radius: 100% !important;
     overflow: hidden;
+    box-shadow: 1px 1px 2px 2px silver;
+
+    &:hover {
+    box-shadow: inset 0px 0px 2px 4px silver;
+
+    }
 }

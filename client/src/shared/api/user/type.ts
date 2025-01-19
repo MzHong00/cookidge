@@ -18,12 +18,11 @@ export interface IUserInfiniteQueryParams extends PagenationParams {
 
 export interface IUserPicture extends Pick<IUser, "_id" | "picture" | "name"> {}
 
-export interface IUserSearchDTO
-  extends IUserPicture {
+export interface IUserSearchDTO extends IUserPicture {
   introduce: string;
   follower_count: string | number;
 }
 
 export interface IUserInputDTO extends Pick<IUser, "name" | "introduce"> {
-  picture: File[];
+  picture?: IUser["picture"];
 }

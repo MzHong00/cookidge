@@ -15,6 +15,7 @@ import {
 import { useCreateIngredientMutation } from "..";
 
 import styles from "./createIngredientForm.module.scss";
+import { FadeLayout } from "shared/ui/fadeLayout";
 
 interface IngredientInputForm {
   ingredients: IIngredient[];
@@ -58,89 +59,88 @@ export const CreateIngredientForm = ({ fridge_id, onSubmitAttach }: Props) => {
   };
 
   return (
-    <SubjectBox title="재료 추가" className={styles.container}>
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-        <div style={{ overflowY: "auto" }}>
-          <table className={styles.table}>
-            <colgroup className={styles.colgroup}>
-              {Array.from({ length: 5 }).map((_, i) => (
-                <col key={i} />
-              ))}
-            </colgroup>
-            <thead className={styles.tableHeader}>
-              <tr>
-                {INGREDIENT_TABLE_FIELD.map((filed) => (
-                  <td key={filed}>{filed}</td>
+    <FadeLayout>
+      <SubjectBox title="재료 추가" className={styles.container}>
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+          <div style={{ overflowY: "auto" }}>
+            <table className={styles.table}>
+              <colgroup>
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <col key={i} />
                 ))}
-              </tr>
-            </thead>
-            <tbody>
-              {fields?.map((ingredient, index) => (
-                <tr key={ingredient._id} className={styles.ingredientTableItem}>
-                  <td>
-                    <select
-                      id="category"
-                      {...register(`ingredients.${index}.category`, {
-                        required: true,
-                      })}
-                    >
-                      {INGREDIENTS_CATEGORIES.map((category) => (
-                        <option key={category.text}>
-                          {category.emoji} {category.text}
-                        </option>
-                      ))}
-                    </select>
-                  </td>
-                  <td>
-                    <input
-                      placeholder="재료 이름"
-                      {...register(`ingredients.${index}.name`, {
-                        required: true,
-                      })}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      placeholder="수량"
-                      {...register(`ingredients.${index}.quantity`, {
-                        required: true,
-                      })}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="date"
-                      {...register(`ingredients.${index}.expired_at`, {
-                        required: true,
-                      })}
-                    />
-                  </td>
-                  <td>
-                    <IconButton
-                      Icon={CgRemoveR}
-                      onClick={() => remove(index)}
-                      className={styles.removeButton}
-                      color="red"
-                    />
-                  </td>
+              </colgroup>
+              <thead>
+                <tr>
+                  {INGREDIENT_TABLE_FIELD.map((filed) => (
+                    <td key={filed}>{filed}</td>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <>
-          <div className={styles.appendButtonContainer}>
+              </thead>
+              <tbody>
+                {fields?.map((ingredient, index) => (
+                  <tr key={ingredient._id} className={styles.ingredient}>
+                    <td>
+                      <select
+                        id="category"
+                        {...register(`ingredients.${index}.category`, {
+                          required: true,
+                        })}
+                      >
+                        {INGREDIENTS_CATEGORIES.map((category) => (
+                          <option key={category.text}>
+                            {category.emoji} {category.text}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
+                    <td>
+                      <input
+                        placeholder="재료 이름"
+                        {...register(`ingredients.${index}.name`, {
+                          required: true,
+                        })}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        placeholder="수량"
+                        {...register(`ingredients.${index}.quantity`, {
+                          required: true,
+                        })}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="date"
+                        {...register(`ingredients.${index}.expired_at`, {
+                          required: true,
+                        })}
+                      />
+                    </td>
+                    <td>
+                      <IconButton
+                        Icon={CgRemoveR}
+                        onClick={() => remove(index)}
+                        className={styles.removeButton}
+                        color="red"
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className={styles.appendButton}>
             <IconButton
               Icon={RiAddLine}
-              className={styles.appendButton}
               onClick={onClickAppendField}
             >
               추가
             </IconButton>
           </div>
           <input type="submit" className={styles.submitButton} value="확인" />
-        </>
-      </form>
-    </SubjectBox>
+        </form>
+      </SubjectBox>
+    </FadeLayout>
   );
 };

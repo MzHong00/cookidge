@@ -8,17 +8,22 @@ import { InputFile } from "shared/ui/inputFile";
 import { IconButton } from "shared/ui/iconButton";
 import { useConfirmDialogActions } from "shared/ui/confirmDialog";
 import { usePreviewImages } from "shared/hooks/usePreviewImages";
+import { compressImageToBase64 } from "shared/lib/imageCompression";
 import { UserQueries } from "entities/user";
 import { useUpdateUserMutation } from "../mutation/updateUserMutation";
 
 import styles from "./userEditForm.module.scss";
+
+interface UserEditInputs extends Omit<IUserInputDTO, "picture"> {
+  picture: File[];
+}
 
 export const UserEditForm = () => {
   const { openDialogMessage } = useConfirmDialogActions();
   const { mutateAsync, isPending } = useUpdateUserMutation();
   const { data: me } = useQuery(UserQueries.meQuery());
 
-  const { watch, register, handleSubmit } = useForm<IUserInputDTO>({
+  const { watch, register, handleSubmit } = useForm<UserEditInputs>({
     defaultValues: {
       name: me?.name,
       introduce: me?.introduce,
@@ -27,14 +32,23 @@ export const UserEditForm = () => {
 
   const previewImages = usePreviewImages(watch("picture"));
 
-  const onSubmit: SubmitHandler<IUserInputDTO> = (newUserData) => {
-    if (isPending) return;
+  const onSubmit: SubmitHandler<UserEditInputs> = async (user) => {
+    const { name, introduce, picture } = user;
 
     openDialogMessage({
       message: `프로필을 수정하시겠습니까?`,
       requestFn: async () => {
-        await mutateAsync(newUserData);
+        const compressedPicture = (await compressImageToBase64(picture[0], {
+          maxSizeMB: 2,
+        })) as string | undefined;
+        
+        await mutateAsync({
+          name: name,
+          introduce: introduce,
+          picture: compressedPicture,
+        });
       },
+      option: {backspace: false},
     });
   };
 
@@ -42,7 +56,7 @@ export const UserEditForm = () => {
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <InputFile
         id="pictures"
-        className={styles.uploadPictureButton}
+        className={styles.imageInput}
         previewUrl={`${
           previewImages.length === 0 ? me?.picture : previewImages
         }`}
@@ -50,13 +64,10 @@ export const UserEditForm = () => {
       />
       <InputBox label="이메일" id="email" value={me?.email} disabled />
       <InputBox label="이름" {...register("name")} />
-      <TextArea
-        label="소개"
-        length={watch("introduce")?.length || 0}
-        maxLength={100}
-        {...register("introduce")}
-      />
-      <IconButton className="w-full main-button">수정</IconButton>
+      <TextArea label="소개" maxLength={100} {...register("introduce")} />
+      <IconButton className="w-full main-button" disabled={isPending}>
+        수정
+      </IconButton>
     </form>
   );
 };

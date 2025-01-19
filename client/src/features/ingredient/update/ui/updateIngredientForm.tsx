@@ -68,12 +68,12 @@ export const UpdateIngredientForm = ({
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div style={{ overflowY: "auto" }}>
           <table className={styles.table}>
-            <colgroup className={styles.colgroup}>
+            <colgroup >
               {Array.from({ length: 5 }).map((_, i) => (
                 <col key={i} />
               ))}
             </colgroup>
-            <thead className={styles.tableHeader}>
+            <thead>
               <tr>
                 {INGREDIENT_TABLE_FIELD.map((filed) => (
                   <td key={filed}>{filed}</td>
@@ -82,7 +82,7 @@ export const UpdateIngredientForm = ({
             </thead>
             <tbody>
               {fields?.map((ingredient, index) => (
-                <tr key={ingredient._id} className={styles.ingredientTableItem}>
+                <tr key={ingredient._id} className={styles.ingredient}>
                   <td>
                     <select
                       id="category"
@@ -134,18 +134,15 @@ export const UpdateIngredientForm = ({
             </tbody>
           </table>
         </div>
-        <>
-          <div className={styles.appendButtonContainer}>
+          <div className={styles.appendButton}>
             <IconButton
               Icon={RiAddLine}
-              className={styles.appendButton}
               onClick={onClickAppendField}
             >
               추가
             </IconButton>
           </div>
           <input type="submit" className={styles.submitButton} value="확인" />
-        </>
       </form>
     </SubjectBox>
   );
