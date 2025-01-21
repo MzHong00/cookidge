@@ -1,1 +1,1 @@
-export { RecipeSearchOptionWidget } from "./ui/recipeSearchOptionWidget";
+export { RecipeSearchOption } from "./ui/recipeSearchOption";
