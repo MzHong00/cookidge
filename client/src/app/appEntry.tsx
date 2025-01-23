@@ -8,7 +8,13 @@ import appRouter from "./appRouter";
 import "./app.scss";
 
 const AppEntry = () => {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions:{
+      queries: {
+        throwOnError: true,
+      }
+    }
+  });
 
   return (
     <QueryClientProvider client={queryClient}>
