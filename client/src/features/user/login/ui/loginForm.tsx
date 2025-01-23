@@ -11,15 +11,7 @@ import { TestAccountLoginForm } from "..";
 
 import styles from "./loginForm.module.scss";
 
-interface Props {
-  className: string;
-}
-
-export const LoginForm = ({ className }: Props) => {
-  const googleOAuthHandler = () => {
-    OAuthService.googleOAuth();
-  };
-
+export const LoginForm = ({ className }: { className: string }) => {
   return (
     <FadeLayout className={`${styles.container} ${className}`}>
       <SubjectBox className={styles.loginForm}>
@@ -36,7 +28,9 @@ export const LoginForm = ({ className }: Props) => {
           </div>
           <IconButton
             Icon={FcGoogle}
-            onClick={googleOAuthHandler}
+            onClick={() => {
+              OAuthService.redirectToGoogleOAuthForm();
+            }}
             className={`${styles.googleOAuthButton}`}
           >
             <span>구글 계정으로 로그인</span>
