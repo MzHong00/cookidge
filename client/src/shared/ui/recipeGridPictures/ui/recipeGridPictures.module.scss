@@ -1,0 +1,11 @@
+.gridList {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr)
+}
+
+@media screen and (max-width: 767px) {
+    .gridList {
+        grid-template-columns: repeat(2, minmax(100px, 1fr))
+    }
+}
