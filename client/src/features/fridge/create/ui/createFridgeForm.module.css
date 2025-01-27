@@ -8,14 +8,6 @@
     gap: 1rem;
 }
 
-.createButton {
-    padding-inline: 1rem;
-    padding-block: 0.5rem;
-    color: white;
-    background-color: rgb(var(--main-rgb)) !important;
-    border-radius: 5px;
-}
-
 .closeButton {
     border: 1px solid rgb(var(--base-rgb-grey-medium));
 }
