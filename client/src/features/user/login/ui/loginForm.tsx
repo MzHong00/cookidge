@@ -4,19 +4,16 @@ import { FcGoogle } from "@react-icons/all-files/fc/FcGoogle";
 import { Logo } from "shared/ui/logo";
 import { FadeLayout } from "shared/ui/fadeLayout";
 import { SubjectBox } from "shared/ui/subjectBox";
-import { InfoTooltip } from "shared/ui/infoToolTip";
 import { IconButton } from "shared/ui/iconButton";
 import { OAuthService } from "shared/api/oauth";
 import { TestAccountLoginForm } from "..";
 
 import styles from "./loginForm.module.scss";
 
-export const LoginForm = ({ className }: { className: string }) => {
+export const LoginForm = ({ className }: { className?: string }) => {
   return (
     <FadeLayout className={`${styles.container} ${className}`}>
       <SubjectBox className={styles.loginForm}>
-        <InfoTooltip message="로그인이 정상적이지 않을 경우, 브라우저 설정에서 트래커 추적 방지를 허용해 주세요." />
-
         <Link to="/">
           <Logo className={styles.logo} />
         </Link>
