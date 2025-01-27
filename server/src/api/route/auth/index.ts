@@ -16,29 +16,35 @@ export default (app: Router) => {
         sameSite: "none",
         secure: true,
       })
-      .json({ message: "Logged out successfully" });
+      .json({ message: "로그아웃에 성공했습니다." });
   });
 
   route.get("/issue-token", async (req, res) => {
-    const refreshToken = req.cookies.token as string;
+    const refreshToken = req.cookies.token as string | undefined;
 
     if (!refreshToken)
       return res
         .status(401)
-        .json({ isLogin: false, message: "로그인 상태가 아닙니다." });
+        .json({ message: "로그인 상태가 아닙니다." });
 
     if (!config.jwtSecretKey)
       return res.status(503).json({ message: "서버 jwt key가 없습니다" });
 
     jwt.verify(refreshToken, config.jwtSecretKey, (err, payload) => {
-      if (err)
-        return res.status(401).json({ message: "유효하지 않은 토큰입니다." });
+      if (err) {
+        if ((err as jwt.TokenExpiredError).expiredAt)
+          return res.status(488).json({
+            message: "토큰이 만료되었습니다. 다시 로그인 해주세요.",
+          });
+
+        return res.status(401).json({
+          message: "유효하지 않은 리프레시 토큰입니다.",
+        });
+      }
 
       const accessToken = issueToken({ id: (payload as JwtPayload).id });
 
-      return res
-        .status(201)
-        .send({ isLogin: true, token: accessToken, payload: payload });
+      return res.status(201).send({ token: accessToken });
     });
   });
 
@@ -61,7 +67,7 @@ export default (app: Router) => {
         .cookie("token", refresh_token, {
           httpOnly: true,
           secure: true,
-          sameSite: "none",
+          sameSite: "strict",
         })
         .send({ token: access_token });
     } catch (error) {
