@@ -17,9 +17,11 @@ export const FridgeList = () => {
         <IconLink
           to={`detail/${fridge._id}`}
           key={fridge._id}
-          className={`${styles.fridgeButton} ${fridge._id === id && styles.activeFridge}`}
+          className={`${styles.fridgeButton} ${
+            fridge._id === id && styles.active
+          }`}
         >
-          <RiFridgeLine color="skyblue" />
+          <RiFridgeLine />
           {fridge.name}
         </IconLink>
       ))}
