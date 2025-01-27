@@ -1,20 +1,22 @@
-import { AxiosError } from "axios";
+import type { AxiosError } from "axios";
 import axios from "shared/lib/axios";
 
 export class AuthService {
   static readonly api = "/api/auth";
 
   static async issueAccessToken() {
-    const { token }: { token: string | undefined } = (
-      await axios.get(`${this.api}/issue-token`)
+    const response = (
+      await axios.get(`${this.api}/issue-token`, { withCredentials: true })
     )?.data;
-    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-    return token;
+    axios.defaults.headers.common.Authorization = `Bearer ${response?.token}`;
+
+    return response?.token;
   }
 
   static async logout() {
-    return (await axios.post(`${this.api}/logout`)).data;
+    await axios.post(`${this.api}/logout`);
+    window.location.reload();
   }
 
   static async testAccountLogin(code: string) {

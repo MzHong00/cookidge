@@ -3,13 +3,14 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import { OAuthService } from "shared/api/oauth";
 import { LoadingSpinner } from "shared/ui/loadingSpinner";
-import { CreateFridgeForm } from "features/fridge/create";
 import { UserSearchBox } from "entities/user";
 import { RecipeSearchBox } from "entities/recipe";
+import { CreateFridgeForm } from "features/fridge/create";
 import { Root } from "pages/root";
+import { Home } from "pages/home";
 import { LoginPage } from "pages/login";
 import { Dashboard } from "pages/dashboard";
-import { Home, searchOptionLoader } from "pages/home";
+import { NotFound } from "widgets/notFound";
 import { RecipeDetailPage } from "pages/recipe/detailPage";
 import { FridgeDetailPage } from "pages/fridge/detailPage";
 import { RankOverViewPage } from "pages/rank/rankOverView";
@@ -29,12 +30,12 @@ const appRouter = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
+    errorElement: <NotFound />,
     children: [
       {
         path: "/",
-        loader: searchOptionLoader(),
         element: <Home />,
-      },
+  },
       {
         path: "recipe/:id",
         element: <RecipeDetailPage />,
@@ -197,7 +198,7 @@ const appRouter = createBrowserRouter([
   },
   {
     path: "/oauth-redirect",
-    loader: async () => await OAuthService.googleOAuthRedirect(),
+    loader: async () => await OAuthService.loginWithGoogleOAuth(),
     element: <Navigate to={"/dashboard"} />,
   },
 ]);

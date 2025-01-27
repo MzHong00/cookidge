@@ -2,7 +2,6 @@ import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
 import type { PagenationParams } from "shared/types";
 import type { IUserInfiniteQueryParams } from "shared/api/user";
-import { useAuthStore } from "shared/lib/zustand";
 import { type IUser, UserService } from "shared/api/user";
 
 export class UserQueries {
@@ -11,6 +10,8 @@ export class UserQueries {
     user: "user",
     infinite: "inifinite",
     rank: "rank",
+    follower: "follower",
+    maker: "recipe-maker",
   };
 
   static readonly staleTime = {
@@ -19,14 +20,11 @@ export class UserQueries {
   };
 
   static meQuery() {
-    const { isLogin } = useAuthStore.getState();
-
     return queryOptions({
       queryKey: [this.keys.me],
       queryFn: () => UserService.fetchMe(),
       staleTime: this.staleTime.root,
       refetchOnWindowFocus: false,
-      enabled: isLogin,
       retry: false,
     });
   }
@@ -71,7 +69,7 @@ export class UserQueries {
     const { limit = 10 } = option || {};
 
     return infiniteQueryOptions({
-      queryKey: [this.keys.rank, "follower", this.keys.infinite],
+      queryKey: [this.keys.rank, this.keys.follower, this.keys.infinite],
       queryFn: ({ pageParam, signal }) =>
         UserService.followerRank({
           signal,
@@ -95,7 +93,7 @@ export class UserQueries {
     const { limit = 10 } = option || {};
 
     return infiniteQueryOptions({
-      queryKey: [this.keys.rank, "recipe-maker", this.keys.infinite],
+      queryKey: [this.keys.rank, this.keys.maker, this.keys.infinite],
       queryFn: ({ pageParam, signal }) =>
         UserService.recipeMakerRank({
           signal,

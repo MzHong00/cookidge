@@ -1,11 +1,8 @@
 import axios, { AxiosStatic } from "axios";
 
 import { AuthService } from "shared/api/auth/service";
-import { useAuthStore } from "../zustand";
 
-const instance = axios.create({
-  withCredentials: true,
-});
+const instance = axios.create();
 
 instance.interceptors.request.use(
   (config) => {
@@ -21,48 +18,32 @@ instance.interceptors.request.use(
 //isLogin false 기준: Refresh Token이 유효하지 않은 경우
 instance.interceptors.response.use(
   (response) => {
-    axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-
-    if (response.data.token) {
-      const { changeIsLogin } = useAuthStore.getState();
-      changeIsLogin(true);
-    }
-
     return response;
   },
   async (error) => {
-    const { isLogin, changeIsLogin } = useAuthStore.getState();
-
-    if (error.response.data.isLogin === false) {
-      changeIsLogin(false);
-      return Promise.resolve();
-    }
-
-    if (error.response.status === 401) {
-      if (!isLogin) return Promise.resolve();
-
-      await AuthService.issueAccessToken();
-
-      /* ------- 토큰 인증 재요청 과정 ------- */
-      const accessToken = axios.defaults.headers.common.Authorization;
+    // 엑세스 토큰 만료 (재발급 로직)
+    if (error.response.status === 498) {
+      const accessToken = await AuthService.issueAccessToken();
+      
+      if (!accessToken) return Promise.resolve();
 
       // 기존 요청의 headers에 새로 발급된 access token을 설정
       error.config.headers = {
         ...error.config.headers,
-        Authorization: `${accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       };
 
       // 기존 요청의 data를 JSON으로 파싱하여 복원
-      if (error.config.data) {
-        error.config.data = JSON.parse(error.config.data);
-      }
-
+      if (error.config.data) error.config.data = JSON.parse(error.config.data);
       const response = await axios.request(error.config);
 
       return response;
     }
 
-    return Promise.reject(error);
+    // 리프레시 토큰 만료 (로그아웃 로직)
+    if (error.response.status === 488) {
+      AuthService.logout();
+    }
   }
 );
 
