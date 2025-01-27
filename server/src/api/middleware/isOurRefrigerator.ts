@@ -8,8 +8,6 @@ export default async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.userId;
   const refrigeratorId = req.query.refrigerator_id || req.body.refrigerator_id;
   
-  if (!userId)
-    return res.status(401).json({ message: "로그인 상태가 아닙니다." });
   if (!refrigeratorId)
     return res
       .status(400)
@@ -33,9 +31,6 @@ export const isMyRefrigerator = async (
 ) => {
   const userId = req.userId;
   const refrigeratorId = req.body.refrigerator_id;
-
-  if (!userId)
-    return res.status(401).json({ message: "로그인 상태가 아닙니다." });
 
   const refrigerator = await Refrigerator.findOne({
     _id: refrigeratorId,

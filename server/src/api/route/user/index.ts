@@ -7,7 +7,6 @@ import {
   IUserSearchQueryOptions,
   IUserUpdateInputDTO,
 } from "../../../interface/IUser";
-import { upload } from "../../../loaders/multer";
 import { CloudinaryService } from "../../../services/cloudinary";
 import { RankService } from "../../../services/rank";
 import { PagenationOptions } from "../../../interface/types";
@@ -22,9 +21,6 @@ export default (app: Router) => {
 
     try {
       const me = await UserService.readUserById(meId);
-
-      if (!me)
-        return res.status(404).json({ message: "내 정보를 찾을 수 없습니다." });
 
       res.status(200).json(me);
     } catch (error) {
