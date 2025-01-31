@@ -1,4 +1,3 @@
-import type { AxiosError } from "axios";
 import axios from "shared/lib/axios";
 
 export class AuthService {
@@ -20,16 +19,11 @@ export class AuthService {
   }
 
   static async testAccountLogin(code: string) {
-    try {
-      await axios.post(`${this.api}/test-account`, {
-        code: code,
-      });
-    } catch (error) {
-      const errData = (error as AxiosError).response?.data as
-        | { message: string }
-        | undefined;
+    const response = await axios.post(`${this.api}/test-account`, {
+      code: code,
+    });
 
-      return errData?.message;
-    }
+    if (response?.data?.token)
+      axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
   }
 }
