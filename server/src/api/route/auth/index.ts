@@ -52,7 +52,7 @@ export default (app: Router) => {
     const { code } = req.body;
 
     if (code !== "5789")
-      return res.status(403).json({ message: "올바르지 않은 코드입니다." });
+      return res.status(401).json({ message: "올바르지 않은 코드입니다." });
 
     try {
       const { access_token, refresh_token } = await signin({
@@ -71,7 +71,7 @@ export default (app: Router) => {
         })
         .send({ token: access_token });
     } catch (error) {
-      return res.status(403).json({ message: "올바르지 않은 코드입니다." });
+      return res.status(401).json({ message: "올바르지 않은 코드입니다." });
     }
   });
 };
