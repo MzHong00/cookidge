@@ -15,7 +15,6 @@ export class UserQueries {
   };
 
   static readonly staleTime = {
-    root: 60 * 60 * 1000,
     search: 30 * 1000,
   };
 
@@ -23,7 +22,6 @@ export class UserQueries {
     return queryOptions({
       queryKey: [this.keys.me],
       queryFn: () => UserService.fetchMe(),
-      staleTime: this.staleTime.root,
       refetchOnWindowFocus: false,
       retry: false,
     });
@@ -33,7 +31,6 @@ export class UserQueries {
     return queryOptions({
       queryKey: [this.keys.user, name],
       queryFn: () => UserService.fetchUser(name),
-      staleTime: this.staleTime.root,
       enabled: !!name,
       retry: false,
     });
@@ -84,7 +81,6 @@ export class UserQueries {
 
         return lastPageParam + 1;
       },
-      staleTime: this.staleTime.root,
       retry: false,
     });
   }
@@ -108,7 +104,6 @@ export class UserQueries {
 
         return lastPageParam + 1;
       },
-      staleTime: this.staleTime.root,
       retry: false,
     });
   }
