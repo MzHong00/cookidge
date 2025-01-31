@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import isAuth from "../../middleware/isAuth";
+import isRefreshAuth from "../../middleware/isRefreshAuth";
 import { celebrate, Joi, Segments } from "celebrate";
 import { UserService } from "../../../services/user";
 import {
@@ -10,19 +11,24 @@ import {
 import { CloudinaryService } from "../../../services/cloudinary";
 import { RankService } from "../../../services/rank";
 import { PagenationOptions } from "../../../interface/types";
+import { issueToken } from "../../../services/auth";
 
 const route = Router();
 
 export default (app: Router) => {
   app.use("/user", route);
 
-  route.get("/me", isAuth, async (req, res) => {
+  route.get("/me", isRefreshAuth, async (req, res) => {
     const meId = req.userId;
 
     try {
       const me = await UserService.readUserById(meId);
+      const accessToken = issueToken({ id: meId });
 
-      res.status(200).json(me);
+      res.status(200).json({
+        user: me,
+        token: accessToken,
+      });
     } catch (error) {
       console.log(error);
       res
@@ -119,11 +125,9 @@ export default (app: Router) => {
         res.status(200).json(recipeMakerRank);
       } catch (error) {
         console.log(error);
-        res
-          .status(500)
-          .json({
-            message: "레시피 메이커 랭킹을 검색하는 중 오류가 발생했습니다.",
-          });
+        res.status(500).json({
+          message: "레시피 메이커 랭킹을 검색하는 중 오류가 발생했습니다.",
+        });
       }
     }
   );
@@ -134,19 +138,19 @@ export default (app: Router) => {
       [Segments.BODY]: Joi.object({
         name: Joi.string(),
         introduce: Joi.any(),
-        picture: Joi.string()
+        picture: Joi.string(),
       }),
     }),
     isAuth,
     async (req, res) => {
       const userId = req.userId;
       const { name, introduce, picture } = req.body as IUserUpdateInputDTO;
-      
+
       const image = await CloudinaryService.uploadImageByBase64(picture, {
         folder: "profiles",
         transformation: { width: 200 },
       });
-      
+
       try {
         await UserService.updateUser(userId, {
           ...(name && { name }),
