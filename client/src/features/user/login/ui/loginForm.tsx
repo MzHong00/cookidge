@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { FcGoogle } from "@react-icons/all-files/fc/FcGoogle";
 
 import { Logo } from "shared/ui/logo";
@@ -14,9 +13,7 @@ export const LoginForm = ({ className }: { className?: string }) => {
   return (
     <FadeLayout className={`${styles.container} ${className}`}>
       <SubjectBox className={styles.loginForm}>
-        <Link to="/">
-          <Logo className={styles.logo} />
-        </Link>
+        <Logo to="/" className={styles.logo} />
 
         <main className={styles.content}>
           <div className={styles.introduce}>
