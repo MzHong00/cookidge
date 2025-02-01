@@ -1,0 +1,13 @@
+@use 'app/app.scss';
+
+.deleteButton {
+    margin-top: auto;
+    float: right;
+    transition-timing-function: ease;
+    transition-duration: 0.2s;
+    opacity: 0.3;
+
+    &:hover {
+        opacity: 0.8;
+    }
+}

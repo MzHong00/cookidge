@@ -3,7 +3,7 @@ import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
 import { useIntersectionObserver } from "shared/hooks/useIntersectionObserver";
 import { RecipeQueries } from "entities/recipe/queries/recipeQueries";
-import { RecipeCard } from "entities/recipe";
+import { RecipeCard, RecipeCardSkeleton } from "entities/recipe";
 import { LikeButton } from "features/recipe/like";
 import { useRecipeSearchParams } from "../model/useRecipeSearchParams";
 
@@ -16,16 +16,14 @@ export const RecipeList = () => {
     data: recipes,
     fetchNextPage,
     hasNextPage,
+    isFetching,
   } = useSuspenseInfiniteQuery(RecipeQueries.infinityQuery(recipeParams));
 
   const { setTarget } = useIntersectionObserver({
     hasNextPage,
     fetchNextPage,
-    options: { root: recipeContainerRef.current, rootMargin: "800px" },
   });
-  console.log(recipes);
-  
-  
+
   return (
     <div ref={recipeContainerRef} className={styles.recipeList}>
       {recipes?.pages.map((page) =>
@@ -43,6 +41,7 @@ export const RecipeList = () => {
           </RecipeCard>
         ))
       )}
+      {isFetching && <RecipeCardSkeleton />}
       <div id="observer" ref={setTarget} style={{ minHeight: "4em" }}></div>
     </div>
   );

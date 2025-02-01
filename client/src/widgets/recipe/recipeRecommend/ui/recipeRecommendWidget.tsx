@@ -17,6 +17,7 @@ interface Props extends React.HTMLAttributes<HTMLElement> {
   my_ingredients?: IIngredient[];
 }
 const SKELETON_COUNT = 4;
+
 export const RecipeRecommendWidget = ({
   fridge_id,
   my_ingredients,
@@ -60,29 +61,29 @@ export const RecipeRecommendWidget = ({
         레시피 추천
       </IconButton>
       <div className={styles.recipeList}>
-        {isFetching
-          ? Array.from({ length: SKELETON_COUNT }).map((_, i) => (
-              <RecipeCardSkeleton key={i} />
-            ))
-          : recipes?.map(({ matched_ingredients, ...recipe }) => (
-              <RecipeCard
-                key={recipe._id}
-                recipe={recipe}
-                className={styles.recipeCard}
-              >
-                <Link to={`/recipe/${recipe._id}`}>
-                  <LikeButton
-                    recipe_id={recipe._id}
-                    likeMembers={recipe.like_members}
-                    disabled
-                  />
-                  <div>
-                    포함된 재료({matched_ingredients.length}):{" "}
-                    {matched_ingredients.join(", ")}
-                  </div>
-                </Link>
-              </RecipeCard>
-            ))}
+        {isFetching ? (
+          <RecipeCardSkeleton count={SKELETON_COUNT} />
+        ) : (
+          recipes?.map(({ matched_ingredients, ...recipe }) => (
+            <RecipeCard
+              key={recipe._id}
+              recipe={recipe}
+              className={styles.recipeCard}
+            >
+              <Link to={`/recipe/${recipe._id}`}>
+                <LikeButton
+                  recipe_id={recipe._id}
+                  likeMembers={recipe.like_members}
+                  disabled
+                />
+                <div>
+                  포함된 재료({matched_ingredients.length}):{" "}
+                  {matched_ingredients.join(", ")}
+                </div>
+              </Link>
+            </RecipeCard>
+          ))
+        )}
       </div>
     </SubjectBox>
   );

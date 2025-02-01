@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { RiFridgeLine } from "@react-icons/all-files/ri/RiFridgeLine";
 
 import { IconLink } from "shared/ui/iconLink";
@@ -9,8 +9,8 @@ import styles from "./fridgeList.module.scss";
 
 export const FridgeList = () => {
   const { id } = useParams();
-  const { data: fridgeList } = useQuery(FridgeQueries.listQuery());
-
+  const { data: fridgeList } = useSuspenseQuery(FridgeQueries.listQuery());
+  
   return (
     <section className={styles.container}>
       {fridgeList?.map((fridge) => (
