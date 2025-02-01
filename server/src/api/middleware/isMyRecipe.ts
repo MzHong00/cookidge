@@ -10,9 +10,6 @@ export default async (req: Request, res: Response, next: NextFunction) => {
   if (!recipeId)
     return res.status(404).json({ message: "레시피 ID가 없습니다." });
 
-  if (!userId)
-    return res.status(401).json({ message: "로그인 상태가 아닙니다." });
-
   const isMyRecipe = await Recipe.findOne({
     _id: mongoose.Types.ObjectId.createFromHexString(recipeId),
     author_id: userId,

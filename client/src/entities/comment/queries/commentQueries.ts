@@ -9,8 +9,6 @@ export class CommentQueries {
     comment: "comment",
   };
 
-  static staleTime = 5 * 60 * 1000;
-
   static infiniteQuery(
     query: { recipeId: IRecipe["_id"] } & Partial<PagenationParams>
   ) {
@@ -34,7 +32,6 @@ export class CommentQueries {
         const lastComment = lastPage.at(-1);
         return lastComment?._id;
       },
-      staleTime: this.staleTime,
       retry: false
     });
   }

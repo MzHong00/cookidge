@@ -1,8 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import type { IFridgeFormInput } from "shared/api/fridge";
 import { InputBox } from "shared/ui/inputBox";
-import { IconLink } from "shared/ui/iconLink";
 import { IconButton } from "shared/ui/iconButton";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { FadeLayout } from "shared/ui/fadeLayout";
@@ -12,6 +12,8 @@ import { useCreateFridgeMutation } from "../mutation/createFridgeMutation";
 import styles from "./createFridgeForm.module.css";
 
 export const CreateFridgeForm = () => {
+  const navigate = useNavigate();
+
   const { openDialogMessage } = useConfirmDialogActions();
   const { mutateAsync, isPending } = useCreateFridgeMutation();
 
@@ -54,9 +56,15 @@ export const CreateFridgeForm = () => {
             )}
           </div>
           <div className={styles.actionBar}>
-            <IconLink to="/dashboard/fridge" className={styles.closeButton}>
+            <IconButton
+              onClick={(e) => {
+                e.preventDefault();
+                navigate(-1);
+              }}
+              className={styles.closeButton}
+            >
               취소
-            </IconLink>
+            </IconButton>
             <IconButton className="main-button">생성</IconButton>
           </div>
         </SubjectBox>

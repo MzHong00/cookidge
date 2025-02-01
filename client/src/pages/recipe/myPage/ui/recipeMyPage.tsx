@@ -6,23 +6,20 @@ import { RiHeart2Line } from "@react-icons/all-files/ri/RiHeart2Line";
 import { IconLink } from "shared/ui/iconLink";
 import { SubjectBox } from "shared/ui/subjectBox";
 import { FadeLayout } from "shared/ui/fadeLayout";
+import { RecipeGridPictures } from "shared/ui/recipeGridPictures";
 import { UserQueries } from "entities/user";
 import { RecipeQueries } from "entities/recipe";
-import { LoginForm } from "features/user/login";
-import { RecipeGridPictures } from "widgets/recipeGridPictures";
 
 import styles from "./recipeMyPage.module.scss";
 
 export const RecipeMyPage = () => {
   const { data: me } = useQuery(UserQueries.meQuery());
-  const { data: myRecipes = [], isLoading: isMyRecipeLoading } = useQuery(
+  const { data: myRecipes = [], isFetching: isMyRecipeLoading } = useQuery(
     RecipeQueries.myListQuery(me?.name)
   );
-  const { data: myLikeRecipes = [], isLoading: isLikeRecipeLoading } = useQuery(
+  const { data: myLikeRecipes = [], isFetching: isLikeRecipeLoading } = useQuery(
     RecipeQueries.myLikeQuery(me?.name)
   );
-
-  if (!me) return <LoginForm className={styles.loginForm} />;
 
   return (
     <FadeLayout className="flex-column">
@@ -38,7 +35,7 @@ export const RecipeMyPage = () => {
         >
           <RecipeGridPictures
             recipes={myRecipes}
-            isLoading={isMyRecipeLoading}
+            isFetching={isMyRecipeLoading}
           />
         </SubjectBox>
         <SubjectBox
@@ -48,7 +45,7 @@ export const RecipeMyPage = () => {
         >
           <RecipeGridPictures
             recipes={myLikeRecipes}
-            isLoading={isLikeRecipeLoading}
+            isFetching={isLikeRecipeLoading}
           />
         </SubjectBox>
       </div>

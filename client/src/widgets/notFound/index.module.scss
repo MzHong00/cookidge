@@ -1,0 +1,22 @@
+@use 'app/app.scss';
+
+.container {
+    height: 100vh;
+    margin: auto;
+    @include app.flex-layout(column, center, center, 2rem);
+
+    &>h1 {
+        color: rgba(var(--main-rgb));
+        font-size: 10rem;
+        font-family: cursive;
+        text-shadow: 2px 2px 8px silver;
+    }
+
+    &>p {
+        font-size: 1.5rem;
+    }
+
+    &>button {
+        @include app.main-button();
+    }
+}

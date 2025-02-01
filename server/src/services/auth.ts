@@ -5,14 +5,20 @@ import { User } from "../models/user";
 import { CloudinaryService } from "./cloudinary";
 import { type IUserCreateInputDTO } from "../interface/IUser";
 
+const ACCESS_TOKEN_EXPIRE_TIME = "1h";
+const REFRESH_TOKEN_EXPIRE_TIME = "24h";
+
 export const signin = async (googleUserInfo: IUserCreateInputDTO) => {
   try {
     const user = await User.findOne({ email: googleUserInfo.email });
 
-    if (!user) return await signup(googleUserInfo);
+    if (!user) return signup(googleUserInfo);
 
     return {
-      refresh_token: issueToken({ id: user._id.toString() }, "24h"),
+      refresh_token: issueToken(
+        { id: user._id.toString() },
+        REFRESH_TOKEN_EXPIRE_TIME
+      ),
       access_token: issueToken({ id: user._id.toString() }),
     };
   } catch (error) {
@@ -33,7 +39,10 @@ export const signup = async (userInputDto: IUserCreateInputDTO) => {
     });
 
     return {
-      refresh_token: issueToken({ id: user._id.toString() }, "24h"),
+      refresh_token: issueToken(
+        { id: user._id.toString() },
+        REFRESH_TOKEN_EXPIRE_TIME
+      ),
       access_token: issueToken({ id: user._id.toString() }),
     };
   } catch (error) {
@@ -41,7 +50,10 @@ export const signup = async (userInputDto: IUserCreateInputDTO) => {
   }
 };
 
-export const issueToken = (payload: JwtPayload, expireTime: string = "1h") => {
+export const issueToken = (
+  payload: JwtPayload,
+  expireTime: string = ACCESS_TOKEN_EXPIRE_TIME
+) => {
   try {
     return jwt.sign(payload, config.jwtSecretKey as string, {
       expiresIn: expireTime,

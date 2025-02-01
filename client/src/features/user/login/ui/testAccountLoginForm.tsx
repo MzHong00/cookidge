@@ -34,6 +34,7 @@ export const TestAccountLoginForm = () => {
             {...register("code")}
             autoComplete="off"
           />
+          <span>※ Code: 5789</span>
           {errMsg && <p>*{errMsg}</p>}
           <IconButton>확인</IconButton>
         </form>

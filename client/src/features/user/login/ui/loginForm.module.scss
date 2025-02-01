@@ -74,4 +74,9 @@
         color: red;
         font-size: 0.75em;
     }
+
+    &>span {
+        color: rgb(var(--base-rgb-grey-medium));
+        font-size: 0.75em;
+    }
 }

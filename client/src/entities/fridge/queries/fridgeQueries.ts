@@ -8,13 +8,10 @@ export class FridgeQueries {
     detail: "fridge-detail",
   };
 
-  static readonly staleTime = 60 * 60 * 1000;
-
   static listQuery() {
     return queryOptions<IFridgeList[]>({
       queryKey: [this.keys.list],
-      queryFn: async () => await FridgeService.fetchFridgeList(),
-      staleTime: this.staleTime,
+      queryFn: () => FridgeService.fetchFridgeList(),
       retry: false
     });
   }
@@ -23,8 +20,8 @@ export class FridgeQueries {
     return queryOptions({
       queryKey: [this.keys.detail, id],
       queryFn: async () => await FridgeService.fetchFridgeDetail(id),
-      staleTime: this.staleTime,
       enabled: !!id,
+      retry: false
     });
   }
 }

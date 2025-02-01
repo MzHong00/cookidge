@@ -3,16 +3,21 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import { OAuthService } from "shared/api/oauth";
 import { LoadingSpinner } from "shared/ui/loadingSpinner";
-import { CreateFridgeForm } from "features/fridge/create";
 import { UserSearchBox } from "entities/user";
 import { RecipeSearchBox } from "entities/recipe";
+import { CreateFridgeForm } from "features/fridge/create";
 import { Root } from "pages/root";
+import { Home } from "pages/home";
 import { LoginPage } from "pages/login";
 import { Dashboard } from "pages/dashboard";
-import { Home, searchOptionLoader } from "pages/home";
+import { NotFound } from "widgets/notFound";
 import { RecipeDetailPage } from "pages/recipe/detailPage";
-import { FridgeDetailPage } from "pages/fridge/detailPage";
+import {
+  FridgeDetailPage,
+  FridgeDetailPageSkeleton,
+} from "pages/fridge/detailPage";
 import { RankOverViewPage } from "pages/rank/rankOverView";
+import { QueryWrapper } from "shared/ui/queryWrapper";
 const SearchPage = lazy(() => import("pages/search"));
 const UserPage = lazy(() => import("pages/user/userDetailPage"));
 const UserSettingPage = lazy(() => import("pages/user/userSettingPage"));
@@ -29,10 +34,10 @@ const appRouter = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
+    errorElement: <NotFound />,
     children: [
       {
         path: "/",
-        loader: searchOptionLoader(),
         element: <Home />,
       },
       {
@@ -81,7 +86,13 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "dashboard",
-        element: <Dashboard />,
+        element: (
+          <QueryWrapper
+            supenseFallback={<LoadingSpinner msg="사용자 가져오는 중..." />}
+          >
+            <Dashboard />
+          </QueryWrapper>
+        ),
         children: [
           {
             index: true,
@@ -91,7 +102,7 @@ const appRouter = createBrowserRouter([
             path: "fridge",
             element: (
               <Suspense
-                fallback={<LoadingSpinner msg="냉장고 리스트 로딩중..." />}
+                fallback={<LoadingSpinner msg="냉장고 목록 가져오는 중..." />}
               >
                 <FridgeMyListPage />
               </Suspense>
@@ -99,18 +110,22 @@ const appRouter = createBrowserRouter([
             children: [
               {
                 path: "detail/:id",
-                element: <FridgeDetailPage />,
+                element: (
+                  <QueryWrapper supenseFallback={<FridgeDetailPageSkeleton />}>
+                    <FridgeDetailPage />
+                  </QueryWrapper>
+                ),
               },
               {
                 path: "setting/:id",
                 element: (
-                  <Suspense
-                    fallback={
+                  <QueryWrapper
+                    supenseFallback={
                       <LoadingSpinner msg="냉장고 설정 페이지 로딩중..." />
                     }
                   >
                     <FridgeSettingPage />
-                  </Suspense>
+                  </QueryWrapper>
                 ),
               },
             ],
@@ -197,8 +212,9 @@ const appRouter = createBrowserRouter([
   },
   {
     path: "/oauth-redirect",
-    loader: async () => await OAuthService.googleOAuthRedirect(),
-    element: <Navigate to={"/dashboard"} />,
+    loader: async () => await OAuthService.loginWithGoogleOAuth(),
+    element: <Navigate to={"/dashboard"} replace />,
+    errorElement: <NotFound />
   },
 ]);
 
