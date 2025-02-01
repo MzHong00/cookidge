@@ -10,9 +10,6 @@ export const isMyComment = async (
   const userId = req.userId;
   const { comment_id } = req.body;
 
-  if (!userId)
-    return res.status(401).json({ message: "로그인 상태가 아닙니다." });
-
   const isMyComment = await Comment.findOne({
     _id: comment_id,
     user_id: userId,
@@ -31,9 +28,6 @@ export const deleteCommentAuthorization = async (
 ) => {
   const userId = req.userId;
   const { comment_id, author_id } = req.body;
-
-  if (!userId)
-    return res.status(401).json({ message: "로그인 상태가 아닙니다." });
 
   const isMyComment = await Comment.findOne({
     _id: comment_id,

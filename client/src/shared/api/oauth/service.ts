@@ -3,7 +3,7 @@ import axios from "shared/lib/axios";
 export class OAuthService {
   static readonly root = "/api/google-oauth";
 
-  static async googleOAuth() {
+  static async redirectToGoogleOAuthForm() {
     try {
       const response = await axios.get(`${this.root}/login`);
 
@@ -13,7 +13,7 @@ export class OAuthService {
     }
   }
 
-  static async googleOAuthRedirect() {
+  static async loginWithGoogleOAuth() {
     const params = new URLSearchParams(window.location.search);
     const oauth_code = params.get("code");
 
@@ -27,7 +27,8 @@ export class OAuthService {
 
       return accessToken;
     } catch (error) {
-      throw new Error(`구글 로그인 redirect 에러: ${error}`);
+      console.log(`구글 로그인 redirect 에러: ${error}`);
+      throw error;
     }
   }
 }

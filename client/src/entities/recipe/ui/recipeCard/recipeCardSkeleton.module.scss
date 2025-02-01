@@ -2,11 +2,14 @@
 
 .card {
   width: 100%;
+  max-width: 500px;
+  margin-inline: auto;
+  flex-direction: column !important;
   border-radius: 10px;
-  overflow: hidden;
 }
 
 .image {
+  width: 100%;
   max-width: 500px;
   aspect-ratio: 1;
   @include app.skeleton-shimmer();

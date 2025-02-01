@@ -3,55 +3,5 @@
 .container {
     width: 100%;
     padding-bottom: 3rem;
-    @include app.flex-layout(column, center, center);
-}
-
-.userInfoContainer {
-    width: 100%;
-    max-width: 800px;
-    margin-bottom: 3rem;
-    @include app.flex-layout(column);
-    gap: 2rem;
-}
-
-.profilesPicture {
-    width: 200px;
-    margin: auto;
-}
-
-.userInfo {
-    @include app.flex-layout(column, center, center, 0.5rem)
-}
-
-.introduceText {
-    color: rgb(var(--base-rgb-grey-medium));
-}
-
-.profileEditButton {
-    @include app.main-button();
-}
-
-.followBox {
-    padding: 1rem;
-    display: inline-block;
-    font-size: 1.25em;
-}
-
-.userRecipeContainer {
-    max-width: 800px;
-}
-
-.userRecipeCard>:last-child {
-    @include app.flex-layout(row, center, space-between);
-}
-
-.userRecipeCard b {
-    font-size: 1em !important;
-    white-space: nowrap;
-}
-
-@media screen and (max-width: 767px) {
-    .userActionBar {
-        flex-direction: column;
-    }
+    @include app.flex-layout(column, center, stretch);
 }

@@ -32,7 +32,8 @@ export const useFilterRecipeParams = () => {
   };
 
   const onClickRemoveFilterParams = () => {
-    setFilterParams()
+      filterParams.delete(CATEGORIES_KEY);
+      setFilterParams(filterParams)
   }
 
   return {

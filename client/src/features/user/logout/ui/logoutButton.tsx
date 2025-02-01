@@ -13,7 +13,6 @@ export const LogoutButton = (props: Props) => {
       message: "로그아웃 하시겠습니까?",
       requestFn: async () => {
         await AuthService.logout();
-        window.location.reload();
       },
       option: { backspace: false },
     });

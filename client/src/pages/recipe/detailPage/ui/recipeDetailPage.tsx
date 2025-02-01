@@ -1,50 +1,26 @@
-import { useQuery } from "@tanstack/react-query";
-import { Link, useParams } from "react-router-dom";
-import { RiUserReceived2Line } from "@react-icons/all-files/ri/RiUserReceived2Line";
+import { useParams } from "react-router-dom";
 
 import { FadeLayout } from "shared/ui/fadeLayout";
-import { UserCard, UserQueries } from "entities/user";
-import { RecipeStep, RecipeQueries } from "entities/recipe";
-import { DeleteRecipeButton } from "features/recipe/delete";
-import { CommentWidget } from "widgets/comment";
-import { RecipeDetailWidget } from "widgets/recipeDetail";
 import { LoadingSpinner } from "shared/ui/loadingSpinner";
+import { NotFound } from "widgets/notFound";
+import { CommentWidget } from "widgets/comment";
+import { RecipeDetailWidget } from "widgets/recipe/recipeDetail";
+import { QueryWrapper } from "shared/ui/queryWrapper";
 
 export const RecipeDetailPage = () => {
-  const { id } = useParams();
-  const { data: me } = useQuery(UserQueries.meQuery());
-  const { data: recipeWithUser, isLoading } = useQuery(
-    RecipeQueries.detailQuery(id)
-  );
-
-  if (isLoading) return <LoadingSpinner msg="레시피 읽는 중..." />;
-  if (!recipeWithUser) return <div>레시피가 존재하지 않습니다.</div>;
-
-  const { user, ...recipe } = recipeWithUser;
+  const { id = "" } = useParams();
 
   return (
     <FadeLayout className="flex-column">
-      <UserCard name={user.name} picture={user.picture}>
-        {me?._id === user._id ? (
-          <section className="flex-row-center">
-            <Link to={`/dashboard/recipe/update`} state={recipeWithUser}>
-              수정
-            </Link>
-            <DeleteRecipeButton recipeId={recipe._id} />
-          </section>
-        ) : (
-          <section className="flex-row-center">
-            <RiUserReceived2Line />
-            <span>{user.follower.length}</span>
-          </section>
-        )}
-      </UserCard>
-
-      <RecipeDetailWidget recipe={recipe} />
-
-      {!!recipe.cooking_steps.length && <RecipeStep recipeSteps={recipe.cooking_steps} />}
-
-      <CommentWidget recipe_id={recipe._id}/>
+      <QueryWrapper
+        supenseFallback={<LoadingSpinner msg="레시피 읽는 중..." />}
+        errorFallback={() => <NotFound msg="레시피를 찾지 못했어요..!" />}
+      >
+        <RecipeDetailWidget recipe_id={id} />
+        <QueryWrapper>
+          <CommentWidget recipe_id={id} />
+        </QueryWrapper>
+      </QueryWrapper>
     </FadeLayout>
   );
 };

@@ -1,7 +1,7 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
 
+import type { GoogleUserInfo } from "../../../interface/types";
 import { signin } from "../../../services/auth";
-import { GoogleUserInfo } from "../../../interface/types";
 import { googleOauth, googleOauthForm } from "../../../services/googleOAuth";
 
 const route = Router();
@@ -9,13 +9,15 @@ const route = Router();
 export default (app: Router) => {
   app.use("/google-oauth", route);
 
-  route.get("/login", (_, res: Response) => {
+  route.get("/login", (req, res) => {
+    console.log("이거야", req.headers.host);
+    
     const googleFormUrl = googleOauthForm();
 
     res.status(200).send(googleFormUrl);
   });
 
-  route.get("/callback", async (req: Request, res: Response) => {
+  route.get("/callback", async (req, res) => {
     try {
       const { code } = req.query;
 
@@ -28,7 +30,7 @@ export default (app: Router) => {
         .cookie("token", refresh_token, {
           httpOnly: true,
           secure: true,
-          sameSite: "none",
+          sameSite: "strict",
         })
         .send({ token: access_token });
     } catch (error) {

@@ -1,8 +1,8 @@
-import { IUser } from "../user";
-import { IIngredient } from "../ingredient";
-import { PagenationParams } from "shared/types";
+import type { IUser } from "../user";
+import type { IIngredient } from "../ingredient";
+import type { PagenationParams } from "shared/types";
 
-export type IRecipe = {
+export interface IRecipe {
   _id: string;
   name: string;
   pictures: string[];
@@ -15,57 +15,61 @@ export type IRecipe = {
   cooking_steps: ICookingStep[];
   like_members: IUser["_id"][];
   created_at: string;
-};
-export type IRecipeCard = Pick<
-  IRecipe,
-  | "_id"
-  | "name"
-  | "pictures"
-  | "introduction"
-  | "servings"
-  | "cooking_time"
-  | "created_at"
-> &
-  Partial<Pick<IRecipe, "like_members">>;
-export type IRecipeJoinUser = IRecipe & { user: IUser };
-export type IRecipePictures = Pick<IRecipe, "_id" | "pictures">;
+}
+export interface IRecipeCard
+  extends Pick<
+      IRecipe,
+      | "_id"
+      | "name"
+      | "pictures"
+      | "introduction"
+      | "servings"
+      | "cooking_time"
+      | "created_at"
+    >,
+    Partial<Pick<IRecipe, "like_members">> {}
+export interface IRecipeJoinUser extends IRecipe {
+  user: IUser;
+}
+export interface IRecipePictures extends Pick<IRecipe, "_id" | "pictures"> {}
 
-export type ICookingStep = {
+export interface ICookingStep {
   picture?: string;
   instruction: string;
-};
+}
 
-export type ICookingStepInput = {
+export interface ICookingStepInput {
   picture?: FileList | string;
   instruction: string;
-};
+}
 
-export type IRecipeQueryOption = Partial<PagenationParams> & {
+export interface IRecipeQueryOption extends Partial<PagenationParams> {
   query?: string;
-};
+}
 
-export type RecipeFilterQuery = Partial<PagenationParams> & {
+export interface RecipeFilterQuery extends Partial<PagenationParams> {
   categories?: IRecipe["category"][];
   sort?: "time" | "like";
-};
+}
 
-export type IRecipeInputDTO = Pick<
-  IRecipe,
-  | "_id"
-  | "name"
-  | "ingredients"
-  | "introduction"
-  | "servings"
-  | "category"
-  | "cooking_time"
-> & {
+export interface IRecipeInputDTO
+  extends Pick<
+    IRecipe,
+    | "_id"
+    | "name"
+    | "ingredients"
+    | "introduction"
+    | "servings"
+    | "category"
+    | "cooking_time"
+  > {
   pictures: File[] | string[];
   cooking_steps: {
     picture?: File | string;
     instruction: string;
   }[];
-};
+}
 
-export type IRecipeForm = Omit<IRecipeInputDTO, "cooking_steps"> & {
+export interface IRecipeForm extends Omit<IRecipeInputDTO, "cooking_steps"> {
   cooking_steps: ICookingStepInput[];
-};
+}

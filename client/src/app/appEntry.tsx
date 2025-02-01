@@ -7,8 +7,17 @@ import appRouter from "./appRouter";
 
 import "./app.scss";
 
+const ONE_HOUR = 60 * 60 * 1000;
+
 const AppEntry = () => {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions:{
+      queries: {
+        throwOnError: true,
+        staleTime: ONE_HOUR
+      }
+    }
+  });
 
   return (
     <QueryClientProvider client={queryClient}>

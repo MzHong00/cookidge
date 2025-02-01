@@ -5,7 +5,6 @@ import { celebrate, Joi, Segments } from "celebrate";
 import isAuth from "../../middleware/isAuth";
 import { upload } from "../../../loaders/multer";
 import isMyRecipe from "../../middleware/isMyRecipe";
-import attachCurrentUser from "../../middleware/attachCurrentUser";
 import {
   IRecipeSearchOption,
   IRecipeInput,
@@ -61,7 +60,7 @@ export default (app: Router) => {
 
       try {
         const recipe = await RecipeService.readRecipes(searchOptions);
-
+        
         if (!recipe) {
           return res
             .status(200)
@@ -135,7 +134,6 @@ export default (app: Router) => {
     ]),
     celebrate({ [Segments.BODY]: recipeInputJoiSchema }),
     isAuth,
-    attachCurrentUser,
     async (req, res) => {
       const userId = req.userId;
       const recipeInputDto = req.body as IRecipeInput;

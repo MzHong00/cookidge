@@ -1,0 +1,23 @@
+@use 'app/app.scss';
+
+.container {
+    padding: 1rem;
+    @include app.flex-layout(column, center, center);
+
+    &>button {
+        background-color: rgba(var(--base-rgb-grey-light), 0.6);
+
+        &>svg {
+            transition: transform 0.5s ease-in-out;
+        }
+
+        &:hover svg {
+            transform: rotate(360deg);
+        }
+    }
+}
+
+.warning {
+    font-size: 4rem;
+    color: rgba(var(--main-rgb), 0.6);
+}

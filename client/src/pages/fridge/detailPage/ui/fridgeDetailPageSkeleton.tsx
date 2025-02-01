@@ -9,22 +9,24 @@ import { ProfileImageSkeleton } from "shared/ui/profileImage";
 
 import styles from "./fridgeDetailPageSkeleton.module.scss";
 
-interface Props {
-  threshHold: number;
-}
+const RANDOM_COUNT_LIMIT = 10;
 
-export const FridgeDetailPageSkeleton = ({ threshHold }: Props) => {
+export const FridgeDetailPageSkeleton = ({
+  threshold = 5,
+}: {
+  threshold?: number;
+}) => {
   return (
     <div className="flex-column">
       <IconButton Icon={BsGear} className={styles.config} />
 
       <SubjectBox title="공유자">
         <div className="flex-row">
-          {Array.from({ length: Math.floor(Math.random() * 10) }).map(
-            (_, i) => (
-              <ProfileImageSkeleton key={i} style={{ width: "20px" }} />
-            )
-          )}
+          {Array.from({
+            length: Math.floor(Math.random() * RANDOM_COUNT_LIMIT),
+          }).map((_, i) => (
+            <ProfileImageSkeleton key={i} style={{ width: "20px" }} />
+          ))}
         </div>
       </SubjectBox>
 
@@ -34,7 +36,7 @@ export const FridgeDetailPageSkeleton = ({ threshHold }: Props) => {
           Icon={RiSeedlingLine}
           headerClassName={styles.header}
         >
-          <div className={styles.count}/>
+          <div className={styles.count} />
           <p>총 재료 수</p>
         </SubjectBox>
 
@@ -43,8 +45,8 @@ export const FridgeDetailPageSkeleton = ({ threshHold }: Props) => {
           Icon={RiTimer2Line}
           headerClassName={styles.header}
         >
-          <div className={styles.count}/>
-          <p>{threshHold}일 이내 유통기한 만료 재료 수</p>
+          <div className={styles.count} />
+          <p>{threshold}일 이내 유통기한 만료 재료 수</p>
         </SubjectBox>
       </div>
 
@@ -64,9 +66,9 @@ export const FridgeDetailPageSkeleton = ({ threshHold }: Props) => {
       <div className={styles.expiredAt} />
 
       <SubjectBox className={styles.ingredient}>
-        <div className={styles.fridgeTitle} />
+        <div />
         <h2>재료 목록</h2>
-        <div className={styles.ingredientList} />
+        <div />
       </SubjectBox>
     </div>
   );

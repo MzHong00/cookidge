@@ -21,18 +21,12 @@ export class RecipeQueries {
     infinite: "infinite",
   };
 
-  static readonly staleTime = {
-    root: 60 * 60 * 1000,
-    search: 60 * 1000,
-  };
-
   // 유저 레시피 목록 조회
   static listByUserQuery(userName?: IUser["name"]) {
     return queryOptions<IRecipePictures[]>({
       queryKey: [this.keys.root, this.keys.list, this.keys.user, userName],
       queryFn: () =>
         RecipeService.readRecipeListByUser(userName as IUser["name"]),
-      staleTime: this.staleTime.root,
       enabled: !!userName,
       retry: false,
     });
@@ -43,7 +37,6 @@ export class RecipeQueries {
     return queryOptions({
       queryKey: [this.keys.root, recipeId],
       queryFn: () => RecipeService.readRecipe(recipeId),
-      staleTime: this.staleTime.root,
       enabled: !!recipeId,
       retry: false,
     });
@@ -54,7 +47,6 @@ export class RecipeQueries {
     return queryOptions({
       queryKey: [this.keys.root, this.keys.list, this.keys.user, userName],
       queryFn: ({ signal }) => RecipeService.readMyRecipe({ signal }),
-      staleTime: this.staleTime.root,
       enabled: !!userName,
     });
   }
@@ -64,7 +56,6 @@ export class RecipeQueries {
     return queryOptions({
       queryKey: [this.keys.root, this.keys.list, this.keys.like, userName],
       queryFn: ({ signal }) => RecipeService.readMyLikeRecieps({ signal }),
-      staleTime: this.staleTime.root,
       enabled: !!userName,
     });
   }
@@ -120,7 +111,6 @@ export class RecipeQueries {
 
         return lastPageParam + 1;
       },
-      staleTime: this.staleTime.search,
       enabled: !!query,
       retry: false,
     });
@@ -154,7 +144,6 @@ export class RecipeQueries {
 
         return lastPageParam + 1;
       },
-      staleTime: this.staleTime.root,
       retry: false,
     });
   }

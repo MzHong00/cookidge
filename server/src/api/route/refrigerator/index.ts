@@ -26,11 +26,11 @@ export default (app: Router) => {
   });
 
   route.get("/read-detail", isAuth, isOurRefrigerator, async (req, res) => {
-    const recipeId = req.query.refrigerator_id as string;
+    const refrigeratorId = req.query.refrigerator_id as string;
 
     try {
       const refrigerator = await RefrigeratorService.readDetail(
-        mongoose.Types.ObjectId.createFromHexString(recipeId)
+        mongoose.Types.ObjectId.createFromHexString(refrigeratorId)
       );
 
       res.status(200).json(...refrigerator);

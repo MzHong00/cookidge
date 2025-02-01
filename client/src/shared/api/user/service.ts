@@ -1,25 +1,28 @@
 import axios from "shared/lib/axios";
 
-import { type IUser } from ".";
-import {
+import type { PagenationParams } from "shared/types";
+import type {
   IUserInfiniteQueryParams,
   IUserInputDTO,
   IUserPicture,
   IUserSearchDTO,
 } from "./type";
-import { PagenationParams } from "shared/types";
+import type { IUser } from ".";
 
 export class UserService {
   static readonly root = "/api/user";
 
-  static async fetchMe(): Promise<IUser> {
+  static async fetchMe() {
     const response = await axios.get(`${this.root}/me`, {
       headers: {
         "Cache-Control": "no-cache", // 캐시를 사용하지 않음
       },
     });
+    const { user, token } = response?.data;
 
-    return response.data;
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+
+    return user ?? null;
   }
 
   static async fetchUser(userName?: IUser["name"]): Promise<IUser | undefined> {
@@ -42,9 +45,7 @@ export class UserService {
   static async updateUser(
     updateData: IUserInputDTO
   ): Promise<{ message: string }> {
-    return (
-      await axios.patch(`${this.root}/update`, updateData)
-    ).data;
+    return (await axios.patch(`${this.root}/update`, updateData)).data;
   }
 
   // 유저 삭제

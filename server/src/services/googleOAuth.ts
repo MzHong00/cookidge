@@ -3,13 +3,15 @@ import { OAuth2Client } from "google-auth-library";
 
 import keys from "../config/keys/googleOAuth2.keys";
 
-const oAuth2Client = new OAuth2Client(
-  keys.web.client_id,
-  keys.web.client_secret,
-  keys.web.redirect_uris[0]
-);
+
 
 export const googleOauthForm = () => {
+  const oAuth2Client = new OAuth2Client(
+    keys.web.client_id,
+    keys.web.client_secret,
+    keys.web.redirect_uris[0]
+  );
+
   const authorizeUrl = oAuth2Client.generateAuthUrl({
     access_type: "offline",
     scope: [
@@ -22,6 +24,12 @@ export const googleOauthForm = () => {
 };
 
 export const googleOauth = async (googleCode: string): Promise<any> => {
+  const oAuth2Client = new OAuth2Client(
+    keys.web.client_id,
+    keys.web.client_secret,
+    keys.web.redirect_uris[0]
+  );
+  
   try {
     const r = await oAuth2Client.getToken(googleCode);
     oAuth2Client.setCredentials(r.tokens);
