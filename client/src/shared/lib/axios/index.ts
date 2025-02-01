@@ -44,6 +44,8 @@ instance.interceptors.response.use(
     if (error.response.status === 488) {
       AuthService.logout();
     }
+
+    throw error;
   }
 );
 
