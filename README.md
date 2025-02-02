@@ -3,6 +3,7 @@
 **Cookidge**는 Cook + Firdge의 합성어로, 냉장고를 관리하고 공유할 수 있는 냉장고 서비스와 요리 레시피 SNS를 결합한 음식 관련 통합 서비스이다.
 
 배포: https://cookidge.vercel.app/
+
 회고: https://velog.io/@mzhong/Side-Project-Cookidge-%ED%9A%8C%EA%B3%A0
 
 ### 기능
