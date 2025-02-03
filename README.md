@@ -7,17 +7,17 @@
 회고: https://velog.io/@mzhong/Side-Project-Cookidge-%ED%9A%8C%EA%B3%A0
 
 ### 기능
-01. 사용자
+- 사용자
 CRUD, Google OAuth, 팔로우, 검색, 랭킹 기능
 
-02. 레시피
+- 레시피 
 CRUD, 필터, 정렬, 좋아요, 검색, 추천, 랭킹 기능
 
-03. 냉장고
+- 냉장고
 CRUD, 정렬, 검색, 공유 기능
 
 ### 아키텍처
-![](https://velog.velcdn.com/images/mzhong/post/1cad1603-37bb-4182-b54b-2196feaeebb4/image.png)
+![](https://velog.velcdn.com/images/mzhong/post/243ad786-c6af-4917-888f-d223dbe3f9ab/image.png)
 
 ### UI
 ![](https://velog.velcdn.com/images/mzhong/post/c0ca2c1f-fc88-4f93-a224-3126b8cf2d55/image.png)
@@ -57,6 +57,8 @@ CRUD, 정렬, 검색, 공유 기능
 
 **해결:** `useNavigate`, `setSearchParams` 등에는 History를 남기지 않은 속성이 존재했다. `replace` 속성을 사용하여 History에 이전 검색 기록을 남기지 않고 바로 빠져나올 수 있게 했다.
 
+<hr>
+
 > IOS, 사파리 등에서 로그인이 안되는 오류
 
 **원인:** Cookidge의 FE와 BE의 도메인이 다르기 때문에 **서드파티 쿠키를 제한**하는 브라우저에서는 `token`이 쿠키에 등록되지 않음
@@ -65,6 +67,7 @@ CRUD, 정렬, 검색, 공유 기능
 
 **해결:** 프론트엔드에서 프록시를 사용하여 마치 퍼스트 파티 쿠키처럼 동작하도록 구현했다. [[관련 글](https://velog.io/@mzhong/IOS-%ED%99%98%EA%B2%BD%EC%97%90%EC%84%9C-%EC%BF%A0%ED%82%A4%EA%B0%80-%EC%A0%80%EC%9E%A5%EC%9D%B4-%EC%95%88%EB%90%98%EB%8A%94-%ED%98%84%EC%83%81)]
 
+<hr>
 
 > 모바일 크롬 환경에서 레시피 폼 요리과정 항목을 추가할 때, 미리보기 이미지가 없어지는 오류
 
@@ -72,6 +75,21 @@ CRUD, 정렬, 검색, 공유 기능
 
 **해결:** `PreviewImage` 컴포넌트를 생성하고 `React.memo`를 적용하여 요리과정 항목이 추가/제거 될 때, 다른 컴포넌트가 리렌더링 되지 않게했다.
 
+<hr>
+
+> 로그인 인증 네트워크 워터폴 현상
+
+**원인:** 로그인 되어있는 상태에서 페이지를 새로고침할 때, 다음과 같은 로직으로 인증 후 내정보를 가져오게 된다.
+
+01. `meQuery` 요청. (`access token`을 메모리에 저장하기 때문에 초기 `access token`이 없어서 실패) 
+02. `cookie`에 있는 `refresh token`으로 `access token` 발급
+03. `meQuery` 재요청 후, 내 정보를 얻음
+
+이런 로직으로 네트워크 요청 워터폴이 생긴다. 
+
+**해결:** `meQuery` 한 번의 API 요청으로 `access token`과 내 정보를 동시에 가져오는 미들웨어를 생성했다. 추가적으로, `access token`의 재발급이 필요할때 커스텀 상태코드 498을 사용하여 기존의 클라이언트 `isLogin` 전역 상태와 서버에서 데이터로 주는 `isLogin`을 없애고 상태코드로 통신할 수 있게 되었다.
+
+<hr>
 
 > 배포 환경 고화질 이미지 전송시 `413 Error` 발생
 
@@ -81,6 +99,8 @@ CRUD, 정렬, 검색, 공유 기능
 **해결:** 이미지 `base64`대신 `blob`으로 전송하고, `image-compression` 라이브러리를 사용하여 이미지 압축
 
 그러나 추가 에러가 발생하였다.
+
+<hr>
 
 > 모바일 크롬 환경에서 이미지 압축이 안되는 현상
 
@@ -115,12 +135,15 @@ CRUD, 정렬, 검색, 공유 기능
 
 **해결:** `mongoose`의 `pre` API를 사용하여 사용자의 정보가 `User` 스키마에 저장될 때, 사용자@1234 처럼 `name` + `@code`의 형태로 첫 사용자의 이름을 결정하는 로직으로 해결
 
+<hr>
+
 > 브라우저에 쿠키가 저장이 안되는 현상
 
 **원인:** 클라이언트와 서버가 `CORS` 환경에서 쿠키를 올바르게 주고 받기 위해서는 `credential`이라는 속성도 지정해줘야 한다.
 
 **해결:** `express`의 `cors`옵션으로 `credential: true` 설정. 그러나 지금은 프록시를 통해 동일 출처 통신을 하는 것 처럼 보이게 하여 의미가 없음
 
+<hr>
 
 ### Other
 #### 기술 스택
