@@ -7,13 +7,14 @@
 회고: https://velog.io/@mzhong/Side-Project-Cookidge-%ED%9A%8C%EA%B3%A0
 
 ### 기능
-- 사용자
+
+**[사용자]**
 CRUD, Google OAuth, 팔로우, 검색, 랭킹 기능
 
-- 레시피 
+**[레시피]**
 CRUD, 필터, 정렬, 좋아요, 검색, 추천, 랭킹 기능
 
-- 냉장고
+**[냉장고]**
 CRUD, 정렬, 검색, 공유 기능
 
 ### 아키텍처
