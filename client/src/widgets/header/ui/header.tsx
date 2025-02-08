@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { RiUser3Line } from "@react-icons/all-files/ri/RiUser3Line";
 
@@ -26,9 +25,6 @@ export const Header = () => {
       >
         <Profile />
       </QueryWrapper>
-      <Suspense fallback={<ProfileImageSkeleton />}>
-        <Profile />
-      </Suspense>
     </header>
   );
 };
