@@ -7,6 +7,7 @@ import { Navbar } from "shared/ui/navbar";
 import { IconLink } from "shared/ui/iconLink";
 import { useModal } from "shared/hooks/useModal";
 import { IconButton } from "shared/ui/iconButton";
+import { QueryWrapper } from "shared/ui/queryWrapper";
 import { ProfileImage, ProfileImageSkeleton } from "shared/ui/profileImage";
 import { UserQueries } from "entities/user";
 import { LogoutButton } from "features/user/logout";
@@ -19,6 +20,12 @@ export const Header = () => {
     <header className={styles.header}>
       <Logo to={"/"} />
       <Navbar items={navItems} />
+      <QueryWrapper
+        supenseFallback={<ProfileImageSkeleton />}
+        errorFallback={() => <LoginButton />}
+      >
+        <Profile />
+      </QueryWrapper>
       <Suspense fallback={<ProfileImageSkeleton />}>
         <Profile />
       </Suspense>
@@ -30,12 +37,7 @@ const Profile = () => {
   const { modalRef, isOpen, toggleModal } = useModal();
   const { data: user } = useSuspenseQuery(UserQueries.meQuery());
 
-  if (!user)
-    return (
-      <IconLink to="/login" className={styles.loginButton}>
-        로그인
-      </IconLink>
-    );
+  if (!user) return <LoginButton />;
 
   return (
     <div className={styles.userBar}>
@@ -52,5 +54,13 @@ const Profile = () => {
         </nav>
       )}
     </div>
+  );
+};
+
+const LoginButton = () => {
+  return (
+    <IconLink to="/login" className={styles.loginButton}>
+      로그인
+    </IconLink>
   );
 };
