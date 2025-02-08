@@ -3,7 +3,7 @@
 .container {
     width: 100%;
     max-width: 500px;
-    @include app.flex-layout(column, stretch, stretch, 0);
+    @include app.flex-layout(column, stretch, normal, 0);
     border-bottom: 1px solid rgb(var(--base-rgb-grey-light));
     overflow: hidden;
 
@@ -19,7 +19,7 @@
 
     &>:first-child {
         width: 100%;
-        @include app.flex-layout(row, flex-end, stretch, 0.5rem);
+        @include app.flex-layout(row, baseline, normal, 0.5rem);
 
         &>h3 {
             overflow: hidden;

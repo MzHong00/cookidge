@@ -17,7 +17,7 @@ export const RecipeDetailPage = () => {
         errorFallback={() => <NotFound msg="레시피를 찾지 못했어요..!" />}
       >
         <RecipeDetailWidget recipe_id={id} />
-        <QueryWrapper>
+        <QueryWrapper supenseFallback={<LoadingSpinner msg="댓글 읽는 중..." />}>
           <CommentWidget recipe_id={id} />
         </QueryWrapper>
       </QueryWrapper>
