@@ -131,6 +131,7 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
           <TextArea
             id="introduce"
             label="소개"
+            maxLength={INTRODUCE_LIMIT_LENGTH}
             placeholder="요리의 간단한 소개를 작성해주세요."
             {...register("introduction", {
               required: "요리의 간단한 소개를 작성해 주세요.",
