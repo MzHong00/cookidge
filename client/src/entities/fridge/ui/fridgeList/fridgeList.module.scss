@@ -1,7 +1,7 @@
 @use 'app/app.scss';
 
 .container {
-    @include app.flex-layout(row, stretch, stretch, 0.25rem);
+    @include app.flex-layout(row, normal, normal, 0.25rem);
     flex-wrap: wrap;
     box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1), 0px -2px 4px rgba(0, 0, 0, 0.1);
 
