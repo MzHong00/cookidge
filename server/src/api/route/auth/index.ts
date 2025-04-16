@@ -1,13 +1,20 @@
 import { Router } from "express";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt, { type JwtPayload } from "jsonwebtoken";
 
 import config from "../../../config";
+import isAuth from "../../middleware/isAuth";
 import { issueToken, signin } from "../../../services/auth";
 
 const route = Router();
 
 export default (app: Router) => {
   app.use("/auth", route);
+
+  route.get("/", isAuth, (req, res) => {
+    const userId = req.userId;
+
+    res.status(200).json({message: `인증 성공 - UserID: ${userId}`});
+  })
 
   route.post("/logout", (_, res) => {
     res
