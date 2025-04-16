@@ -21,6 +21,5 @@ export interface IUserSearchQueryOptions extends PagenationOptions {
 export interface IUserCreateInputDTO
   extends Pick<IUser, "name" | "picture" | "email"> {}
 
-export interface IUserUpdateInputDTO extends Pick<IUser, "name" | "introduce"> {
-  picture?: string;
-}
+export interface IUserUpdateInputDTO
+  extends Pick<IUser, "name" | "introduce" | "picture"> {}

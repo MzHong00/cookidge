@@ -84,6 +84,59 @@ export default (app: Router) => {
   );
 
   route.get(
+    "/follower",
+    celebrate({
+      [Segments.QUERY]: Joi.object({
+        name: Joi.string(),
+        limit: Joi.string(),
+        offset: Joi.string(),
+      }),
+    }),
+    async (req, res) => {
+      const query = req.query as unknown as PagenationOptions & {
+        name: string;
+      };
+
+      try {
+        const follower = await UserService.readFollowerList(query);
+        
+        res.status(200).json(follower);
+      } catch (error) {
+        console.log(error);
+        res
+          .status(500)
+          .json({ message: "팔로워 목록을 가져오는 중 오류가 발생했습니다." });
+      }
+    }
+  );
+
+  route.get(
+    "/following",
+    celebrate({
+      [Segments.QUERY]: Joi.object({
+        name: Joi.string(),
+        limit: Joi.string(),
+        offset: Joi.string(),
+      }),
+    }),
+    async (req, res) => {
+      const query = req.query as unknown as PagenationOptions & {
+        name: string;
+      };
+
+      try {
+        const follower = await UserService.readFollowingList(query);
+        res.status(200).json(follower);
+      } catch (error) {
+        console.log(error);
+        res
+          .status(500)
+          .json({ message: "팔로워 목록을 가져오는 중 오류가 발생했습니다." });
+      }
+    }
+  );
+
+  route.get(
     "/rank-follower",
     celebrate({
       [Segments.QUERY]: Joi.object({
@@ -93,6 +146,7 @@ export default (app: Router) => {
     }),
     async (req, res) => {
       const { limit, offset } = req.query as PagenationOptions;
+
       try {
         const followRank = await RankService.followRank({ limit, offset });
 
