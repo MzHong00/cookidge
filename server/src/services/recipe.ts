@@ -14,9 +14,9 @@ import { CloudinaryService } from "./cloudinary";
 import { IIngredient } from "../interface/IIngredient";
 import { mongooseTransaction } from "../lib/mongoose/transaction";
 
-const SORT= {
-  "latest": "_id",
-  "like": "like_count",
+const SORT = {
+  latest: "_id",
+  like: "like_count",
 } as const;
 
 export class RecipeService {
@@ -24,7 +24,7 @@ export class RecipeService {
     return Recipe.findById(recipeId);
   }
 
-  static readRecipeJoinUser(recipeId: string) {
+  static readRecipeJoinUserById(recipeId: string) {
     return Recipe.aggregate([
       {
         $match: { _id: mongoose.Types.ObjectId.createFromHexString(recipeId) },
@@ -52,19 +52,31 @@ export class RecipeService {
   }
 
   static readRecipes(option: IRecipeSearchOption) {
-    const { categories, sort = Object.keys(SORT)[0] as IRecipeSort, limit = 3, offset=0 } = option || {};
+    const {
+      title,
+      categories,
+      sort = Object.keys(SORT)[0] as IRecipeSort,
+      limit = 3,
+      offset = 0,
+    } = option || {};
+
+    const validCategories =
+      typeof categories === "string" ? [categories] : categories;
 
     return Recipe.aggregate([
       {
-        $match: categories
-          ? {
-              $or: [
-                ...categories?.map((category) => ({
-                  category: category,
-                })),
-              ],
-            }
-          : {},
+        $match: {
+          ...(title && { name: { $regex: `${title}` } }),
+          ...(validCategories
+            ? {
+                $or: [
+                  ...validCategories?.map((category) => ({
+                    category: category,
+                  })),
+                ],
+              }
+            : {}),
+        },
       },
       {
         $addFields: {
@@ -90,14 +102,8 @@ export class RecipeService {
     ]);
   }
 
-  static readUserRecipes(userId: IUser["_id"]) {
-    return Recipe.find(
-      { author_id: userId },
-      {
-        _id: 1,
-        pictures: 1,
-      }
-    );
+  static readRecipesByUserId(userId: IUser["_id"]) {
+    return Recipe.find({ author_id: userId });
   }
 
   static createRecipe(userId: IUser["_id"], recipe: IRecipeInput) {

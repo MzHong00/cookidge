@@ -38,11 +38,19 @@ export class CloudinaryService {
     return uploadResult;
   }
 
-  static async uploadImageByBase64(image?: string, config?: UploadApiOptions) {
-    if (!image) return;
+  static async uploadFiles(
+    files: (Express.Multer.File | string)[],
+    config?: UploadApiOptions
+  ) {
+    const images = files.map((file) => this.uploadFile(file, config));
+    const uploads = await Promise.all(images);
 
+    return uploads;
+  }
+
+  static async uploadImageByBase64(image: string, config?: UploadApiOptions) {
     const { folder, transformation, ...cld_config } = config || {};
-    // Upload an image
+
     const uploadResult = await cloudinary.uploader
       .upload(image, {
         folder: `cookidge/${folder}`,
@@ -58,19 +66,20 @@ export class CloudinaryService {
       })
       .catch((error) => {
         console.log(error);
+        throw error
       });
 
     return uploadResult;
   }
 
-  static async uploadFiles(
-    files: (Express.Multer.File | string)[],
+  static async uploadImagesByBase64(
+    images: string[],
     config?: UploadApiOptions
   ) {
-    const images = files.map((file) => this.uploadFile(file, config));
-    const uploads = await Promise.all(images);
+    const result = images.map((image) => this.uploadFile(image, config));
+    const uploadedResult =  await Promise.all(result);
 
-    return uploads;
+    return uploadedResult;
   }
 
   static async deleteFiles(files: string[]) {

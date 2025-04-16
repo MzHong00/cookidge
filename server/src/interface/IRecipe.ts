@@ -8,34 +8,24 @@ import { IIngredient } from "./IIngredient";
 export interface IRecipe {
   _id: ObjectId | mongoose.mongo.BSON.ObjectId;
   name: string;
-  pictures?: string[];
+  pictures: string[];
   author_id: IUser["_id"];
   ingredients: Omit<IIngredient, "expired_at">[];
   introduction: string;
   servings: number;
   category: string;
   cooking_time: number;
-  cooking_steps?: ICookingStep[];
+  cooking_steps: ICookingStep[];
   like_members: IUser["_id"][];
   created_at: Date;
 }
 
 export interface ICookingStep {
-  picture?: string;
+  picture: string;
   instruction: string;
 }
 
-export interface IRecipeInput
-  extends Pick<
-      IRecipe,
-      | "name"
-      | "introduction"
-      | "category"
-      | "cooking_time"
-      | "servings"
-      | "category"
-    >,
-    Partial<Pick<IRecipe, "ingredients" | "pictures" | "cooking_steps">> {}
+export interface IRecipeInput extends Omit<IRecipe, '_id' | 'author_id' | 'like_members' | 'created_at'> {}
 
 export interface IRecipeQueryOption extends PagenationOptions {
   query?: string;
@@ -44,7 +34,8 @@ export interface IRecipeQueryOption extends PagenationOptions {
 export type IRecipeSort = "latest" | "like";
 
 export interface IRecipeSearchOption extends PagenationOptions {
-  categories?: IRecipe["category"][];
+  title?: string;
+  categories?: IRecipe["category"][] | IRecipe["category"];
   sort?: IRecipeSort;
 }
 
@@ -60,9 +51,9 @@ export const recipeInputJoiSchema = {
     })
   ),
   introduction: Joi.string().required(),
-  servings: Joi.string().required(),
+  servings: Joi.number().required(),
   category: Joi.string().required(),
-  cooking_time: Joi.string().required(),
+  cooking_time: Joi.number().required(),
   cooking_steps: Joi.any(),
   __v: Joi.string(),
 };
