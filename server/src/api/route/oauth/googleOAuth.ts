@@ -10,22 +10,24 @@ export default (app: Router) => {
   app.use("/google-oauth", route);
 
   route.get("/login", (req, res) => {
-    const reqHost = req.headers["x-forwarded-host"] as string;
-    console.log(reqHost);
-    
-    const googleFormUrl = googleOauthForm(reqHost);
+    const reqReferer = req.headers.referer as string;
+    const url = new URL(reqReferer);
+    const domain = `${url.protocol}//${url.host}`;
+
+    const googleFormUrl = googleOauthForm(domain);
 
     res.status(200).send(googleFormUrl);
   });
 
   route.get("/callback", async (req, res) => {
     try {
-      const reqHost = req.headers["x-forwarded-host"] as string;
-      console.log(reqHost);
+      const reqReferer = req.headers.referer as string;
+      const url = new URL(reqReferer);
+      const domain = `${url.protocol}//${url.host}`;
 
       const { code } = req.query as { code: string };
 
-      const googleUserInfo: GoogleUserInfo = await googleOauth(code, reqHost);
+      const googleUserInfo: GoogleUserInfo = await googleOauth(code, domain);
       const { access_token, refresh_token } = await signin(googleUserInfo);
 
       res
