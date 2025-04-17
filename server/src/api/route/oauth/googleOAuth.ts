@@ -11,7 +11,8 @@ export default (app: Router) => {
 
   route.get("/login", (req, res) => {
     const reqHost = req.headers["x-forwarded-host"] as string;
-
+    console.log(reqHost);
+    
     const googleFormUrl = googleOauthForm(reqHost);
 
     res.status(200).send(googleFormUrl);
@@ -20,6 +21,7 @@ export default (app: Router) => {
   route.get("/callback", async (req, res) => {
     try {
       const reqHost = req.headers["x-forwarded-host"] as string;
+      console.log(reqHost);
 
       const { code } = req.query as { code: string };
 
