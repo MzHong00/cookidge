@@ -5,7 +5,9 @@ import keys from "../config/keys/googleOAuth2.keys";
 
 export const googleOauthForm = (reqHost: string = "") => {
   const isNextVersion = keys.web.redirect_uris[1]?.includes(reqHost);
-
+  console.log(isNextVersion);
+  console.log(keys.web.redirect_uris[1], reqHost);
+  
   const oAuth2Client = new OAuth2Client(
     keys.web.client_id,
     keys.web.client_secret,
@@ -25,7 +27,6 @@ export const googleOauthForm = (reqHost: string = "") => {
 
 export const googleOauth = async (googleCode: string, reqHost: string = "") => {
   const isNextVersion = keys.web.redirect_uris[1]?.includes(reqHost);
-console.log(isNextVersion);
 
   const oAuth2Client = new OAuth2Client(
     keys.web.client_id,
