@@ -1,11 +1,11 @@
 import { SubmitHandler } from "react-hook-form";
 
-import { useAlertActions } from "shared/ui/alert";
 import type { IRecipeForm } from "shared/api/recipe/type";
+import { useAlertActions } from "shared/ui/alert";
 import { useConfirmDialogActions } from "shared/ui/confirmDialog";
-import { compressImage } from "shared/lib/imageCompression";
-import { RecipeForm } from "features/recipe/create";
+import { compressImageToBase64 } from "shared/lib/imageCompression";
 import { useUpdateRecipeMutation } from "..";
+import { RecipeForm } from "features/recipe/create";
 
 interface Props {
   defalutValues: IRecipeForm;
@@ -24,7 +24,7 @@ export const UpdateRecipeForm = ({ defalutValues }: Props) => {
           setProcessMessage("이미지 압축 중...");
           const compressedCookImages = (await Promise.all(
             Array.from(data.pictures as (string | File)[]).map((file) =>
-              typeof file === "string" ? file : compressImage(file)
+              typeof file === "string" ? file : compressImageToBase64(file)
             )
           )) as IRecipeForm["pictures"];
 
@@ -34,7 +34,7 @@ export const UpdateRecipeForm = ({ defalutValues }: Props) => {
               picture:
                 typeof picture === "string"
                   ? picture
-                  : await compressImage(picture?.[0]),
+                  : await compressImageToBase64(picture?.[0]) as string,
             }))
           );
 

@@ -165,6 +165,7 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
                 required: "조리 시간을 설정해 주세요.",
                 min: { value: 1, message: "올바르지 않은 조리 시간입니다." },
                 max: { value: 2400, message: "올바르지 않은 조리 시간입니다." },
+                valueAsNumber: true
               })}
             />
             <InputBox
@@ -178,6 +179,7 @@ export const RecipeForm = ({ defalutValues, submitTitle, onSubmit }: Props) => {
                 required: "몇 인분인지 설정해 주세요.",
                 min: { value: 1, message: "올바르지 않은 인분 설정입니다." },
                 max: { value: 300, message: "올바르지 않은 인분 설정입니다." },
+                valueAsNumber: true
               })}
             />
           </div>

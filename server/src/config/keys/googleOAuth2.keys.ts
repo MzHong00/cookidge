@@ -10,6 +10,7 @@ export default {
     client_secret: config.googleOAuthSecret,
     redirect_uris: [
       config.googleOAuthRedirectUrl,
+      config.googleOAuthRedirectNextUrl
     ],
   },
 };

@@ -55,5 +55,5 @@ export const recipeInputJoiSchema = {
   category: Joi.string().required(),
   cooking_time: Joi.number().required(),
   cooking_steps: Joi.any(),
-  __v: Joi.string(),
+  __v: Joi.number(),
 };
