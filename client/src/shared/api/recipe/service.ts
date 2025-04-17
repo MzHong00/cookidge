@@ -16,7 +16,7 @@ export class RecipeService {
   static readonly root = "/api/recipe";
 
   static async readRecipe(id?: IRecipe["_id"]): Promise<IRecipeJoinUser> {
-    return (await axios.get(`${this.root}/read/detail/${id}`)).data[0];
+    return (await axios.get(`${this.root}/read/detail/${id}`)).data;
   }
 
   static async readRecipeList(config: {
@@ -41,13 +41,7 @@ export class RecipeService {
   static async createRecipe(
     IRecipeInputDTO: IRecipeInputDTO
   ): Promise<{ message: string }> {
-    return (
-      await axios.post(`${this.root}/create`, IRecipeInputDTO, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-    ).data;
+    return (await axios.post(`${this.root}/create`, IRecipeInputDTO)).data;
   }
 
   static async updateRecipe(
@@ -56,9 +50,6 @@ export class RecipeService {
   ): Promise<{ message: string }> {
     return (
       await axios.put(`${this.root}/update`, recipe, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
         params: { _id: recipeId },
       })
     ).data;

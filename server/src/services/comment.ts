@@ -16,7 +16,7 @@ export class CommentService {
           $match: {
             ...(last_comment_id && {
               _id: {
-                $lt: mongoose.Types.ObjectId.createFromHexString(
+                $gt: mongoose.Types.ObjectId.createFromHexString(
                   last_comment_id
                 ),
               },
@@ -24,7 +24,7 @@ export class CommentService {
             recipe_id: mongoose.Types.ObjectId.createFromHexString(recipe_id),
           },
         },
-        { $sort: { _id: -1 } },
+        { $sort: { _id: 1 } },
         { $limit: Number(limit) },
         {
           $lookup: {

@@ -54,9 +54,9 @@ export class RankService {
         $project: {
           recipe_count: 1,
           author: {
-            _id: "$author_info._id", 
+            _id: "$author_info._id",
             name: "$author_info.name",
-            picture: "$author_info.picture", 
+            picture: "$author_info.picture",
           },
         },
       },

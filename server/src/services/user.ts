@@ -12,6 +12,7 @@ import { Refrigerator } from "../models/refrigerator";
 import { Comment } from "../models/comment";
 import { Like } from "../models/like";
 import { CloudinaryService } from "./cloudinary";
+import { PagenationOptions } from "../interface/types";
 
 export class UserService {
   static readUserById(id: IUser["_id"]) {
@@ -46,20 +47,82 @@ export class UserService {
     ]);
   }
 
+  static readFollowerList(
+    params: PagenationOptions & {
+      name: IUser["name"];
+    }
+  ) {
+    const { name, limit = 10, offset = 0 } = params;
+
+    return User.aggregate([
+      { $match: { name: name } },
+      {
+        $lookup: {
+          from: "users",
+          localField: "follower",
+          foreignField: "_id",
+          as: "followerDetails",
+        },
+      },
+      { $skip: Number(offset) },
+      { $limit: Number(limit) },
+      { $unwind: "$followerDetails" },
+      { $replaceRoot: { newRoot: "$followerDetails" } },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          picture: 1,
+        },
+      },
+    ]);
+  }
+
+  static readFollowingList(
+    params: PagenationOptions & {
+      name: IUser["name"];
+    }
+  ) {
+    const { name, limit = 10, offset = 0 } = params;
+
+    return User.aggregate([
+      { $match: { name: name } },
+      {
+        $lookup: {
+          from: "users",
+          localField: "following",
+          foreignField: "_id",
+          as: "followingDetails",
+        },
+      },
+      { $skip: Number(offset) },
+      { $limit: Number(limit) },
+      { $unwind: "$followingDetails" },
+      { $replaceRoot: { newRoot: "$followingDetails" } },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          picture: 1,
+        },
+      },
+    ]);
+  }
+
   static async updateUser(
     userId: IUser["_id"],
     userData: Partial<IUserUpdateInputDTO>
   ) {
-    if(userData.picture) {
+    if (userData.picture) {
       const user = await this.readUserById(userId);
       CloudinaryService.deleteFiles([user?.picture || ""]);
     }
-    
+
     return User.findByIdAndUpdate(userId, { $set: userData }, { new: true });
   }
 
   static async deleteUser(userId: IUser["_id"]) {
-    const myRecipes = await RecipeService.readUserRecipes(userId);
+    const myRecipes = await RecipeService.readRecipesByUserId(userId);
     const user = await this.readUserById(userId);
 
     mongooseTransaction(async () => {

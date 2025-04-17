@@ -29,7 +29,7 @@ export default (app: Router) => {
     const { id } = req.params;
 
     try {
-      const recipe = await RecipeService.readRecipeJoinUser(id);
+      const [recipe] = await RecipeService.readRecipeJoinUserById(id);
 
       if (!recipe) {
         return res.status(200).json({ message: "레시피를 찾을 수 없습니다." });
@@ -49,7 +49,11 @@ export default (app: Router) => {
     "/read-list",
     celebrate({
       [Segments.QUERY]: Joi.object({
-        categories: Joi.array().items(Joi.string()),
+        title: Joi.string().allow(""),
+        categories: Joi.alternatives().try(
+          Joi.array().items(Joi.string()),
+          Joi.string()
+        ),
         sort: Joi.string(),
         limit: Joi.string(),
         offset: Joi.string(),
@@ -57,10 +61,10 @@ export default (app: Router) => {
     }),
     async (req, res) => {
       const searchOptions = req.query as IRecipeSearchOption;
-
+      
       try {
         const recipe = await RecipeService.readRecipes(searchOptions);
-        
+
         if (!recipe) {
           return res
             .status(200)
@@ -87,7 +91,7 @@ export default (app: Router) => {
         { _id: 1 }
       )) as IUser;
 
-      const recipes = await RecipeService.readUserRecipes(_id);
+      const recipes = await RecipeService.readRecipesByUserId(_id);
 
       if (!recipes) {
         return res.status(200).json({ message: "레시피를 찾을 수 없습니다." });
@@ -107,7 +111,7 @@ export default (app: Router) => {
     const userId = req.userId;
 
     try {
-      const recipes = await RecipeService.readUserRecipes(userId);
+      const recipes = await RecipeService.readRecipesByUserId(userId);
 
       if (!recipes) {
         return res.status(200).json({ message: "레시피를 찾을 수 없습니다." });
@@ -125,55 +129,37 @@ export default (app: Router) => {
   // 레시피 생성
   route.post(
     "/create",
-    upload.fields([
-      { name: "pictures[]" },
-      ...Array.from({ length: 10 }, (_, i) => ({
-        name: `cooking_steps[${i}][picture]`,
-        maxCount: 1,
-      })),
-    ]),
     celebrate({ [Segments.BODY]: recipeInputJoiSchema }),
     isAuth,
     async (req, res) => {
       const userId = req.userId;
-      const recipeInputDto = req.body as IRecipeInput;
-      const { "pictures[]": pictures, ...stepPictures } = req.files as {
-        "pictures[]"?: Express.Multer.File[];
-        [stepPictures: string]: Express.Multer.File[] | undefined;
-      };
+      const recipeInputDTO = req.body as IRecipeInput;
+      const { pictures, cooking_steps } = recipeInputDTO;
 
       try {
-        if (pictures) {
-          recipeInputDto.pictures = (
-            await CloudinaryService.uploadFiles(pictures, {
-              folder: cldFolder.recipes,
-            })
-          )
-            .map((picture) => (picture ? picture.public_id : ""))
-            .filter((ids) => !!ids);
-        }
+        // Cloudinary 업로드 후, 사진 데이터를 붙히는 작업
+        recipeInputDTO.pictures = (
+          await CloudinaryService.uploadImagesByBase64(pictures, {
+            folder: cldFolder.recipes,
+          })
+        )
+          .map((picture) => (picture ? picture.public_id : ""))
+          .filter((ids) => !!ids);
 
-        if (stepPictures) {
-          const stepIndex = Object.keys(stepPictures).map((key) =>
-            parseInt(key[14])
-          );
-          const stepPublicIds = (
-            await CloudinaryService.uploadFiles(
-              Object.values(stepPictures).flatMap((pic) => pic ?? []),
-              { folder: cldFolder.cooking_steps }
-            )
-          )
-            .map((cldImg) => (cldImg ? cldImg.public_id : ""))
-            .filter((ids) => ids);
+        // 요리과정 데이터의 이미지만 추출하여 Cloudinary에 업로드 후, 과정 사진 데이터를 정제하는 작업
+        recipeInputDTO.cooking_steps = await Promise.all(
+          cooking_steps.map(async ({ picture, instruction }) => ({
+            picture: (
+              await CloudinaryService.uploadImageByBase64(picture, {
+                folder: cldFolder.cooking_steps,
+              })
+            ).public_id,
+            instruction: instruction,
+          }))
+        );
 
-          stepIndex.forEach((stepIndex, publicIdIndex) => {
-            if (recipeInputDto.cooking_steps)
-              recipeInputDto.cooking_steps[stepIndex].picture =
-                stepPublicIds[publicIdIndex];
-          });
-        }
-
-        await RecipeService.createRecipe(userId, recipeInputDto);
+        // 레시피 생성
+        await RecipeService.createRecipe(userId, recipeInputDTO);
 
         res.status(201).json({ message: "레시피 생성에 성공하였습니다." });
       } catch (error) {
@@ -188,28 +174,18 @@ export default (app: Router) => {
   // 레시피 수정
   route.put(
     "/update",
-    upload.fields([
-      { name: "pictures[]" },
-      ...Array.from({ length: 10 }, (_, i) => ({
-        name: `cooking_steps[${i}][picture]`,
-        maxCount: 1,
-      })),
-    ]),
     celebrate({
-      [Segments.BODY]: Joi.object(recipeInputJoiSchema),
-      [Segments.QUERY]: Joi.object({ _id: Joi.string() }),
+      [Segments.QUERY]: Joi.object({
+        _id: Joi.string().required(),
+      }),
+      [Segments.BODY]: recipeInputJoiSchema,
     }),
     isAuth,
     isMyRecipe,
     async (req, res) => {
       const recipeId = req.query._id as string;
-      const recipeInputDto = req.body as IRecipeInput;
-      const { "pictures[]": pictures, ...stepPictures } = req.files as {
-        "pictures[]"?: Express.Multer.File[];
-        [stepPictures: string]: Express.Multer.File[] | undefined;
-      };
-
-      if (!recipeInputDto.cooking_steps) recipeInputDto.cooking_steps = [];
+      const recipeInputDTO = req.body as IRecipeInput;
+      const { pictures, cooking_steps } = recipeInputDTO;
 
       try {
         const prevRecipe = (await RecipeService.readRecipeById(
@@ -217,61 +193,58 @@ export default (app: Router) => {
         )) as IRecipe;
 
         // 요리 사진 로직
-        if (pictures) {
-          const picturePromise = await Promise.all([
-            // 이전 이미지 저장소에서 제거
-            prevRecipe?.pictures &&
-              CloudinaryService.deleteFiles(prevRecipe.pictures),
-            // 새로운 이미지 저장소에 업로드
-            CloudinaryService.uploadFiles(pictures, {
+        if (pictures[0].startsWith("data")) {
+          // 이전 이미지를 저장소에서 제거 및 새로운 이미지 저장소에 업로드
+          const pictureResult = await Promise.all([
+            CloudinaryService.deleteFiles(prevRecipe.pictures),
+            CloudinaryService.uploadImagesByBase64(pictures, {
               folder: cldFolder.recipes,
             }),
           ]);
 
-          recipeInputDto.pictures = picturePromise[1]
+          recipeInputDTO.pictures = pictureResult[1]
             .map((picture) => (picture ? picture.public_id : ""))
             .filter((ids) => !!ids);
         }
 
         // 요리 과정 사진 로직
-        if (stepPictures) {
-          const stepIndex = Object.keys(stepPictures).map((key) =>
-            parseInt(key[14])
-          );
+        recipeInputDTO.cooking_steps = await Promise.all(
+          cooking_steps.map(async ({ picture, instruction }, i) => {
+            const isNewPicture = picture.startsWith("data");
+            // 이전 이미지를 저장소에서 제거 및 새로운 이미지 저장소에 업로드
+            const newPicture = isNewPicture
+              ? (
+                  await Promise.all([
+                    prevRecipe.cooking_steps[i] &&
+                      CloudinaryService.deleteFiles([
+                        prevRecipe.cooking_steps[i].picture,
+                      ]),
+                    (
+                      await CloudinaryService.uploadImageByBase64(picture, {
+                        folder: cldFolder.cooking_steps,
+                      })
+                    ).public_id,
+                  ])
+                )[1]
+              : picture;
 
-          const stepPromise = await CloudinaryService.uploadFiles(
-            Object.values(stepPictures).flatMap((pic) => pic ?? []),
-            { folder: cldFolder.cooking_steps }
-          );
+            return {
+              picture: newPicture,
+              instruction: instruction,
+            };
+          })
+        );
 
-          const stepPublicIds = stepPromise
-            .map((cldImg) => (cldImg ? cldImg.public_id : ""))
-            .filter((ids) => !!ids);
-
-          stepIndex.forEach((stepIndex, publicIdIndex) => {
-            if (recipeInputDto.cooking_steps)
-              recipeInputDto.cooking_steps[stepIndex].picture =
-                stepPublicIds[publicIdIndex];
-          });
+        // 새로운 요리 과정의 길이가 더 작을때, 나머지 요리 과정 이미지 저장소에서 제거
+        if (cooking_steps.length < prevRecipe.cooking_steps.length) {
+          const willDeletePictures = prevRecipe.cooking_steps
+            .slice(cooking_steps.length)
+            .map(({ picture }) => picture);
+          CloudinaryService.deleteFiles(willDeletePictures);
         }
 
-        const deleteTargets: string[] = [];
-
-        // 이전과 현재의 요리과정 사진 전체 탐색
-        prevRecipe.cooking_steps?.forEach((step) => {
-          if (!step.picture) return;
-          // 사용하지 않은 요리과정 추출
-          const isUsing = recipeInputDto.cooking_steps
-            ?.map((step) => step.picture || "")
-            .find((url) => url === step.picture);
-          if (!isUsing) deleteTargets.push(step.picture);
-        });
-
-        // 사용하지 않은 요리과정 사진 삭제
-        CloudinaryService.deleteFiles(deleteTargets);
-
         // 레시피 업데이트
-        await RecipeService.updateRecipe(recipeId, recipeInputDto);
+        await RecipeService.updateRecipe(recipeId, recipeInputDTO);
 
         res.status(200).json({ message: "레시피 업데이트에 성공했습니다." });
       } catch (error) {

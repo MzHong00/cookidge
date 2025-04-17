@@ -30,7 +30,7 @@
     @include app.flex-layout(column);
 
     &>label {
-        @include app.flex-layout(row, center, stretch, 0.25rem);
+        @include app.flex-layout(row, center, normal, 0.25rem);
         font-size: 1.2em;
         font-weight: bold;
 
@@ -60,7 +60,7 @@
 }
 
 .category {
-    @include app.flex-layout(column, stretch, stretch, 0.25rem);
+    @include app.flex-layout(column, normal, normal, 0.25rem);
 }
 
 .steps {
@@ -74,7 +74,7 @@
     @include app.flex-layout(row);
 
     &>:first-child {
-        @include app.flex-layout(column, center, stretch, 0);
+        @include app.flex-layout(column, center, normal, 0);
     }
 
     &>:last-child {

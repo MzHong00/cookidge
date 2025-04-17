@@ -3,13 +3,13 @@ import { OAuth2Client } from "google-auth-library";
 
 import keys from "../config/keys/googleOAuth2.keys";
 
+export const googleOauthForm = (reqHost: string = "") => {
+  const isNextVersion = keys.web.redirect_uris[1]?.includes(reqHost);
 
-
-export const googleOauthForm = () => {
   const oAuth2Client = new OAuth2Client(
     keys.web.client_id,
     keys.web.client_secret,
-    keys.web.redirect_uris[0]
+    isNextVersion ? keys.web.redirect_uris[1] : keys.web.redirect_uris[0]
   );
 
   const authorizeUrl = oAuth2Client.generateAuthUrl({
@@ -23,13 +23,16 @@ export const googleOauthForm = () => {
   return authorizeUrl;
 };
 
-export const googleOauth = async (googleCode: string): Promise<any> => {
+export const googleOauth = async (googleCode: string, reqHost: string = "") => {
+  const isNextVersion = keys.web.redirect_uris[1]?.includes(reqHost);
+console.log(isNextVersion);
+
   const oAuth2Client = new OAuth2Client(
     keys.web.client_id,
     keys.web.client_secret,
-    keys.web.redirect_uris[0]
+    isNextVersion ? keys.web.redirect_uris[1] : keys.web.redirect_uris[0]
   );
-  
+
   try {
     const r = await oAuth2Client.getToken(googleCode);
     oAuth2Client.setCredentials(r.tokens);
