@@ -9,6 +9,7 @@ interface Config {
   mongodbPassword: string;
   mongodbName: string;
   googleOAuthRedirectUrl: string;
+  googleOAuthRedirectNextUrl: string;
   googleOAuthClientId: string;
   googleOAuthSecret: string;
   clodinaryCloudName: string;
@@ -23,6 +24,7 @@ const config: Partial<Config> = {
   mongodbPassword: process.env.MONGODB_ADMIN_PASSWORD,
   mongodbName: process.env.MONGODB_NAME,
   googleOAuthRedirectUrl: process.env.GOOGLE_OAUTH_REDIRECT_URL,
+  googleOAuthRedirectNextUrl: process.env.GOOGLE_OAUTH_REDIRECT_NEXT_URL,
   googleOAuthClientId: process.env.CLIENT_ID,
   googleOAuthSecret: process.env.CLIENT_SECRET,
   clodinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME,
