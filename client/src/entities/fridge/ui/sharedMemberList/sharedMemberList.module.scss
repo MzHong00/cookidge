@@ -1,0 +1,15 @@
+@use 'app/app.scss';
+
+.profileLink {
+    position: relative;
+
+    .profileIcon {
+        padding: 1px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        color: yellow;
+        background-color: black;
+        font-size: 0.75rem;
+    }
+}
