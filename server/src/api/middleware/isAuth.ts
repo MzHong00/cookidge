@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
+import jwt, { type JwtPayload } from "jsonwebtoken";
 import mongoose from "mongoose";
-import jwt, { JwtPayload } from "jsonwebtoken";
 
 import type { Cookies } from "../../interface/types";
 import config from "../../config";

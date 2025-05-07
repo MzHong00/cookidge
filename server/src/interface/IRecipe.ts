@@ -1,9 +1,9 @@
 import { Joi } from "celebrate";
-import mongoose, { ObjectId } from "mongoose";
+import mongoose, { type ObjectId } from "mongoose";
 
-import { IUser } from "./IUser";
-import { PagenationOptions } from "./types";
-import { IIngredient } from "./IIngredient";
+import type { IUser } from "./IUser";
+import type { IIngredient } from "./IIngredient";
+import type { PagenationOptions } from "./types";
 
 export interface IRecipe {
   _id: ObjectId | mongoose.mongo.BSON.ObjectId;

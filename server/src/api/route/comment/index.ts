@@ -1,12 +1,12 @@
 import { Router } from "express";
 import { celebrate, Joi, Segments } from "celebrate";
 
+import {
+  isMyComment,
+  deleteCommentAuthorization,
+} from "../../middleware/commentAuthorization";
 import isAuth from "../../middleware/isAuth";
 import { CommentService } from "../../../services/comment";
-import {
-  deleteCommentAuthorization,
-  isMyComment,
-} from "../../middleware/commentAuthorization";
 
 const route = Router();
 

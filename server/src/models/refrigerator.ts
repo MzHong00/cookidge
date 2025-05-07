@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-import { IRefrigerator } from "../interface/IRefrigerator";
+import type { IRefrigerator } from "../interface/IRefrigerator";
 
 const INGREDIENTS_CATEGORIES_TEXT = [
   "고기",

@@ -1,8 +1,8 @@
-import { JwtPayload } from "jsonwebtoken";
-import { Express, Request } from "express";
+import type { JwtPayload } from "jsonwebtoken";
+import type { Express, Request } from "express";
 
-import { IUser } from "../../interface/IUser";
-import { IRefrigerator } from "../../interface/IRefrigerator";
+import type { IUser } from "../../interface/IUser";
+import type { IRefrigerator } from "../../interface/IRefrigerator";
 
 declare global {
   namespace Express {

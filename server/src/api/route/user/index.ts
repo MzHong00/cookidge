@@ -1,15 +1,15 @@
 import { Router } from "express";
-
-import isAuth from "../../middleware/isAuth";
 import { celebrate, Joi, Segments } from "celebrate";
-import { UserService } from "../../../services/user";
-import {
+
+import type {
   IUserSearchQueryOptions,
   IUserUpdateInputDTO,
 } from "../../../interface/IUser";
-import { CloudinaryService } from "../../../services/cloudinary";
+import type { PagenationOptions } from "../../../interface/types";
+import isAuth from "../../middleware/isAuth";
+import { UserService } from "../../../services/user";
 import { RankService } from "../../../services/rank";
-import { PagenationOptions } from "../../../interface/types";
+import { CloudinaryService } from "../../../services/cloudinary";
 
 const route = Router();
 

@@ -1,18 +1,18 @@
 import mongoose from "mongoose";
 
-import {
+import type {
   IUser,
   IUserSearchQueryOptions,
   IUserUpdateInputDTO,
 } from "../interface/IUser";
+import type { PagenationOptions } from "../interface/types";
 import { User } from "../models/user";
-import { mongooseTransaction } from "../lib/mongoose/transaction";
-import { RecipeService } from "./recipe";
-import { Refrigerator } from "../models/refrigerator";
-import { Comment } from "../models/comment";
 import { Like } from "../models/like";
+import { Comment } from "../models/comment";
+import { Refrigerator } from "../models/refrigerator";
+import { RecipeService } from "./recipe";
 import { CloudinaryService } from "./cloudinary";
-import { PagenationOptions } from "../interface/types";
+import { mongooseTransaction } from "../lib/mongoose/transaction";
 
 export class UserService {
   static readUserById(id: IUser["_id"]) {

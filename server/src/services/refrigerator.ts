@@ -1,5 +1,5 @@
-import { IRefrigerator } from "../interface/IRefrigerator";
-import { IUser } from "../interface/IUser";
+import type { IUser } from "../interface/IUser";
+import type { IRefrigerator } from "../interface/IRefrigerator";
 import { Refrigerator } from "../models/refrigerator";
 
 export class RefrigeratorService {

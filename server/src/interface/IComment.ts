@@ -1,8 +1,8 @@
-import { ObjectId } from "mongoose";
+import type { ObjectId } from "mongoose";
 
-import { IUser } from "./IUser";
-import { IRecipe } from "./IRecipe";
-import { PagenationOptions } from "./types";
+import type { IUser } from "./IUser";
+import type { IRecipe } from "./IRecipe";
+import type { PagenationOptions } from "./types";
 
 export interface IComment {
   _id: ObjectId;

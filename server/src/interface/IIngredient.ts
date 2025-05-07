@@ -1,5 +1,5 @@
+import type { ObjectId } from "mongoose";
 import Joi from "joi";
-import { ObjectId } from "mongoose";
 
 export interface IIngredient {
   _id: ObjectId;

@@ -1,10 +1,14 @@
+import type { Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
-import { Request, Response, NextFunction } from "express";
 
+import type { IRefrigerator } from "../../interface/IRefrigerator";
 import { Refrigerator } from "../../models/refrigerator";
-import { IRefrigerator } from "../../interface/IRefrigerator";
 
-export default async (req: Request, res: Response, next: NextFunction) => {
+export const isOurRefrigerator = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const userId = req.userId;
   const refrigeratorId = req.query.refrigerator_id || req.body.refrigerator_id;
 

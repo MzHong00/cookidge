@@ -1,17 +1,17 @@
 import mongoose from "mongoose";
-import {
+import type {
   IRecipe,
   IRecipeSort,
   IRecipeInput,
   IRecipeQueryOption,
   IRecipeSearchOption,
 } from "../interface/IRecipe";
+import type { IUser } from "../interface/IUser";
+import type { IIngredient } from "../interface/IIngredient";
 import { Like } from "../models/like";
 import { Recipe } from "../models/recipe";
-import { IUser } from "../interface/IUser";
 import { Comment } from "../models/comment";
 import { CloudinaryService } from "./cloudinary";
-import { IIngredient } from "../interface/IIngredient";
 import { mongooseTransaction } from "../lib/mongoose/transaction";
 
 const SORT = {

@@ -1,6 +1,7 @@
-import mongoose, { ObjectId } from "mongoose";
-import { IIngredient } from "./IIngredient";
-import { IUser } from "./IUser";
+import mongoose, { type ObjectId } from "mongoose";
+
+import type { IUser } from "./IUser";
+import type { IIngredient } from "./IIngredient";
 
 export interface IRefrigerator {
   _id: ObjectId | mongoose.mongo.BSON.ObjectId;

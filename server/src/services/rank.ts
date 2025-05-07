@@ -1,6 +1,6 @@
-import { IRecipeQueryOption } from "../interface/IRecipe";
-import { Recipe } from "../models/recipe";
+import type { IRecipeQueryOption } from "../interface/IRecipe";
 import { User } from "../models/user";
+import { Recipe } from "../models/recipe";
 
 export class RankService {
   // ※ 레시피 좋아요 랭킹은 기존의 Recipe 서비스에서 사용이 가능

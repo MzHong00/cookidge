@@ -1,4 +1,4 @@
-import { type Express } from "express";
+import type { Express } from "express";
 import expressLoader from "./express";
 import mongooseLoader from "./mongoose";
 import cloudinaryLoader from "./cloudinary";

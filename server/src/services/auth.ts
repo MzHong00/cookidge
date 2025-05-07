@@ -1,9 +1,9 @@
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt, { type JwtPayload } from "jsonwebtoken";
 
+import type { IUserCreateInputDTO } from "../interface/IUser";
 import config from "../config";
 import { User } from "../models/user";
 import { CloudinaryService } from "./cloudinary";
-import { type IUserCreateInputDTO } from "../interface/IUser";
 
 const ACCESS_TOKEN_EXPIRE_TIME = "1h";
 const REFRESH_TOKEN_EXPIRE_TIME = "24h";

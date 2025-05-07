@@ -3,11 +3,12 @@ import { Router } from "express";
 import { celebrate, Joi, Segments } from "celebrate";
 
 import isAuth from "../../middleware/isAuth";
-import isOurRefrigerator, {
+import {
   isMyRefrigerator,
+  isOurRefrigerator,
 } from "../../middleware/isOurRefrigerator";
-import { RefrigeratorService } from "../../../services/refrigerator";
 import { UserService } from "../../../services/user";
+import { RefrigeratorService } from "../../../services/refrigerator";
 
 const route = Router();
 
