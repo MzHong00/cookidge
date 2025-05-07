@@ -1,14 +1,21 @@
+import type { Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { Request, Response, NextFunction } from "express";
 
+import type { Cookies } from "../../interface/types";
 import config from "../../config";
 
 export default (req: Request, res: Response, next: NextFunction) => {
-  const accessToken = req.headers.authorization?.split(" ")[1];
   console.log(req.originalUrl);
 
-  if (!accessToken)
+  const { access_token, refresh_token } = req.cookies as Cookies;
+
+  if (!refresh_token)
+    return res.status(200).json({
+      message: "로그인 상태가 아닙니다.",
+    });
+
+  if (!access_token)
     return res.status(498).json({
       message: "토큰이 없습니다.",
     });
@@ -18,7 +25,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
       message: "서버에서 Secret Key를 찾을 수 없습니다.",
     });
 
-  jwt.verify(accessToken, config.jwtSecretKey as string, (err, payload) => {
+  jwt.verify(access_token, config.jwtSecretKey, (err, payload) => {
     if (err) {
       if ((err as jwt.TokenExpiredError).expiredAt)
         return res.status(498).json({

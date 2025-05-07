@@ -32,12 +32,17 @@ export default (app: Router) => {
 
       res
         .status(200)
-        .cookie("token", refresh_token, {
+        .cookie("access_token", access_token, {
           httpOnly: true,
           secure: true,
           sameSite: "strict",
         })
-        .send({ token: access_token });
+        .cookie("refresh_token", refresh_token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "strict",
+        })
+        .json({ message: "토큰이 발급되었습니다." });
     } catch (error) {
       console.log(error);
       res.status(500).send(`Login Error: ${error}`);

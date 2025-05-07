@@ -13,3 +13,8 @@ export type GoogleUserInfo = {
   email_verified: boolean; // 이메일 인증 여부
   locale: string; // 언어 및 지역 정보 (e.g., "en", "ko")
 };
+
+export type Cookies = {
+  access_token?: string;
+  refresh_token?: string;
+}
