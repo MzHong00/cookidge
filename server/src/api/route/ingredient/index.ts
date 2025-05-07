@@ -34,7 +34,7 @@ export default (app: Router) => {
         await IngredientService.createIngredient(refrigeratorId, ingredients);
 
         res.status(201).json({
-          message: "재료가 생성에 성공하였습니다.",
+          message: "재료 생성에 성공하였습니다.",
         });
       } catch (error) {
         console.error("재료 생성 중 오류 발생:", error);

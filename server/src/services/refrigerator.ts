@@ -9,7 +9,7 @@ export class RefrigeratorService {
       {
         $or: [{ owner_id: userId }, { shared_members: userId }],
       },
-      "_id name"
+      "_id name last_updated stored_ingredients"
     );
   }
 
@@ -67,10 +67,10 @@ export class RefrigeratorService {
     return Refrigerator.findByIdAndDelete(refrigeratorId);
   }
 
-  static addSharedMember(refrigeratorId: string, member: IUser["_id"]) {
+  static addSharedMember(refrigeratorId: string, memberId: IUser["_id"]) {
     return Refrigerator.findByIdAndUpdate(refrigeratorId, {
       $addToSet: {
-        shared_members: member,
+        shared_members: memberId,
       },
     });
   }

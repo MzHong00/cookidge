@@ -22,7 +22,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     next();
   } catch (error) {
     console.error(error);
-    
+
     return res
       .status(404)
       .json({ message: "요청한 냉장고를 찾을 수 없습니다." });
@@ -37,10 +37,10 @@ export const isMyRefrigerator = async (
   const userId = req.userId;
   const refrigeratorId = req.body.refrigerator_id;
 
-  const refrigerator = (await Refrigerator.findOne({
+  const refrigerator = await Refrigerator.findOne<IRefrigerator>({
     _id: refrigeratorId,
     owner_id: userId,
-  })) as unknown as IRefrigerator | null;
+  });
 
   if (!refrigerator)
     return res.status(403).json({ message: "허가되지 않은 사용자입니다." });
