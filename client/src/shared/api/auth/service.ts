@@ -4,13 +4,7 @@ export class AuthService {
   static readonly api = "/api/auth";
 
   static async issueAccessToken() {
-    const response = (
-      await axios.get(`${this.api}/issue-token`, { withCredentials: true })
-    )?.data;
-
-    axios.defaults.headers.common.Authorization = `Bearer ${response?.token}`;
-
-    return response?.token;
+    return (await axios.get(`${this.api}/issue-token`))?.data;
   }
 
   static async logout() {
@@ -19,11 +13,8 @@ export class AuthService {
   }
 
   static async testAccountLogin(code: string) {
-    const response = await axios.post(`${this.api}/test-account`, {
+    return await axios.post(`${this.api}/test-account`, {
       code: code,
     });
-
-    if (response?.data?.token)
-      axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
   }
 }
