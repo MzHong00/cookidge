@@ -1,5 +1,5 @@
+import type { IIngredient, IIngredientInputDto } from "../interface/IIngredient";
 import { Refrigerator } from "../models/refrigerator";
-import { IIngredient, IIngredientInputDto } from "../interface/IIngredient";
 
 export class IngredientService {
   static createIngredient(

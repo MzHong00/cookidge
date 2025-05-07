@@ -1,33 +1,29 @@
 import { Router } from "express";
-
-import isAuth from "../../middleware/isAuth";
-import isRefreshAuth from "../../middleware/isRefreshAuth";
 import { celebrate, Joi, Segments } from "celebrate";
-import { UserService } from "../../../services/user";
-import {
+
+import type {
   IUserSearchQueryOptions,
   IUserUpdateInputDTO,
 } from "../../../interface/IUser";
-import { CloudinaryService } from "../../../services/cloudinary";
+import type { PagenationOptions } from "../../../interface/types";
+import isAuth from "../../middleware/isAuth";
+import { UserService } from "../../../services/user";
 import { RankService } from "../../../services/rank";
-import { PagenationOptions } from "../../../interface/types";
-import { issueToken } from "../../../services/auth";
+import { CloudinaryService } from "../../../services/cloudinary";
 
 const route = Router();
 
 export default (app: Router) => {
   app.use("/user", route);
 
-  route.get("/me", isRefreshAuth, async (req, res) => {
+  route.get("/me", isAuth, async (req, res) => {
     const meId = req.userId;
 
     try {
       const me = await UserService.readUserById(meId);
-      const accessToken = issueToken({ id: meId });
 
       res.status(200).json({
         user: me,
-        token: accessToken,
       });
     } catch (error) {
       console.log(error);
@@ -99,7 +95,7 @@ export default (app: Router) => {
 
       try {
         const follower = await UserService.readFollowerList(query);
-        
+
         res.status(200).json(follower);
       } catch (error) {
         console.log(error);

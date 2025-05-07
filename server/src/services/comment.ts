@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 import type { IUser } from "../interface/IUser";
 import type { IRecipe } from "../interface/IRecipe";
 import type { IComment, ICommentQuery } from "../interface/IComment";
-
 import { Comment } from "../models/comment";
 
 export class CommentService {

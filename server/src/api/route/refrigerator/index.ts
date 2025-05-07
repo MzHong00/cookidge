@@ -3,9 +3,11 @@ import { Router } from "express";
 import { celebrate, Joi, Segments } from "celebrate";
 
 import isAuth from "../../middleware/isAuth";
-import isOurRefrigerator, {
+import {
   isMyRefrigerator,
+  isOurRefrigerator,
 } from "../../middleware/isOurRefrigerator";
+import { UserService } from "../../../services/user";
 import { RefrigeratorService } from "../../../services/refrigerator";
 
 const route = Router();
@@ -126,22 +128,26 @@ export default (app: Router) => {
     celebrate({
       [Segments.BODY]: Joi.object({
         refrigerator_id: Joi.string().required(),
-        member_id: Joi.string().required(),
+        invite_name: Joi.string().required(),
       }),
     }),
     isAuth,
     isMyRefrigerator,
     async (req, res) => {
-      const { refrigerator_id, member_id } = req.body as {
+      const { refrigerator_id, invite_name } = req.body as {
         refrigerator_id: string;
-        member_id: string;
+        invite_name: string;
       };
 
       try {
-        await RefrigeratorService.addSharedMember(
-          refrigerator_id,
-          mongoose.Types.ObjectId.createFromHexString(member_id)
-        );
+        const member = await UserService.readUserByName(invite_name);
+
+        if (!member)
+          return res
+            .status(500)
+            .json({ message: "존재하지 않은 사용자입니다." });
+
+        await RefrigeratorService.addSharedMember(refrigerator_id, member._id);
 
         res.status(200).json({ message: "공유 멤버 초대를 성공했습니다." });
       } catch (error) {

@@ -42,7 +42,10 @@ export const FridgeDetailPage = () => {
       </div>
 
       <SubjectBox title="공유자">
-        <SharedMemberList allowed_users={fridge.allowed_users} />
+        <SharedMemberList
+          owner_id={fridge.owner_id}
+          allowed_users={fridge.allowed_users}
+        />
       </SubjectBox>
 
       <div className="flex-row">

@@ -68,14 +68,14 @@ export class FridgeService {
   }
 
   static async addSharedMember(
-    fridgeId?: IFridge["_id"],
-    memberId?: IUser["_id"]
+    fridgeId: IFridge["_id"],
+    inviteName: IUser["name"]
   ): Promise<{ message: string }> {
     try {
       return (
         await axios.patch(`${this.root}/shared-member/add`, {
           refrigerator_id: fridgeId,
-          member_id: memberId,
+          invite_name: inviteName,
         })
       ).data;
     } catch (error) {
@@ -84,8 +84,8 @@ export class FridgeService {
   }
 
   static async removeSharedMember(
-    fridgeId?: IFridge["_id"],
-    memberId?: IUser["_id"]
+    fridgeId: IFridge["_id"],
+    memberId: IUser["_id"]
   ): Promise<{ message: string }> {
     try {
       return (

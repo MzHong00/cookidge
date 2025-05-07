@@ -1,9 +1,9 @@
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt, { type JwtPayload } from "jsonwebtoken";
 
+import type { IUserCreateInputDTO } from "../interface/IUser";
 import config from "../config";
 import { User } from "../models/user";
 import { CloudinaryService } from "./cloudinary";
-import { type IUserCreateInputDTO } from "../interface/IUser";
 
 const ACCESS_TOKEN_EXPIRE_TIME = "1h";
 const REFRESH_TOKEN_EXPIRE_TIME = "24h";
@@ -54,6 +54,8 @@ export const issueToken = (
   payload: JwtPayload,
   expireTime: string = ACCESS_TOKEN_EXPIRE_TIME
 ) => {
+  console.log(`${payload.id} - 토큰 발급`);
+
   try {
     return jwt.sign(payload, config.jwtSecretKey as string, {
       expiresIn: expireTime,

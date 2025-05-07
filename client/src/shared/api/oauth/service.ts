@@ -18,14 +18,11 @@ export class OAuthService {
     const oauth_code = params.get("code");
 
     try {
-      const response = await axios.get(
-        `${this.root}/callback?code=${oauth_code}`,
-        { withCredentials: true }
-      );
-
-      const accessToken = response.data.token;
-
-      return accessToken;
+      return (
+        await axios.get(`${this.root}/callback?code=${oauth_code}`, {
+          withCredentials: true,
+        })
+      ).data;
     } catch (error) {
       console.log(`구글 로그인 redirect 에러: ${error}`);
       throw error;

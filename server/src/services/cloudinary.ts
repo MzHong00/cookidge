@@ -1,4 +1,4 @@
-import { v2 as cloudinary, UploadApiOptions } from "cloudinary";
+import { type UploadApiOptions, v2 as cloudinary } from "cloudinary";
 
 export class CloudinaryService {
   static toBase64String(file: Express.Multer.File) {
@@ -66,7 +66,7 @@ export class CloudinaryService {
       })
       .catch((error) => {
         console.log(error);
-        throw error
+        throw error;
       });
 
     return uploadResult;
@@ -77,7 +77,7 @@ export class CloudinaryService {
     config?: UploadApiOptions
   ) {
     const result = images.map((image) => this.uploadFile(image, config));
-    const uploadedResult =  await Promise.all(result);
+    const uploadedResult = await Promise.all(result);
 
     return uploadedResult;
   }

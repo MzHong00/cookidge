@@ -3,10 +3,10 @@ import { Router } from "express";
 import user from "./user";
 import auth from "./auth";
 import recipe from "./recipe";
+import comment from "./comment";
 import ingredient from "./ingredient";
 import refrigerator from "./refrigerator";
 import googleOAuth from "./oauth/googleOAuth";
-import comment from "./comment";
 
 export default () => {
   const app = Router();

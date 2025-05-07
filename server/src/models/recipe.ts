@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-import { IRecipe } from "../interface/IRecipe";
+import type { IRecipe } from "../interface/IRecipe";
 
 const FOOD_CATEGORIES = ["한식", "일식", "중식", "양식", "디저트"];
 

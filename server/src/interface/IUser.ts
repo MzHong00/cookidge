@@ -1,6 +1,6 @@
-import mongoose, { ObjectId } from "mongoose";
+import mongoose, { type ObjectId } from "mongoose";
 
-import { PagenationOptions } from "./types";
+import type { PagenationOptions } from "./types";
 
 export interface IUser {
   _id: ObjectId | mongoose.mongo.BSON.ObjectId;

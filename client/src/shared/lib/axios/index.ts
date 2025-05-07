@@ -2,7 +2,9 @@ import axios, { AxiosStatic } from "axios";
 
 import { AuthService } from "shared/api/auth/service";
 
-const instance = axios.create();
+const instance = axios.create({
+  withCredentials: true,
+});
 
 instance.interceptors.request.use(
   (config) => {
@@ -23,15 +25,7 @@ instance.interceptors.response.use(
   async (error) => {
     // 엑세스 토큰 만료 (재발급 로직)
     if (error.response.status === 498) {
-      const accessToken = await AuthService.issueAccessToken();
-      
-      if (!accessToken) return Promise.resolve();
-
-      // 기존 요청의 headers에 새로 발급된 access token을 설정
-      error.config.headers = {
-        ...error.config.headers,
-        Authorization: `Bearer ${accessToken}`,
-      };
+      await AuthService.issueAccessToken();
 
       // 기존 요청의 data를 JSON으로 파싱하여 복원
       if (error.config.data) error.config.data = JSON.parse(error.config.data);

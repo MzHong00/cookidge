@@ -1,7 +1,7 @@
-import { ObjectId } from "mongoose";
+import type { ObjectId } from "mongoose";
 
-import { IUser } from "./IUser";
-import { IRecipe } from "./IRecipe";
+import type { IUser } from "./IUser";
+import type { IRecipe } from "./IRecipe";
 
 export interface ILike{
     _id: ObjectId,

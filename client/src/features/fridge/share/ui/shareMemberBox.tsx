@@ -6,27 +6,27 @@ import { useShareMemberMutation } from "..";
 
 interface Props {
   fridge_id: IFridge["_id"];
-  allowed_users?: IUserPicture[]
+  allowed_users?: IUserPicture[];
 }
 
 export const ShareMemberBox = ({ fridge_id }: Props) => {
-  const {openDialogMessage} = useConfirmDialogActions();
+  const { openDialogMessage } = useConfirmDialogActions();
   const { mutateAsync, isPending } = useShareMemberMutation(fridge_id);
 
   const onClickAddSharedMember = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    const {user_id, user_name} = e.currentTarget.dataset;
+    const { user_name } = e.currentTarget.dataset;
 
-    if (!user_id || isPending) return;
-    
+    if (!user_name || isPending) return;
+
     openDialogMessage({
       message: `${user_name}를 초대하시겠습니까?`,
-      requestFn: async() => {
-        mutateAsync(user_id);
+      requestFn: async () => {
+        mutateAsync(user_name);
       },
-      option: { backspace: false }
-    })
+      option: { backspace: false },
+    });
   };
 
   return (

@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-import { IComment } from "../interface/IComment";
+import type { IComment } from "../interface/IComment";
 
 const CommentSchema = new Schema<IComment>({
   recipe_id: { type: mongoose.Types.ObjectId, required: true },
