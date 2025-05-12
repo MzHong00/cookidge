@@ -12,6 +12,7 @@ import { Like } from "../models/like";
 import { Recipe } from "../models/recipe";
 import { Comment } from "../models/comment";
 import { CloudinaryService } from "./cloudinary";
+import { removeSpecialChars } from "../utils/removeSpecialChars";
 import { mongooseTransaction } from "../lib/mongoose/transaction";
 
 const SORT = {
@@ -66,7 +67,9 @@ export class RecipeService {
     return Recipe.aggregate([
       {
         $match: {
-          ...(title && { name: { $regex: `${title}` } }),
+          ...(title && {
+            name: { $regex: `${removeSpecialChars(title)}`, $options: "i" },
+          }),
           ...(validCategories
             ? {
                 $or: [
