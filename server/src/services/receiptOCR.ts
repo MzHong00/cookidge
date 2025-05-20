@@ -1,5 +1,7 @@
 import { GoogleGenAI } from "@google/genai";
 
+import config from "../config";
+
 const prompt = `
 요구사항: 이미지가 영수증이 아니거나 글자가 없을 때 빈 배열을 반환해주고, JSON 형태로 name과 quantity로 데이터를 정리해줘
 추가 요구사항:
@@ -8,7 +10,7 @@ const prompt = `
 - 이미지에 분석 중 문제가 발생할 때 빈 배열 반환`;
 
 export async function receiptOCR(picture: string) {
-  const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_GEMINI_API_KEY });
+  const ai = new GoogleGenAI({ apiKey: config.googleGeminiApiKey });
 
   // 이미지 URL을 base64로 변경 (프론트에서 인코딩한 base64를 바로 사용하면 에러가 발생했음)
   const response = await fetch(picture);

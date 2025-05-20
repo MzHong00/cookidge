@@ -12,6 +12,7 @@ interface Config {
   googleOAuthRedirectNextUrl: string;
   googleOAuthClientId: string;
   googleOAuthSecret: string;
+  googleGeminiApiKey: string;
   clodinaryCloudName: string;
   cloudinaryApiKey: string;
   cloudinaryApiSecret: string;
@@ -27,9 +28,10 @@ const config: Partial<Config> = {
   googleOAuthRedirectNextUrl: process.env.GOOGLE_OAUTH_REDIRECT_NEXT_URL,
   googleOAuthClientId: process.env.CLIENT_ID,
   googleOAuthSecret: process.env.CLIENT_SECRET,
+  googleGeminiApiKey: process.env.GOOGLE_GEMINI_API_KEY,
   clodinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME,
   cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
-  cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET
+  cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET,
 };
 
 export default config;
