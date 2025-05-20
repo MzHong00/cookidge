@@ -1,5 +1,6 @@
 import { Router } from "express";
 
+import ai from "./ai";
 import user from "./user";
 import auth from "./auth";
 import recipe from "./recipe";
@@ -10,6 +11,8 @@ import googleOAuth from "./oauth/googleOAuth";
 
 export default () => {
   const app = Router();
+
+  ai(app);
 
   auth(app);
   googleOAuth(app);
